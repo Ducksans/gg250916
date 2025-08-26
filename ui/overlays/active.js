@@ -2137,71 +2137,63 @@
   }
 })();
 (function () {
-  function gg_enforce_st1206() {
-    if (!document.body.classList.contains("simple")) return;
-    const wrap = document.getElementById("a1-wrap");
-    if (!wrap) return;
+  
+function gg_enforce_st1206(){
+  try{
+    // simple 모드 보장
+    if(!document.body.classList.contains('simple')){
+      document.body.classList.add('simple');
+    }
+    const wrap = document.getElementById('a1-wrap'); if(!wrap) return;
 
-    // global scroll off
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
+    // 전역 스크롤 차단
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
 
-    // grid rows clamp
-    wrap.style.display = "grid";
-    wrap.style.gridTemplateRows = "auto minmax(0, 1fr) auto";
-    wrap.style.height = "calc(100dvh - var(--gg-strip-h,46px))";
-    wrap.style.overflow = "hidden";
+    // grid 고정
+    wrap.style.display = 'grid';
+    wrap.style.gridTemplateRows = 'auto minmax(0, 1fr) auto';
+    wrap.style.height = 'calc(100dvh - var(--gg-strip-h,46px))';
+    wrap.style.overflow = 'hidden';
 
-    // keep 3 direct children (toolbar, #chat-msgs, #composer-wrap)
-    const msgs = document.getElementById("chat-msgs");
-    const keep = new Set(["chat-msgs", "composer-wrap"]);
-    Array.from(wrap.children).forEach((el, i) => {
-      if (i === 0) return;
-      if (keep.has(el.id)) return;
-      msgs && msgs.prepend(el);
+    // 직계 자식 3개만 유지(툴바, #chat-msgs, #composer-wrap)
+    const msgs = document.getElementById('chat-msgs');
+    const keep = new Set(['chat-msgs','composer-wrap']);
+    Array.from(wrap.children).forEach((el,i)=>{
+      if(i===0) return;               // toolbar
+      if(keep.has(el.id)) return;     // allowlist
+      if(msgs) msgs.prepend(el);      // 그 외는 타임라인 내부로 이동
     });
-    while (wrap.children.length > 3 && msgs)
-      msgs.prepend(wrap.lastElementChild);
+    while (wrap.children.length>3 && msgs) msgs.prepend(wrap.lastElementChild);
 
-    // input: never a scroller
-    const root = document.getElementById("chat-input");
-    const kill = (el) => {
-      if (el) {
-        el.style.setProperty("overflow", "hidden", "important");
-        el.style.setProperty("overflow-y", "hidden", "important");
-      }
-    };
-    kill(root);
-    kill(root?.querySelector("textarea"));
-    const ce = root?.querySelector(
-      '[contenteditable],[contenteditable="true"]',
-    );
-    kill(ce);
+    // 입력영역은 절대 스크롤러가 되지 않게
+    const root = document.getElementById('chat-input');
+    const kill = (el)=>{ if(el){ el.style.setProperty('overflow','hidden','important'); el.style.setProperty('overflow-y','hidden','important'); } };
+    kill(root); kill(root?.querySelector('textarea'));
+    const ce = root?.querySelector('[contenteditable],[contenteditable="true"]'); kill(ce);
 
-    // composer-actions mark
+    // composer-actions 마킹(같은 부모)
     if (root && !wrap.querySelector('[data-gg="composer-actions"]')) {
-      root.parentElement?.setAttribute("data-gg", "composer-actions");
+      root.parentElement && root.parentElement.setAttribute('data-gg','composer-actions');
     }
 
-    // thinking badge inside timeline
-    (function () {
-      if (!msgs) return;
-      let b = document.getElementById("gg-thinking");
-      if (!b) {
-        b = document.createElement("div");
-        b.id = "gg-thinking";
-        b.style.display = "none";
-      }
-      if (b.parentElement !== msgs) msgs.insertAdjacentElement("afterbegin", b);
+    // "생각중" 배지는 반드시 #chat-msgs 내부 첫 자식
+    (function(){
+      if(!msgs) return;
+      let b = document.getElementById('gg-thinking');
+      if(!b){ b=document.createElement('div'); b.id='gg-thinking'; b.style.display='none'; }
+      if(b.parentElement!==msgs) msgs.insertAdjacentElement('afterbegin', b);
     })();
-  }
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", gg_enforce_st1206, {
-      once: true,
-    });
-    window.addEventListener("load", gg_enforce_st1206, { once: true });
-  } else {
-    gg_enforce_st1206();
-    window.addEventListener("load", gg_enforce_st1206, { once: true });
-  }
-})();
+  }catch(e){ try{ console.warn('[ST-1206] enforce warn:', e); }catch(_){ } }
+}
+
+// 로딩 타이밍 방어 + 수동 호출도 가능하게 export
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', gg_enforce_st1206, {once:true});
+  window.addEventListener('load', gg_enforce_st1206, {once:true});
+}else{
+  gg_enforce_st1206();
+  window.addEventListener('load', gg_enforce_st1206, {once:true});
+}
+window.gg_enforce_st1206 = gg_enforce_st1206;
+
