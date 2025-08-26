@@ -1051,7 +1051,185 @@ const server = http.createServer(async (req, res) => {
       }
     }
 
+    // Debug: expose last RAG injection log and helper writer
+    if (!global.__GG_LAST_RAG__) global.__GG_LAST_RAG__ = null;
+    function __ggSaveRagLog(log) {
+      try {
+        global.__GG_LAST_RAG__ = log;
+        const d = path.join(STATUS_ROOT, "logs");
+        ensureDir(d);
+        fs.writeFileSync(
+          path.join(d, "rag_injection_latest.json"),
+          JSON.stringify(log, null, 2),
+          "utf8",
+        );
+      } catch (_) {}
+    }
+    // Debug endpoint
+    if (req.method === "GET" && req.url.startsWith("/api/debug/rag")) {
+      return sendJSON(res, 200, {
+        ok: true,
+        data: global.__GG_LAST_RAG__ || null,
+      });
+    }
+
     // Chat proxy
+    // RAG + MEMORY helpers for system prompt enrichment
+    function __gg_readMemory() {
+      try {
+        const p = path.join(STATUS_ROOT, "memory.json");
+        if (fs.existsSync(p)) return JSON.parse(fs.readFileSync(p, "utf8"));
+      } catch (_) {}
+      return {};
+    }
+    async function __gg_buildMergedMessages(messages, topK) {
+      try {
+        const arr = Array.isArray(messages) ? messages.slice() : [];
+        const last = arr.length ? arr[arr.length - 1] : { content: "" };
+        const q = String((last && last.content) || "").slice(0, 2000);
+        const backend =
+          (ENV.GG_BACKEND && String(ENV.GG_BACKEND)) || "http://127.0.0.1:8000";
+        let ragContext = "";
+        if (q) {
+          try {
+            const u = new URL("/api/search/unified", backend);
+            u.searchParams.set("q", q);
+            u.searchParams.set("k", String(topK || 12));
+            u.searchParams.set("strict", "1");
+            const resp = await fetch(u.toString(), { method: "GET" });
+            const obj1 = await resp.json().catch(() => ({}));
+            let rawHits = (obj1 && obj1.data && obj1.data.post) || [];
+            let __strictMode = 1;
+            // strict=0 fallback if no hits under strict=1
+            if (!rawHits.length) {
+              try {
+                u.searchParams.set("strict", "0");
+                const resp2 = await fetch(u.toString(), { method: "GET" });
+                const obj2 = await resp2.json().catch(() => ({}));
+                rawHits = (obj2 && obj2.data && obj2.data.post) || [];
+                __strictMode = 0;
+              } catch (_) {}
+            }
+            // Prioritize rules/ai paths (especially ST-1206) to ensure core guardrails docs are injected
+            function __ggScorePath(p) {
+              try {
+                const s = String(p || "").toLowerCase();
+                let sc = 0;
+                if (s.includes("rules/ai/st-1206.ui.rules.md")) sc += 100;
+                if (s.includes("rules/ai/")) sc += 30;
+                if (s.endsWith(".md")) sc += 10;
+                if (s.includes("docs/")) sc += 8;
+                return sc;
+              } catch (_) {
+                return 0;
+              }
+            }
+            // If rules/ai paths are missing, attempt a co-citation query to bring the core guardrails doc in
+            const needCite = !rawHits.some((h) => {
+              const p = (h && (h.path || h.source || "")).toLowerCase();
+              return p.includes("rules/ai/");
+            });
+
+            let mergedHits = rawHits.slice();
+            let coCiteAttempted = false;
+            let coCitedPaths = [];
+            if (needCite) {
+              try {
+                coCiteAttempted = true;
+                const u3 = new URL("/api/search/unified", backend);
+                // Focus query to bias rules/ai guardrails
+                u3.searchParams.set(
+                  "q",
+                  "ST-1206 ui guardrails rules/ai ST-1206.ui.rules.md",
+                );
+                u3.searchParams.set("k", "25");
+                // Allow broader match to ensure we retrieve the doc to merge
+                u3.searchParams.set("strict", "0");
+                const resp3 = await fetch(u3.toString(), { method: "GET" });
+                const obj3 = await resp3.json().catch(() => ({}));
+                const extra = (obj3 && obj3.data && obj3.data.post) || [];
+                coCitedPaths = extra
+                  .map((e) => (e && (e.path || e.source || "")) || "")
+                  .filter(Boolean);
+                const seen = new Set(
+                  mergedHits.map(
+                    (e) => (e && (e.path || e.source || "")) || "",
+                  ),
+                );
+                for (const e of extra) {
+                  const key = (e && (e.path || e.source || "")) || "";
+                  if (!seen.has(key)) {
+                    mergedHits.push(e);
+                    seen.add(key);
+                  }
+                }
+              } catch (_) {
+                // co-citation is best-effort; ignore failures
+              }
+            }
+
+            const hits = mergedHits.slice().sort((a, b) => {
+              const ap = __ggScorePath(a && (a.path || a.source));
+              const bp = __ggScorePath(b && (b.path || b.source));
+              if (ap !== bp) return bp - ap; // higher priority first
+              return 0; // keep original order on tie
+            });
+
+            if (hits.length) {
+              const lines = hits
+                .slice(0, Math.max(4, Math.min(12, Number(topK || 12))))
+                .map((h, i) => {
+                  const pth = h.path || h.source || "";
+                  const sn = (h.text || h.snippet || "")
+                    .replace(/\s+/g, " ")
+                    .slice(0, 300);
+                  return `#${i + 1} ${pth}\n${sn}`;
+                });
+              ragContext = ["[RAG]", ...lines].join("\n");
+              // Save RAG log for easy verification
+              __ggSaveRagLog({
+                ts: nowISO(),
+                query: q,
+                top_k: Number(topK || 12),
+                strict: __strictMode,
+                hits: hits.map((h) => ({
+                  path: h && (h.path || h.source || ""),
+                  tier: (h && h.tier) || "",
+                  score: Number((h && (h._rank_score || h.score)) || 0),
+                })),
+                injected: lines,
+                co_cite_attempted: coCiteAttempted,
+                co_cited_paths: coCitedPaths.slice(0, 5),
+                candidate_count: mergedHits.length,
+              });
+            }
+          } catch (_) {}
+        }
+        const mem = __gg_readMemory();
+        const memLines = Object.entries(mem).map(([k, v]) => `- ${k}: ${v}`);
+        const sysParts = [
+          "당신은 '금강' 코치/PM 하이브리드로서 간결·명령형·체크리스트 톤을 유지합니다.",
+          "[GROUNDING_POLICY]\n- [RAG] 인용을 근거로 인정하고 요약에 활용한다\n- 인용이 없으면 '없음 템플릿'으로 응답한다",
+          memLines.length ? ["[MEMORY]", ...memLines].join("\n") : "",
+          ragContext,
+        ].filter(Boolean);
+        const sysMsg = sysParts.join("\n\n");
+        const merged = arr.slice();
+        if (!merged.length || (merged[0] && merged[0].role !== "system")) {
+          merged.unshift({ role: "system", content: sysMsg });
+        } else {
+          merged[0] = {
+            role: "system",
+            content: [String(merged[0].content || ""), sysMsg]
+              .filter(Boolean)
+              .join("\n\n"),
+          };
+        }
+        return merged;
+      } catch (_) {
+        return Array.isArray(messages) ? messages : [];
+      }
+    }
     if (req.method === "POST" && req.url.startsWith("/api/chat")) {
       if (!OPENAI_API_KEY) {
         return sendJSON(res, 500, {
@@ -1099,11 +1277,15 @@ const server = http.createServer(async (req, res) => {
 
       let apiResult;
       try {
+        const mergedMessages = await __gg_buildMergedMessages(
+          messages,
+          typeof body.top_k === "number" ? body.top_k : 12,
+        );
         apiResult = await openaiChat({
           apiKey: OPENAI_API_KEY,
           orgId: OPENAI_ORG_ID,
           model,
-          messages,
+          messages: mergedMessages,
           temperature,
         });
       } catch (err) {

@@ -1,0 +1,27 @@
+{
+  "version": "1",
+  "user_name": "덕산조롬",
+  "project_root": "/home/duksan/바탕화면/gumgang_meeting",
+
+  "reply_style": "간결·명령형·체크리스트",
+  "ui_ruleset": "ST-1206 가드레일 준수",
+  "donts": "시간 약속/헛약속 금지, 모르면 모른다고 말하기, 출처 없는 단정 금지",
+
+  "soul_scope": "DOCTRINE, GG_SOUL",
+  "default_mode": "simple",
+
+  "rag": {
+    "use_rag_default": true,
+    "top_k": 4,
+    "file_whitelist": ["docs", "knowledge/chatgpt"]
+  },
+
+  "paths": {
+    "docs": "docs",
+    "chatgpt_knowledge": "knowledge/chatgpt",
+    "threads_api": "/api/threads/*",
+    "search_api": "/api/search/unified"
+  },
+
+  "notes": "이 메모리는 짧고 변하지 않는 사실만을 담습니다. 대용량 대화/문서는 RAG 인덱스로 검색-주입합니다."
+}
