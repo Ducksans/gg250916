@@ -1,0 +1,161 @@
+{
+  "version": "1.0.0",
+  "lang": "ko",
+  "name": "nohit_templates_ko_v1",
+  "description": "임계치 미달(기억 없음) 시 덕산에게 제공할 한국어 응답 템플릿 세트",
+  "variables": [
+    "query",
+    "suggest",
+    "evidence_path"
+  ],
+  "placeholder_defaults": {
+    "query": "요청 주제",
+    "suggest": "핵심 키워드",
+    "evidence_path": "status/evidence/memory/search/results_YYYYMMDD.json"
+  },
+  "selection_policy": {
+    "strategy": "rotate_by_style_then_random",
+    "order": [
+      "standard",
+      "action",
+      "encourage",
+      "concise"
+    ],
+    "random_within_style": true
+  },
+  "policy": {
+    "must_include_evidence": true,
+    "answer_structure": [
+      "결론(없음/있음 우선 선언)",
+      "한 줄 요약 또는 제안",
+      "근거 경로(evidence_path)",
+      "다음 액션(선택지 제안)"
+    ],
+    "notes": [
+      "추론으로 채우지 말 것. 없으면 없음으로 답변.",
+      "evidence_path는 실제 검색 로그 경로를 가리켜야 함.",
+      "suggest는 키워드 후보 또는 대체 표현을 넣을 수 있음."
+    ]
+  },
+  "templates": [
+    {
+      "id": "std_01",
+      "style": "standard",
+      "tone": "neutral",
+      "text": "덕산, 해당 내용에 대한 기록을 찾지 못했습니다. 지금부터 대화와 검색으로 {query}를 함께 구체화해볼까요? 근거: {evidence_path}",
+      "recommended_actions": [
+        "create_topic",
+        "search_keywords"
+      ]
+    },
+    {
+      "id": "std_02",
+      "style": "standard",
+      "tone": "neutral",
+      "text": "덕산, 우리 대화/메모에 {query} 관련 근거가 없습니다. 원하시면 초안부터 만들고 키워드 {suggest}로 탐색을 시작하겠습니다. 근거: {evidence_path}",
+      "recommended_actions": [
+        "create_topic",
+        "search_keywords"
+      ]
+    },
+    {
+      "id": "concise_01",
+      "style": "concise",
+      "tone": "brief",
+      "text": "기억 없음. {query}는 기록에 없습니다. {suggest}로 새로 시작할까요? 근거: {evidence_path}",
+      "recommended_actions": [
+        "create_topic"
+      ]
+    },
+    {
+      "id": "concise_02",
+      "style": "concise",
+      "tone": "brief",
+      "text": "근거 부재. 지금은 저장된 메모가 없습니다. 초안 생성 → 검색 진행? 근거: {evidence_path}",
+      "recommended_actions": [
+        "create_topic",
+        "search_keywords"
+      ]
+    },
+    {
+      "id": "enc_01",
+      "style": "encourage",
+      "tone": "supportive",
+      "text": "덕산, 지금은 발자취가 없지만 지금부터 남기면 됩니다. {query} 초안을 만들고 관련 키워드 {suggest}로 탐색을 붙일게요. 근거: {evidence_path}",
+      "recommended_actions": [
+        "create_topic",
+        "search_keywords"
+      ]
+    },
+    {
+      "id": "enc_02",
+      "style": "encourage",
+      "tone": "supportive",
+      "text": "흔적은 없지만 방향은 잡았습니다. 제목부터 정해 저장하고 이어서 탐색해볼까요? 근거: {evidence_path}",
+      "recommended_actions": [
+        "create_topic"
+      ]
+    },
+    {
+      "id": "act_01",
+      "style": "action",
+      "tone": "directive",
+      "text": "선택지: [새 토픽 생성] [키워드 검색({suggest})] [범위 지정(세션/BT/프로젝트)]. 어떤 걸로 시작할까요? 근거: {evidence_path}",
+      "recommended_actions": [
+        "create_topic",
+        "search_keywords",
+        "specify_scope"
+      ]
+    },
+    {
+      "id": "act_02",
+      "style": "action",
+      "tone": "directive",
+      "text": "바로 실행: “새 메모 생성 → 검색 로그 연결 → 리캡 카드 생성” 진행해도 될까요? 근거: {evidence_path}",
+      "recommended_actions": [
+        "create_topic",
+        "search_keywords",
+        "create_recap"
+      ]
+    },
+    {
+      "id": "ctx_01",
+      "style": "contextual",
+      "tone": "neutral",
+      "text": "어제/그제 범위에서도 {query} 단서가 없었습니다. ST/BT 범위 확장해 다시 볼까요, 아니면 신규로 적재할까요? 근거: {evidence_path}",
+      "recommended_actions": [
+        "specify_scope",
+        "create_topic"
+      ]
+    },
+    {
+      "id": "ctx_02",
+      "style": "contextual",
+      "tone": "neutral",
+      "text": "스마트 팜처럼 유사 주제도 발견되지 않았습니다. 다른 표현(예: {suggest})으로 재시도 또는 신규 생성 권장. 근거: {evidence_path}",
+      "recommended_actions": [
+        "search_keywords",
+        "create_topic"
+      ]
+    },
+    {
+      "id": "trust_01",
+      "style": "trust",
+      "tone": "firm",
+      "text": "덕산, 추론으로 채우지 않겠습니다. 현재는 “없음”입니다. 원하시면 지금부터 사실 기록을 시작하고 모든 근거를 남기겠습니다. 근거: {evidence_path}",
+      "recommended_actions": [
+        "create_topic"
+      ]
+    },
+    {
+      "id": "trust_02",
+      "style": "trust",
+      "tone": "firm",
+      "text": "현재 메모리 체계에 {query}는 없습니다. 대체로 “없음”을 유지하되, 덕산 지시에 따라 생성→검색 루틴을 개시합니다. 근거: {evidence_path}",
+      "recommended_actions": [
+        "create_topic",
+        "search_keywords"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+date: Sat, 09 Aug 2025 04:06:17 GMT
+server: uvicorn
+content-length: 352
+content-type: application/json
+x-gumgang-timestamp: 2025-08-09 13:06
+x-gumgang-tz: Asia/Seoul
+

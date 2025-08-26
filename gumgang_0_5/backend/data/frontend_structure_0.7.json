@@ -1,0 +1,26 @@
+{
+  "type": "file_structure",
+  "name": "frontend_0.7_structure",
+  "description": "금강 GUI 프론트엔드 전체 구조 (v0.7 기준)",
+  "root": ".",
+  "structure": [
+    "frontend_README.md",
+    "frontend_tree.txt",
+    "index.html",
+    "package-lock.json",
+    "package.json",
+    "public/roadmap.json",
+    "src/App.jsx",
+    "src/main.jsx",
+    "src/index.css",
+    "src/types.ts",
+    "src/components/Header.tsx",
+    "src/components/ChatWindow.jsx",
+    "src/components/GumgangStatusCard.tsx",
+    "src/components/StatusDisplay.tsx",
+    "src/pages/HomePage.jsx",
+    "src/pages/RoadmapPage.jsx",
+    "tailwind.config.js",
+    "tsconfig.json"
+  ]
+}

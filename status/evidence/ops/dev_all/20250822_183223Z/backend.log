@@ -1,0 +1,9 @@
+[INFO] Running backend on 127.0.0.1:8000 (reload=0)
+[INFO] App dir: /home/duksan/바탕화면/gumgang_meeting
+[INFO] Env file: /home/duksan/바탕화면/gumgang_meeting/.env (app reads directly; no export required)
+INFO:     Started server process [44868]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ERROR:    [Errno 98] error while attempting to bind on address ('127.0.0.1', 8000): address already in use
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.

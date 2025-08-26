@@ -1,0 +1,15 @@
+{
+  "shellExec": "/bin/bash",
+  "shellParams": "-i",
+  "executeOnLoad": "",
+  "notice": false,
+  "decorateMultiline": true,
+  "linesToSuppress": 1,
+  "separatedShells": false,
+  "prependOutput": ">>> ",
+  "enviromentVariables": "PYTHONIOENCODING=utf8\n",
+  "executeOnUnload": "",
+  "regexpCleaner": "^((>>> )|(... ))+",
+  "shortcuts": "/ggscan -> /home/duksan/바탕화면/gumgang_0_5/gg.sh scan\n/ggread -> /home/duksan/바탕화면/gumgang_0_5/gg.sh read\n",
+  "advanced": true
+}

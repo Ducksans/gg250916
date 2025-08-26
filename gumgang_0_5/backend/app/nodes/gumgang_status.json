@@ -1,0 +1,17 @@
+{
+  "version": "0.7",
+  "version_check_message": "🧠 파일 구조 기반 판단 결과: 금강 현재 버전은 0.7입니다.",
+  "clues": [
+    "📁 gumgang_0_5/gumgang0.5_chatlog_2025-07-20_17-23-35.md → 0.5 단서",
+    "📁 gumgang_0_5/start_gumgang_gui.sh → 0.5 단서",
+    "📁 gumgang_0_5/backend/app/nodes/gumgang_status.json → 0.7 단서",
+    "📁 gumgang_0_5/backend/app/nodes/version_check.py → 0.6 단서",
+    "📁 gumgang_0_5/backend/app/nodes/file_tree_analyzer.py → 0.7 단서",
+    "📁 gumgang_0_5/backend/app/nodes/status_report.py → 0.6 단서",
+    "📁 gumgang_0_5/backend/data/roadmap_gold.json → 0.6 단서",
+    "📁 gumgang_0_5_backup_20250722_1404/gumgang0.5_chatlog_2025-07-20_17-23-35.md → 0.5 단서",
+    "📁 gumgang_0_5_backup_20250722_1404/start_gumgang_gui.sh → 0.5 단서",
+    "📁 gumgang_0_5_backup_20250722_1404/backend/data/roadmap_gold.json → 0.6 단서"
+  ],
+  "root_path": "/home/duksan/바탕화면"
+}

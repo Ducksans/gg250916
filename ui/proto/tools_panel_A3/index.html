@@ -1,0 +1,1188 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Tools Panel A3 — Minimal Prototype</title>
+        <style>
+            :root {
+                --bg: #0b1220;
+                --panel: #111827;
+                --text: #e5e7eb;
+                --muted: #94a3b8;
+                --border: #1f2937;
+                --primary: #0a5ea8;
+                --accent: #10b981;
+                --danger: #ef4444;
+                --warn: #f59e0b;
+                --ring: rgba(59, 130, 246, 0.25);
+                --shadow:
+                    0 1px 2px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.3);
+            }
+            [data-theme="light"] {
+                --bg: #ffffff;
+                --panel: #f9fafb;
+                --text: #111827;
+                --muted: #6b7280;
+                --border: #e5e7eb;
+                --primary: #0a5ea8;
+                --accent: #059669;
+                --danger: #ef4444;
+                --warn: #d97706;
+                --ring: rgba(59, 130, 246, 0.2);
+                --shadow:
+                    0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Base */
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                height: 100%;
+            }
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: var(--text);
+                font-family:
+                    ui-sans-serif,
+                    -apple-system,
+                    "Segoe UI",
+                    Roboto,
+                    Helvetica,
+                    Arial,
+                    "Apple Color Emoji",
+                    "Segoe UI Emoji";
+            }
+            h1,
+            h2,
+            h3 {
+                margin: 0;
+            }
+            button {
+                font: inherit;
+                cursor: pointer;
+            }
+
+            /* Top bar */
+            .topbar {
+                position: sticky;
+                top: 0;
+                z-index: 3;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 12px 16px;
+                background: var(--panel);
+                border-bottom: 1px solid var(--border);
+            }
+            .row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .muted {
+                color: var(--muted);
+                font-size: 12px;
+            }
+
+            /* Buttons / badges */
+            .badge,
+            .btn {
+                border: 1px solid var(--border);
+                background: transparent;
+                color: var(--text);
+                border-radius: 8px;
+            }
+            .badge {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            .btn {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            .btn.primary {
+                background: var(--primary);
+                color: #fff;
+                border-color: transparent;
+            }
+            .btn.accent {
+                background: var(--accent);
+                color: #fff;
+                border-color: transparent;
+            }
+            .btn.danger {
+                background: var(--danger);
+                color: #fff;
+                border-color: transparent;
+            }
+            .btn.warn {
+                background: var(--warn);
+                color: #fff;
+                border-color: transparent;
+            }
+            .btn:active {
+                transform: translateY(1px);
+            }
+
+            /* Layout */
+            .app {
+                display: grid;
+                grid-template-columns: 300px 1fr;
+                gap: 12px;
+                min-height: calc(100vh - 54px);
+                padding: 12px;
+            }
+            .panel {
+                background: var(--panel);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                box-shadow: var(--shadow);
+                min-height: 0; /* allow shrink in grid */
+            }
+            .panel-header {
+                padding: 12px;
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .panel-body {
+                padding: 12px;
+            }
+
+            /* Inputs & list */
+            .fieldset {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+            label {
+                font-size: 12px;
+                color: var(--muted);
+            }
+            input[type="text"],
+            input[type="number"],
+            textarea,
+            select {
+                width: 100%;
+                padding: 10px 12px;
+                border: 1px solid var(--border);
+                background: transparent;
+                color: var(--text);
+                border-radius: 10px;
+                outline: none;
+            }
+            input[type="text"]:focus,
+            input[type="number"]:focus,
+            textarea:focus,
+            select:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px var(--ring);
+            }
+            .tools-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .tool-item {
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                background: transparent;
+            }
+            .tool-item[aria-selected="true"] {
+                outline: 2px solid var(--primary);
+                outline-offset: 1px;
+            }
+            .tool-name {
+                font-weight: 600;
+            }
+
+            /* Status pill */
+            .statusbar {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            .pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 4px 8px;
+                border-radius: 999px;
+                font-size: 12px;
+                border: 1px solid var(--border);
+                background: rgba(148, 163, 184, 0.1);
+            }
+            .idle {
+                background: rgba(148, 163, 184, 0.08);
+            }
+            .running {
+                background: rgba(59, 130, 246, 0.15);
+                border-color: rgba(59, 130, 246, 0.3);
+            }
+            .succeeded {
+                background: rgba(34, 197, 94, 0.15);
+                border-color: rgba(34, 197, 94, 0.3);
+            }
+            .failed {
+                background: rgba(239, 68, 68, 0.15);
+                border-color: rgba(239, 68, 68, 0.3);
+            }
+            .stopped {
+                background: rgba(234, 179, 8, 0.15);
+                border-color: rgba(234, 179, 8, 0.3);
+            }
+            /* A3 Warning banner */
+            .warnbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 10px 12px;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                margin-bottom: 12px;
+                background: rgba(245, 158, 11, 0.12);
+            }
+            .warnbar.warn {
+                background: rgba(245, 158, 11, 0.12);
+                border-color: rgba(245, 158, 11, 0.35);
+            }
+            .warnbar.error {
+                background: rgba(239, 68, 68, 0.12);
+                border-color: rgba(239, 68, 68, 0.35);
+            }
+            .warnbar .actions {
+                display: inline-flex;
+                gap: 8px;
+            }
+            .badge.warn {
+                background: var(--warn);
+                color: #fff;
+                border-color: transparent;
+            }
+            .badge.danger {
+                background: var(--danger);
+                color: #fff;
+                border-color: transparent;
+            }
+
+            /* Output areas */
+            .split {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .pre {
+                background: #0a0f1a;
+                color: #e5e7eb;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 10px;
+                overflow: auto;
+                min-height: 160px;
+            }
+            [data-theme="light"] .pre {
+                background: #111827;
+            }
+
+            .footer {
+                border-top: 1px solid var(--border);
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+            }
+            .small {
+                font-size: 12px;
+            }
+            .grid-2 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .grid-3 {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 8px;
+            }
+
+            @media (max-width: 980px) {
+                .app {
+                    grid-template-columns: 1fr;
+                }
+                .split {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header class="topbar">
+            <h1>Tools Panel A3 — Minimal Prototype</h1>
+            <div class="row">
+                <span class="muted">Theme</span>
+                <button
+                    id="themeToggle"
+                    class="badge"
+                    aria-label="Toggle theme"
+                >
+                    Dark
+                </button>
+            </div>
+        </header>
+
+        <main class="app" aria-label="A3 Prototype">
+            <!-- Tools list / inputs -->
+            <aside class="panel" aria-label="Tools panel">
+                <div class="panel-header">
+                    <h2>Tools</h2>
+                    <span class="muted small">A3-T1/T2/T3</span>
+                </div>
+                <div class="panel-body">
+                    <ul
+                        id="tools"
+                        class="tools-list"
+                        role="listbox"
+                        aria-label="Tool list"
+                    >
+                        <li
+                            class="tool-item"
+                            data-tool="echo"
+                            tabindex="0"
+                            role="option"
+                            aria-selected="true"
+                        >
+                            <div class="tool-name">Echo Tool</div>
+                            <div class="muted">
+                                입력을 그대로 반환합니다. (타임스탬프 포함)
+                            </div>
+                        </li>
+                        <li
+                            class="tool-item"
+                            data-tool="delay"
+                            tabindex="0"
+                            role="option"
+                            aria-selected="false"
+                        >
+                            <div class="tool-name">Delay Tool</div>
+                            <div class="muted">
+                                지정 시간(ms) 지연 후 성공합니다. Stop으로 취소
+                                가능.
+                            </div>
+                        </li>
+                        <li
+                            class="tool-item"
+                            data-tool="sha256"
+                            tabindex="0"
+                            role="option"
+                            aria-selected="false"
+                        >
+                            <div class="tool-name">SHA-256 Tool</div>
+                            <div class="muted">
+                                입력 문자열의 SHA-256 해시를 계산합니다(Web
+                                Crypto).
+                            </div>
+                        </li>
+                        <li
+                            class="tool-item"
+                            data-tool="fail"
+                            tabindex="0"
+                            role="option"
+                            aria-selected="false"
+                        >
+                            <div class="tool-name">Fail Tool</div>
+                            <div class="muted">
+                                의도적으로 실패를 발생시켜 오류 처리 확인.
+                            </div>
+                        </li>
+                    </ul>
+
+                    <hr
+                        style="
+                            border: none;
+                            border-top: 1px solid var(--border);
+                            margin: 12px 0;
+                        "
+                    />
+
+                    <!-- Inputs: one group per tool -->
+                    <div class="fieldset" id="inputs-echo">
+                        <label for="echo-input">Echo input</label>
+                        <input
+                            id="echo-input"
+                            type="text"
+                            placeholder="텍스트를 입력하세요"
+                        />
+                    </div>
+
+                    <div class="fieldset" id="inputs-delay" hidden>
+                        <div class="grid-2">
+                            <div class="fieldset">
+                                <label for="delay-ms">Delay (ms)</label>
+                                <input
+                                    id="delay-ms"
+                                    type="number"
+                                    min="0"
+                                    max="20000"
+                                    step="100"
+                                    value="1500"
+                                />
+                            </div>
+                            <div class="fieldset">
+                                <label for="delay-msg"
+                                    >Message (optional)</label
+                                >
+                                <input
+                                    id="delay-msg"
+                                    type="text"
+                                    placeholder="지연 후 표시할 메시지"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fieldset" id="inputs-sha256" hidden>
+                        <label for="sha256-input">Text to hash (SHA-256)</label>
+                        <textarea
+                            id="sha256-input"
+                            rows="4"
+                            placeholder="해시할 텍스트"
+                        ></textarea>
+                    </div>
+
+                    <div class="fieldset" id="inputs-fail" hidden>
+                        <label for="fail-msg">Failure reason (optional)</label>
+                        <input
+                            id="fail-msg"
+                            type="text"
+                            placeholder="예: invalid parameter for demo"
+                        />
+                    </div>
+
+                    <div class="row" style="margin-top: 8px">
+                        <button
+                            id="runBtn"
+                            class="btn primary"
+                            aria-label="Run selected tool"
+                        >
+                            Run
+                        </button>
+                        <button
+                            id="stopBtn"
+                            class="btn warn"
+                            aria-label="Stop running tool"
+                            disabled
+                        >
+                            Stop
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Status / Result / Log -->
+            <section class="panel" aria-label="Status and Results">
+                <div class="panel-header">
+                    <h2>Status / Result / Log</h2>
+                    <div class="statusbar">
+                        <span class="muted small">Status:</span>
+                        <span id="statusPill" class="pill idle">Idle</span>
+                        <button
+                            id="btnSimWarn"
+                            class="badge warn"
+                            title="Simulate WARN"
+                        >
+                            Sim WARN
+                        </button>
+                        <button
+                            id="btnSimError"
+                            class="badge danger"
+                            title="Simulate ERROR"
+                        >
+                            Sim ERROR
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <!-- A3 Warning Banner -->
+                    <div
+                        id="warnBanner"
+                        class="warnbar warn"
+                        hidden
+                        aria-live="assertive"
+                    >
+                        <div id="warnText">
+                            Threshold warning: context usage high.
+                        </div>
+                        <div class="actions">
+                            <button id="btnSummarize" class="btn accent">
+                                Summarize then continue
+                            </button>
+                            <button id="btnAbort" class="btn danger">
+                                Abort
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Metadata / sign-off -->
+                    <div class="fieldset">
+                        <div class="grid-3">
+                            <div class="fieldset">
+                                <label for="runId">Run ID</label>
+                                <input id="runId" type="text" />
+                            </div>
+                            <div class="fieldset">
+                                <label for="sessionId">Session ID</label>
+                                <input
+                                    id="sessionId"
+                                    type="text"
+                                    value="GG-SESS-20250816-1608"
+                                />
+                            </div>
+                            <div class="fieldset">
+                                <label for="scope">Scope</label>
+                                <input
+                                    id="scope"
+                                    type="text"
+                                    value="UI_MVP_GATE_A3"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fieldset">
+                        <div class="grid-3">
+                            <div class="fieldset">
+                                <label for="verifier">Verifier</label>
+                                <input
+                                    id="verifier"
+                                    type="text"
+                                    placeholder="Duksan"
+                                />
+                            </div>
+                            <div class="fieldset">
+                                <label for="witness">Witness</label>
+                                <input
+                                    id="witness"
+                                    type="text"
+                                    placeholder="Local Gumgang"
+                                />
+                            </div>
+                            <div class="fieldset">
+                                <label for="spirit">Spirit Signature</label>
+                                <input
+                                    id="spirit"
+                                    type="text"
+                                    value="Local Gumgang — same soul across Web → Zed → UI"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result -->
+                    <div class="fieldset">
+                        <label for="resultBox">Result</label>
+                        <div
+                            id="resultBox"
+                            class="pre"
+                            aria-live="polite"
+                        ></div>
+                    </div>
+
+                    <!-- Logs -->
+                    <div class="split">
+                        <div class="fieldset">
+                            <label for="logBox">Log</label>
+                            <div id="logBox" class="pre"></div>
+                        </div>
+                        <div class="fieldset">
+                            <label for="jsonBox">Run Log JSON (preview)</label>
+                            <div
+                                id="jsonBox"
+                                class="pre"
+                                style="white-space: pre"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="row">
+                        <button id="exportBtn" class="btn accent">
+                            Export Log (JSON)
+                        </button>
+                    </div>
+                    <div class="muted small">
+                        Suggested:
+                        gumgang_meeting/ui/logs/ui_mvp_gate_YYYYMMDD_HHMM_A3.json
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <script>
+            // ---------- Utilities ----------
+            function pad2(n) {
+                return (n < 10 ? "0" : "") + n;
+            }
+            function now() {
+                return new Date();
+            }
+            function hhmmss(d) {
+                return (
+                    pad2(d.getHours()) +
+                    ":" +
+                    pad2(d.getMinutes()) +
+                    ":" +
+                    pad2(d.getSeconds())
+                );
+            }
+            function ymd(d) {
+                return (
+                    d.getFullYear() +
+                    "" +
+                    pad2(d.getMonth() + 1) +
+                    "" +
+                    pad2(d.getDate())
+                );
+            }
+            function ymd_hm(d) {
+                return (
+                    ymd(d) +
+                    "_" +
+                    pad2(d.getHours()) +
+                    "" +
+                    pad2(d.getMinutes())
+                );
+            }
+            function iso(d) {
+                return d.toISOString();
+            }
+            function sleep(ms) {
+                return new Promise((r) => setTimeout(r, ms));
+            }
+            function hexOf(buffer) {
+                const bytes = new Uint8Array(buffer);
+                return Array.from(bytes)
+                    .map((b) => b.toString(16).padStart(2, "0"))
+                    .join("");
+            }
+
+            // ---------- Theme ----------
+            const themeToggle = document.getElementById("themeToggle");
+            const THEME_KEY = "gg_a3_theme";
+            function applyTheme(t) {
+                document.documentElement.setAttribute("data-theme", t);
+                themeToggle.textContent = t === "dark" ? "Dark" : "Light";
+            }
+            applyTheme(localStorage.getItem(THEME_KEY) || "dark");
+            themeToggle.addEventListener("click", () => {
+                const next =
+                    document.documentElement.getAttribute("data-theme") ===
+                    "dark"
+                        ? "light"
+                        : "dark";
+                applyTheme(next);
+                try {
+                    localStorage.setItem(THEME_KEY, next);
+                } catch (_) {}
+            });
+
+            // ---------- DOM refs ----------
+            const toolsList = document.getElementById("tools");
+            const runBtn = document.getElementById("runBtn");
+            const stopBtn = document.getElementById("stopBtn");
+            const statusPill = document.getElementById("statusPill");
+            const resultBox = document.getElementById("resultBox");
+            const logBox = document.getElementById("logBox");
+            const jsonBox = document.getElementById("jsonBox");
+            const exportBtn = document.getElementById("exportBtn");
+            // A3 Warning banner & simulation controls
+            const btnSimWarn = document.getElementById("btnSimWarn");
+            const btnSimError = document.getElementById("btnSimError");
+            const warnBanner = document.getElementById("warnBanner");
+            const warnText = document.getElementById("warnText");
+            const btnSummarize = document.getElementById("btnSummarize");
+            const btnAbort = document.getElementById("btnAbort");
+            // Bind simulation buttons
+            if (btnSimWarn) {
+                btnSimWarn.addEventListener("click", () =>
+                    showWarning("warn", "Simulated WARN: context usage ≥ 85%"),
+                );
+            }
+            if (btnSimError) {
+                btnSimError.addEventListener("click", () =>
+                    showWarning(
+                        "error",
+                        "Simulated ERROR: context usage ≥ 95%",
+                    ),
+                );
+            }
+            if (btnSummarize) {
+                btnSummarize.addEventListener("click", async () => {
+                    recordWarningAction("summarize_then_continue");
+                    setStatus("running");
+                    logLine("info", "Summarizing before continue", {
+                        severity:
+                            (window.lastWarning &&
+                                window.lastWarning.severity) ||
+                            null,
+                    });
+                    const startedAt = now();
+                    await sleep(300); // simulate summarization
+                    // Update result for demo
+                    const msg =
+                        "(simulated) summary completed @ " + hhmmss(now());
+                    resultBox.textContent = msg;
+                    hideWarning();
+                    const endedAt = now();
+                    runLog.tool_runs.push({
+                        tool: "A3_warning_action",
+                        status: "SUCCEEDED",
+                        started_at: iso(startedAt),
+                        ended_at: iso(endedAt),
+                        duration_ms: endedAt.getTime() - startedAt.getTime(),
+                        params: {
+                            action: "summarize_then_continue",
+                            severity:
+                                (window.lastWarning &&
+                                    window.lastWarning.severity) ||
+                                null,
+                            message:
+                                (window.lastWarning &&
+                                    window.lastWarning.message) ||
+                                "",
+                        },
+                        result: { summary: msg },
+                        error: null,
+                    });
+                    setStatus("succeeded");
+                    renderJSON();
+                });
+            }
+            if (btnAbort) {
+                btnAbort.addEventListener("click", () => {
+                    recordWarningAction("abort");
+                    hideWarning();
+                    stopRunning();
+                    logLine("warn", "Aborted due to warning/error", {
+                        severity:
+                            (window.lastWarning &&
+                                window.lastWarning.severity) ||
+                            null,
+                    });
+                    const ts = now();
+                    runLog.tool_runs.push({
+                        tool: "A3_warning_action",
+                        status: "STOPPED",
+                        started_at: iso(ts),
+                        ended_at: iso(ts),
+                        duration_ms: 0,
+                        params: {
+                            action: "abort",
+                            severity:
+                                (window.lastWarning &&
+                                    window.lastWarning.severity) ||
+                                null,
+                            message:
+                                (window.lastWarning &&
+                                    window.lastWarning.message) ||
+                                "",
+                        },
+                        result: null,
+                        error: { message: "Stopped by user due to warning" },
+                    });
+                    setStatus("stopped");
+                    renderJSON();
+                });
+            }
+
+            const inputEcho = document.getElementById("echo-input");
+            const inputDelayMs = document.getElementById("delay-ms");
+            const inputDelayMsg = document.getElementById("delay-msg");
+            const inputSha256 = document.getElementById("sha256-input");
+            const inputFailMsg = document.getElementById("fail-msg");
+
+            const inputsEcho = document.getElementById("inputs-echo");
+            const inputsDelay = document.getElementById("inputs-delay");
+            const inputsSha256 = document.getElementById("inputs-sha256");
+            const inputsFail = document.getElementById("inputs-fail");
+
+            // Meta/signoff
+            const runIdEl = document.getElementById("runId");
+            const sessionIdEl = document.getElementById("sessionId");
+            const scopeEl = document.getElementById("scope");
+            const verifierEl = document.getElementById("verifier");
+            const witnessEl = document.getElementById("witness");
+            const spiritEl = document.getElementById("spirit");
+
+            // ---------- Run Log Skeleton ----------
+            const start = now();
+            runIdEl.value = "UI_MVP_GATE_A3_" + ymd_hm(start);
+
+            const runLog = {
+                run_id: runIdEl.value,
+                session_id: sessionIdEl.value,
+                scope: scopeEl.value,
+                version: "1.0",
+                local_ts_start: iso(start),
+                local_ts_end: null,
+                environment: {
+                    stack: "Static HTML + Web Crypto (browser)",
+                    os: "unknown",
+                    browser: navigator.userAgent,
+                },
+                ssot: "/gumgang_meeting/docs",
+                tools: [
+                    { id: "echo", name: "Echo Tool" },
+                    { id: "delay", name: "Delay Tool" },
+                    { id: "sha256", name: "SHA-256 Tool" },
+                    { id: "fail", name: "Fail Tool" },
+                ],
+                status_history: [],
+                tool_runs: [],
+                signoff: {
+                    verifier: "",
+                    witness: "",
+                    epoch: "ui",
+                    spirit_signature: "",
+                },
+                notes: [],
+            };
+
+            function setStatus(state) {
+                statusPill.className = "pill " + state;
+                statusPill.textContent =
+                    state[0].toUpperCase() + state.slice(1);
+                runLog.status_history.push({ ts: iso(now()), state: state });
+                renderJSON();
+            }
+
+            function logLine(level, msg, data) {
+                const line =
+                    "[" +
+                    hhmmss(now()) +
+                    "] " +
+                    level.toUpperCase() +
+                    " — " +
+                    msg +
+                    (data ? " " + JSON.stringify(data) : "");
+                logBox.textContent += line + "\n";
+                logBox.scrollTop = logBox.scrollHeight;
+            }
+
+            function renderJSON() {
+                jsonBox.textContent = JSON.stringify(runLog, null, 2);
+            }
+
+            // ---------- A3 Warning helpers ----------
+            // Keep last simulated warning context
+            window.lastWarning = null;
+            function showWarning(severity, message) {
+                if (!warnBanner) return;
+                window.lastWarning = { severity, message, ts: iso(now()) };
+                warnText.textContent = message || "Threshold warning";
+                warnBanner.hidden = false;
+                warnBanner.classList.remove("warn", "error");
+                warnBanner.classList.add(
+                    severity === "error" ? "error" : "warn",
+                );
+                logLine("warn", "A3 warning shown", { severity, message });
+                runLog.notes.push({
+                    ts: iso(now()),
+                    type: "A3_WARNING",
+                    severity: severity,
+                    message: message,
+                });
+                renderJSON();
+            }
+            function hideWarning() {
+                if (!warnBanner) return;
+                warnBanner.hidden = true;
+            }
+            function recordWarningAction(action) {
+                runLog.notes.push({
+                    ts: iso(now()),
+                    type: "A3_WARNING_ACTION",
+                    action: action,
+                    severity:
+                        (window.lastWarning && window.lastWarning.severity) ||
+                        null,
+                    message:
+                        (window.lastWarning && window.lastWarning.message) ||
+                        "",
+                });
+                renderJSON();
+            }
+
+            // ---------- Tool selection & input groups ----------
+            let selectedTool = "echo";
+            function updateToolSelection() {
+                const items = toolsList.querySelectorAll(".tool-item");
+                items.forEach((li) => {
+                    const on = li.getAttribute("data-tool") === selectedTool;
+                    li.setAttribute("aria-selected", String(on));
+                });
+                inputsEcho.hidden = selectedTool !== "echo";
+                inputsDelay.hidden = selectedTool !== "delay";
+                inputsSha256.hidden = selectedTool !== "sha256";
+                inputsFail.hidden = selectedTool !== "fail";
+            }
+            toolsList.addEventListener("click", function (e) {
+                const li = e.target.closest(".tool-item");
+                if (!li) return;
+                selectedTool = li.getAttribute("data-tool");
+                logLine("info", "Selected tool", { tool: selectedTool });
+                updateToolSelection();
+            });
+            toolsList.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" || e.key === " ") {
+                    const li = document.activeElement.closest(".tool-item");
+                    if (li) {
+                        selectedTool = li.getAttribute("data-tool");
+                        logLine("info", "Selected tool (kbd)", {
+                            tool: selectedTool,
+                        });
+                        updateToolSelection();
+                    }
+                }
+            });
+            updateToolSelection();
+
+            // ---------- Execution control ----------
+            let current = null; // { tool, startedAt, timeoutId, aborted }
+
+            function canRun() {
+                return !current;
+            }
+
+            async function runSelectedTool() {
+                if (!canRun()) return;
+
+                // Freeze metadata into run log
+                runLog.run_id = runIdEl.value || runLog.run_id;
+                runLog.session_id = sessionIdEl.value || runLog.session_id;
+                runLog.scope = scopeEl.value || runLog.scope;
+                runLog.signoff.verifier = verifierEl.value || "Duksan";
+                runLog.signoff.witness = witnessEl.value || "Local Gumgang";
+                runLog.signoff.spirit_signature =
+                    spiritEl.value ||
+                    "Local Gumgang — same soul across Web → Zed → UI";
+
+                setStatus("running");
+                runBtn.disabled = true;
+                stopBtn.disabled = false;
+                resultBox.textContent = "";
+
+                const startedAt = now();
+                const runEntry = {
+                    tool: selectedTool,
+                    status: "RUNNING",
+                    started_at: iso(startedAt),
+                    ended_at: null,
+                    duration_ms: null,
+                    params: {},
+                    result: null,
+                    error: null,
+                };
+
+                try {
+                    if (selectedTool === "echo") {
+                        const txt = (inputEcho.value || "").trim();
+                        runEntry.params.input = txt;
+                        await sleep(50);
+                        const out = "echo: " + txt + " @ " + hhmmss(now());
+                        runEntry.status = "SUCCEEDED";
+                        runEntry.result = { text: out };
+                        resultBox.textContent = out;
+                        logLine("info", "Echo result", { text: out });
+                    } else if (selectedTool === "delay") {
+                        const ms = Math.max(
+                            0,
+                            Math.min(
+                                20000,
+                                parseInt(inputDelayMs.value || "0", 10) || 0,
+                            ),
+                        );
+                        const msg = (inputDelayMsg.value || "").trim();
+                        runEntry.params.ms = ms;
+                        runEntry.params.message = msg;
+
+                        current = {
+                            tool: "delay",
+                            startedAt: startedAt,
+                            timeoutId: null,
+                            aborted: false,
+                        };
+                        await new Promise(function (resolve, reject) {
+                            const tid = setTimeout(function () {
+                                if (current && current.aborted) {
+                                    reject(new Error("aborted"));
+                                    return;
+                                }
+                                resolve(null);
+                            }, ms);
+                            current.timeoutId = tid;
+                        });
+
+                        const out =
+                            "delayed " + ms + " ms" + (msg ? " — " + msg : "");
+                        runEntry.status = "SUCCEEDED";
+                        runEntry.result = { text: out };
+                        resultBox.textContent = out;
+                        logLine("info", "Delay result", {
+                            ms: ms,
+                            message: msg,
+                        });
+                    } else if (selectedTool === "sha256") {
+                        const txt = inputSha256.value || "";
+                        runEntry.params.input_len = txt.length;
+
+                        if (
+                            !(
+                                window.crypto &&
+                                window.crypto.subtle &&
+                                window.TextEncoder
+                            )
+                        ) {
+                            throw new Error(
+                                "Web Crypto API not available in this context",
+                            );
+                        }
+                        const enc = new TextEncoder().encode(txt);
+                        const digest = await crypto.subtle.digest(
+                            "SHA-256",
+                            enc,
+                        );
+                        const hex = hexOf(digest);
+
+                        runEntry.status = "SUCCEEDED";
+                        runEntry.result = { hash: hex };
+                        resultBox.textContent = hex;
+                        logLine("info", "SHA-256 result", { hash: hex });
+                    } else if (selectedTool === "fail") {
+                        const why = (
+                            inputFailMsg.value || "intentional failure for demo"
+                        ).trim();
+                        runEntry.params.reason = why;
+                        await sleep(50);
+                        throw new Error(why);
+                    }
+
+                    setStatus("succeeded");
+                } catch (err) {
+                    if (err && err.message === "aborted") {
+                        runEntry.status = "STOPPED";
+                        runEntry.error = { message: "Stopped by user" };
+                        setStatus("stopped");
+                        resultBox.textContent = "Stopped";
+                        logLine("warn", "Run stopped by user");
+                    } else {
+                        runEntry.status = "FAILED";
+                        runEntry.error = {
+                            message: String((err && err.message) || err),
+                        };
+                        setStatus("failed");
+                        resultBox.textContent =
+                            "Error: " + runEntry.error.message;
+                        logLine("error", "Run failed", runEntry.error);
+                    }
+                } finally {
+                    const endedAt = now();
+                    runEntry.ended_at = iso(endedAt);
+                    runEntry.duration_ms =
+                        endedAt.getTime() - startedAt.getTime();
+                    runLog.tool_runs.push(runEntry);
+
+                    runBtn.disabled = false;
+                    stopBtn.disabled = true;
+
+                    if (current && current.timeoutId)
+                        clearTimeout(current.timeoutId);
+                    current = null;
+
+                    runLog.local_ts_end = iso(endedAt);
+                    renderJSON();
+                }
+            }
+
+            function stopRunning() {
+                if (!current) return;
+                if (current.tool === "delay" && current.timeoutId) {
+                    current.aborted = true;
+                    clearTimeout(current.timeoutId);
+                    current.timeoutId = null;
+                }
+            }
+
+            // Bind Run/Stop
+            runBtn.addEventListener("click", runSelectedTool);
+            stopBtn.addEventListener("click", stopRunning);
+
+            // Export log
+            exportBtn.addEventListener("click", function () {
+                // Update signoff just before export
+                runLog.signoff.verifier = verifierEl.value || "Duksan";
+                runLog.signoff.witness = witnessEl.value || "Local Gumgang";
+                runLog.signoff.spirit_signature =
+                    spiritEl.value ||
+                    "Local Gumgang — same soul across Web → Zed → UI";
+                if (!runLog.local_ts_end) runLog.local_ts_end = iso(now());
+                renderJSON();
+
+                const blob = new Blob([JSON.stringify(runLog, null, 2)], {
+                    type: "application/json",
+                });
+                const a = document.createElement("a");
+                const ts = ymd_hm(now());
+                a.href = URL.createObjectURL(blob);
+                a.download = "ui_mvp_gate_" + ts + "_A3.json";
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(a.href);
+                logLine("info", "Exported log", { file: a.download });
+            });
+
+            // Initialize
+            setStatus("idle");
+            renderJSON();
+
+            // Expose A3 warning helpers on window for cross-panel wiring
+            window.A3 = window.A3 || {};
+            window.A3.showWarning =
+                typeof showWarning === "function" ? showWarning : () => {};
+            window.A3.hideWarning =
+                typeof hideWarning === "function" ? hideWarning : () => {};
+            window.A3.recordWarningAction =
+                typeof recordWarningAction === "function"
+                    ? recordWarningAction
+                    : () => {};
+            Object.defineProperty(window.A3, "lastWarning", {
+                get() {
+                    return window.lastWarning || null;
+                },
+            });
+
+            // Accessibility: default focus to tools list first item
+            (function focusFirstTool() {
+                const first = toolsList.querySelector(".tool-item");
+                if (first) first.focus();
+            })();
+        </script>
+    </body>
+</html>

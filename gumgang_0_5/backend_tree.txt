@@ -1,0 +1,133 @@
+/home/duksan/바탕화면/gumgang_0_5/backend
+├── __init__.py
+├── __pycache__
+│   └── main.cpython-310.pyc
+├── app
+│   ├── __pycache__
+│   │   ├── graph.cpython-310.pyc
+│   │   └── main.cpython-310.pyc
+│   ├── graph.py
+│   ├── gumgang_graph_0_7_backup.py
+│   ├── main_legacy.py
+│   ├── nodes
+│   │   ├── __pycache__
+│   │   ├── file_tree_analyzer.py
+│   │   ├── gumgang_status.json
+│   │   ├── identity_reflect_node.py
+│   │   ├── status_report.py
+│   │   └── version_check.py
+│   ├── routes
+│   │   ├── __pycache__
+│   │   ├── ask.py
+│   │   ├── edit.py
+│   │   ├── ingest.py
+│   │   ├── memory.py
+│   │   ├── save_chat.py
+│   │   ├── status.py
+│   │   ├── structure.py
+│   │   └── structure_fixes.py
+│   ├── setup_edit_api.sh
+│   └── utils
+│       ├── __pycache__
+│       ├── edit_history_reader.py
+│       ├── edit_logger.py
+│       ├── structure_fix_applier.py
+│       └── structure_fix_logger.py
+├── backend_backup_20250725_092607.zip
+├── backend_file_tree.txt
+├── backend_tree.txt
+├── backendserverstart.sh
+├── backup_ingest_scripts_20250727_035453
+│   ├── ingest_chatgpt_memory.py.bak
+│   ├── ingest_identity.py.bak
+│   ├── ingest_roadmap.py.bak
+│   ├── ingest_self_knowledge.py.bak
+│   └── roadmap_ingest.py.bak
+├── data
+│   ├── backend_structure_natural.json
+│   ├── core_identity.json
+│   ├── frontend_structure_0.7.json
+│   ├── frontend_structure_natural.json
+│   ├── structure_full.json
+│   ├── structure_proposals.json
+│   ├── structure_report.json
+│   └── structure_report_natural.json
+├── gumgang_tree.txt
+├── logs
+│   └── refactor_log_20250723_124923.txt
+├── main.py
+├── memory
+│   ├── backup_edit_files
+│   │   ├── Header.tsx.20250727_120717.bak
+│   │   ├── Header.tsx.20250727_120932.bak
+│   │   ├── Header.tsx.20250727_121104.bak
+│   │   ├── Header.tsx.20250727_165550.bak
+│   │   ├── Header.tsx.20250727_182750.bak
+│   │   ├── Header.tsx.20250727_200332.bak
+│   │   ├── Header.tsx.20250727_200550.bak
+│   │   ├── Header.tsx.20250727_200822.bak
+│   │   ├── Header.tsx.20250727_200944.bak
+│   │   ├── Header.tsx.20250727_201150.bak
+│   │   ├── Header.tsx.20250727_201327.bak
+│   │   └── tailwind.config.js.20250727_122458.bak
+│   ├── gumgang_memory
+│   │   ├── 4281ce5e-b504-4e58-9e6d-7486b49e34f0
+│   │   ├── chroma.sqlite3
+│   │   └── f422f853-9638-4b70-9e57-7fcc4796a781
+│   ├── history
+│   │   ├── edit_history.json
+│   │   └── edit_history_refined.json
+│   ├── logs
+│   │   └── refactor_history.log
+│   ├── reports
+│   ├── retrievers.py
+│   ├── sources
+│   │   ├── chatgpt
+│   │   ├── chatgpt_sessions
+│   │   ├── file_summaries.json
+│   │   ├── folder_structure.json
+│   │   ├── roadmap_gold.json
+│   │   ├── roadmap_natural.json
+│   │   └── structure
+│   ├── structure_fixes_backup
+│   │   └── 20250728_102848
+│   ├── structure_fixes_history.json
+│   ├── unlinked
+│   └── vectors
+│       ├── chatgpt_memory
+│       ├── chatgpt_memory_backup_20250726_190914
+│       ├── legacy
+│       └── roadmap
+├── refactor_backend_structure.sh
+├── requirements.txt
+├── scripts
+│   ├── analyze_structure.py
+│   ├── check_and_fix_tailwind.py
+│   ├── convert_roadmap_to_natural.py
+│   ├── convert_saved_json_to_md.py
+│   ├── convert_structure_report_to_natural.py
+│   ├── generate_file_summaries.py
+│   ├── ingest_backend_natural.py
+│   ├── ingest_backend_structure.py
+│   ├── ingest_chatgpt_memory.py
+│   ├── ingest_frontend_natural.py
+│   ├── ingest_frontend_structure.py
+│   ├── ingest_identity.py
+│   ├── ingest_roadmap.py
+│   ├── ingest_self_knowledge.py
+│   ├── ingest_structure_full.py
+│   ├── ingest_structure_natural.py
+│   ├── ingest_structure_report.py
+│   ├── ingest_structure_split.py
+│   ├── refactor
+│   │   └── refine_edit_history.py
+│   ├── reflect_test.py
+│   ├── roadmap_ingest.py
+│   ├── self_reflect.py
+│   ├── self_structure_scan.py
+│   ├── setup_memory_dirs.py
+│   └── structure_improvement_suggester.py
+├── structure_fix.md
+└── tests
+
+35 directories, 95 files

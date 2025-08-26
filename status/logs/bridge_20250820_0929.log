@@ -1,0 +1,7 @@
+nohup: 입력 무시
+[Gumgang Bridge] listening on http://127.0.0.1:3037
+[Gumgang Bridge] .env: /home/duksan/바탕화면/gumgang_meeting/.env
+[Gumgang Bridge] model: gpt-5
+[Gumgang Bridge] key: ✓ OPENAI_API_KEY loaded
+[Gumgang Bridge] conversations root: /home/duksan/바탕화면/gumgang_meeting/conversations
+[Gumgang Bridge] ui root: /home/duksan/바탕화면/gumgang_meeting/ui

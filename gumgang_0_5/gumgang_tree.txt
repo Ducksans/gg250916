@@ -1,0 +1,939 @@
+/home/duksan/바탕화면/gumgang_0_5
+├── #!
+│   └── bin
+│       └── bash  echo "📦 ChatGPT 세션 백업 스크립트 실행 시작..."  # 🗂️ 날짜 기반 디렉토리 생성 TODAY=$(date +"%Y-%m-%d") BASE_DIR="memory
+├── README.md
+├── backend
+│   ├── __pycache__
+│   │   └── main.cpython-310.pyc
+│   ├── app
+│   │   ├── __pycache__
+│   │   ├── graph.py
+│   │   ├── gumgang_graph_0_7_backup.py
+│   │   ├── nodes
+│   │   ├── routes
+│   │   ├── setup_edit_api.sh
+│   │   └── test_openai_key.py
+│   ├── backend
+│   │   └── memory
+│   ├── backend_backup_20250725_092607.zip
+│   ├── backend_file_tree.txt
+│   ├── backend_tree.txt
+│   ├── backendserverstart.sh
+│   ├── data
+│   ├── gumgang_tree.txt
+│   ├── logs
+│   │   ├── refactor_log_20250723_124923.txt
+│   │   └── test_api.http
+│   ├── main.py
+│   ├── memory
+│   │   ├── gumgang_memory
+│   │   ├── logs
+│   │   ├── retrievers.py
+│   │   ├── sources
+│   │   └── vectors
+│   ├── refactor_backend_structure.sh
+│   ├── requirements.txt
+│   ├── scripts
+│   │   ├── backend
+│   │   ├── convert_roadmap_to_natural.py
+│   │   ├── convert_saved_json_to_md.py
+│   │   ├── ingest_chatgpt_memory.py
+│   │   ├── ingest_identity.py
+│   │   ├── ingest_roadmap.py
+│   │   ├── ingest_self_knowledge.py
+│   │   ├── reflect_test.py
+│   │   ├── roadmap_ingest.py
+│   │   ├── self_reflect.py
+│   │   └── self_structure_scan.py
+│   └── tests
+│       ├── test_langgraph_status.py
+│       └── test_reflect_query_self.py
+├── backup_gumgang.sh
+├── chatgpt_urls.txt
+├── extract_chatgpt_sessions.js
+├── extract_chatgpt_sessions.sh
+├── fix_scripts_path.sh
+├── frontend
+│   ├── frontend_README.md
+│   ├── frontend_tree.txt
+│   ├── index.html
+│   ├── node_modules
+│   │   ├── @ampproject
+│   │   ├── @babel
+│   │   ├── @cspotcode
+│   │   ├── @esbuild
+│   │   ├── @jridgewell
+│   │   ├── @rolldown
+│   │   ├── @tsconfig
+│   │   ├── @types
+│   │   ├── @vitejs
+│   │   ├── acorn
+│   │   ├── acorn-walk
+│   │   ├── arg
+│   │   ├── asynckit
+│   │   ├── axios
+│   │   ├── browserslist
+│   │   ├── call-bind-apply-helpers
+│   │   ├── caniuse-lite
+│   │   ├── combined-stream
+│   │   ├── convert-source-map
+│   │   ├── cookie
+│   │   ├── create-require
+│   │   ├── csstype
+│   │   ├── debug
+│   │   ├── delayed-stream
+│   │   ├── diff
+│   │   ├── dunder-proto
+│   │   ├── electron-to-chromium
+│   │   ├── es-define-property
+│   │   ├── es-errors
+│   │   ├── es-object-atoms
+│   │   ├── es-set-tostringtag
+│   │   ├── esbuild
+│   │   ├── escalade
+│   │   ├── follow-redirects
+│   │   ├── form-data
+│   │   ├── function-bind
+│   │   ├── gensync
+│   │   ├── get-intrinsic
+│   │   ├── get-proto
+│   │   ├── gopd
+│   │   ├── has-symbols
+│   │   ├── has-tostringtag
+│   │   ├── hasown
+│   │   ├── js-tokens
+│   │   ├── jsesc
+│   │   ├── json5
+│   │   ├── loose-envify
+│   │   ├── lru-cache
+│   │   ├── make-error
+│   │   ├── math-intrinsics
+│   │   ├── mime-db
+│   │   ├── mime-types
+│   │   ├── ms
+│   │   ├── nanoid
+│   │   ├── node-releases
+│   │   ├── picocolors
+│   │   ├── postcss
+│   │   ├── proxy-from-env
+│   │   ├── react
+│   │   ├── react-dom
+│   │   ├── react-refresh
+│   │   ├── react-router
+│   │   ├── react-router-dom
+│   │   ├── rollup
+│   │   ├── scheduler
+│   │   ├── semver
+│   │   ├── set-cookie-parser
+│   │   ├── source-map-js
+│   │   ├── ts-node
+│   │   ├── typescript
+│   │   ├── undici-types
+│   │   ├── update-browserslist-db
+│   │   ├── v8-compile-cache-lib
+│   │   ├── vite
+│   │   ├── yallist
+│   │   └── yn
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   └── roadmap.json
+│   ├── src
+│   │   ├── App.jsx
+│   │   ├── components
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   │   ├── pages
+│   │   └── types.ts
+│   ├── tailwind.config.js
+│   └── tsconfig.json
+├── frontend.zip
+├── frontend_full_clean.zip
+├── gather_chatgpt_sessions.sh
+├── google-chrome-stable_current_amd64.deb
+├── gumgang0.5_chatlog_2025-07-20_17-23-35.md
+├── gumgang_backend_py.zip
+├── gumgang_frontend_refactored.zip
+├── gumgang_tree.txt
+├── keytest.py
+├── logs
+│   ├── puppeteer_20250725_144846.log
+│   ├── puppeteer_20250725_145945.log
+│   ├── puppeteer_20250725_150717.log
+│   └── puppeteer_20250725_150805.log
+├── node_modules
+│   ├── @babel
+│   │   ├── code-frame
+│   │   └── helper-validator-identifier
+│   ├── @puppeteer
+│   │   └── browsers
+│   ├── @tootallnate
+│   │   └── quickjs-emscripten
+│   ├── @types
+│   │   ├── node
+│   │   └── yauzl
+│   ├── agent-base
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   └── package.json
+│   ├── ansi-regex
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── ansi-styles
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── argparse
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── argparse.js
+│   │   ├── lib
+│   │   └── package.json
+│   ├── ast-types
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── def
+│   │   ├── fork.d.ts
+│   │   ├── fork.js
+│   │   ├── gen
+│   │   ├── lib
+│   │   ├── main.d.ts
+│   │   ├── main.js
+│   │   ├── package.json
+│   │   ├── tsconfig.json
+│   │   ├── types.d.ts
+│   │   └── types.js
+│   ├── b4a
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── browser.js
+│   │   ├── index.js
+│   │   ├── lib
+│   │   └── package.json
+│   ├── bare-events
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── lib
+│   │   └── package.json
+│   ├── bare-fs
+│   │   ├── CMakeLists.txt
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── binding.c
+│   │   ├── binding.js
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── lib
+│   │   ├── package.json
+│   │   ├── prebuilds
+│   │   ├── promises.d.ts
+│   │   └── promises.js
+│   ├── bare-os
+│   │   ├── CMakeLists.txt
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── binding.c
+│   │   ├── binding.js
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── lib
+│   │   ├── package.json
+│   │   └── prebuilds
+│   ├── bare-path
+│   │   ├── LICENSE
+│   │   ├── NOTICE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   ├── lib
+│   │   └── package.json
+│   ├── bare-stream
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── global.js
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   ├── promises.js
+│   │   └── web.js
+│   ├── basic-ftp
+│   │   ├── LICENSE.txt
+│   │   ├── README.md
+│   │   ├── dist
+│   │   └── package.json
+│   ├── buffer-crc32
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── callsites
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── chromium-bidi
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── lib
+│   │   └── package.json
+│   ├── cliui
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE.txt
+│   │   ├── README.md
+│   │   ├── build
+│   │   ├── index.mjs
+│   │   └── package.json
+│   ├── color-convert
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── conversions.js
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   └── route.js
+│   ├── color-name
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── cosmiconfig
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   └── package.json
+│   ├── data-uri-to-buffer
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   └── package.json
+│   ├── debug
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── package.json
+│   │   └── src
+│   ├── degenerator
+│   │   ├── README.md
+│   │   ├── dist
+│   │   └── package.json
+│   ├── devtools-protocol
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── json
+│   │   ├── package.json
+│   │   ├── pdl
+│   │   └── types
+│   ├── emoji-regex
+│   │   ├── LICENSE-MIT.txt
+│   │   ├── README.md
+│   │   ├── es2015
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   └── text.js
+│   ├── end-of-stream
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── env-paths
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── error-ex
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── escalade
+│   │   ├── dist
+│   │   ├── index.d.mts
+│   │   ├── index.d.ts
+│   │   ├── license
+│   │   ├── package.json
+│   │   ├── readme.md
+│   │   └── sync
+│   ├── escodegen
+│   │   ├── LICENSE.BSD
+│   │   ├── README.md
+│   │   ├── bin
+│   │   ├── escodegen.js
+│   │   └── package.json
+│   ├── esprima
+│   │   ├── ChangeLog
+│   │   ├── LICENSE.BSD
+│   │   ├── README.md
+│   │   ├── bin
+│   │   ├── dist
+│   │   └── package.json
+│   ├── estraverse
+│   │   ├── LICENSE.BSD
+│   │   ├── README.md
+│   │   ├── estraverse.js
+│   │   ├── gulpfile.js
+│   │   └── package.json
+│   ├── esutils
+│   │   ├── LICENSE.BSD
+│   │   ├── README.md
+│   │   ├── lib
+│   │   └── package.json
+│   ├── extract-zip
+│   │   ├── LICENSE
+│   │   ├── cli.js
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── fast-fifo
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── fixed-size.js
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── fd-slicer
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   └── test
+│   ├── get-caller-file
+│   │   ├── LICENSE.md
+│   │   ├── README.md
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── index.js.map
+│   │   └── package.json
+│   ├── get-stream
+│   │   ├── buffer-stream.js
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── get-uri
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   └── package.json
+│   ├── http-proxy-agent
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   └── package.json
+│   ├── https-proxy-agent
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   └── package.json
+│   ├── import-fresh
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── ip-address
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   ├── package.json
+│   │   └── src
+│   ├── is-arrayish
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── is-fullwidth-code-point
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── js-tokens
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── js-yaml
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── bin
+│   │   ├── dist
+│   │   ├── index.js
+│   │   ├── lib
+│   │   └── package.json
+│   ├── jsbn
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── example.html
+│   │   ├── example.js
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   └── test
+│   ├── json-parse-even-better-errors
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE.md
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── lines-and-columns
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── build
+│   │   └── package.json
+│   ├── lru-cache
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── index.mjs
+│   │   └── package.json
+│   ├── mitt
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   ├── index.d.ts
+│   │   └── package.json
+│   ├── ms
+│   │   ├── index.js
+│   │   ├── license.md
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── netmask
+│   │   ├── CHANGELOG.md
+│   │   ├── CREDITS.md
+│   │   ├── README.md
+│   │   ├── example
+│   │   ├── lib
+│   │   ├── package.json
+│   │   ├── test
+│   │   └── tests
+│   ├── once
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── once.js
+│   │   └── package.json
+│   ├── pac-proxy-agent
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   └── package.json
+│   ├── pac-resolver
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   └── package.json
+│   ├── parent-module
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── parse-json
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── pend
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   └── test.js
+│   ├── picocolors
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── package.json
+│   │   ├── picocolors.browser.js
+│   │   ├── picocolors.d.ts
+│   │   ├── picocolors.js
+│   │   └── types.d.ts
+│   ├── progress
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE
+│   │   ├── Makefile
+│   │   ├── Readme.md
+│   │   ├── index.js
+│   │   ├── lib
+│   │   └── package.json
+│   ├── proxy-agent
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   └── package.json
+│   ├── proxy-from-env
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   └── test.js
+│   ├── pump
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── SECURITY.md
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   ├── test-browser.js
+│   │   └── test-node.js
+│   ├── puppeteer
+│   │   ├── README.md
+│   │   ├── install.mjs
+│   │   ├── lib
+│   │   ├── package.json
+│   │   └── src
+│   ├── puppeteer-core
+│   │   ├── README.md
+│   │   ├── lib
+│   │   ├── package.json
+│   │   └── src
+│   ├── require-directory
+│   │   ├── LICENSE
+│   │   ├── README.markdown
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── resolve-from
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── semver
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── bin
+│   │   ├── classes
+│   │   ├── functions
+│   │   ├── index.js
+│   │   ├── internal
+│   │   ├── package.json
+│   │   ├── preload.js
+│   │   ├── range.bnf
+│   │   └── ranges
+│   ├── smart-buffer
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── build
+│   │   ├── docs
+│   │   ├── package.json
+│   │   └── typings
+│   ├── socks
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── build
+│   │   ├── docs
+│   │   ├── package.json
+│   │   └── typings
+│   ├── socks-proxy-agent
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   └── package.json
+│   ├── source-map
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   ├── lib
+│   │   ├── package.json
+│   │   ├── source-map.d.ts
+│   │   └── source-map.js
+│   ├── sprintf-js
+│   │   ├── CONTRIBUTORS.md
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   ├── package.json
+│   │   └── src
+│   ├── streamx
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── string-width
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── strip-ansi
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── tar-fs
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── tar-stream
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── constants.js
+│   │   ├── extract.js
+│   │   ├── headers.js
+│   │   ├── index.js
+│   │   ├── pack.js
+│   │   └── package.json
+│   ├── text-decoder
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   ├── lib
+│   │   └── package.json
+│   ├── tslib
+│   │   ├── CopyrightNotice.txt
+│   │   ├── LICENSE.txt
+│   │   ├── README.md
+│   │   ├── SECURITY.md
+│   │   ├── modules
+│   │   ├── package.json
+│   │   ├── tslib.d.ts
+│   │   ├── tslib.es6.html
+│   │   ├── tslib.es6.js
+│   │   ├── tslib.es6.mjs
+│   │   ├── tslib.html
+│   │   └── tslib.js
+│   ├── typed-query-selector
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── package.json
+│   │   ├── parser.d.ts
+│   │   ├── shim.d.ts
+│   │   └── strict.d.ts
+│   ├── undici-types
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── agent.d.ts
+│   │   ├── api.d.ts
+│   │   ├── balanced-pool.d.ts
+│   │   ├── cache-interceptor.d.ts
+│   │   ├── cache.d.ts
+│   │   ├── client.d.ts
+│   │   ├── connector.d.ts
+│   │   ├── content-type.d.ts
+│   │   ├── cookies.d.ts
+│   │   ├── diagnostics-channel.d.ts
+│   │   ├── dispatcher.d.ts
+│   │   ├── env-http-proxy-agent.d.ts
+│   │   ├── errors.d.ts
+│   │   ├── eventsource.d.ts
+│   │   ├── fetch.d.ts
+│   │   ├── formdata.d.ts
+│   │   ├── global-dispatcher.d.ts
+│   │   ├── global-origin.d.ts
+│   │   ├── h2c-client.d.ts
+│   │   ├── handlers.d.ts
+│   │   ├── header.d.ts
+│   │   ├── index.d.ts
+│   │   ├── interceptors.d.ts
+│   │   ├── mock-agent.d.ts
+│   │   ├── mock-call-history.d.ts
+│   │   ├── mock-client.d.ts
+│   │   ├── mock-errors.d.ts
+│   │   ├── mock-interceptor.d.ts
+│   │   ├── mock-pool.d.ts
+│   │   ├── package.json
+│   │   ├── patch.d.ts
+│   │   ├── pool-stats.d.ts
+│   │   ├── pool.d.ts
+│   │   ├── proxy-agent.d.ts
+│   │   ├── readable.d.ts
+│   │   ├── retry-agent.d.ts
+│   │   ├── retry-handler.d.ts
+│   │   ├── util.d.ts
+│   │   ├── utility.d.ts
+│   │   ├── webidl.d.ts
+│   │   └── websocket.d.ts
+│   ├── wrap-ansi
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── wrappy
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── package.json
+│   │   └── wrappy.js
+│   ├── ws
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── browser.js
+│   │   ├── index.js
+│   │   ├── lib
+│   │   ├── package.json
+│   │   └── wrapper.mjs
+│   ├── y18n
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── build
+│   │   ├── index.mjs
+│   │   └── package.json
+│   ├── yargs
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── browser.d.ts
+│   │   ├── browser.mjs
+│   │   ├── build
+│   │   ├── helpers
+│   │   ├── index.cjs
+│   │   ├── index.mjs
+│   │   ├── lib
+│   │   ├── locales
+│   │   ├── package.json
+│   │   ├── yargs
+│   │   └── yargs.mjs
+│   ├── yargs-parser
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE.txt
+│   │   ├── README.md
+│   │   ├── browser.js
+│   │   ├── build
+│   │   └── package.json
+│   ├── yauzl
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   └── package.json
+│   └── zod
+│       ├── LICENSE
+│       ├── README.md
+│       ├── index.cjs
+│       ├── index.d.cts
+│       ├── index.d.ts
+│       ├── index.js
+│       ├── package.json
+│       ├── src
+│       ├── v3
+│       ├── v4
+│       └── v4-mini
+├── package-lock.json
+├── package.json
+├── readme.txt
+├── refactor_langchain.sh
+├── refactor_memory_structure.sh
+├── roadmap_ingest.sh
+├── scripts
+│   ├── extract_all_chatgpt_sessions.js
+│   ├── extract_chatgpt_sessions.js
+│   ├── node_modules
+│   │   ├── @babel
+│   │   ├── @puppeteer
+│   │   ├── @tootallnate
+│   │   ├── @types
+│   │   ├── agent-base
+│   │   ├── ansi-regex
+│   │   ├── ansi-styles
+│   │   ├── argparse
+│   │   ├── ast-types
+│   │   ├── b4a
+│   │   ├── bare-events
+│   │   ├── bare-fs
+│   │   ├── bare-os
+│   │   ├── bare-path
+│   │   ├── bare-stream
+│   │   ├── basic-ftp
+│   │   ├── buffer-crc32
+│   │   ├── callsites
+│   │   ├── chromium-bidi
+│   │   ├── cliui
+│   │   ├── color-convert
+│   │   ├── color-name
+│   │   ├── cosmiconfig
+│   │   ├── data-uri-to-buffer
+│   │   ├── debug
+│   │   ├── degenerator
+│   │   ├── devtools-protocol
+│   │   ├── emoji-regex
+│   │   ├── end-of-stream
+│   │   ├── env-paths
+│   │   ├── error-ex
+│   │   ├── escalade
+│   │   ├── escodegen
+│   │   ├── esprima
+│   │   ├── estraverse
+│   │   ├── esutils
+│   │   ├── extract-zip
+│   │   ├── fast-fifo
+│   │   ├── fd-slicer
+│   │   ├── get-caller-file
+│   │   ├── get-stream
+│   │   ├── get-uri
+│   │   ├── http-proxy-agent
+│   │   ├── https-proxy-agent
+│   │   ├── import-fresh
+│   │   ├── ip-address
+│   │   ├── is-arrayish
+│   │   ├── is-fullwidth-code-point
+│   │   ├── js-tokens
+│   │   ├── js-yaml
+│   │   ├── jsbn
+│   │   ├── json-parse-even-better-errors
+│   │   ├── lines-and-columns
+│   │   ├── lru-cache
+│   │   ├── mitt
+│   │   ├── ms
+│   │   ├── netmask
+│   │   ├── once
+│   │   ├── pac-proxy-agent
+│   │   ├── pac-resolver
+│   │   ├── parent-module
+│   │   ├── parse-json
+│   │   ├── pend
+│   │   ├── picocolors
+│   │   ├── progress
+│   │   ├── proxy-agent
+│   │   ├── proxy-from-env
+│   │   ├── pump
+│   │   ├── puppeteer
+│   │   ├── puppeteer-core
+│   │   ├── require-directory
+│   │   ├── resolve-from
+│   │   ├── semver
+│   │   ├── smart-buffer
+│   │   ├── socks
+│   │   ├── socks-proxy-agent
+│   │   ├── source-map
+│   │   ├── sprintf-js
+│   │   ├── streamx
+│   │   ├── string-width
+│   │   ├── strip-ansi
+│   │   ├── tar-fs
+│   │   ├── tar-stream
+│   │   ├── text-decoder
+│   │   ├── tslib
+│   │   ├── typed-query-selector
+│   │   ├── undici-types
+│   │   ├── wrap-ansi
+│   │   ├── wrappy
+│   │   ├── ws
+│   │   ├── y18n
+│   │   ├── yargs
+│   │   ├── yargs-parser
+│   │   ├── yauzl
+│   │   └── zod
+│   ├── package-lock.json
+│   └── package.json
+├── setup_status_ui.sh
+├── start.sh
+├── start_gumgang_gui.sh
+├── test_langgraph_selfreport.py
+├── test_langgraph_status.py
+├── test_memory_connection.py
+├── test_reflect_query.py
+└── test_reflect_query_self.py
+
+385 directories, 551 files

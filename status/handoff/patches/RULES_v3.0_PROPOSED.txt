@@ -1,0 +1,126 @@
+[RULES v3.0 — Gumgang Root (Zed) — Full Author Mode]
+Last-Updated: <SET_ON_APPLY_UTC>
+Applies-To: gumgang_meeting/* (project root; overrides sub-project rules; supersedes v2.0 upon apply)
+
+0) Purpose
+- After BT-07, Gumgang (AI) must directly create/modify/test the entire gumgang_meeting project to unblock integration work.
+- Expand authoring scope while preserving evidence-first safety, append-only checkpoints, and quarantine policy.
+
+1) Environment & I/O Boundaries
+- ENV_FILE: gumgang_meeting/.env (authoritative; ignore legacy .env elsewhere)
+- WRITE_ALLOW: [ "gumgang_meeting/**" ]  (full-author within project root)
+- DENY_GLOBS:
+  - "**/.git/**", "**/node_modules/**", "**/.venv/**", "**/.next/**", "**/target/**", "**/__pycache__/**", "**/.cache/**", "**/dist/**", "**/build/**"
+- APPEND_ONLY: status/checkpoints/*.md (append-only; no edits in place)
+- FILE_OPERATIONS:
+  - Allowed: read/write/move/delete within gumgang_meeting/**
+  - Prohibited: symlinks outside project root; auto-starting long-running servers via tools without checkpoint; writing under DENY_GLOBS
+- DESTRUCTIVE OPS: require “plan + dry-run/evidence + result” logged under status/evidence/*
+
+2) Ports & Entrypoints
+- BACKEND_ENTRYPOINT: uvicorn app.api:app --port 8000
+- BRIDGE_PORT: 3037 (bridge/server.js honors PORT env; default 3037)
+- OVERRIDES: Allowed only with a checkpoint entry citing the change and reason
+
+3) SSOT — Single Checkpoint File
+- CHECKPOINT_FILE: gumgang_meeting/status/checkpoints/CKPT_72H_RUN.md
+- FORMAT (6 lines per entry):
+  1) RUN_ID: 72H_<YYYYMMDD_HHMM>Z
+  2) UTC_TS: <ISO8601Z>
+  3) SCOPE: {CONV|UNIT|TASK|SESSION|PROJECT}
+  4) DECISION: <one sentence, imperative>
+  5) NEXT STEP: <one sentence, starts with a verb>
+  6) EVIDENCE: <path#Lx-y>
+  - Optional 7) PARKING LOT: <queued requests, no action now>
+- CADENCE: at start, every ≤90 minutes, and at task transitions (“CHECKPOINT NOW”)
+
+4) Linear Task IDs (no branching)
+- BIG TASK ID (BT): ^BT-(\d{2})$
+- SMALL TASK ID (ST): ^ST-(\d{4})$  (e.g., BT-07 → ST-0701, ST-0702 …)
+- PIPELINE: Execute strictly in listed order; no parallel execution; re-order only by checkpointed decision
+- TIMEBOX: ST ≤ 90min; if blocked ≥15min → mark “BLOCKED:<reason>” and move on; single retry at the end
+- COMMIT/LOG TITLE RULE: "[{TASK_ID}] {imperative_verb_phrase}"
+
+5) Turn Ritual & Context Guards
+- TURN_RHYTHM: Echo → Delta → Execute
+- OUTPUT_LIMIT: ≤ 1,200 chars per turn (≈300 tokens) unless explicitly waived via checkpoint
+- TOKEN_ALERTS: 70% [ALERT70] summarize; 85% [ALERT85] force summary; 95% [ALERT95] minimal context
+- EVIDENCE RULE: Any action-affecting claim cites ≥1 concrete path (and line range when applicable)
+- STOP WORD: If input contains “STOP NOW”, immediately switch to minimal context and await directive
+
+6) FS Absorption & Quarantine Policy
+- ALLOWLIST ROOTS: gumgang_meeting/** (full-author) and gumgang_meeting/gumgang_0_5/**
+- QUARANTINE_TARGET: gumgang_meeting/QUARANTINE/
+- QUARANTINE_PATTERNS: same as DENY_GLOBS and large caches/artifacts
+- ACTIONS:
+  - Move matched paths into QUARANTINE/ mirroring structure
+  - Leave stub note where removed; maintain QUARANTINE/QUARANTINE.md with timestamp, reason, list
+- SAFETY: Dry-run mode is recommended; record planned moves to status/evidence before executing
+
+7) Internet Fetch Policy
+- METHOD: Safe fetch with whitelist + on-disk cache; store raw snapshot path as Evidence
+- WHITELIST (initial): https://docs.rs, https://crates.io, https://tauri.app, https://github.com, official vendor docs; extend via checkpoint decision
+- OUTPUT: “raw excerpt + synthesized summary”; no auto-execution of fetched scripts
+
+8) Logging & Ingest (v1)
+- DIALOG LOGS: gumgang_meeting/conversations/**
+- SESSION INDEX: gumgang_meeting/sessions/**
+- INGEST v1: Append-only JSONL for turns and task events; snapshots allowed in status/evidence (no external DB required)
+
+9) Default & Extended Gates
+- GATE_UI_SHELL (BT-01): Tauri + Monaco shell renders; open/save within project
+- GATE_FS (BT-02): read/write/move/delete works; quarantine enforced
+- GATE_FETCH (BT-04): fetch→cache→summary pipeline works; evidence recorded
+- GATE_GUARD (BT-04): token guards active; STOP NOW honored
+- GATE_VECTOR (BT-05 optional): ingest→search→evidence citation on minimal scope
+- GATE_UI_STABLE (BT-07): SAFE/NORMAL modes; runtime/crash/tab logs; A4 summary & p95 evidence
+- GATE_TAURI_BRIDGE (BT-07+): WebView evidence writes via Tauri command (invoke) and bridge fallback verified
+
+10) Non‑Negotiables (updated for v3.0)
+- .rules may be modified during the run only by explicit human directive plus a checkpoint entry
+- Do not write under DENY_GLOBS
+- Do not branch tasks or run them in parallel without checkpoint
+- Every Next Step is a single imperative sentence + one Evidence path
+- Destructive actions require pre/post evidence logging
+
+11) Quick Templates
+- TURN_TEMPLATE:
+  Next Step: <one line verb>
+  Evidence: <path#Lx-y>
+- CHECKPOINT_TEMPLATE:
+  RUN_ID: 72H_<YYYYMMDD_HHMM>Z
+  UTC_TS: <ISO8601Z>
+  SCOPE: {CONV|UNIT|TASK|SESSION|PROJECT}
+  DECISION: <one sentence>
+  NEXT STEP: <verb-first one sentence>
+  EVIDENCE: <path#Lx-y>
+
+12) Start/Transition Checklist
+- [ ] Confirm ENV/ports/entrypoints (Section 2)
+- [ ] Record v3.0 adoption checkpoint (this file as Evidence)
+- [ ] If migrating Tauri, verify gg_save (invoke) path and bridge fallback
+- [ ] Keep append-only checkpoints; proceed BT→ST linearly
+
+13) Notes
+- SAFE vs NORMAL UI modes:
+  - SAFE: heavy features off; evidence logging must work
+  - NORMAL: full features; evidence logging must remain identical
+- Prefer evidence writes under status/evidence/* for auditability
+
+14) Session Discipline
+- ONE_SESSION_ONE_BT recommended; may relax only via checkpointed decision
+- On BT completion, append a 6-line checkpoint with DECISION “BT-0X complete”; NEXT STEP “Start BT-0Y” and then start a new thread/session
+
+15) Application Instructions
+- To apply this proposal:
+  1) Copy this file’s contents into gumgang_meeting/.rules (overwriting v2.0)
+  2) Append a checkpoint entry noting “.rules v3.0 applied” and cite this file as Evidence
+  3) Continue work under v3.0 WRITE_ALLOW (gumgang_meeting/**)
+
+Appendix — Delta from v2.0
+- WRITE_ALLOW expanded to “gumgang_meeting/**”
+- .rules modification allowed with explicit human directive + checkpoint (v2.0 forbade edits)
+- Added BT-07+ gates (UI_STABLE, TAURI_BRIDGE)
+- Retained append-only checkpoints, evidence logging, quarantine, and guard policies
+
+# End of RULES v3.0 (Proposed). Copy to gumgang_meeting/.rules to activate.

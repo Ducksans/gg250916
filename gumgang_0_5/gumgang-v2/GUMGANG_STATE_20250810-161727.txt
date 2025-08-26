@@ -1,0 +1,53 @@
+=== META ===
+Time(KST): 2025-08-10 16:17:27 KST
+Dir: /home/duksan/바탕화면/gumgang_0_5/gumgang-v2
+
+=== GIT ===
+safety/emergency-git
+r0.1-green-9-g8d6ca8cb
+Untracked/modified counts:
+  modified: 52
+  untracked: 27
+
+=== FRONTEND ===
+{
+  "name": "gumgang-v2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node start-dev.js",
+    "dev:original": "next dev --turbopack",
+    "dev:fixed": "PORT=3000 next dev -p 3000 --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "ci:sanity": "bash scripts/ci/sanity.sh",
+    "guard:scan": "rg -n \"as any|@ts-ignore|@ts-expect-error(?!:)\" -g \"!node_modules\" || true"
+  },
+  "dependencies": {
+    "@arco-design/web-react": "^2.66.3",
+    "@heroicons/react": "^2.2.0",
+7:    "strict": false,
+32:    "paths": {
+
+=== BACKEND ===
+(no backend dir)
+
+=== PORTS / HEALTH ===
+port 8000: LISTEN(pid=7354)
+port 3000: closed
+port 8002: closed
+
+=== RULES / GUARDS ===
+(no .rules)
+(no pre-commit hook)
+
+=== BUNDLE ===
+bundle dir: .next
+bundle total: 295.44 MB
+
+=== TS ERRORS ===
+(no .tsc.out — skipping)

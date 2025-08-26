@@ -1,0 +1,95 @@
+{
+  "session_id": "metacog_test_20250807_125958",
+  "timestamp": "2025-08-07T12:59:59.166388",
+  "summary": {
+    "total": 14,
+    "success": 9,
+    "rate": 100.0
+  },
+  "details": [
+    {
+      "test": "think_reflect_create",
+      "case": "인공지능이 자아를 가질 수 있을까?",
+      "success": false,
+      "timestamp": "2025-08-07T12:59:58.073368"
+    },
+    {
+      "test": "think_reflect_create",
+      "case": "복잡한 문제를 어떻게 단계적으로 해결할 수 있을까?",
+      "success": true,
+      "timestamp": "2025-08-07T12:59:58.075646"
+    },
+    {
+      "test": "think_reflect_create",
+      "case": "창의성과 논리성 중 무엇이 더 중요할까?",
+      "success": true,
+      "timestamp": "2025-08-07T12:59:58.078247"
+    },
+    {
+      "test": "self_awareness",
+      "case": "report_generation",
+      "success": true,
+      "timestamp": "2025-08-07T12:59:58.078902"
+    },
+    {
+      "test": "strategy_adaptation",
+      "case": "exploration",
+      "success": false,
+      "timestamp": "2025-08-07T12:59:58.078944"
+    },
+    {
+      "test": "strategy_adaptation",
+      "case": "exploitation",
+      "success": false,
+      "timestamp": "2025-08-07T12:59:58.078969"
+    },
+    {
+      "test": "strategy_adaptation",
+      "case": "reflection",
+      "success": true,
+      "timestamp": "2025-08-07T12:59:58.078990"
+    },
+    {
+      "test": "neural_monitoring",
+      "case": "activation_tracking",
+      "success": true,
+      "timestamp": "2025-08-07T12:59:59.084266"
+    },
+    {
+      "test": "uncertainty_management",
+      "case": "2050년의 세계는 어떤 모습일까?",
+      "success": true,
+      "timestamp": "2025-08-07T12:59:59.088297"
+    },
+    {
+      "test": "uncertainty_management",
+      "case": "의식이란 정확히 무엇인가?",
+      "success": true,
+      "timestamp": "2025-08-07T12:59:59.092248"
+    },
+    {
+      "test": "uncertainty_management",
+      "case": "우주의 끝은 어디인가?",
+      "success": true,
+      "timestamp": "2025-08-07T12:59:59.096736"
+    },
+    {
+      "test": "insight_generation",
+      "case": "insights_created",
+      "success": false,
+      "timestamp": "2025-08-07T12:59:59.154808"
+    },
+    {
+      "test": "complex_reasoning",
+      "case": "chain_completion",
+      "success": false,
+      "timestamp": "2025-08-07T12:59:59.161565"
+    },
+    {
+      "test": "creative_solving",
+      "case": "ideas_generated",
+      "success": true,
+      "timestamp": "2025-08-07T12:59:59.166250"
+    }
+  ]
+}

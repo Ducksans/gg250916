@@ -1,0 +1,606 @@
+// @ts-nocheck
+"use client";
+
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { Terminal } from "xterm";
+import { FitAddon } from "xterm-addon-fit";
+import {
+  Modal,
+  Button,
+  Tag,
+  List,
+  Card,
+  Space,
+  Typography,
+  Input,
+  Badge,
+  Tooltip,
+  Notification,
+} from "@arco-design/web-react";
+import {
+  IconSafe,
+  IconClose,
+  IconDesktop,
+  IconExclamationCircle,
+  IconCheckCircle,
+  IconCloseCircle,
+  IconClockCircle,
+  IconCode,
+} from "@arco-design/web-react/icon";
+import axios from "axios";
+import "xterm/css/xterm.css";
+
+const { Title, Text } = Typography;
+
+interface CommandHistory {
+  id: string;
+  command: string;
+  timestamp: Date;
+  status:
+    | "pending"
+    | "approved"
+    | "rejected"
+    | "executed"
+    | "failed"
+    | "blocked";
+  output?: string;
+  error?: string;
+  riskLevel: "safe" | "caution" | "dangerous";
+}
+
+interface CommandApproval {
+  command: string;
+  riskLevel: "safe" | "caution" | "dangerous";
+  warnings: string[];
+  requiresElevation: boolean;
+}
+
+export const SecureTerminalManager: React.FC = () => {
+  const terminalRef = useRef<HTMLDivElement>(null);
+  const terminalInstance = useRef<Terminal | null>(null);
+  const fitAddon = useRef<FitAddon | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+  const [currentCommand, setCurrentCommand] = useState("");
+  const [commandBuffer, setCommandBuffer] = useState("");
+  const [history, setHistory] = useState<CommandHistory[]>([]);
+  const [approvalModal, setApprovalModal] = useState<CommandApproval | null>(
+    null,
+  );
+  const [isExecuting, setIsExecuting] = useState(false);
+  const [trustScore, setTrustScore] = useState(100);
+
+  // 위험한 명령어 패턴
+  const DANGEROUS_PATTERNS = [
+    /^rm\s+-rf\s+\//, // rm -rf /
+    /^dd\s+if=.*of=\/dev\/[sh]d[a-z]/, // dd to disk
+    /^mkfs\./, // format filesystem
+    /^:(){.*}:&/, // fork bomb
+    /^cat\s+\/dev\/urandom.*>.*\/dev\/[sh]d[a-z]/, // overwrite disk with random
+    /^chmod\s+-R\s+777\s+\//, // chmod 777 /
+    /^chown\s+-R.*\//, // chown root /
+    />\/dev\/[sh]d[a-z]/, // redirect to disk
+    /^wget.*\|\s*sh/, // download and execute
+    /^curl.*\|\s*bash/, // download and execute
+    /^python\s+-c.*os\.system/, // python system command
+    /^eval\s+/, // eval arbitrary code
+    /^exec\s+/, // exec arbitrary code
+  ];
+
+  // 주의가 필요한 명령어
+  const CAUTION_PATTERNS = [
+    /^sudo\s+/, // sudo commands
+    /^rm\s+/, // any rm command
+    /^mv\s+.*\//, // move to root paths
+    /^cp\s+.*\//, // copy to root paths
+    /^kill\s+/, // kill processes
+    /^pkill\s+/, // pkill processes
+    /^service\s+.*stop/, // stop services
+    /^systemctl\s+.*stop/, // stop systemd services
+    /^npm\s+install/, // npm install
+    /^pip\s+install/, // pip install
+    /^apt\s+install/, // apt install
+    /^git\s+push\s+--force/, // force push
+  ];
+
+  // 명령어 위험도 평가
+  const assessCommandRisk = (command: string): CommandApproval => {
+    const trimmedCommand = command.trim();
+    const warnings: string[] = [];
+    let riskLevel: "safe" | "caution" | "dangerous" = "safe";
+    let requiresElevation = false;
+
+    // 위험한 명령어 체크
+    for (const pattern of DANGEROUS_PATTERNS) {
+      if (pattern.test(trimmedCommand)) {
+        warnings.push(`⛔ 매우 위험한 명령어: ${pattern.source}`);
+        riskLevel = "dangerous";
+      }
+    }
+
+    // 주의 명령어 체크
+    if (riskLevel !== "dangerous") {
+      for (const pattern of CAUTION_PATTERNS) {
+        if (pattern.test(trimmedCommand)) {
+          warnings.push(`⚠️ 주의가 필요한 명령어: ${pattern.source}`);
+          riskLevel = "caution";
+        }
+      }
+    }
+
+    // sudo 체크
+    if (trimmedCommand.startsWith("sudo ")) {
+      requiresElevation = true;
+      warnings.push("🔐 관리자 권한이 필요합니다");
+    }
+
+    // 파이프와 리다이렉션 체크
+    if (trimmedCommand.includes("|") || trimmedCommand.includes(">")) {
+      if (riskLevel === "safe") riskLevel = "caution";
+      warnings.push("📝 파이프 또는 리다이렉션 포함");
+    }
+
+    return {
+      command: trimmedCommand,
+      riskLevel,
+      warnings,
+      requiresElevation,
+    };
+  };
+
+  // 터미널 초기화
+  useEffect(() => {
+    if (!terminalRef.current || terminalInstance.current) return;
+
+    const terminal = new Terminal({
+      theme: {
+        background: "#1e1e2e",
+        foreground: "#cdd6f4",
+        cursor: "#f5e0dc",
+        black: "#45475a",
+        red: "#f38ba8",
+        green: "#a6e3a1",
+        yellow: "#f9e2af",
+        blue: "#89b4fa",
+        magenta: "#f5c2e7",
+        cyan: "#94e2d5",
+        white: "#bac2de",
+        brightBlack: "#585b70",
+        brightRed: "#f38ba8",
+        brightGreen: "#a6e3a1",
+        brightYellow: "#f9e2af",
+        brightBlue: "#89b4fa",
+        brightMagenta: "#f5c2e7",
+        brightCyan: "#94e2d5",
+        brightWhite: "#a6adc8",
+      },
+      fontSize: 14,
+      fontFamily: '"Cascadia Code", "Fira Code", monospace',
+      cursorBlink: true,
+      cursorStyle: "block",
+      scrollback: 1000,
+      tabStopWidth: 4,
+    });
+
+    const fit = new FitAddon();
+    terminal.loadAddon(fit);
+    terminal.open(terminalRef.current);
+    fit.fit();
+
+    terminalInstance.current = terminal;
+    fitAddon.current = fit;
+
+    // 환영 메시지
+    terminal.writeln("\x1b[1;32m🛡️ Secure Terminal Manager v1.0\x1b[0m");
+    terminal.writeln(
+      "\x1b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\x1b[0m",
+    );
+    terminal.writeln("• 모든 명령어는 실행 전 승인이 필요합니다");
+    terminal.writeln("• 위험한 명령어는 자동으로 차단됩니다");
+    terminal.writeln("• 신뢰도 점수: \x1b[1;32m100%\x1b[0m");
+    terminal.writeln(
+      "\x1b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\x1b[0m",
+    );
+    terminal.write("\r\n$ ");
+
+    // 입력 핸들러
+    terminal.onData((data) => {
+      if (isExecuting) return;
+
+      const code = data.charCodeAt(0);
+
+      if (code === 13) {
+        // Enter
+        if (commandBuffer.trim()) {
+          handleCommandSubmit(commandBuffer);
+        }
+        setCommandBuffer("");
+      } else if (code === 127) {
+        // Backspace
+        if (commandBuffer.length > 0) {
+          terminal.write("\b \b");
+          setCommandBuffer((prev) => prev.slice(0, -1));
+        }
+      } else if (code === 3) {
+        // Ctrl+C
+        terminal.write("^C\r\n$ ");
+        setCommandBuffer("");
+      } else if (code >= 32) {
+        // Printable characters
+        terminal.write(data);
+        setCommandBuffer((prev) => prev + data);
+      }
+    });
+
+    // 리사이즈 핸들러
+    const handleResize = () => {
+      if (fitAddon.current) {
+        fitAddon.current.fit();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    setIsConnected(true);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      terminal.dispose();
+      terminalInstance.current = null;
+    };
+  }, []);
+
+  // 명령어 제출 처리
+  const handleCommandSubmit = useCallback((command: string) => {
+    const assessment = assessCommandRisk(command);
+
+    // 위험한 명령어는 즉시 차단
+    if (assessment.riskLevel === "dangerous") {
+      const historyItem: CommandHistory = {
+        id: Date.now().toString(),
+        command,
+        timestamp: new Date(),
+        status: "blocked",
+        riskLevel: "dangerous",
+      };
+      setHistory((prev) => [historyItem, ...prev]);
+
+      if (terminalInstance.current) {
+        terminalInstance.current.writeln("");
+        terminalInstance.current.writeln(
+          "\x1b[1;31m⛔ 명령어가 차단되었습니다: 매우 위험한 명령어\x1b[0m",
+        );
+        terminalInstance.current.write("$ ");
+      }
+
+      Notification.error({
+        title: "명령어 차단됨",
+        content: `위험한 명령어가 감지되어 차단되었습니다: ${command}`,
+        duration: 5000,
+      });
+
+      // 신뢰도 감소
+      setTrustScore((prev) => Math.max(0, prev - 10));
+      return;
+    }
+
+    // 승인 모달 표시
+    setApprovalModal(assessment);
+    setCurrentCommand(command);
+  }, []);
+
+  // 명령어 승인
+  const handleApprove = useCallback(async () => {
+    if (!currentCommand || !approvalModal) return;
+
+    const historyItem: CommandHistory = {
+      id: Date.now().toString(),
+      command: currentCommand,
+      timestamp: new Date(),
+      status: "approved",
+      riskLevel: approvalModal.riskLevel,
+    };
+
+    setHistory((prev) => [historyItem, ...prev]);
+    setApprovalModal(null);
+    setIsExecuting(true);
+
+    try {
+      // 백엔드로 명령어 실행 요청
+      const response = await axios.post(
+        "http://localhost:8002/api/terminal/execute",
+        {
+          command: currentCommand,
+          workDir: process.cwd(),
+          timeout: 30000, // 30초 타임아웃
+        },
+      );
+
+      if (response.data.success) {
+        historyItem.status = "executed";
+        historyItem.output = response.data.output;
+
+        if (terminalInstance.current) {
+          terminalInstance.current.writeln("");
+          terminalInstance.current.writeln(response.data.output);
+          terminalInstance.current.write("$ ");
+        }
+
+        // 신뢰도 증가 (안전한 실행)
+        if (approvalModal.riskLevel === "safe") {
+          setTrustScore((prev) => Math.min(100, prev + 1));
+        }
+      } else {
+        throw new Error(response.data.error || "Command execution failed");
+      }
+    } catch (error: any) {
+      historyItem.status = "failed";
+      historyItem.error = error.message;
+
+      if (terminalInstance.current) {
+        terminalInstance.current.writeln("");
+        terminalInstance.current.writeln(
+          `\x1b[1;31m❌ 실행 실패: ${error.message}\x1b[0m`,
+        );
+        terminalInstance.current.write("$ ");
+      }
+
+      Notification.error({
+        title: "명령어 실행 실패",
+        content: error.message,
+        duration: 5000,
+      });
+
+      // 신뢰도 감소 (실패)
+      setTrustScore((prev) => Math.max(0, prev - 5));
+    } finally {
+      setIsExecuting(false);
+      setCurrentCommand("");
+      setHistory((prev) =>
+        prev.map((item) => (item.id === historyItem.id ? historyItem : item)),
+      );
+    }
+  }, [currentCommand, approvalModal]);
+
+  // 명령어 거부
+  const handleReject = useCallback(() => {
+    if (!currentCommand || !approvalModal) return;
+
+    const historyItem: CommandHistory = {
+      id: Date.now().toString(),
+      command: currentCommand,
+      timestamp: new Date(),
+      status: "rejected",
+      riskLevel: approvalModal.riskLevel,
+    };
+
+    setHistory((prev) => [historyItem, ...prev]);
+    setApprovalModal(null);
+    setCurrentCommand("");
+
+    if (terminalInstance.current) {
+      terminalInstance.current.writeln("");
+      terminalInstance.current.writeln(
+        "\x1b[1;33m⚠️ 명령어가 사용자에 의해 거부되었습니다\x1b[0m",
+      );
+      terminalInstance.current.write("$ ");
+    }
+  }, [currentCommand, approvalModal]);
+
+  // 위험도에 따른 색상
+  const getRiskColor = (level: string) => {
+    switch (level) {
+      case "dangerous":
+        return "#ff4d4f";
+      case "caution":
+        return "#faad14";
+      case "safe":
+        return "#52c41a";
+      default:
+        return "#8c8c8c";
+    }
+  };
+
+  // 상태에 따른 아이콘
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "executed":
+        return <IconCheckCircle style={{ color: "#52c41a" }} />;
+      case "failed":
+        return <IconCloseCircle style={{ color: "#ff4d4f" }} />;
+      case "blocked":
+        return <IconClose style={{ color: "#ff4d4f" }} />;
+      case "rejected":
+        return <IconExclamationCircle style={{ color: "#faad14" }} />;
+      case "approved":
+        return <IconCheckCircle style={{ color: "#52c41a" }} />;
+      case "pending":
+        return <IconClockCircle style={{ color: "#8c8c8c" }} />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="h-full flex flex-col bg-gray-900 overflow-hidden">
+      {/* 헤더 */}
+      <div className="bg-gray-800 border-b border-gray-700 px-4 py-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <IconDesktop className="text-2xl text-green-400" />
+            <Title heading={6} className="!mb-0 text-gray-100">
+              Secure Terminal Manager
+            </Title>
+            <Badge
+              count={isConnected ? "Connected" : "Disconnected"}
+              dot
+              dotStyle={{
+                background: isConnected ? "#52c41a" : "#ff4d4f",
+              }}
+            />
+          </div>
+          <div className="flex items-center gap-4">
+            <Tooltip content="현재 신뢰도 점수">
+              <div className="flex items-center gap-2">
+                <IconSafe className="text-green-400" />
+                <Text className="text-gray-300">신뢰도: {trustScore}%</Text>
+              </div>
+            </Tooltip>
+            <Button
+              size="small"
+              type="text"
+              icon={<IconCode />}
+              onClick={() => {
+                if (terminalInstance.current) {
+                  terminalInstance.current.clear();
+                  terminalInstance.current.write("$ ");
+                }
+              }}
+            >
+              Clear
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* 메인 콘텐츠 */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* 터미널 */}
+        <div className="flex-1 bg-gray-900 p-4">
+          <div
+            ref={terminalRef}
+            className="h-full w-full overflow-auto"
+            style={{
+              background: "#1e1e2e",
+              padding: "8px",
+              borderRadius: "4px",
+            }}
+          />
+        </div>
+
+        {/* 히스토리 패널 */}
+        <div className="w-80 bg-gray-800 border-l border-gray-700 overflow-hidden flex flex-col">
+          <div className="px-4 py-3 border-b border-gray-700">
+            <Title heading={6} className="!mb-0 text-gray-100">
+              Command History
+            </Title>
+          </div>
+          <div className="flex-1 overflow-y-auto p-4">
+            <List
+              dataSource={history}
+              render={(item: CommandHistory) => (
+                <List.Item
+                  key={item.id}
+                  className="!px-0 !py-2"
+                  style={{
+                    borderBottom: "1px solid rgba(255,255,255,0.08)",
+                  }}
+                >
+                  <div className="w-full">
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center gap-2">
+                        {getStatusIcon(item.status)}
+                        <Tag color={getRiskColor(item.riskLevel)} size="small">
+                          {item.riskLevel}
+                        </Tag>
+                      </div>
+                      <Text className="text-xs text-gray-500">
+                        {new Date(item.timestamp).toLocaleTimeString()}
+                      </Text>
+                    </div>
+                    <Text
+                      className="text-xs font-mono text-gray-300 block truncate"
+                      title={item.command}
+                    >
+                      $ {item.command}
+                    </Text>
+                    {item.error && (
+                      <Text className="text-xs text-red-400 mt-1">
+                        Error: {item.error}
+                      </Text>
+                    )}
+                  </div>
+                </List.Item>
+              )}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 승인 모달 */}
+      <Modal
+        title={
+          <div className="flex items-center gap-2">
+            <IconSafe />
+            <span>명령어 승인 필요</span>
+          </div>
+        }
+        visible={!!approvalModal}
+        onOk={handleApprove}
+        onCancel={handleReject}
+        okText="승인"
+        cancelText="거부"
+        okButtonProps={{
+          status:
+            approvalModal?.riskLevel === "dangerous"
+              ? "danger"
+              : approvalModal?.riskLevel === "caution"
+                ? "warning"
+                : "success",
+        }}
+        maskClosable={false}
+      >
+        <div className="space-y-4">
+          <div>
+            <Text className="text-sm text-gray-500 mb-1">
+              실행하려는 명령어:
+            </Text>
+            <Card className="bg-gray-900">
+              <Text className="font-mono">$ {approvalModal?.command}</Text>
+            </Card>
+          </div>
+
+          <div>
+            <Text className="text-sm text-gray-500 mb-1">위험도 평가:</Text>
+            <Tag
+              color={getRiskColor(approvalModal?.riskLevel || "safe")}
+              size="large"
+            >
+              {approvalModal?.riskLevel === "dangerous"
+                ? "⛔ 매우 위험"
+                : approvalModal?.riskLevel === "caution"
+                  ? "⚠️ 주의 필요"
+                  : "✅ 안전"}
+            </Tag>
+          </div>
+
+          {approvalModal?.warnings && approvalModal.warnings.length > 0 && (
+            <div>
+              <Text className="text-sm text-gray-500 mb-1">경고:</Text>
+              <List
+                size="small"
+                dataSource={approvalModal.warnings}
+                render={(warning: string) => (
+                  <List.Item className="!py-1">
+                    <Text className="text-sm">{warning}</Text>
+                  </List.Item>
+                )}
+              />
+            </div>
+          )}
+
+          {approvalModal?.requiresElevation && (
+            <Card className="bg-yellow-50 border-yellow-300">
+              <div className="flex items-center gap-2">
+                <IconExclamationCircle className="text-yellow-600" />
+                <Text className="text-sm">
+                  이 명령어는 관리자 권한이 필요합니다
+                </Text>
+              </div>
+            </Card>
+          )}
+        </div>
+      </Modal>
+    </div>
+  );
+};
+
+export default SecureTerminalManager;

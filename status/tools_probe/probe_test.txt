@@ -1,0 +1,48 @@
+Gumgang Tools Probe — v0.1
+Purpose: Minimal, truthful capability snapshot for Zed-local Gumgang
+
+1) File System (scoped to project roots)
+- Create file/dir: Supported (this file confirms creation).
+- Read/Write/Edit: Supported via project tools.
+- Move/Copy/Delete: Supported (use with care; /docs is SSOT and read-only by policy).
+- Constraint: Paths must start with a declared project root (e.g., gumgang_meeting/...).
+
+2) Terminal (one-liners only)
+- Supported for short commands that terminate on their own (e.g., echo, ls).
+- Disallowed: Long-running servers/watchers (npm run dev, http.server, etc.).
+
+3) HTTP Retrieval
+- Supported via programmatic fetch of URLs (returns content as text/markdown).
+- Note: This is not a full GUI browser; no interactive rendering or cookies/session control.
+
+4) Editor Integration
+- Open/inspect/edit files within the workspace: Supported.
+- Batch edits and new-file creation: Supported.
+- Attempting to write into SSOT (/gumgang_meeting/docs) may be blocked per freeze policy.
+
+5) Known Policies and Safeguards
+- SSOT (Single Source of Truth) at /gumgang_meeting/docs is frozen (read-only).
+- memory/memory.log is append-only (do not rewrite history).
+- Evidence-first: Important summaries/decisions should link to source paths and line ranges.
+- Token prudence: Use rollups/limits and checkpoints to stay within context budgets.
+
+6) Previously Verified (this session)
+- Terminal echo one-liner executed successfully.
+- Remote fetch retrieved example page content successfully.
+- Create/edit of draft/ops files across memory/, task/, context_observer/, status/, obsidian_vault/ succeeded.
+
+7) Not Available in this Interface
+- Launching a GUI web browser window.
+- Running processes that do not terminate on their own.
+- Directly overriding SSOT freeze without the approved unlock→publish→re-freeze protocol.
+
+8) Next-Probe (optional, upon approval)
+- Append a PROBE record to memory/memory.log (append-only).
+- Create tiny read/write/delete cycle in a sandbox dir (status/tools_probe/sandbox/).
+- Fetch and checksum a known URL; store SHA-256 alongside retrieved byte length.
+- Run a harmless terminal pipeline (echo | sha256sum equivalent) to validate shell piping.
+
+Indicator (snapshot)
+- Environment: Zed-local Gumgang
+- Mode: Read/Write enabled within workspace; SSOT frozen
+- Status: Ready for controlled, evidence-backed execution

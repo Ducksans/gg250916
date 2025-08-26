@@ -1,0 +1,726 @@
+{
+  "scanned_at": "2025-07-30T14:40:17.499232",
+  "backend_file_count": 79,
+  "frontend_file_count": 20,
+  "frontend_api_calls": [],
+  "backend_routes": [
+    "/apply_structure_fixes",
+    "/rescan_structure",
+    "/recall_wiki",
+    "/memory/ingest-all",
+    "/load_file",
+    "/read_master_seed",
+    "/save_chat",
+    "/status",
+    "/harvest",
+    "/memory/ingest",
+    "/edit/proposal",
+    "/create_front_scaffold",
+    "/status/reflect",
+    "/create_component",
+    "/save_file",
+    "/create_electron_scaffold",
+    "/status_report",
+    "/memory/search",
+    "/edit",
+    "/ask"
+  ],
+  "connection_report": [],
+  "backend_files": [
+    {
+      "filename": "main_legacy.py",
+      "path": "app/main_legacy.py",
+      "ext": ".py",
+      "size": 2823,
+      "modified": "2025-07-27T17:07:21.588859"
+    },
+    {
+      "filename": "gumgang_graph_0_7_backup.py",
+      "path": "app/gumgang_graph_0_7_backup.py",
+      "ext": ".py",
+      "size": 4343,
+      "modified": "2025-07-23T12:49:24.070749"
+    },
+    {
+      "filename": "setup_edit_api.sh",
+      "path": "app/setup_edit_api.sh",
+      "ext": ".sh",
+      "size": 1793,
+      "modified": "2025-07-21T13:20:10.031677"
+    },
+    {
+      "filename": "graph.py",
+      "path": "app/graph.py",
+      "ext": ".py",
+      "size": 4620,
+      "modified": "2025-07-27T17:23:00.622020"
+    },
+    {
+      "filename": "edit.py",
+      "path": "app/routes/edit.py",
+      "ext": ".py",
+      "size": 4745,
+      "modified": "2025-07-27T20:03:14.339707"
+    },
+    {
+      "filename": "recall_wiki.py",
+      "path": "app/routes/recall_wiki.py",
+      "ext": ".py",
+      "size": 825,
+      "modified": "2025-07-28T21:11:05.867704"
+    },
+    {
+      "filename": "docs.py",
+      "path": "app/routes/docs.py",
+      "ext": ".py",
+      "size": 510,
+      "modified": "2025-07-28T15:40:00.873099"
+    },
+    {
+      "filename": "status.py",
+      "path": "app/routes/status.py",
+      "ext": ".py",
+      "size": 606,
+      "modified": "2025-07-25T10:13:32.603507"
+    },
+    {
+      "filename": "save_chat.py",
+      "path": "app/routes/save_chat.py",
+      "ext": ".py",
+      "size": 1725,
+      "modified": "2025-07-25T20:58:45.269152"
+    },
+    {
+      "filename": "ask.py",
+      "path": "app/routes/ask.py",
+      "ext": ".py",
+      "size": 1142,
+      "modified": "2025-07-27T21:19:01.623558"
+    },
+    {
+      "filename": "frontend_scaffold.py",
+      "path": "app/routes/frontend_scaffold.py",
+      "ext": ".py",
+      "size": 578,
+      "modified": "2025-07-29T14:51:18.193150"
+    },
+    {
+      "filename": "structure.py",
+      "path": "app/routes/structure.py",
+      "ext": ".py",
+      "size": 874,
+      "modified": "2025-07-27T14:50:57.260021"
+    },
+    {
+      "filename": "structure_fixes.py",
+      "path": "app/routes/structure_fixes.py",
+      "ext": ".py",
+      "size": 562,
+      "modified": "2025-07-28T12:03:48.975297"
+    },
+    {
+      "filename": "ingest.py",
+      "path": "app/routes/ingest.py",
+      "ext": ".py",
+      "size": 3096,
+      "modified": "2025-07-30T09:18:36.404802"
+    },
+    {
+      "filename": "create_component.py",
+      "path": "app/routes/create_component.py",
+      "ext": ".py",
+      "size": 2036,
+      "modified": "2025-07-30T12:16:54.603458"
+    },
+    {
+      "filename": "memory.py",
+      "path": "app/routes/memory.py",
+      "ext": ".py",
+      "size": 794,
+      "modified": "2025-07-25T10:38:40.752393"
+    },
+    {
+      "filename": "file_ops.py",
+      "path": "app/routes/file_ops.py",
+      "ext": ".py",
+      "size": 589,
+      "modified": "2025-07-30T13:21:34.585718"
+    },
+    {
+      "filename": "electron_scaffold.py",
+      "path": "app/routes/electron_scaffold.py",
+      "ext": ".py",
+      "size": 349,
+      "modified": "2025-07-29T15:06:30.153700"
+    },
+    {
+      "filename": "memory.cpython-310.pyc",
+      "path": "app/routes/__pycache__/memory.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 1099,
+      "modified": "2025-07-25T10:38:41.658398"
+    },
+    {
+      "filename": "electron_scaffold.cpython-312.pyc",
+      "path": "app/routes/__pycache__/electron_scaffold.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 743,
+      "modified": "2025-07-30T09:19:28.837560"
+    },
+    {
+      "filename": "ask.cpython-310.pyc",
+      "path": "app/routes/__pycache__/ask.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 1280,
+      "modified": "2025-07-27T21:19:03.168571"
+    },
+    {
+      "filename": "ask.cpython-312.pyc",
+      "path": "app/routes/__pycache__/ask.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 1956,
+      "modified": "2025-07-30T09:16:29.124932"
+    },
+    {
+      "filename": "file_ops.cpython-312.pyc",
+      "path": "app/routes/__pycache__/file_ops.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 1433,
+      "modified": "2025-07-30T13:24:43.045369"
+    },
+    {
+      "filename": "status.cpython-310.pyc",
+      "path": "app/routes/__pycache__/status.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 877,
+      "modified": "2025-07-25T10:13:32.929506"
+    },
+    {
+      "filename": "frontend_scaffold.cpython-312.pyc",
+      "path": "app/routes/__pycache__/frontend_scaffold.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 768,
+      "modified": "2025-07-30T09:19:28.836560"
+    },
+    {
+      "filename": "ingest.cpython-312.pyc",
+      "path": "app/routes/__pycache__/ingest.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 4673,
+      "modified": "2025-07-30T09:18:37.415771"
+    },
+    {
+      "filename": "create_component.cpython-310.pyc",
+      "path": "app/routes/__pycache__/create_component.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 1042,
+      "modified": "2025-07-29T18:18:42.595470"
+    },
+    {
+      "filename": "__init__.cpython-310.pyc",
+      "path": "app/routes/__pycache__/__init__.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 164,
+      "modified": "2025-07-25T10:35:10.716410"
+    },
+    {
+      "filename": "structure.cpython-310.pyc",
+      "path": "app/routes/__pycache__/structure.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 884,
+      "modified": "2025-07-27T14:52:42.663339"
+    },
+    {
+      "filename": "status.cpython-312.pyc",
+      "path": "app/routes/__pycache__/status.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 1126,
+      "modified": "2025-07-30T09:08:04.798334"
+    },
+    {
+      "filename": "ingest.cpython-310.pyc",
+      "path": "app/routes/__pycache__/ingest.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 3191,
+      "modified": "2025-07-25T10:38:41.659398"
+    },
+    {
+      "filename": "structure_fixes.cpython-312.pyc",
+      "path": "app/routes/__pycache__/structure_fixes.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 846,
+      "modified": "2025-07-30T09:16:29.125932"
+    },
+    {
+      "filename": "memory.cpython-312.pyc",
+      "path": "app/routes/__pycache__/memory.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 1579,
+      "modified": "2025-07-30T09:12:46.697788"
+    },
+    {
+      "filename": "structure_fixes.cpython-310.pyc",
+      "path": "app/routes/__pycache__/structure_fixes.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 711,
+      "modified": "2025-07-28T12:11:01.198534"
+    },
+    {
+      "filename": "edit.cpython-310.pyc",
+      "path": "app/routes/__pycache__/edit.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 3971,
+      "modified": "2025-07-27T20:03:15.909718"
+    },
+    {
+      "filename": "electron_scaffold.cpython-310.pyc",
+      "path": "app/routes/__pycache__/electron_scaffold.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 595,
+      "modified": "2025-07-29T15:10:11.736900"
+    },
+    {
+      "filename": "recall_wiki.cpython-312.pyc",
+      "path": "app/routes/__pycache__/recall_wiki.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 1462,
+      "modified": "2025-07-30T09:16:29.127932"
+    },
+    {
+      "filename": "save_chat.cpython-310.pyc",
+      "path": "app/routes/__pycache__/save_chat.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 2135,
+      "modified": "2025-07-25T20:58:46.886154"
+    },
+    {
+      "filename": "structure.cpython-312.pyc",
+      "path": "app/routes/__pycache__/structure.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 1447,
+      "modified": "2025-07-30T09:16:29.124932"
+    },
+    {
+      "filename": "recall_wiki.cpython-310.pyc",
+      "path": "app/routes/__pycache__/recall_wiki.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 1008,
+      "modified": "2025-07-28T21:11:07.357712"
+    },
+    {
+      "filename": "edit.cpython-312.pyc",
+      "path": "app/routes/__pycache__/edit.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 6519,
+      "modified": "2025-07-30T09:16:29.121932"
+    },
+    {
+      "filename": "frontend_scaffold.cpython-310.pyc",
+      "path": "app/routes/__pycache__/frontend_scaffold.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 610,
+      "modified": "2025-07-29T14:52:44.115528"
+    },
+    {
+      "filename": "create_component.cpython-312.pyc",
+      "path": "app/routes/__pycache__/create_component.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 2614,
+      "modified": "2025-07-30T12:16:56.399467"
+    },
+    {
+      "filename": "gumgang_status.json",
+      "path": "app/nodes/gumgang_status.json",
+      "ext": ".json",
+      "size": 981,
+      "modified": "2025-07-22T19:04:30.710768"
+    },
+    {
+      "filename": "version_check.py",
+      "path": "app/nodes/version_check.py",
+      "ext": ".py",
+      "size": 1511,
+      "modified": "2025-07-23T12:49:24.062749"
+    },
+    {
+      "filename": "file_tree_analyzer.py",
+      "path": "app/nodes/file_tree_analyzer.py",
+      "ext": ".py",
+      "size": 2703,
+      "modified": "2025-07-28T10:40:40.230582"
+    },
+    {
+      "filename": "identity_reflect_node.py",
+      "path": "app/nodes/identity_reflect_node.py",
+      "ext": ".py",
+      "size": 2753,
+      "modified": "2025-07-27T10:01:23.107530"
+    },
+    {
+      "filename": "status_report.py",
+      "path": "app/nodes/status_report.py",
+      "ext": ".py",
+      "size": 7565,
+      "modified": "2025-07-30T14:03:56.144190"
+    },
+    {
+      "filename": "file_tree_analyzer.cpython-312.pyc",
+      "path": "app/nodes/__pycache__/file_tree_analyzer.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 4488,
+      "modified": "2025-07-30T09:12:04.870904"
+    },
+    {
+      "filename": "identity_reflect_node.cpython-312.pyc",
+      "path": "app/nodes/__pycache__/identity_reflect_node.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 4177,
+      "modified": "2025-07-30T09:12:46.689788"
+    },
+    {
+      "filename": "file_tree_analyzer.cpython-310.pyc",
+      "path": "app/nodes/__pycache__/file_tree_analyzer.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 2730,
+      "modified": "2025-07-28T10:40:41.513578"
+    },
+    {
+      "filename": "identity_reflect_node.cpython-310.pyc",
+      "path": "app/nodes/__pycache__/identity_reflect_node.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 2866,
+      "modified": "2025-07-27T10:01:24.410513"
+    },
+    {
+      "filename": "status_report.cpython-310.pyc",
+      "path": "app/nodes/__pycache__/status_report.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 5080,
+      "modified": "2025-07-28T10:09:23.729262"
+    },
+    {
+      "filename": "status_report.cpython-312.pyc",
+      "path": "app/nodes/__pycache__/status_report.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 8009,
+      "modified": "2025-07-30T14:03:56.571192"
+    },
+    {
+      "filename": "version_check.cpython-310.pyc",
+      "path": "app/nodes/__pycache__/version_check.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 1193,
+      "modified": "2025-07-25T09:44:33.157007"
+    },
+    {
+      "filename": "wiki_qa_chain.py",
+      "path": "app/chains/wiki_qa_chain.py",
+      "ext": ".py",
+      "size": 1305,
+      "modified": "2025-07-28T21:10:10.828425"
+    },
+    {
+      "filename": "wiki_qa_chain.cpython-312.pyc",
+      "path": "app/chains/__pycache__/wiki_qa_chain.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 1417,
+      "modified": "2025-07-30T09:16:29.128932"
+    },
+    {
+      "filename": "wiki_qa_chain.cpython-310.pyc",
+      "path": "app/chains/__pycache__/wiki_qa_chain.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 1231,
+      "modified": "2025-07-28T21:10:12.422433"
+    },
+    {
+      "filename": "component_logger.py",
+      "path": "app/utils/component_logger.py",
+      "ext": ".py",
+      "size": 1311,
+      "modified": "2025-07-30T12:15:05.795954"
+    },
+    {
+      "filename": "save_file.py",
+      "path": "app/utils/save_file.py",
+      "ext": ".py",
+      "size": 1444,
+      "modified": "2025-07-30T13:21:01.215608"
+    },
+    {
+      "filename": "structure_fix_applier.py",
+      "path": "app/utils/structure_fix_applier.py",
+      "ext": ".py",
+      "size": 4273,
+      "modified": "2025-07-28T12:27:16.651195"
+    },
+    {
+      "filename": "load_file.py",
+      "path": "app/utils/load_file.py",
+      "ext": ".py",
+      "size": 589,
+      "modified": "2025-07-30T13:20:53.369582"
+    },
+    {
+      "filename": "edit_history_reader.py",
+      "path": "app/utils/edit_history_reader.py",
+      "ext": ".py",
+      "size": 1863,
+      "modified": "2025-07-27T23:03:14.867391"
+    },
+    {
+      "filename": "edit_logger.py",
+      "path": "app/utils/edit_logger.py",
+      "ext": ".py",
+      "size": 933,
+      "modified": "2025-07-27T20:13:13.657549"
+    },
+    {
+      "filename": "structure_fix_logger.py",
+      "path": "app/utils/structure_fix_logger.py",
+      "ext": ".py",
+      "size": 600,
+      "modified": "2025-07-28T12:04:45.110771"
+    },
+    {
+      "filename": "structure_fix_logger.cpython-310.pyc",
+      "path": "app/utils/__pycache__/structure_fix_logger.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 819,
+      "modified": "2025-07-28T12:20:45.037053"
+    },
+    {
+      "filename": "load_file.cpython-312.pyc",
+      "path": "app/utils/__pycache__/load_file.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 998,
+      "modified": "2025-07-30T13:20:53.895584"
+    },
+    {
+      "filename": "structure_fix_applier.cpython-310.pyc",
+      "path": "app/utils/__pycache__/structure_fix_applier.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 3661,
+      "modified": "2025-07-28T12:27:18.194203"
+    },
+    {
+      "filename": "structure_fix_logger.cpython-312.pyc",
+      "path": "app/utils/__pycache__/structure_fix_logger.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 1359,
+      "modified": "2025-07-30T09:16:29.127932"
+    },
+    {
+      "filename": "component_logger.cpython-312.pyc",
+      "path": "app/utils/__pycache__/component_logger.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 1640,
+      "modified": "2025-07-30T12:16:56.399467"
+    },
+    {
+      "filename": "edit_history_reader.cpython-312.pyc",
+      "path": "app/utils/__pycache__/edit_history_reader.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 3091,
+      "modified": "2025-07-30T09:12:04.871904"
+    },
+    {
+      "filename": "edit_logger.cpython-310.pyc",
+      "path": "app/utils/__pycache__/edit_logger.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 1010,
+      "modified": "2025-07-27T20:13:15.190553"
+    },
+    {
+      "filename": "structure_fix_applier.cpython-312.pyc",
+      "path": "app/utils/__pycache__/structure_fix_applier.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 5730,
+      "modified": "2025-07-30T09:16:29.126932"
+    },
+    {
+      "filename": "edit_history_reader.cpython-310.pyc",
+      "path": "app/utils/__pycache__/edit_history_reader.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 1822,
+      "modified": "2025-07-27T23:03:16.134400"
+    },
+    {
+      "filename": "edit_logger.cpython-312.pyc",
+      "path": "app/utils/__pycache__/edit_logger.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 1973,
+      "modified": "2025-07-30T09:16:29.122931"
+    },
+    {
+      "filename": "save_file.cpython-312.pyc",
+      "path": "app/utils/__pycache__/save_file.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 2305,
+      "modified": "2025-07-30T13:21:01.744610"
+    },
+    {
+      "filename": "main.cpython-310.pyc",
+      "path": "app/__pycache__/main.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 2879,
+      "modified": "2025-07-27T17:07:21.872862"
+    },
+    {
+      "filename": "graph.cpython-312.pyc",
+      "path": "app/__pycache__/graph.cpython-312.pyc",
+      "ext": ".pyc",
+      "size": 5901,
+      "modified": "2025-07-30T09:12:04.873904"
+    },
+    {
+      "filename": "graph.cpython-310.pyc",
+      "path": "app/__pycache__/graph.cpython-310.pyc",
+      "ext": ".pyc",
+      "size": 4108,
+      "modified": "2025-07-27T17:23:01.900014"
+    }
+  ],
+  "frontend_files": [
+    {
+      "filename": "index.css",
+      "path": "../frontend/src/index.css",
+      "ext": ".css",
+      "size": 202,
+      "modified": "2025-07-29T13:04:08.615155"
+    },
+    {
+      "filename": "types.ts",
+      "path": "../frontend/src/types.ts",
+      "ext": ".ts",
+      "size": 228,
+      "modified": "2025-07-23T13:51:13.945477"
+    },
+    {
+      "filename": "App.jsx",
+      "path": "../frontend/src/App.jsx",
+      "ext": ".jsx",
+      "size": 2535,
+      "modified": "2025-07-29T13:30:53.187030"
+    },
+    {
+      "filename": "main.tsx",
+      "path": "../frontend/src/main.tsx",
+      "ext": ".tsx",
+      "size": 379,
+      "modified": "2025-07-29T13:33:21.261968"
+    },
+    {
+      "filename": "StructureScanButton.tsx",
+      "path": "../frontend/src/components/StructureScanButton.tsx",
+      "ext": ".tsx",
+      "size": 864,
+      "modified": "2025-07-27T14:54:31.412637"
+    },
+    {
+      "filename": "ChatMessage.tsx",
+      "path": "../frontend/src/components/ChatMessage.tsx",
+      "ext": ".tsx",
+      "size": 501,
+      "modified": "2025-07-29T12:59:36.184963"
+    },
+    {
+      "filename": "EditResultCard.tsx",
+      "path": "../frontend/src/components/EditResultCard.tsx",
+      "ext": ".tsx",
+      "size": 2006,
+      "modified": "2025-07-27T21:36:29.156223"
+    },
+    {
+      "filename": "Header.tsx",
+      "path": "../frontend/src/components/Header.tsx",
+      "ext": ".tsx",
+      "size": 1952,
+      "modified": "2025-07-29T17:22:50.674093"
+    },
+    {
+      "filename": "MemorySeedDisplay.tsx",
+      "path": "../frontend/src/components/MemorySeedDisplay.tsx",
+      "ext": ".tsx",
+      "size": 1626,
+      "modified": "2025-07-29T11:46:34.196605"
+    },
+    {
+      "filename": "StructureReportCard.tsx",
+      "path": "../frontend/src/components/StructureReportCard.tsx",
+      "ext": ".tsx",
+      "size": 542,
+      "modified": "2025-07-28T11:07:00.447578"
+    },
+    {
+      "filename": "ChatInput.tsx",
+      "path": "../frontend/src/components/ChatInput.tsx",
+      "ext": ".tsx",
+      "size": 1291,
+      "modified": "2025-07-29T12:43:16.381078"
+    },
+    {
+      "filename": "StatusDisplay.tsx",
+      "path": "../frontend/src/components/StatusDisplay.tsx",
+      "ext": ".tsx",
+      "size": 480,
+      "modified": "2025-07-23T10:28:18.756422"
+    },
+    {
+      "filename": "parseEditHistory.ts",
+      "path": "../frontend/src/components/parseEditHistory.ts",
+      "ext": ".ts",
+      "size": 971,
+      "modified": "2025-07-27T21:46:10.718140"
+    },
+    {
+      "filename": "StructureProposalCard.tsx",
+      "path": "../frontend/src/components/StructureProposalCard.tsx",
+      "ext": ".tsx",
+      "size": 3261,
+      "modified": "2025-07-28T12:42:15.335520"
+    },
+    {
+      "filename": "EditHistoryCard.tsx",
+      "path": "../frontend/src/components/EditHistoryCard.tsx",
+      "ext": ".tsx",
+      "size": 1748,
+      "modified": "2025-07-27T22:00:47.449046"
+    },
+    {
+      "filename": "MessageBubble.tsx",
+      "path": "../frontend/src/components/MessageBubble.tsx",
+      "ext": ".tsx",
+      "size": 1316,
+      "modified": "2025-07-29T12:42:10.017204"
+    },
+    {
+      "filename": "ChatWindow.tsx",
+      "path": "../frontend/src/components/ChatWindow.tsx",
+      "ext": ".tsx",
+      "size": 2158,
+      "modified": "2025-07-29T13:00:43.285526"
+    },
+    {
+      "filename": "GumgangStatusCard.tsx",
+      "path": "../frontend/src/components/GumgangStatusCard.tsx",
+      "ext": ".tsx",
+      "size": 4919,
+      "modified": "2025-07-28T11:27:55.978276"
+    },
+    {
+      "filename": "RoadmapPage.jsx",
+      "path": "../frontend/src/pages/RoadmapPage.jsx",
+      "ext": ".jsx",
+      "size": 4165,
+      "modified": "2025-07-29T11:41:51.174652"
+    },
+    {
+      "filename": "HomePage.jsx",
+      "path": "../frontend/src/pages/HomePage.jsx",
+      "ext": ".jsx",
+      "size": 1911,
+      "modified": "2025-07-29T12:39:55.456696"
+    }
+  ]
+}

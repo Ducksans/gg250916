@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-LOCAL",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250825-203205-lxwqmd",
+    "model": "gpt-5",
+    "created_at": "2025-08-25T11:32:28.834Z",
+    "updated_at": "2025-08-25T11:32:28.834Z",
+    "type": "chat",
+    "version": 1,
+    "provider": "openai",
+    "upstream_model": "gpt-5-2025-08-07",
+    "last_request_id": "req_7c15c478b5ad431d80cfdb4f34953bd6"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "채팅창 레이아웃 리빌딩 중입니다. 샘플 출력 바랍니다",
+      "ts": "2025-08-25T11:32:05.331Z"
+    },
+    {
+      "role": "assistant",
+      "content": "샘플 출력: 12:34 사용자: 안녕하세요! | 12:34 어시스턴트: 안녕하세요, 무엇을 도와드릴까요? | 12:35 시스템: 연결 상태 양호(지연 120ms) | 12:35 어시스턴트(입력중): ●●● | 12:36 어시스턴트: 파일 image.png(120KB) 업로드 완료 | 12:36 경고: 네트워크 일시 지연 발생, 재시도 중… | 12:37 어시스턴트: 결과가 준비되었습니다(3건) | 퀵액션: [복사][공유][다시 시도] | 토스트: 복사되었습니다 | 페이지네이션: 1/5 | 푸터: 세션 #1234 • 모델 gpt-4o-mini; 근거: 1) 지금 응답은 openai 엔진을 호출 합니까? 2) ping 3) 덕산 합의: 기억-우선 원칙과 5계층 메모리(ST-1201) 라우팅 및 임계치 미달 시 ‘없음 템플릿’+Evidence 경로 포함; evidence_path: status/evidence/memory/tiers/ultra_short/20250825/A1-meqvzudq.jsonl#L11-11, status/evidence/memory/tiers/ultra_short/20250825/A1-meqil0q4.jsonl#L3-3, status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl#L1-1",
+      "ts": "2025-08-25T11:32:28.834Z",
+      "usage": {
+        "prompt_tokens": 360,
+        "completion_tokens": 2090,
+        "total_tokens": 2450,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1728,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-5-2025-08-07",
+      "request_id": "req_7c15c478b5ad431d80cfdb4f34953bd6"
+    }
+  ]
+}

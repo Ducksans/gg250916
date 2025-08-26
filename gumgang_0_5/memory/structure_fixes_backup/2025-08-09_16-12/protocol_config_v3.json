@@ -1,0 +1,29 @@
+{
+  "version": "3.0",
+  "trust_threshold": 92.0,
+  "auto_backup": true,
+  "auto_rollback": true,
+  "max_rollback_attempts": 3,
+  "checkpoint_interval": 3600,
+  "dangerous_commands": [
+    "rm -rf /",
+    "format",
+    "del /f /s /q",
+    ":(){:|:&};:",
+    "dd if=/dev/zero"
+  ],
+  "protected_paths": [
+    "/etc",
+    "/usr",
+    "/bin",
+    "/sbin",
+    "/System",
+    "C:\\Windows",
+    "C:\\Program Files"
+  ],
+  "allowed_paths": [
+    "/home/duksan/바탕화면/gumgang_0_5",
+    "/tmp",
+    "/home/duksan/바탕화면"
+  ]
+}

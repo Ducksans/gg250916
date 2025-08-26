@@ -1,0 +1,10 @@
+[
+  {
+    "source_url": "https://tauri.app",
+    "canonical_url": "https://v2.tauri.app/",
+    "recorded_at": "2025-08-19T14:18:19Z",
+    "snapshot_path": "gumgang_meeting/status/resources/fetch_snapshot_20250819_tauri.app.md",
+    "raw_excerpt": "<!DOCTYPE html><html lang=\"en\" dir=\"ltr\" data-theme=\"dark\"><head><meta charset=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><title>Tauri 2.0 | Tauri</title><link rel=\"canonical\" href=\"https://v2.tauri.app/\"/></head>",
+    "summary": "Landing page for Tauri 2.0: small, secure, cross-platform app toolkit. Links to guides, references, blog, and releases. Emphasizes frontend-agnostic approach, minimal binary size, and multi-platform targets (desktop and mobile)."
+  }
+]

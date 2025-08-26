@@ -1,0 +1,198 @@
+session_id: SESSION-20250808-120939
+timestamp: '2025-08-08T12:09:40.886390'
+previous_session: null
+verified_facts:
+  structure:
+    timestamp: '2025-08-08T12:09:39.457236'
+    directories:
+      frontend_legacy:
+        path: /home/duksan/바탕화면/gumgang_0_5/frontend
+        exists: false
+        is_dir: false
+        file_count: 0
+      frontend_v2:
+        path: /home/duksan/바탕화면/gumgang_0_5/gumgang-v2
+        exists: true
+        is_dir: true
+        file_count: 38933
+      backend:
+        path: /home/duksan/바탕화면/gumgang_0_5/backend
+        exists: true
+        is_dir: true
+        file_count: 57019
+      memory:
+        path: /home/duksan/바탕화면/gumgang_0_5/memory
+        exists: true
+        is_dir: true
+        file_count: 13
+      context:
+        path: /home/duksan/바탕화면/gumgang_0_5/context
+        exists: true
+        is_dir: true
+        file_count: 1
+      task_tracking:
+        path: /home/duksan/바탕화면/gumgang_0_5/task_tracking
+        exists: true
+        is_dir: true
+        file_count: 0
+    critical_files:
+      gumgang-v2/package.json:
+        exists: true
+        size: 1183
+        modified: '2025-08-07T18:59:33.749419'
+        hash: d981938802adfbd90ce293aa26a4c277
+      gumgang-v2/app/dashboard/page.tsx:
+        exists: true
+        size: 19841
+        modified: '2025-08-07T21:28:46.112388'
+        hash: b40ca20245bd012e3965bf17be770dc3
+      backend/app/api/routes/dashboard.py:
+        exists: true
+        size: 24438
+        modified: '2025-08-08T10:38:59.419925'
+        hash: 8cb1bf22726ce0156726d460165a8ce9
+      backend/main.py:
+        exists: true
+        size: 6494
+        modified: '2025-08-08T09:18:22.748684'
+        hash: 188b2aba32e22f9f86cb7a7edb7a6f86
+      backend/app_new.py:
+        exists: true
+        size: 1176
+        modified: '2025-08-08T10:48:52.466398'
+        hash: d223e93c29e55556edee50bb26bc5d6e
+      session_manager.py:
+        exists: true
+        size: 21934
+        modified: '2025-08-08T12:02:31.160639'
+        hash: 7d55b37d6949100a4ed5d7e5b4ddff17
+      task_tracker.py:
+        exists: true
+        size: 26009
+        modified: '2025-08-08T12:05:20.124148'
+        hash: b6a8eacf229af39882d22aac92b95a9b
+    issues: []
+    recommendations: []
+  services:
+    frontend:
+      port: 3000
+      running: false
+      process: null
+    backend:
+      port: 8000
+      running: false
+      process: null
+  frontend_path: /gumgang-v2
+  backend_path: /backend
+  using_next_js: true
+  monaco_editor: true
+  tauri_enabled: true
+warnings: []
+tasks_completed: []
+tasks_pending: []
+tasks_in_progress: []
+file_states:
+  gumgang-v2/package.json:
+    path: gumgang-v2/package.json
+    exists: true
+    size: 1183
+    modified: '2025-08-07T18:59:33.749419'
+    hash: d981938802adfbd90ce293aa26a4c277
+    content_preview: "{\n  \"name\": \"gumgang-v2\",\n  \"version\": \"0.1.0\",\n\
+      \  \"private\": true,\n  \"scripts\": {"
+  gumgang-v2/app/dashboard/page.tsx:
+    path: gumgang-v2/app/dashboard/page.tsx
+    exists: true
+    size: 19841
+    modified: '2025-08-07T21:28:46.112388'
+    hash: b40ca20245bd012e3965bf17be770dc3
+    content_preview: '"use client";
+
+
+      import { useState, useEffect, useCallback } from "react";
+
+      import dynamic from "next/dynamic";
+
+      import { useUnifiedBackend } from "@/hooks/useUnifiedBackend";'
+  backend/app/api/routes/dashboard.py:
+    path: backend/app/api/routes/dashboard.py
+    exists: true
+    size: 24438
+    modified: '2025-08-08T10:38:59.419925'
+    hash: 8cb1bf22726ce0156726d460165a8ce9
+    content_preview: '"""
+
+      금강 2.0 대시보드 API
+
+
+      프로젝트 전체 상태 모니터링 및 제어를 위한 API 엔드포인트
+
+      실시간 WebSocket 통신 및 Zed 에디터 통합 지원'
+  backend/main.py:
+    path: backend/main.py
+    exists: true
+    size: 6494
+    modified: '2025-08-08T09:18:22.748684'
+    hash: 188b2aba32e22f9f86cb7a7edb7a6f86
+    content_preview: 'import os
+
+      import json
+
+      import subprocess
+
+      from dotenv import load_dotenv
+
+      from fastapi import FastAPI, Request'
+  backend/app_new.py:
+    path: backend/app_new.py
+    exists: true
+    size: 1176
+    modified: '2025-08-08T10:48:52.466398'
+    hash: d223e93c29e55556edee50bb26bc5d6e
+    content_preview: '"""
+
+      금강 2.0 백엔드 애플리케이션 진입점
+
+
+      새로운 API 구조를 사용하는 FastAPI 애플리케이션
+
+      대시보드, 채팅, 시스템 관리 기능 통합'
+  session_manager.py:
+    path: session_manager.py
+    exists: true
+    size: 21934
+    modified: '2025-08-08T12:02:31.160639'
+    hash: 7d55b37d6949100a4ed5d7e5b4ddff17
+    content_preview: '#!/usr/bin/env python3
+
+      """
+
+      금강 2.0 세션 관리 시스템
+
+      - 세션 간 컨텍스트 영속화
+
+      - 할루시네이션 방지'
+  task_tracker.py:
+    path: task_tracker.py
+    exists: true
+    size: 26009
+    modified: '2025-08-08T12:05:20.124148'
+    hash: b6a8eacf229af39882d22aac92b95a9b
+    content_preview: '#!/usr/bin/env python3
+
+      """
+
+      금강 2.0 Task 추적 시스템
+
+      - 모든 작업에 고유 ID 부여
+
+      - 계층적 Task 관리'
+memory_layers: {}
+session_metrics:
+  token_usage:
+    current: 0
+    limit: 120000
+  api_calls: 0
+  files_created: 0
+  files_modified: 0
+  execution_time: 0

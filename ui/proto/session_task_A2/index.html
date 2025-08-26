@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Session/Task View A2 — Minimal Prototype</title>
+        <style>
+            :root {
+                --bg: #ffffff;
+                --text: #111827;
+                --panel: #ffffff;
+                --muted: #6b7280;
+                --border: #e5e7eb;
+                --primary: #0a5ea8;
+                --danger: #ef4444;
+                --ring: rgba(59, 130, 246, 0.2);
+                --shadow:
+                    0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+            [data-theme="dark"] {
+                --bg: #0b1220;
+                --text: #e5e7eb;
+                --panel: #111827;
+                --muted: #94a3b8;
+                --border: #1f2937;
+                --primary: #0b4d8a;
+                --danger: #ef4444;
+                --ring: rgba(59, 130, 246, 0.25);
+                --shadow:
+                    0 1px 2px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.3);
+            }
+
+            /* Base */
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                height: 100%;
+            }
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: var(--text);
+                font-family:
+                    ui-sans-serif,
+                    -apple-system,
+                    "Segoe UI",
+                    Roboto,
+                    Helvetica,
+                    Arial,
+                    "Apple Color Emoji",
+                    "Segoe UI Emoji";
+            }
+            button {
+                font: inherit;
+            }
+
+            /* Top bar */
+            .topbar {
+                position: sticky;
+                top: 0;
+                z-index: 5;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 12px 16px;
+                background: var(--panel);
+                border-bottom: 1px solid var(--border);
+            }
+            .topbar h1 {
+                margin: 0;
+                font-size: 16px;
+                letter-spacing: 0.01em;
+            }
+            .toolbar {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .hint {
+                font-size: 12px;
+                color: var(--muted);
+            }
+
+            /* Buttons / badges */
+            .badge,
+            .btn {
+                border: 1px solid var(--border);
+                background: transparent;
+                color: var(--text);
+                border-radius: 8px;
+                cursor: pointer;
+            }
+            .badge {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            .btn {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+            .btn.primary {
+                background: var(--primary);
+                color: #fff;
+                border-color: transparent;
+            }
+            .btn.danger {
+                background: var(--danger);
+                color: #fff;
+                border-color: transparent;
+            }
+            .btn:active {
+                transform: translateY(1px);
+            }
+
+            /* Layout */
+            .app {
+                display: grid;
+                grid-template-columns: 280px 1fr;
+                min-height: calc(100vh - 54px);
+                min-width: 720px;
+            }
+            .panel {
+                background: var(--panel);
+            }
+
+            /* Sessions panel */
+            .sessions-panel {
+                border-right: 1px solid var(--border);
+                display: flex;
+                flex-direction: column;
+                min-height: 0; /* allow child to shrink in grid */
+            }
+            .panel-header {
+                padding: 12px;
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+            }
+            .panel-header h2 {
+                margin: 0;
+                font-size: 14px;
+            }
+            .sessions {
+                list-style: none;
+                margin: 0;
+                padding: 8px;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                overflow-y: auto;
+                min-height: 0;
+            }
+            .session-item {
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                cursor: pointer;
+                box-shadow: var(--shadow);
+                background: transparent;
+            }
+            .session-item .name {
+                font-weight: 600;
+                font-size: 13px;
+            }
+            .session-item .meta {
+                font-size: 11px;
+                color: var(--muted);
+            }
+            .session-item:focus {
+                outline: none;
+                box-shadow: 0 0 0 3px var(--ring);
+            }
+            .session-item.selected {
+                outline: 2px solid var(--primary);
+                outline-offset: 1px;
+            }
+
+            /* Tasks panel */
+            .tasks-panel {
+                display: flex;
+                flex-direction: column;
+                min-height: 0;
+            }
+            .tasks-header {
+                padding: 12px;
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+            }
+            .tasks-header .title {
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            .composer {
+                padding: 12px;
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .composer input[type="text"] {
+                flex: 1;
+                padding: 10px 12px;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                outline: none;
+                background: transparent;
+                color: var(--text);
+            }
+            .composer input[type="text"]:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px var(--ring);
+            }
+
+            .tasks {
+                list-style: none;
+                margin: 0;
+                padding: 12px;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                overflow-y: auto;
+                flex: 1;
+                min-height: 0;
+            }
+            .task-item {
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 10px 12px;
+                display: grid;
+                grid-template-columns: 24px 1fr auto;
+                gap: 10px;
+                align-items: center;
+                box-shadow: var(--shadow);
+                background: transparent;
+            }
+            .task-item .title {
+                font-size: 14px;
+            }
+            .task-item .meta {
+                font-size: 11px;
+                color: var(--muted);
+            }
+            .task-item.completed .title {
+                text-decoration: line-through;
+                opacity: 0.7;
+            }
+
+            .empty {
+                padding: 24px;
+                color: var(--muted);
+                font-size: 13px;
+            }
+
+            .footer {
+                border-top: 1px solid var(--border);
+                padding: 8px 12px;
+                font-size: 12px;
+                color: var(--muted);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            @media (max-width: 860px) {
+                .app {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header class="topbar" role="banner">
+            <h1>Session/Task View A2 — Minimal Prototype</h1>
+            <div class="toolbar">
+                <span class="hint">Dark/Light</span>
+                <button
+                    id="themeToggle"
+                    class="badge"
+                    aria-label="Toggle theme"
+                >
+                    Dark
+                </button>
+            </div>
+        </header>
+
+        <main class="app" aria-label="A2 Prototype">
+            <!-- Sessions -->
+            <aside class="panel sessions-panel">
+                <div class="panel-header">
+                    <h2>Sessions</h2>
+                    <div class="toolbar">
+                        <button
+                            id="newSessionBtn"
+                            class="btn primary"
+                            aria-label="New Session"
+                        >
+                            New
+                        </button>
+                        <button
+                            id="deleteSessionBtn"
+                            class="btn danger"
+                            aria-label="Delete Session"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
+                <ul
+                    id="sessions"
+                    class="sessions"
+                    aria-label="Session list"
+                ></ul>
+                <div class="footer">
+                    <div><strong id="sessionCount">0</strong> sessions</div>
+                    <div class="hint">A2-T1/T2</div>
+                </div>
+            </aside>
+
+            <!-- Tasks -->
+            <section class="panel tasks-panel">
+                <div class="tasks-header">
+                    <div class="title" id="currentSessionName">
+                        No session selected
+                    </div>
+                    <div class="hint">A2-T3/T4</div>
+                </div>
+                <div class="composer" role="form" aria-label="Add task">
+                    <label
+                        for="taskInput"
+                        class="hint"
+                        style="position: absolute; left: -9999px"
+                        >Task title</label
+                    >
+                    <input
+                        id="taskInput"
+                        type="text"
+                        placeholder="Enter task title and press Enter"
+                    />
+                    <button id="addTaskBtn" class="btn" aria-label="Add Task">
+                        Add Task
+                    </button>
+                </div>
+                <ul id="tasks" class="tasks" aria-label="Task list"></ul>
+                <div class="footer">
+                    <div><strong id="taskCount">0</strong> tasks</div>
+                    <div class="hint">
+                        Tips: Select a session to manage its tasks
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <script>
+            // ---------- Utils ----------
+            const pad2 = (n) => (n < 10 ? "0" : "") + n;
+            const hhmm = (d = new Date()) =>
+                pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+            const uid = (p = "id") =>
+                p +
+                "_" +
+                Date.now().toString(36) +
+                Math.random().toString(36).slice(2, 7);
+
+            // ---------- DOM ----------
+            const $themeToggle = document.getElementById("themeToggle");
+            const $sessions = document.getElementById("sessions");
+            const $tasks = document.getElementById("tasks");
+            const $sessionCount = document.getElementById("sessionCount");
+            const $taskCount = document.getElementById("taskCount");
+            const $currentSessionName =
+                document.getElementById("currentSessionName");
+            const $taskInput = document.getElementById("taskInput");
+
+            // ---------- Theme ----------
+            const THEME_KEY = "gg_a2_theme";
+            function applyTheme(t) {
+                document.documentElement.setAttribute("data-theme", t);
+                $themeToggle.textContent = t === "dark" ? "Dark" : "Light";
+            }
+            applyTheme(localStorage.getItem(THEME_KEY) || "dark");
+            $themeToggle.addEventListener("click", () => {
+                const next =
+                    document.documentElement.getAttribute("data-theme") ===
+                    "dark"
+                        ? "light"
+                        : "dark";
+                applyTheme(next);
+                localStorage.setItem(THEME_KEY, next);
+            });
+
+            // ---------- State ----------
+            const STATE_KEY = "gg_a2_state";
+            let state = { sessions: [], selectedSessionId: null, seq: 1 };
+
+            const save = () => {
+                try {
+                    localStorage.setItem(STATE_KEY, JSON.stringify(state));
+                } catch (_) {}
+            };
+            (function load() {
+                try {
+                    const raw = localStorage.getItem(STATE_KEY);
+                    if (!raw) return;
+                    const parsed = JSON.parse(raw);
+                    if (parsed && Array.isArray(parsed.sessions)) {
+                        state = Object.assign(
+                            { sessions: [], selectedSessionId: null, seq: 1 },
+                            parsed,
+                        );
+                    }
+                } catch (_) {}
+            })();
+
+            // ---------- Model ----------
+            function ensureInitialSession() {
+                if (state.sessions.length === 0) {
+                    const id = uid("sess");
+                    state.sessions.push({
+                        id,
+                        name: "Session " + state.seq++,
+                        createdAt: hhmm(),
+                        tasks: [],
+                    });
+                    state.selectedSessionId = id;
+                    save();
+                }
+            }
+            const getSelectedSession = () =>
+                state.sessions.find((s) => s.id === state.selectedSessionId) ||
+                null;
+            const getSelectedIndex = () =>
+                state.sessions.findIndex(
+                    (s) => s.id === state.selectedSessionId,
+                );
+
+            // ---------- Render helpers ----------
+            function el(tag, className, text) {
+                const n = document.createElement(tag);
+                if (className) n.className = className;
+                if (text !== undefined) n.textContent = text;
+                return n;
+            }
+
+            // ---------- Render ----------
+            function renderSessions() {
+                $sessions.innerHTML = "";
+                state.sessions.forEach((s) => {
+                    const li = el(
+                        "li",
+                        "session-item" +
+                            (s.id === state.selectedSessionId
+                                ? " selected"
+                                : ""),
+                    );
+                    li.setAttribute("data-id", s.id);
+                    li.setAttribute("tabindex", "0");
+                    li.setAttribute("role", "button");
+                    li.appendChild(el("div", "name", s.name));
+                    li.appendChild(
+                        el(
+                            "div",
+                            "meta",
+                            "Created " +
+                                s.createdAt +
+                                " · Tasks " +
+                                s.tasks.length,
+                        ),
+                    );
+                    li.addEventListener("click", () => selectSession(s.id));
+                    li.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            selectSession(s.id);
+                        }
+                    });
+                    $sessions.appendChild(li);
+                });
+                $sessionCount.textContent = String(state.sessions.length);
+            }
+
+            function renderTasks() {
+                const sess = getSelectedSession();
+                $tasks.innerHTML = "";
+                if (!sess) {
+                    $currentSessionName.textContent = "No session selected";
+                    $taskCount.textContent = "0";
+                    $tasks.appendChild(
+                        el(
+                            "div",
+                            "empty",
+                            "Select or create a session to manage tasks.",
+                        ),
+                    );
+                    return;
+                }
+                $currentSessionName.textContent = sess.name;
+
+                if (sess.tasks.length === 0) {
+                    $tasks.appendChild(
+                        el(
+                            "div",
+                            "empty",
+                            "No tasks yet. Add your first task!",
+                        ),
+                    );
+                } else {
+                    sess.tasks.forEach((task) => {
+                        const li = el(
+                            "li",
+                            "task-item" + (task.completed ? " completed" : ""),
+                        );
+                        li.setAttribute("data-id", task.id);
+
+                        const toggle = document.createElement("input");
+                        toggle.type = "checkbox";
+                        toggle.className = "toggle";
+                        toggle.checked = !!task.completed;
+                        toggle.setAttribute("aria-label", "Toggle complete");
+                        toggle.addEventListener("change", () =>
+                            toggleTask(task.id, toggle.checked),
+                        );
+
+                        li.appendChild(toggle);
+                        li.appendChild(el("div", "title", task.title));
+                        li.appendChild(el("div", "meta", task.createdAt));
+                        $tasks.appendChild(li);
+                    });
+                }
+                $taskCount.textContent = String(sess.tasks.length);
+            }
+
+            // ---------- Actions ----------
+            function selectSession(id) {
+                state.selectedSessionId = id;
+                save();
+                renderSessions();
+                renderTasks();
+                $taskInput.focus();
+            }
+
+            function newSession() {
+                const id = uid("sess");
+                const name = "Session " + state.seq++;
+                state.sessions.push({ id, name, createdAt: hhmm(), tasks: [] });
+                state.selectedSessionId = id;
+                save();
+                renderSessions();
+                renderTasks();
+                $taskInput.focus();
+            }
+
+            function deleteSession() {
+                if (!state.selectedSessionId) return;
+                const idx = getSelectedIndex();
+                if (idx === -1) return;
+                state.sessions.splice(idx, 1);
+                if (state.sessions.length > 0) {
+                    const nextIdx = Math.min(idx, state.sessions.length - 1);
+                    state.selectedSessionId = state.sessions[nextIdx].id;
+                } else {
+                    state.selectedSessionId = null;
+                }
+                save();
+                renderSessions();
+                renderTasks();
+            }
+
+            function addTask() {
+                const sess = getSelectedSession();
+                if (!sess) return;
+                const text = ($taskInput.value || "").trim();
+                if (!text) return;
+                const id = uid("task");
+                sess.tasks.push({
+                    id,
+                    title: text,
+                    completed: false,
+                    createdAt: hhmm(),
+                });
+                $taskInput.value = "";
+                $taskInput.focus();
+                save();
+                renderTasks();
+            }
+
+            function toggleTask(taskId, completed) {
+                const sess = getSelectedSession();
+                if (!sess) return;
+                const t = sess.tasks.find((x) => x.id === taskId);
+                if (!t) return;
+                t.completed = !!completed;
+                save();
+                renderTasks();
+            }
+
+            // ---------- Bindings ----------
+            document
+                .getElementById("newSessionBtn")
+                .addEventListener("click", newSession);
+            document
+                .getElementById("deleteSessionBtn")
+                .addEventListener("click", deleteSession);
+            document
+                .getElementById("addTaskBtn")
+                .addEventListener("click", addTask);
+            $taskInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    addTask();
+                }
+            });
+
+            // ---------- Init ----------
+            ensureInitialSession();
+            renderSessions();
+            renderTasks();
+            $taskInput.focus();
+        </script>
+    </body>
+</html>

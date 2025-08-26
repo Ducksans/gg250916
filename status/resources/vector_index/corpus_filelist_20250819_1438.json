@@ -1,0 +1,81 @@
+{
+  "schema": "corpus-filelist/v1",
+  "description": "Concrete corpus file list for ST-0501 from current tree",
+  "run_id": "72H_20250819_1114Z",
+  "created_utc": "2025-08-19T14:38:00Z",
+  "stage": "ST-0501",
+  "source_manifest": "gumgang_meeting/status/resources/vector_index/ingest_manifest_20250819_1426.json",
+  "categories": {
+    "status_md": [
+      "gumgang_meeting/status/checkpoints/CKPT_2025-08-18_v0_pendingUX_compact_tokens.md",
+      "gumgang_meeting/status/checkpoints/CKPT_2025-08-19_bundleA_roots_tabstate_compact.md",
+      "gumgang_meeting/status/checkpoints/CKPT_2025-08-19_memorylog_ack_and_ro_guide.md",
+      "gumgang_meeting/status/checkpoints/CKPT_72H_RUN.md",
+      "gumgang_meeting/status/evidence/QUARANTINE_EXECUTION_MANIFEST_20250819.md",
+      "gumgang_meeting/status/evidence/QUARANTINE_EXECUTION_USER_NOTES_20250819.md",
+      "gumgang_meeting/status/evidence/day_plan_20250818_people_friendly.md",
+      "gumgang_meeting/status/evidence/drafts/brief_unified_A1-A4_v0_tokenizer.md",
+      "gumgang_meeting/status/evidence/fs_quarantine_plan.md",
+      "gumgang_meeting/status/evidence/gates_log/ui_mvp_gate_20250816.md",
+      "gumgang_meeting/status/evidence/ui_mvp_gate_20250816_report.md",
+      "gumgang_meeting/status/evidence/ui_tokenizer_phase2_t0_pass_20250817.md",
+      "gumgang_meeting/status/evidence/ui_unified_20250816_v0_capture_pass.md",
+      "gumgang_meeting/status/evidence/ui_unified_20250816_v0_full_minimal_pass.md",
+      "gumgang_meeting/status/evidence/where_are_we_pending_20250816.md",
+      "gumgang_meeting/status/evidence/전이확정선언_20250816.md",
+      "gumgang_meeting/status/handoff/직전세션_이어하기_카드.md",
+      "gumgang_meeting/status/notes/RULES_KR_CHEATSHEET.md",
+      "gumgang_meeting/status/notes/SSOT_PATH_POLICY.md",
+      "gumgang_meeting/status/notes/ST-0102_tauri_config_fix.md",
+      "gumgang_meeting/status/notes/ST-0102_webmode_monaco_patch.md",
+      "gumgang_meeting/status/notes/jsonl_logging_spec.md",
+      "gumgang_meeting/status/notes/token_guard_demos.md",
+      "gumgang_meeting/status/notes/token_guard_notes.md",
+      "gumgang_meeting/status/notes/zed_gpt5_context_alignment.md",
+      "gumgang_meeting/status/resources/START_GUIDE_READONLY_RUNTIME.md",
+      "gumgang_meeting/status/resources/fetch_snapshot_20250819_tauri.app.md",
+      "gumgang_meeting/status/resources/openai_docs_index.md",
+      "gumgang_meeting/status/resources/zed_docs.md",
+      "gumgang_meeting/status/roadmap/20250816_48h.md",
+      "gumgang_meeting/status/roadmap/72H_TASK_BREAKDOWN.md",
+      "gumgang_meeting/status/tools_probe/fetch_probe.md",
+      "gumgang_meeting/status/tools_probe/fetch_probe_20250819_1418.md",
+      "gumgang_meeting/status/tools_probe/fs_ops_report.md",
+      "gumgang_meeting/status/tools_probe/jsonl_validation_report_20250819_1407.md",
+      "gumgang_meeting/status/tools_probe/vector_env_probe_20250819_1434.md",
+      "gumgang_meeting/status/tools_probe/vector_ingest_plan_20250819_1426.md",
+      "gumgang_meeting/status/where_are_we.md"
+    ],
+    "docs_md": [
+      "gumgang_meeting/docs/0_0_금강 발원문 원본.md",
+      "gumgang_meeting/docs/0_금강 발원문.md",
+      "gumgang_meeting/docs/1_SSOT_개념.md",
+      "gumgang_meeting/docs/2_불변식_정의.md",
+      "gumgang_meeting/docs/3_금강소울_정의.md",
+      "gumgang_meeting/docs/4_로컬vs웹금강.md",
+      "gumgang_meeting/docs/5_전환게이트_의미.md",
+      "gumgang_meeting/docs/6_기술스택_선정근거.md",
+      "gumgang_meeting/docs/7_기술스택_동결.md",
+      "gumgang_meeting/docs/8_UI_MVP_요구사항.md",
+      "gumgang_meeting/docs/9_UI_MVP_게이트.md",
+      "gumgang_meeting/docs/readme.md",
+      "gumgang_meeting/docs/전이확정선언.md",
+      "gumgang_meeting/docs/🪷 금강 소울 v1.7 — 존재 철학 + 언어 규칙 + 시계열 유지.md"
+    ],
+    "ui_logs_json": [
+      "gumgang_meeting/ui/logs/fetch_summary_20250819.json",
+      "gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json"
+    ],
+    "rules": [
+      "gumgang_meeting/.rules"
+    ]
+  },
+  "totals": {
+    "status_md": 38,
+    "docs_md": 14,
+    "ui_logs_json": 2,
+    "rules": 1,
+    "files": 55
+  },
+  "notes": "This file enumerates the exact corpus per ST-0501 manifest globs at the time of capture. Only paths within the repository are listed; WRITE_ALLOW constraints apply to outputs."
+}

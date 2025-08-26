@@ -1,0 +1,160 @@
+#!/usr/bin/env bash
+# Gumgang 2.0 — commit-msg guard hook
+# Purpose:
+# - Auto-extract Task ID from commit message (e.g., "task: G2-UI-STATUS-HUD" or feat(G2-UI-STATUS-HUD): ...)
+# - Auto-record staged file changes to logs/guard_audit.log and .session/session_manifest.json
+# - KST timestamps are generated inside scripts/guard_record.py via backend/utils/time_kr.now_kr_str_minute
+#
+# Installation:
+#   ln -sf "$(git rev-parse --show-toplevel)/scripts/hooks/commit-msg" "$(git rev-parse --git-path hooks)/commit-msg"
+#
+# Policy:
+# - If no Task ID is detected, this hook WARNs and allows the commit by default.
+# - To ENFORCE Task ID presence (block commit), export GUARD_ENFORCE_TASK=1 (e.g., in your shell/env).
+#
+# Exit codes:
+# - 0: commit allowed
+# - non-zero: commit blocked (only when enforcement is enabled)
+
+set -euo pipefail
+
+MSG_FILE="${1:-}"
+if [[ -z "${MSG_FILE}" || ! -f "${MSG_FILE}" ]]; then
+  echo "[commit-msg] ERROR: message file not found: ${MSG_FILE}" >&2
+  # Cannot validate but do not block commit
+  exit 0
+fi
+
+# Skip for merge/rebase auto-commits (optional heuristic)
+if grep -qiE '^\s*merge|^\s*revert' "${MSG_FILE}" >/dev/null 2>&1; then
+  exit 0
+fi
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+if [[ -z "${REPO_ROOT}" || ! -d "${REPO_ROOT}" ]]; then
+  echo "[commit-msg] WARN: cannot resolve repo root. Skipping guard record." >&2
+  exit 0
+fi
+
+PYTHON_BIN=""
+if [[ -x "${REPO_ROOT}/.venv/bin/python" ]]; then
+  PYTHON_BIN="${REPO_ROOT}/.venv/bin/python"
+elif command -v python3 >/dev/null 2>&1; then
+  PYTHON_BIN="python3"
+elif command -v python >/dev/null 2>&1; then
+  PYTHON_BIN="python"
+else
+  echo "[commit-msg] WARN: no python interpreter found. Skipping guard record." >&2
+  exit 0
+fi
+
+REC_SCRIPT="${REPO_ROOT}/scripts/guard_record.py"
+if [[ ! -f "${REC_SCRIPT}" ]]; then
+  echo "[commit-msg] WARN: recorder script not found: ${REC_SCRIPT}" >&2
+  exit 0
+fi
+
+# Extract Task ID from commit message:
+# 1) "task: <ID>" (case-insensitive)
+# 2) conventional commit-like "(<ID>)" in type(scope)
+# 3) fallback: FIRST token looking like "ABC-DEF" or "ABC_DEF" or "ABC.DEF"
+TASK_ID=""
+if TASK_ID="$(awk 'BEGIN{IGNORECASE=1}/^task:[[:space:]]*/{sub(/^task:[[:space:]]*/,"");print;exit}' "${MSG_FILE}")"; [[ -n "${TASK_ID}" ]]; then
+  :
+else
+  # Try to capture text inside parentheses: e.g., feat(G2-UI-STATUS-HUD): ...
+  if TASK_ID="$(sed -nE '1s/.*\(([A-Z0-9][A-Z0-9_.-]+)\).*/\1/p' "${MSG_FILE}")"; [[ -n "${TASK_ID}" ]]; then
+    :
+  else
+    # Fallback pattern for IDs like G2-UI-STATUS-HUD in subject
+    if TASK_ID="$(sed -nE '1s/.*\b([A-Z][A-Z0-9]+([_.-][A-Z0-9]+)+)\b.*/\1/p' "${MSG_FILE}")"; [[ -n "${TASK_ID}" ]]; then
+      :
+    else
+      TASK_ID=""
+    fi
+  fi
+fi
+
+# Repo-level enforcement via protocol_config_v3.json (+ env override)
+CONF_FILE="${REPO_ROOT}/protocol_config_v3.json"
+ENFORCE_COMMIT_CFG="0"
+if [[ -f "${CONF_FILE}" ]]; then
+  export CONF_FILE
+  set +e
+  ENFORCE_COMMIT_CFG="$("${PYTHON_BIN}" - <<'PY'
+import json, os
+p = os.environ.get("CONF_FILE")
+try:
+    with open(p, "r", encoding="utf-8") as f:
+        cfg = json.load(f)
+    flag = bool(((cfg or {}).get("guard_enforce") or {}).get("commit", False))
+    print("1" if flag else "0")
+except Exception:
+    print("0")
+PY
+  )"
+  set -e
+fi
+ENFORCE_COMMIT_ENV="${GUARD_ENFORCE_TASK:-0}"
+if [[ "${ENFORCE_COMMIT_CFG}" == "1" || "${ENFORCE_COMMIT_ENV}" == "1" ]]; then
+  ENFORCE_COMMIT="1"
+else
+  ENFORCE_COMMIT="0"
+fi
+
+if [[ -z "${TASK_ID}" ]]; then
+  if [[ "${ENFORCE_COMMIT}" == "1" ]]; then
+    echo "[commit-msg] ERROR: Task ID not found in commit message." >&2
+    echo "  - Add a line: 'task: YOUR_TASK_ID'  (e.g., task: G2-UI-STATUS-HUD)" >&2
+    echo "  - Or use conventional commit style: feat(G2-UI-STATUS-HUD): summary" >&2
+    exit 1
+  else
+    echo "[commit-msg] WARN: Task ID not found. Proceeding without guard record." >&2
+    exit 0
+  fi
+fi
+
+# Notes: first line (subject) as brief note
+NOTES="$(head -n1 "${MSG_FILE}" | tr -d '\r' | sed 's/[[:cntrl:]]//g')"
+
+# Gather staged paths and record.
+# - The recorder filters to repo-root existing paths and deduplicates.
+# - If no valid paths, recorder exits with code 2; we treat it as non-blocking.
+set +e
+"${PYTHON_BIN}" "${REC_SCRIPT}" \
+  --task "${TASK_ID}" \
+  --op edit \
+  --from-commit-msg "${MSG_FILE}" \
+  --from-git-staged \
+  --notes "${NOTES}" \
+  --message "${NOTES}"
+rc=$?
+set -e
+
+case "${rc}" in
+  0)
+    echo "[commit-msg] Guard record OK — task=${TASK_ID}"
+    ;;
+  1)
+    # invalid args (should not happen here)
+    echo "[commit-msg] WARN: recorder reported invalid args. Commit continues." >&2
+    ;;
+  2)
+    # no valid paths to record → allow commit but inform
+    echo "[commit-msg] INFO: no valid staged paths to record. Commit continues." >&2
+    ;;
+  3)
+    # internal recorder error → allow by default, unless enforcement for reliability
+    if [[ "${GUARD_ENFORCE_TASK:-0}" == "1" ]]; then
+      echo "[commit-msg] ERROR: recorder internal error. Blocking due to enforcement." >&2
+      exit 1
+    else
+      echo "[commit-msg] WARN: recorder internal error. Commit continues." >&2
+    fi
+    ;;
+  *)
+    echo "[commit-msg] WARN: recorder exited with code ${rc}. Commit continues." >&2
+    ;;
+esac
+
+exit 0

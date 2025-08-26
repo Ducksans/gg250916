@@ -1,0 +1,65 @@
+{
+  "budgets": {
+    "total": {
+      "max": 5242880,
+      "warning": 3145728,
+      "unit": "bytes",
+      "description": "Total bundle size (max: 5MB, warning: 3MB)"
+    },
+    "singleFile": {
+      "max": 524288,
+      "warning": 262144,
+      "unit": "bytes",
+      "description": "Individual file size (max: 512KB, warning: 256KB)"
+    },
+    "javascript": {
+      "max": 2097152,
+      "warning": 1572864,
+      "unit": "bytes",
+      "description": "Total JavaScript (max: 2MB, warning: 1.5MB)"
+    },
+    "css": {
+      "max": 524288,
+      "warning": 262144,
+      "unit": "bytes",
+      "description": "Total CSS (max: 512KB, warning: 256KB)"
+    },
+    "images": {
+      "max": 2097152,
+      "warning": 1048576,
+      "unit": "bytes",
+      "description": "Total images (max: 2MB, warning: 1MB)"
+    },
+    "fonts": {
+      "max": 524288,
+      "warning": 262144,
+      "unit": "bytes",
+      "description": "Total fonts (max: 512KB, warning: 256KB)"
+    }
+  },
+  "fileTypes": {
+    "javascript": [".js", ".mjs", ".cjs"],
+    "css": [".css"],
+    "images": [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp", ".ico"],
+    "fonts": [".woff", ".woff2", ".ttf", ".otf", ".eot"]
+  },
+  "critical": {
+    "firstLoad": {
+      "max": 1048576,
+      "warning": 786432,
+      "unit": "bytes",
+      "description": "Critical path for first load (max: 1MB, warning: 768KB)"
+    },
+    "largestContentfulPaint": {
+      "max": 262144,
+      "warning": 196608,
+      "unit": "bytes",
+      "description": "Resources for LCP (max: 256KB, warning: 192KB)"
+    }
+  },
+  "thresholds": {
+    "failOnViolation": true,
+    "warnOnApproach": true,
+    "approachPercentage": 90
+  }
+}

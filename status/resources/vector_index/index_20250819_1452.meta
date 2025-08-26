@@ -1,0 +1,17 @@
+{
+  "schema": "hnsw-meta-v0",
+  "created_utc": "2025-08-19T14:51:58Z",
+  "nodes": 214,
+  "dims": 384,
+  "params": {
+    "M": 16,
+    "ef_construction": 200,
+    "ef_search": 64
+  },
+  "embedding": {
+    "provider": "local",
+    "model": "sha256-token-hash-v0"
+  },
+  "source_embeddings": "embeddings_20250819_1450.jsonl",
+  "artifact_bin": "index_20250819_1452.bin"
+}

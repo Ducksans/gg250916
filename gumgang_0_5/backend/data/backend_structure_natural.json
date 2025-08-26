@@ -1,0 +1,103 @@
+{
+  "description": "금강 0.8 백엔드는 FastAPI와 LangGraph를 기반으로 하는 자기진화형 AI 시스템입니다. 기능별 역할이 명확하게 분리된 구조로 설계되어 있으며, 핵심 기능은 app/, memory/, scripts/ 폴더를 중심으로 작동합니다.",
+  "structure": [
+    {
+      "path": "app/",
+      "purpose": "FastAPI 엔트리포인트, LangGraph 상태 기계, 상태 노드, API 라우터 등 금강의 핵심 기능을 담당합니다.",
+      "children": [
+        {
+          "path": "app/main.py",
+          "role": "FastAPI 앱 초기화, 라우터 연결, 환경설정(CORS 등)을 담당하는 진입점입니다."
+        },
+        {
+          "path": "app/graph.py",
+          "role": "LangGraph의 상태 흐름(run_graph)을 정의하고 전체 대화 흐름을 제어합니다."
+        },
+        {
+          "path": "app/nodes/",
+          "role": "LangGraph 노드(상태)를 모아둔 폴더입니다. 각 노드는 GPT 호출, 반사, 상태 보고 등의 기능을 수행합니다.",
+          "examples": [
+            "identity_reflect_node.py: 정체성 질문에 대한 반사 응답",
+            "status_report.py: 금강의 상태를 요약해 보고",
+            "version_check.py: 프론트와 백엔드 버전 일치 여부 점검"
+          ]
+        },
+        {
+          "path": "app/routes/",
+          "role": "FastAPI 라우터 모음. 기능별로 API가 나뉘어 있으며, 프론트와의 통신을 담당합니다.",
+          "examples": [
+            "ask.py: /ask → LangGraph 흐름 기반 질의응답",
+            "edit.py: /edit → 구조 기반 코드 수정 API",
+            "status.py: /status_report → 현재 상태 요약 출력"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "memory/",
+      "purpose": "금강의 장기기억, 인게스트 소스, 편집 로그를 포함하는 기억 저장소입니다.",
+      "children": [
+        {
+          "path": "memory/gumgang_memory/",
+          "role": "금강의 주 기억 벡터 DB (Chroma) 저장소로, .sqlite3 포함"
+        },
+        {
+          "path": "memory/vectors/",
+          "role": "기억의 분류 저장소. 예: chatgpt_memory, roadmap 등"
+        },
+        {
+          "path": "memory/sources/",
+          "role": "인게스트 전 원본 자료들이 저장됩니다. 덕산의 에세이, 구조, 로드맵, ChatGPT 기록 등이 포함됩니다."
+        },
+        {
+          "path": "memory/backup_edit_files/",
+          "role": "코드 수정 시 자동 백업된 파일들을 저장하여 복구를 지원합니다."
+        },
+        {
+          "path": "memory/logs/",
+          "role": "수정, 리팩토링 등의 히스토리 로그를 저장합니다."
+        }
+      ]
+    },
+    {
+      "path": "data/",
+      "purpose": "전처리된 데이터 및 설명용 JSON 파일들이 위치합니다.",
+      "children": [
+        {
+          "path": "core_identity.json",
+          "role": "금강의 자기 정체성과 철학, 덕산과의 관계 등을 담은 핵심 자기정의 JSON"
+        },
+        {
+          "path": "frontend_structure_natural.json",
+          "role": "프론트엔드 구조 설명 기억. 백엔드 구조 설명 파일과 쌍을 이룹니다."
+        }
+      ]
+    },
+    {
+      "path": "scripts/",
+      "purpose": "금강의 인게스트, 반사, 구조 변환 테스트 등을 수행하는 실행용 파이썬 스크립트들이 위치합니다.",
+      "examples": [
+        "ingest_roadmap.py: 로드맵 JSON을 기억으로 인게스트",
+        "ingest_identity.py: 정체성 JSON 인게스트",
+        "reflect_test.py: 반사 흐름 테스트",
+        "self_structure_scan.py: 금강 자체 구조를 스캔하고 요약"
+      ]
+    },
+    {
+      "path": "logs/",
+      "purpose": "백엔드의 실행, 테스트, 리팩토링 관련 로그 저장소입니다.",
+      "examples": [
+        "test_api.http: FastAPI 엔드포인트 테스트 기록",
+        "refactor_log_*.txt: 리팩토링 작업 이력"
+      ]
+    },
+    {
+      "path": "tests/",
+      "purpose": "LangGraph 및 금강 기능 테스트 스크립트가 포함된 폴더입니다.",
+      "examples": [
+        "test_langgraph_status.py: 상태 흐름 테스트",
+        "test_reflect_query_self.py: 자기반사 쿼리 테스트"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"id":"ultra_short_20250821_1724211120000","tier":"ultra_short","scope_id":"ST-1201","ts":"2025-08-21T02:32:00Z","text":"BT-12 5계층 메모리 루프 v1 스키마·경로·API(store/search/recall) 초안 확정","refs":["status/checkpoints/CKPT_72H_RUN.md","status/resources/memory/nohit_templates_ko_v1.json"],"mode":"SAFE","weight":{"decay":0.99,"pin":false},"emb":null,"session_id":"GG-SESS-LOCAL"}

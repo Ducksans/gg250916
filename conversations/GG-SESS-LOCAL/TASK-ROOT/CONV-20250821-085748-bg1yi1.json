@@ -1,0 +1,157 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-LOCAL",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250821-085748-bg1yi1",
+    "model": "gpt-5",
+    "created_at": "2025-08-20T23:58:18.432Z",
+    "updated_at": "2025-08-25T02:46:25.622Z",
+    "type": "chat",
+    "version": 1,
+    "provider": "openai",
+    "upstream_model": "gpt-5-2025-08-07",
+    "last_request_id": "req_cb10505a4c6441049deb8aed801b814a"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "테스트 응답 바람",
+      "ts": "2025-08-20T23:57:48.891Z"
+    },
+    {
+      "role": "assistant",
+      "content": "INT: 요청=“테스트 응답” 제공.\nCT: compact:v0 리듬(Echo→Delta→Consent→Execute)로 진행, 현재 모드=회의. 간결+메타 포함.\nΔ: 원하는 형태 선택 부탁: 1) 한 줄 샘플 2) 프로토콜 데모 3) 임의 주제 샘플. 언어/길이 지정 가능.\nOK: 동의 시, 선택지에 맞춘 짧은 테스트 응답 1개 생성.\nTODO: 선택지 확인 → 응답 생성(실행 모드 전환).\nRISK: 형식이 과하다고 느껴질 수 있음.\nLOG: 실행 전 Consent 필요.\n\nConsent: 위대로 진행할까요? 원하시는 선택지와 언어/길이를 알려주세요.",
+      "ts": "2025-08-20T23:58:18.432Z",
+      "usage": {
+        "prompt_tokens": 104,
+        "completion_tokens": 1779,
+        "total_tokens": 1883,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1600,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-5-2025-08-07",
+      "request_id": "req_64be83faedb1475f8225ad0af6a22fd5"
+    },
+    {
+      "role": "user",
+      "content": "무규칙 발화 앵커링 테스트",
+      "ts": "2025-08-21T03:40:06.485Z"
+    },
+    {
+      "role": "assistant",
+      "content": "어떤 테스트를 원하시는지 조금 더 구체화해 주실 수 있을까요? “무규칙 발화 앵커링”을 아래 중 어떤 의미로 쓰셨는지 알려주시면 맞춰 진행하겠습니다.\n\n- 무의미/비문 입력에 대한 모델의 안정적 대응 테스트\n- 대화 앵커(목표·톤·제약)를 정해 임의의 발화도 그 앵커로 해석·응답하는 실험\n- 음성→텍스트 전사 후 의도 추정 성능 점검\n- 특정 제품/서비스용 프롬프트 앵커 설계 검증\n\n원하시면 앵커를 먼저 정의하고 시작할 수 있어요. 아래 템플릿에 채워 주세요.\n- 목적:\n- 대상/맥락:\n- 톤/스타일:\n- 금지사항·제약:\n- 우선순위(정확성/속도/간결성 등):\n- 출력 형식:\n\n또는 “기본 앵커(간결·정확·한국어)”로 임의 설정 후, 무규칙 입력 몇 가지에 대한 응답 예시를 바로 보여드릴 수도 있습니다. 어떤 방식으로 진행할까요?",
+      "ts": "2025-08-21T03:40:22.871Z",
+      "usage": {
+        "prompt_tokens": 16,
+        "completion_tokens": 913,
+        "total_tokens": 929,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 640,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-5-2025-08-07",
+      "request_id": "req_54a70ba251f24454b48327274c392c7a"
+    },
+    {
+      "role": "user",
+      "content": "이 보시오 금강 자네는 금강 프로젝트에 대해서 아는 바가 있습니까? 50글자 이내로 답변 바라오",
+      "ts": "2025-08-21T08:39:59.421Z"
+    },
+    {
+      "role": "assistant",
+      "content": "금강 프로젝트는 잘 모르오. 세부 알려주시오.",
+      "ts": "2025-08-21T08:40:08.711Z",
+      "usage": {
+        "prompt_tokens": 37,
+        "completion_tokens": 791,
+        "total_tokens": 828,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 768,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-5-2025-08-07",
+      "request_id": "req_0bb9787eabcd465c84451c4d3efe5cf8"
+    },
+    {
+      "role": "user",
+      "content": "10글자 이내 답변",
+      "ts": "2025-08-22T06:22:35.417Z"
+    },
+    {
+      "role": "assistant",
+      "content": "알겠습니다",
+      "ts": "2025-08-22T06:22:46.851Z",
+      "usage": {
+        "prompt_tokens": 13,
+        "completion_tokens": 523,
+        "total_tokens": 536,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 512,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-5-2025-08-07",
+      "request_id": "req_77809dbce28643ea98971d88d639454d"
+    },
+    {
+      "role": "user",
+      "content": "ping",
+      "ts": "2025-08-25T02:46:23.931Z"
+    },
+    {
+      "role": "assistant",
+      "content": "pong",
+      "ts": "2025-08-25T02:46:25.621Z",
+      "usage": {
+        "prompt_tokens": 7,
+        "completion_tokens": 10,
+        "total_tokens": 17,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-5-2025-08-07",
+      "request_id": "req_cb10505a4c6441049deb8aed801b814a"
+    }
+  ]
+}

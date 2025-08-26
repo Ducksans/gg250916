@@ -1,0 +1,58 @@
+version: "0.1"
+sealed_at_tz: "KST"
+timestamp_format: "YYYY-MM-DD HH:mm"
+required_headers:
+  - "X-Rules-Id"
+  - "X-Rules-Hash"
+contracts:
+  require_rules_headers: true
+  event_name_immutable: true         # 이벤트 이름은 절대 변경 금지(추가만 허용)
+  payload_changes: "additive_only"   # 필드 추가만 허용, 필드 삭제/축소는 메이저 변경
+  perf_guards:
+    fps_min: 60
+    nodes_max: 2000
+    first_paint_sec_max: 2
+events:
+  - name: "metrics"
+    direction: "server->client"
+    summary: "런타임 지표 스트림"
+    payload:
+      ts: "YYYY-MM-DD HH:mm"
+      cpu_pct: number
+      mem_mb: number
+      gpu_util_pct?: number
+      tokens?:
+        in: number
+        out: number
+
+  - name: "memory-update"
+    direction: "server->client"
+    summary: "기억 계층 변경/집계 알림"
+    payload:
+      ts: "YYYY-MM-DD HH:mm"
+      tier: ["ultra-short","short","mid","long","ultra-long"]
+      op: ["insert","update","evict","summarize"]
+      key: string
+      meta?: object
+
+  - name: "notification"
+    direction: "server->client"
+    summary: "알림/상태 변경"
+    payload:
+      ts: "YYYY-MM-DD HH:mm"
+      level: ["info","warn","error","success"]
+      code: string
+      message: string
+      ref?: string
+
+  - name: "selection-3d"
+    direction: "client->server"
+    summary: "3D 뷰어 상행 선택 이벤트"
+    payload:
+      ts: "YYYY-MM-DD HH:mm"
+      kind: ["node","edge"]
+      id: string
+      action: ["select","hover","focus"]
+      viewport?:
+        cam_pos: [number, number, number]
+        cam_dir: [number, number, number]

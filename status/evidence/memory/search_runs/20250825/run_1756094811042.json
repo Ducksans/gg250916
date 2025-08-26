@@ -1,0 +1,154 @@
+{
+  "query": "메모 저장/검색/리콜 API의 역할을 한 줄씩 정리하고, 관련 근거 경로와 검색 로그를 포함해 줘.",
+  "tiers": [
+    "long",
+    "medium",
+    "short",
+    "ultra_long",
+    "ultra_short"
+  ],
+  "weights": {
+    "kw": 1.0,
+    "recency": 0.6,
+    "refs": 0.4,
+    "tier": 0.2,
+    "tier_map": {
+      "ultra_short": 1.0,
+      "short": 0.8,
+      "medium": 0.6,
+      "long": 0.4,
+      "ultra_long": 0.2
+    }
+  },
+  "params": {
+    "k": 5,
+    "half_life_days": 7.0,
+    "score_min": 0.25,
+    "quorum_min": 1,
+    "quorum_target": 3
+  },
+  "items": [
+    {
+      "tier": "ultra_short",
+      "score": 0.855946613218227,
+      "ts": "2025-08-25T01:03:28.646996Z",
+      "scope_id": null,
+      "text": "[ST-1205] 신선도 테스트: 오늘 진행 메모 1 (Self-RAG/신선도)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250825/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.06666666666666667,
+        "recency": 0.9821332442526005,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.855946613218227,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.795960974771214,
+      "ts": "2025-08-25T02:58:32.107668Z",
+      "scope_id": null,
+      "text": "ping",
+      "path": "status/evidence/memory/tiers/ultra_short/20250825/A1-meqil0q4.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9932682912853565,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.795960974771214,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "short",
+      "score": 0.7795573562917403,
+      "ts": "2025-08-21T02:32:30Z",
+      "scope_id": "ST-1201",
+      "text": "덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함.",
+      "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.6325955938195672,
+        "refs": 0.6,
+        "tier_weight": 0.8
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7795573562917403,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7395454466301732,
+      "ts": "2025-08-21T02:32:00Z",
+      "scope_id": "ST-1201",
+      "text": "BT-12 5계층 메모리 루프 v1 스키마·경로·API(store/search/recall) 초안 확정",
+      "path": "status/evidence/memory/tiers/ultra_short/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.632575744383622,
+        "refs": 0.4,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7395454466301732,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_long",
+      "score": 0.6672713728612809,
+      "ts": "2025-08-21T07:49:53.676359Z",
+      "scope_id": "BT-12",
+      "text": "L5 게이트 핵심 지식",
+      "path": "status/evidence/memory/tiers/ultra_long/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.6454522881021347,
+        "refs": 0.6,
+        "tier_weight": 0.2
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.6672713728612809,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "no_hit": false,
+  "ts": "2025-08-25T04:06:51.042158Z"
+}

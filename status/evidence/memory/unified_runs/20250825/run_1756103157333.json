@@ -1,0 +1,20 @@
+{
+  "query": "__nohit__unlikely",
+  "params": {
+    "k": 3,
+    "half_life_days": null,
+    "fresh_weight": null,
+    "self_rag": 1,
+    "strict": 1,
+    "need_fresh": 0
+  },
+  "source_mix": {
+    "memory": 3,
+    "file": 0
+  },
+  "pre_count": 3,
+  "post_count": 3,
+  "grounded": true,
+  "evidence_path_from_memory_search": "status/evidence/memory/search_runs/20250825/run_1756103157327.json",
+  "ts": "2025-08-25T06:25:57.333280Z"
+}

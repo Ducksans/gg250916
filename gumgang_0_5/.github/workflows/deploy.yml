@@ -1,0 +1,392 @@
+# 금강 2.0 - CI/CD 파이프라인
+name: Deploy 금강 2.0
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  NODE_VERSION: '18'
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  # 테스트 Job
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [frontend, backend]
+
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: 캐시 키 생성
+        id: cache-keys
+        run: |
+          if [ "${{ matrix.service }}" = "frontend" ]; then
+            echo "cache-key=${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}" >> $GITHUB_OUTPUT
+          else
+            echo "cache-key=${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}" >> $GITHUB_OUTPUT
+          fi
+
+      # Frontend 테스트
+      - name: Node.js 설정
+        if: matrix.service == 'frontend'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: gumgang-v2/package-lock.json
+
+      - name: Frontend 의존성 설치
+        if: matrix.service == 'frontend'
+        working-directory: ./gumgang-v2
+        run: npm ci
+
+      - name: Frontend 테스트 실행
+        if: matrix.service == 'frontend'
+        working-directory: ./gumgang-v2
+        run: |
+          npm run test -- --coverage --watchAll=false
+          npm run lint
+
+      - name: Frontend 빌드 테스트
+        if: matrix.service == 'frontend'
+        working-directory: ./gumgang-v2
+        run: npm run build
+
+      # Backend 테스트
+      - name: Python 설정
+        if: matrix.service == 'backend'
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Backend 의존성 캐시
+        if: matrix.service == 'backend'
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ steps.cache-keys.outputs.cache-key }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Backend 의존성 설치
+        if: matrix.service == 'backend'
+        working-directory: ./backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov flake8
+
+      - name: Backend 테스트 실행
+        if: matrix.service == 'backend'
+        working-directory: ./backend
+        run: |
+          flake8 app --count --select=E9,F63,F7,F82 --show-source --statistics
+          pytest tests/ --cov=app --cov-report=xml --cov-report=html
+
+      - name: 코드 커버리지 업로드
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          flags: ${{ matrix.service }}
+          name: ${{ matrix.service }}-coverage
+
+  # 보안 스캔
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Trivy 보안 스캔
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: GitHub Security 업로드
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: OWASP 의존성 체크
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'gumgang-2.0'
+          path: '.'
+          format: 'HTML'
+
+  # Docker 이미지 빌드
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    needs: [test, security-scan]
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    strategy:
+      matrix:
+        service: [frontend, backend]
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Docker Buildx 설정
+        uses: docker/setup-buildx-action@v3
+
+      - name: Registry 로그인
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 메타데이터 추출
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ matrix.service }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: 이미지 빌드 및 푸시
+        uses: docker/build-push-action@v5
+        with:
+          context: ./${{ matrix.service == 'frontend' && 'gumgang-v2' || 'backend' }}
+          file: ./${{ matrix.service == 'frontend' && 'gumgang-v2' || 'backend' }}/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            BUILD_DATE=${{ github.event.head_commit.timestamp }}
+            VCS_REF=${{ github.sha }}
+            VERSION=${{ steps.meta.outputs.version }}
+
+  # 배포
+  deploy:
+    name: Deploy to ${{ matrix.environment }}
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    strategy:
+      matrix:
+        environment: [staging, production]
+        exclude:
+          - environment: production
+            ${{ github.ref != 'refs/heads/main' }}
+
+    environment:
+      name: ${{ matrix.environment }}
+      url: ${{ matrix.environment == 'production' && 'https://gumgang.com' || 'https://staging.gumgang.com' }}
+
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: SSH 키 설정
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: 서버 배포
+        env:
+          SERVER_HOST: ${{ secrets[format('{0}_SERVER_HOST', matrix.environment)] }}
+          SERVER_USER: ${{ secrets[format('{0}_SERVER_USER', matrix.environment)] }}
+        run: |
+          # 배포 스크립트 실행
+          ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST << 'EOF'
+            cd /app/gumgang
+            git pull origin main
+
+            # 환경 변수 설정
+            export COMPOSE_FILE=docker-compose.${{ matrix.environment }}.yml
+
+            # 이미지 풀
+            docker-compose pull
+
+            # 블루-그린 배포
+            docker-compose up -d --no-deps --scale backend=2 backend
+
+            # 헬스체크 대기
+            sleep 30
+
+            # 이전 컨테이너 종료
+            docker-compose up -d --no-deps --remove-orphans backend
+
+            # 프론트엔드 업데이트
+            docker-compose up -d frontend
+
+            # 정리
+            docker system prune -f
+          EOF
+
+      - name: 헬스체크
+        run: |
+          URL="${{ matrix.environment == 'production' && 'https://gumgang.com' || 'https://staging.gumgang.com' }}"
+          for i in {1..10}; do
+            if curl -f "$URL/health"; then
+              echo "✅ 배포 성공!"
+              exit 0
+            fi
+            echo "대기 중... ($i/10)"
+            sleep 10
+          done
+          echo "❌ 헬스체크 실패"
+          exit 1
+
+  # 성능 테스트
+  performance-test:
+    name: Performance Test
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: K6 부하 테스트
+        uses: grafana/k6-action@v0.3.1
+        with:
+          filename: tests/performance/load-test.js
+          flags: --out json=results.json
+
+      - name: Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          urls: |
+            https://staging.gumgang.com
+            https://staging.gumgang.com/login
+            https://staging.gumgang.com/dashboard
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  # 롤백
+  rollback:
+    name: Rollback Deployment
+    runs-on: ubuntu-latest
+    if: failure() && (github.ref == 'refs/heads/main')
+    needs: [deploy, performance-test]
+
+    steps:
+      - name: 롤백 실행
+        env:
+          SERVER_HOST: ${{ secrets.PRODUCTION_SERVER_HOST }}
+          SERVER_USER: ${{ secrets.PRODUCTION_SERVER_USER }}
+        run: |
+          ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST << 'EOF'
+            cd /app/gumgang
+
+            # 이전 버전으로 롤백
+            docker-compose down
+            git reset --hard HEAD~1
+            docker-compose up -d
+
+            echo "⚠️ 롤백 완료"
+          EOF
+
+      - name: Slack 알림
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": "🚨 배포 롤백",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*배포가 롤백되었습니다*\n환경: Production\n커밋: ${{ github.sha }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  # 알림
+  notify:
+    name: Send Notifications
+    runs-on: ubuntu-latest
+    needs: [deploy, performance-test]
+    if: always()
+
+    steps:
+      - name: 배포 성공 알림
+        if: success()
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": "✅ 배포 성공",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*금강 2.0 배포 완료*\n환경: ${{ github.event.inputs.environment || 'production' }}\n브랜치: ${{ github.ref_name }}\n커밋: ${{ github.sha }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: 배포 실패 알림
+        if: failure()
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": "❌ 배포 실패",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*배포 실패*\n환경: ${{ github.event.inputs.environment || 'production' }}\n확인: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

@@ -1,0 +1,142 @@
+{
+  "session_id": "GG-20250109-SESSION-02",
+  "timestamp": "2025-01-09T02:45:00.000000",
+  "token_usage": {
+    "used": 115000,
+    "limit": 120000,
+    "remaining": 5000
+  },
+  "tasks_completed": [
+    {
+      "id": "GG-20250809-FIX-001",
+      "name": "백엔드 통합 수정",
+      "status": "completed",
+      "progress": 90,
+      "achievements": [
+        "백엔드 포트 8000으로 통일",
+        "simple_main.py로 진입점 단일화",
+        "불필요 파일 6개 백업",
+        "17/19 엔드포인트 작동 확인"
+      ]
+    },
+    {
+      "id": "GG-20250109-AUTO-001",
+      "name": "백엔드 자동 시작 시스템",
+      "status": "completed",
+      "progress": 100,
+      "achievements": [
+        "auto_start_backend.sh 구현",
+        ".bashrc/.zshrc 설정 완료",
+        "Cron 모니터링 설정 (5분마다)",
+        "재부팅 후 자동 시작 구현"
+      ]
+    }
+  ],
+  "system_status": {
+    "backend": {
+      "status": "running",
+      "pid": 145943,
+      "port": 8000,
+      "health": "healthy",
+      "uptime_seconds": 600,
+      "endpoints_working": "17/19 (89.5%)",
+      "main_file": "simple_main.py"
+    },
+    "frontend": {
+      "status": "not_tested",
+      "port": 3000,
+      "framework": "Next.js 15",
+      "monaco_editor": "installed",
+      "last_test": null
+    },
+    "terminal_server": {
+      "status": "not_running",
+      "port": 8002,
+      "file": "terminal_server.py"
+    },
+    "protocol_guard": {
+      "version": "v3.0",
+      "trust_score": 100,
+      "checkpoints": 1,
+      "status": "integrated"
+    }
+  },
+  "file_statistics": {
+    "total_python_files": 73031,
+    "total_directories": 30,
+    "git_untracked": 51356,
+    "backend_entries_backed_up": 6,
+    "logs_generated": 15
+  },
+  "critical_issues": [
+    {
+      "severity": "HIGH",
+      "issue": "Git 파일 과다 (73k Python files)",
+      "impact": "성능 저하, Git 관리 불가",
+      "solution": ".gitignore 설정 및 venv 제외 필요"
+    },
+    {
+      "severity": "MEDIUM",
+      "issue": "프론트엔드 미테스트",
+      "impact": "UI 사용 불가",
+      "solution": "npm run dev 실행 및 백엔드 연동 테스트"
+    },
+    {
+      "severity": "LOW",
+      "issue": "터미널 서버 미실행",
+      "impact": "터미널 기능 사용 불가",
+      "solution": "terminal_server.py 실행 (포트 8002)"
+    }
+  ],
+  "project_progress": {
+    "overall": 40,
+    "backend": 75,
+    "frontend": 30,
+    "protocol": 85,
+    "ai_integration": 10,
+    "terminal": 5,
+    "git_integration": 0
+  },
+  "configuration_changes": [
+    {
+      "file": ".bashrc",
+      "change": "gumgang_auto_start 함수 추가"
+    },
+    {
+      "file": ".zshrc",
+      "change": "gumgang_auto_start 함수 추가"
+    },
+    {
+      "file": "backend/simple_main.py",
+      "change": "포트 8001 → 8000 변경"
+    },
+    {
+      "file": "auto_start_backend.sh",
+      "change": "자동 시작 스크립트 생성"
+    }
+  ],
+  "next_session_triggers": [
+    "백엔드가 자동으로 실행되고 있을 것입니다. 프론트엔드를 실행하고 실제로 연동이 되는지 테스트해주세요.",
+    "Git 파일이 73,000개나 됩니다. 정리가 시급합니다. venv와 불필요한 파일들을 .gitignore에 추가하고 정리해주세요.",
+    "터미널 서버(포트 8002)를 실행하고 프론트엔드의 터미널 컴포넌트와 연동해주세요."
+  ],
+  "commands_reference": {
+    "check_backend": "gumgang-status",
+    "start_backend": "gumgang-start",
+    "restart_backend": "gumgang-restart",
+    "view_logs": "gumgang-logs",
+    "test_api": "curl http://localhost:8000/health",
+    "start_frontend": "cd gumgang-v2 && npm run dev",
+    "clean_git": "cd backend && echo 'venv/\\n*.pyc\\n__pycache__/' > .gitignore"
+  },
+  "important_notes": [
+    "백엔드는 포트 8000입니다 (8001 아님)",
+    "simple_main.py가 메인입니다 (main.py 아님)",
+    "백업된 파일들은 backend/backup_entries_20250809/에 있음",
+    "재부팅 후에도 백엔드 자동 시작됨",
+    "토큰 한계 임박 (5k 남음)"
+  ],
+  "session_end_reason": "토큰 한계 근접 (115k/120k)",
+  "handover_priority": "HIGH",
+  "estimated_next_session_duration": "2-3 hours for frontend testing and git cleanup"
+}

@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --font-sans: "Inter", "Pretendard", system-ui, sans-serif;
+    --font-mono: "Fira Code", "D2Coding", monospace;
+
+    /* 금강Ω의 씨앗: 다이아몬드 & 심해(Deep Water) 테마 */
+    --bg-deep-water: #0d1117; /* 가장 깊은 배경, 우주의 암흑 */
+    --bg-panel: #161b22; /* 패널, 사이드바, 물의 표면 */
+
+    --border-default: #30363d;
+    --border-highlight: #8b949e;
+
+    --text-primary: #c9d1d9; /* 기본 텍스트, 별빛 */
+    --text-secondary: #8b949e; /* 보조 텍스트, 은하수 */
+
+    --accent-diamond: #a5b4fc; /* 금강의 지성, 빛나는 다이아몬드 */
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+}
+
+body {
+    background-color: var(--bg-deep-water);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    overflow: hidden;
+}

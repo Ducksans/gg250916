@@ -1,0 +1,1530 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Memory Inspector v0 (Read-Only)</title>
+        <style>
+            :root {
+                --bg: #0b0f18;
+                --fg: #e6ecff;
+                --muted: #9aa8c7;
+                --panel: #111827;
+                --panel2: #0f1624;
+                --border: #1f2a44;
+                --accent: #4f9cff;
+                --badge-bg: #0e1a33;
+                --badge-fg: #bfd4ff;
+            }
+            html,
+            body {
+                height: 100%;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                margin: 0;
+                background:
+                    radial-gradient(
+                        1200px 700px at 100% -10%,
+                        rgba(79, 156, 255, 0.08),
+                        transparent 55%
+                    ),
+                    var(--bg);
+                color: var(--fg);
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    "Segoe UI",
+                    Roboto,
+                    Helvetica,
+                    Arial,
+                    "Apple SD Gothic Neo",
+                    "Noto Sans KR",
+                    sans-serif;
+                line-height: 1.5;
+            }
+            header {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                background: rgba(17, 24, 39, 0.7);
+                border-bottom: 1px solid var(--border);
+                backdrop-filter: blur(6px);
+            }
+            .hdr {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 12px 16px;
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 12px;
+                align-items: center;
+            }
+            h1 {
+                margin: 0;
+                font-size: 18px;
+                font-weight: 600;
+            }
+            .ctrls {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            .ctrls input,
+            .ctrls button {
+                appearance: none;
+                border: 1px solid var(--border);
+                background: var(--panel2);
+                color: var(--fg);
+                border-radius: 8px;
+                padding: 6px 8px;
+                font-size: 13px;
+            }
+            .ctrls button {
+                cursor: pointer;
+                background: var(--accent);
+                color: #06111f;
+                border-color: #2a6ad2;
+            }
+            .ctrls button.secondary {
+                background: var(--panel);
+                color: var(--fg);
+                border-color: var(--border);
+            }
+
+            .badges {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+                padding: 0 16px 12px;
+                max-width: 1100px;
+                margin: 0 auto;
+            }
+            .badge {
+                display: inline-flex;
+                gap: 6px;
+                align-items: center;
+                background: var(--badge-bg);
+                color: var(--badge-fg);
+                border: 1px solid var(--border);
+                border-radius: 999px;
+                padding: 3px 8px;
+                font-size: 12px;
+            }
+            .badge code {
+                background: #091226;
+                color: #b6c8ff;
+                border: 1px solid #1a2a55;
+                padding: 1px 4px;
+                border-radius: 5px;
+                font-family:
+                    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                font-size: 11px;
+            }
+
+            .tabs {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 8px 16px 0;
+                display: flex;
+                gap: 6px;
+                border-bottom: 1px solid var(--border);
+            }
+            .tab {
+                appearance: none;
+                border: 1px solid var(--border);
+                background: var(--panel);
+                color: var(--fg);
+                border-radius: 10px 10px 0 0;
+                padding: 8px 10px;
+                font-size: 13px;
+                cursor: pointer;
+            }
+            .tab.active {
+                outline: 1px solid rgba(79, 156, 255, 0.45);
+                box-shadow: 0 0 0 2px rgba(79, 156, 255, 0.18) inset;
+            }
+
+            main {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 12px 16px 22px;
+                display: grid;
+                grid-template-columns: 1fr 1.8fr;
+                gap: 12px;
+            }
+            .panel {
+                background: rgba(17, 24, 39, 0.75);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 12px;
+                min-height: 460px;
+            }
+            .row {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            .hint {
+                color: var(--muted);
+                font-size: 12px;
+            }
+
+            .list {
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                overflow: hidden;
+                margin-top: 8px;
+                max-height: 460px;
+                overflow-y: auto;
+                background: #0c1322;
+            }
+            .item {
+                display: grid;
+                grid-template-columns: 22px 1fr auto;
+                gap: 8px;
+                padding: 8px 10px;
+                border-bottom: 1px solid #0f1a30;
+                font-size: 13px;
+                align-items: center;
+                cursor: pointer;
+            }
+            .item:hover {
+                background: #0b1a33;
+            }
+            .item:last-child {
+                border-bottom: 0;
+            }
+            .name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .meta {
+                color: var(--muted);
+                font-size: 12px;
+            }
+
+            .error {
+                color: #ffd9d9;
+                background: #2a1212;
+                border: 1px solid #552020;
+                padding: 8px;
+                border-radius: 8px;
+                font-size: 13px;
+                margin-top: 8px;
+                display: none;
+            }
+            .error.show {
+                display: block;
+            }
+
+            pre.preview {
+                white-space: pre-wrap;
+                background: #0a0f1a;
+                color: #d7e5ff;
+                border: 1px solid #0f1c33;
+                border-radius: 10px;
+                padding: 10px;
+                max-height: 520px;
+                overflow: auto;
+                margin-top: 8px;
+                font-family:
+                    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                font-size: 12.5px;
+            }
+            .sep {
+                border: none;
+                height: 1px;
+                background: var(--border);
+                margin: 10px 0;
+            }
+
+            @media (max-width: 1024px) {
+                main {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="hdr">
+                <h1>
+                    Memory Inspector <span class="hint">v0 — Read Only</span>
+                </h1>
+                <div class="ctrls">
+                    <label class="hint" for="rootId">rootId</label>
+                    <input id="rootId" value="ws" style="width: 148px" />
+                    <label class="hint" for="model">model</label>
+                    <input id="model" value="gpt-4o" style="width: 148px" />
+                    <label class="hint" for="sort">sort</label>
+                    <select id="sort" style="width: 116px">
+                        <option value="name">name</option>
+                        <option value="size">size</option>
+                        <option value="mtime">date</option>
+                    </select>
+                    <label class="hint" for="order">order</label>
+                    <select id="order" style="width: 96px">
+                        <option value="asc">asc</option>
+                        <option value="desc">desc</option>
+                    </select>
+                    <label class="row" style="gap: 6px">
+                        <input type="checkbox" id="foldersFirst" checked />
+                        <span class="hint">foldersFirst</span>
+                    </label>
+                    <button id="reloadBtn" title="Reload listing">
+                        Reload
+                    </button>
+                    <button
+                        id="rotateReq"
+                        class="secondary"
+                        title="Rotate request_id"
+                    >
+                        New request_id
+                    </button>
+                </div>
+            </div>
+
+            <div class="badges" id="badgeBar">
+                <span class="badge"
+                    ><strong>request_id:</strong> <code id="reqIdVal"></code
+                ></span>
+                <span class="badge"
+                    ><strong>RO:</strong> <code>true</code></span
+                >
+                <span class="badge"
+                    ><strong>preview_cap:</strong> <code>128KB</code></span
+                >
+                <span class="badge"
+                    ><strong>index_cap:</strong> <code>8000</code></span
+                >
+                <span class="badge"
+                    ><strong>exclude:</strong>
+                    <code
+                        >node_modules,.git,.next,venv,.venv,dist,build,target,.cache,coverage,__pycache__,tmp,logs</code
+                    ></span
+                >
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" data-tab="T1">T1</button>
+                <button class="tab" data-tab="T2">T2</button>
+                <button class="tab" data-tab="T3">T3</button>
+            </div>
+        </header>
+
+        <main>
+            <section class="panel" aria-label="Browser panel">
+                <div class="row" style="justify-content: space-between">
+                    <div class="row" style="gap: 8px">
+                        <strong>Browse</strong>
+                        <span class="hint"
+                            >read-only • server-side filters enforced</span
+                        >
+                    </div>
+                    <div class="hint" id="cwdLabel">cwd: /</div>
+                </div>
+
+                <div class="row" style="margin-top: 8px">
+                    <input
+                        id="search"
+                        placeholder="filename filter (server: q, client: contains)"
+                        style="flex: 1; min-width: 200px"
+                    />
+                    <label class="row" style="gap: 6px">
+                        <input type="checkbox" id="recursive" />
+                        <span class="hint">recursive</span>
+                    </label>
+                    <button id="clearSearch" class="secondary">Clear</button>
+                </div>
+                <div
+                    class="row"
+                    style="margin-top: 6px; justify-content: space-between"
+                >
+                    <div class="row" style="gap: 6px">
+                        <button id="pagePrev" class="secondary" disabled>
+                            ◀ Prev
+                        </button>
+                        <button id="pageNext" class="secondary" disabled>
+                            Next ▶
+                        </button>
+                        <span id="pageInfo" class="hint"
+                            >page: 1 / 1 · total: 0</span
+                        >
+                    </div>
+                    <label class="row" style="gap: 6px">
+                        <span class="hint">pageSize</span>
+                        <input
+                            id="pageSize"
+                            type="number"
+                            min="1"
+                            max="500"
+                            value="200"
+                            style="width: 90px"
+                        />
+                    </label>
+                </div>
+
+                <div class="badges" id="metaList"></div>
+                <div
+                    id="listError"
+                    class="error"
+                    role="alert"
+                    aria-live="polite"
+                ></div>
+                <div
+                    id="list"
+                    class="list"
+                    aria-label="Directory listing"
+                ></div>
+            </section>
+
+            <section class="panel" aria-label="Preview panel">
+                <div class="row" style="justify-content: space-between">
+                    <strong>Preview</strong>
+                    <span class="hint">binary preview disabled</span>
+                </div>
+                <div class="badges" id="metaRead"></div>
+                <div
+                    id="readError"
+                    class="error"
+                    role="alert"
+                    aria-live="polite"
+                ></div>
+                <div class="hint" id="readInfo" style="margin-top: 6px"></div>
+                <div
+                    class="row"
+                    id="readControls"
+                    style="gap: 6px; margin-top: 6px"
+                >
+                    <button id="prevChunk" class="secondary" disabled>
+                        ◀ Prev 128KB
+                    </button>
+                    <button id="nextChunk" class="secondary" disabled>
+                        Next 128KB ▶
+                    </button>
+                    <span class="hint" id="offsetInfo">offset: 0</span>
+                </div>
+                <pre id="preview" class="preview">(select a file)</pre>
+                <hr class="sep" />
+                <div class="hint">
+                    This page never writes or modifies files. All operations are
+                    read‑only and time‑bounded by the server.
+                </div>
+            </section>
+            <section class="panel" aria-label="Orchestrator panel">
+                <div class="row" style="justify-content: space-between">
+                    <strong>Orchestrator</strong>
+                    <span class="hint">ECHO stub • read-only</span>
+                </div>
+                <div class="badges" id="orc-meta"></div>
+                <div
+                    id="orc-error"
+                    class="error"
+                    role="alert"
+                    aria-live="polite"
+                ></div>
+                <div
+                    class="row"
+                    style="margin-top: 8px; gap: 6px; align-items: flex-start"
+                >
+                    <textarea
+                        id="orc-prompt"
+                        placeholder="Enter prompt…"
+                        style="
+                            flex: 1;
+                            min-height: 84px;
+                            min-width: 200px;
+                            border: 1px solid var(--border);
+                            border-radius: 8px;
+                            background: var(--panel);
+                            color: var(--fg);
+                            padding: 8px;
+                        "
+                    ></textarea>
+                    <div
+                        class="row"
+                        style="
+                            flex-direction: column;
+                            gap: 6px;
+                            min-width: 170px;
+                        "
+                    >
+                        <label class="hint" for="orc-judge">judge</label>
+                        <select id="orc-judge" style="width: 160px">
+                            <option value="none">none</option>
+                            <option value="human">human</option>
+                        </select>
+                        <button id="orc-call" title="Call orchestrator">
+                            Call
+                        </button>
+                    </div>
+                </div>
+                <div class="hint" style="margin-top: 6px">Output</div>
+                <pre id="orc-output" class="preview" style="max-height: 220px">
+(empty)</pre
+                >
+            </section>
+        </main>
+
+        <script>
+            // ---------- State ----------
+            const state = {
+                tab: "T1",
+                reqId: genReqId(),
+                get model() {
+                    return (
+                        document.getElementById("model").value.trim() ||
+                        "gpt-4o"
+                    );
+                },
+                set model(v) {
+                    document.getElementById("model").value = v || "";
+                },
+                get rootId() {
+                    return (
+                        document.getElementById("rootId").value.trim() || "ws"
+                    );
+                },
+                set rootId(v) {
+                    document.getElementById("rootId").value = v || "";
+                },
+                cwd: "",
+                q: "",
+                recursive: false,
+                selection: null, // { path, type }
+            };
+
+            // ---------- Elements ----------
+            const tabs = Array.from(document.querySelectorAll(".tab"));
+            const reqIdVal = document.getElementById("reqIdVal");
+            const reloadBtn = document.getElementById("reloadBtn");
+            const rotateReq = document.getElementById("rotateReq");
+            const cwdLabel = document.getElementById("cwdLabel");
+
+            const search = document.getElementById("search");
+            const recursive = document.getElementById("recursive");
+            const clearSearch = document.getElementById("clearSearch");
+
+            const listEl = document.getElementById("list");
+            const listError = document.getElementById("listError");
+            const metaList = document.getElementById("metaList");
+
+            const readError = document.getElementById("readError");
+            const metaRead = document.getElementById("metaRead");
+            const preview = document.getElementById("preview");
+            const readInfo = document.getElementById("readInfo");
+
+            // ---------- Utils ----------
+            function genReqId() {
+                return (
+                    "ui_" +
+                    Date.now() +
+                    "_" +
+                    Math.random().toString(36).slice(2, 8)
+                );
+            }
+            function setReqIdLabel() {
+                reqIdVal.textContent = state.reqId;
+            }
+            function headers() {
+                return {
+                    "X-Request-ID": state.reqId,
+                    "X-Upstream-Model": state.model,
+                    "X-Cache-Ratio": "0",
+                };
+            }
+            function setError(el, msg) {
+                if (!msg) {
+                    el.classList.remove("show");
+                    el.textContent = "";
+                    return;
+                }
+                el.classList.add("show");
+                el.textContent =
+                    typeof msg === "string" ? msg : JSON.stringify(msg);
+            }
+            function setCwdLabel() {
+                cwdLabel.textContent = "cwd: " + (state.cwd || "/");
+            }
+            function bytes(n) {
+                if (n == null) return "";
+                if (n < 1024) return n + " B";
+                const k = 1024;
+                const u = ["KB", "MB", "GB", "TB"];
+                let i = -1;
+                let v = n;
+                do {
+                    v = v / k;
+                    i++;
+                } while (v >= k && i < u.length - 1);
+                return v.toFixed(1) + " " + u[i];
+            }
+            function escapeHtml(s) {
+                return String(s)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;");
+            }
+            function badge(label, value) {
+                const val =
+                    value == null
+                        ? ""
+                        : typeof value === "object"
+                          ? JSON.stringify(value)
+                          : String(value);
+                // Small tooltips to explain common meta badges
+                const tips = {
+                    upstream_model:
+                        "Model used for this request (X-Upstream-Model header).",
+                    request_id:
+                        "Unique request identifier (X-Request-ID) for tracing.",
+                    usage: "Usage metrics (e.g., tokens) reported by the provider.",
+                    cache_ratio:
+                        "Cache hit ratio (0–1). Higher can mean more cache use.",
+                    server_ts:
+                        "Server timestamp when this response was generated.",
+                    bytes_read: "Number of bytes read during this operation.",
+                    rounds: "Number of orchestrator rounds executed.",
+                };
+                const title =
+                    tips[String(label)] != null
+                        ? tips[String(label)]
+                        : String(label);
+                return (
+                    '<span class="badge" title="' +
+                    escapeHtml(title) +
+                    '"><strong>' +
+                    escapeHtml(label) +
+                    ":</strong> <code>" +
+                    escapeHtml(val) +
+                    "</code></span>"
+                );
+            }
+            function renderMeta(container, meta) {
+                container.innerHTML = "";
+                if (!meta) return;
+                const wrap = document.createElement("div");
+                wrap.className = "badges";
+                wrap.innerHTML = [
+                    badge("upstream_model", meta.upstream_model ?? ""),
+                    badge("request_id", meta.request_id ?? ""),
+                    badge("usage", meta.usage ?? ""),
+                    badge("cache_ratio", meta.cache_ratio ?? 0),
+                ].join("");
+                container.replaceChildren(wrap);
+            }
+
+            // ---------- FS: List ----------
+            async function loadList() {
+                setError(listError, null);
+                renderMeta(metaList, null);
+                listEl.innerHTML = rowSkeleton("Loading…");
+                setCwdLabel();
+
+                const url = new URL("/api/fs/list", location.origin);
+                url.searchParams.set("rootId", state.rootId);
+                url.searchParams.set("path", state.cwd);
+                url.searchParams.set(
+                    "recursive",
+                    state.recursive ? "true" : "false",
+                );
+                url.searchParams.set("page", String(state.page || 1));
+                url.searchParams.set("pageSize", String(state.pageSize || 200));
+                url.searchParams.set("sort", state.sort || "name");
+                url.searchParams.set("order", state.order || "asc");
+                url.searchParams.set(
+                    "foldersFirst",
+                    state.foldersFirst ? "true" : "false",
+                );
+                if (state.q.trim()) url.searchParams.set("q", state.q.trim());
+
+                try {
+                    const resp = await fetch(url.toString(), {
+                        headers: headers(),
+                    });
+                    const data = await resp.json().catch(() => ({}));
+                    renderMeta(metaList, data && data.meta);
+                    if (!resp.ok) {
+                        const msg =
+                            (data && (data.error || data.message)) ||
+                            "List failed";
+                        setError(listError, msg);
+                        listEl.innerHTML = "";
+                        return;
+                    }
+                    renderList(data.items || []);
+                    if (window.__ggUpdatePageUI)
+                        window.__ggUpdatePageUI(Number(data.total || 0));
+                } catch (e) {
+                    setError(listError, (e && e.message) || "Network error");
+                    listEl.innerHTML = "";
+                }
+            }
+            function rowSkeleton(text) {
+                return [
+                    '<div class="item">',
+                    "<div>…</div>",
+                    '<div class="name">',
+                    escapeHtml(text),
+                    "</div>",
+                    '<div class="meta"></div>',
+                    "</div>",
+                ].join("");
+            }
+            function renderList(items) {
+                const rows = [];
+                if (state.cwd) rows.push(rowUp());
+                for (const it of items) rows.push(rowItem(it));
+                listEl.innerHTML = rows.join("");
+
+                const up = listEl.querySelector('[data-up="1"]');
+                if (up) up.addEventListener("click", goUp);
+
+                for (const el of listEl.querySelectorAll("[data-path]")) {
+                    el.addEventListener("click", (ev) => {
+                        const p = ev.currentTarget.getAttribute("data-path");
+                        const t = ev.currentTarget.getAttribute("data-type");
+                        if (t === "dir") {
+                            state.cwd = p;
+                            state.selection = null;
+                            preview.textContent = "(select a file)";
+                            readInfo.textContent = "";
+                            setError(readError, null);
+                            loadList();
+                        } else {
+                            state.selection = { path: p, type: "file" };
+                            loadRead();
+                        }
+                    });
+                }
+            }
+            function goUp() {
+                const parts = state.cwd.split("/").filter(Boolean);
+                parts.pop();
+                state.cwd = parts.join("/");
+                state.selection = null;
+                preview.textContent = "(select a file)";
+                readInfo.textContent = "";
+                setError(readError, null);
+                loadList();
+            }
+            function rowUp() {
+                return [
+                    '<div class="item" data-up="1" title="Go up">',
+                    "<div>↩︎</div>",
+                    '<div class="name">../</div>',
+                    '<div class="meta"></div>',
+                    "</div>",
+                ].join("");
+            }
+            function rowItem(it) {
+                const icon = it.type === "dir" ? "📁" : "📄";
+                const size = it.size != null ? bytes(it.size) : "";
+                const mt = it.mtimeMs
+                    ? new Date(it.mtimeMs).toLocaleString()
+                    : "";
+                const meta = [size, mt].filter(Boolean).join(" · ");
+                return [
+                    '<div class="item" data-path="',
+                    escapeHtml(it.path),
+                    '" data-type="',
+                    it.type,
+                    '">',
+                    "<div>",
+                    icon,
+                    "</div>",
+                    '<div class="name" title="',
+                    escapeHtml(it.path),
+                    '">',
+                    escapeHtml(it.name),
+                    "</div>",
+                    '<div class="meta">',
+                    escapeHtml(meta),
+                    "</div>",
+                    "</div>",
+                ].join("");
+            }
+
+            // ---------- FS: Read ----------
+            async function loadRead() {
+                setError(readError, null);
+                renderMeta(metaRead, null);
+                if (!state.selection || state.selection.type !== "file") {
+                    preview.textContent = "(select a file)";
+                    readInfo.textContent = "";
+                    return;
+                }
+                preview.textContent = "Loading…";
+                readInfo.textContent = "";
+
+                const url = new URL("/api/fs/read", location.origin);
+                url.searchParams.set("rootId", state.rootId);
+                url.searchParams.set("path", state.selection.path);
+                url.searchParams.set("offset", "0");
+                url.searchParams.set("limit", String(131072));
+
+                try {
+                    const resp = await fetch(url.toString(), {
+                        headers: headers(),
+                    });
+                    const data = await resp.json().catch(() => ({}));
+                    renderMeta(metaRead, data && data.meta);
+                    if (!resp.ok) {
+                        const msg =
+                            (data && (data.error || data.message)) ||
+                            "Read failed";
+                        setError(readError, msg);
+                        preview.textContent = "(error)";
+                        readInfo.textContent = "";
+                        return;
+                    }
+                    readInfo.textContent = [
+                        "path: " + data.path,
+                        "size: " + bytes(data.size),
+                        "read: " + bytes(data.read),
+                        "binary: " + String(data.is_binary),
+                    ].join(" · ");
+                    if (data.is_binary) {
+                        preview.textContent = "[binary preview disabled]";
+                    } else {
+                        preview.textContent = data.content || "";
+                    }
+                } catch (e) {
+                    setError(readError, (e && e.message) || "Network error");
+                    preview.textContent = "(error)";
+                    readInfo.textContent = "";
+                }
+            }
+
+            // ---------- Wiring ----------
+            tabs.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    tabs.forEach((b) => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    const newTab = btn.getAttribute("data-tab");
+                    if (newTab && newTab !== state.tab) {
+                        state.tab = newTab;
+                        // v0: tabs share same root; future can map different scopes per tab
+                        state.cwd = "";
+                        state.selection = null;
+                        preview.textContent = "(select a file)";
+                        readInfo.textContent = "";
+                        setError(readError, null);
+                        search.value = "";
+                        state.q = "";
+                        recursive.checked = false;
+                        state.recursive = false;
+                        loadList();
+                    }
+                });
+            });
+
+            search.addEventListener("input", () => {
+                state.q = search.value || "";
+                if (search._t) clearTimeout(search._t);
+                search._t = setTimeout(loadList, 220);
+            });
+            recursive.addEventListener("change", () => {
+                state.recursive = !!recursive.checked;
+                loadList();
+            });
+            clearSearch.addEventListener("click", () => {
+                search.value = "";
+                state.q = "";
+                loadList();
+            });
+
+            document.getElementById("rootId").addEventListener("change", () => {
+                state.cwd = "";
+                state.selection = null;
+                state.page = 1;
+                loadList();
+            });
+            document.getElementById("model").addEventListener("change", () => {
+                // future calls use new model in headers
+            });
+
+            reloadBtn.addEventListener("click", loadList);
+            document
+                .getElementById("copyReq")
+                ?.addEventListener("click", () => {
+                    navigator.clipboard.writeText(state.reqId).catch(() => {});
+                });
+            document
+                .getElementById("rotateReq")
+                ?.addEventListener("click", () => {
+                    state.reqId = genReqId();
+                    setReqIdLabel();
+                    const btn = document.getElementById("rotateReq");
+                    if (btn) {
+                        const prev = btn.textContent;
+                        btn.textContent = "New request_id ✓";
+                        setTimeout(() => {
+                            btn.textContent = prev;
+                        }, 800);
+                    }
+                });
+
+            // Init
+            // Defaults for list sorting/pagination (safe if controls are absent)
+            state.sort = state.sort || "name";
+            state.order = state.order || "asc";
+            state.foldersFirst = state.foldersFirst ?? true;
+            state.page = state.page || 1;
+            state.pageSize = state.pageSize || 200;
+
+            // Optional UI controls (present if added in markup)
+            const sortSel = document.getElementById("sort");
+            const orderSel = document.getElementById("order");
+            const foldersFirstChk = document.getElementById("foldersFirst");
+            const pagePrev = document.getElementById("pagePrev");
+            const pageNext = document.getElementById("pageNext");
+            const pageInfo = document.getElementById("pageInfo");
+            const pageSizeInput = document.getElementById("pageSize");
+
+            function updatePageUI(total) {
+                const pages = Math.max(
+                    1,
+                    Math.ceil((Number(total) || 0) / (state.pageSize || 200)),
+                );
+                if (pageInfo) {
+                    pageInfo.textContent =
+                        "page: " +
+                        state.page +
+                        " / " +
+                        pages +
+                        " · total: " +
+                        (Number(total) || 0);
+                }
+                if (pagePrev) pagePrev.disabled = state.page <= 1;
+                if (pageNext) pageNext.disabled = state.page >= pages;
+            }
+
+            if (sortSel) {
+                sortSel.value = state.sort;
+                sortSel.addEventListener("change", () => {
+                    state.sort = sortSel.value || "name";
+                    state.page = 1;
+                    loadList();
+                });
+            }
+            if (orderSel) {
+                orderSel.value = state.order;
+                orderSel.addEventListener("change", () => {
+                    state.order = orderSel.value || "asc";
+                    state.page = 1;
+                    loadList();
+                });
+            }
+            if (foldersFirstChk) {
+                foldersFirstChk.checked = !!state.foldersFirst;
+                foldersFirstChk.addEventListener("change", () => {
+                    state.foldersFirst = !!foldersFirstChk.checked;
+                    state.page = 1;
+                    loadList();
+                });
+            }
+            if (pagePrev) {
+                pagePrev.addEventListener("click", () => {
+                    if (state.page > 1) {
+                        state.page -= 1;
+                        loadList();
+                    }
+                });
+            }
+            if (pageNext) {
+                pageNext.addEventListener("click", () => {
+                    state.page += 1;
+                    loadList();
+                });
+            }
+            if (pageSizeInput) {
+                pageSizeInput.value = String(state.pageSize);
+                pageSizeInput.addEventListener("change", () => {
+                    const n = Math.max(1, Number(pageSizeInput.value || 200));
+                    state.pageSize = n;
+                    state.page = 1;
+                    loadList();
+                });
+            }
+
+            // expose updater for loadList
+            window.__ggUpdatePageUI = updatePageUI;
+
+            setReqIdLabel();
+
+            // ---------- Tab-specific root mapping (query + localStorage) ----------
+            function parseRootMapFromQuery() {
+                const p = new URLSearchParams(location.search);
+                const m = {};
+                if (p.get("root_t1")) m.T1 = p.get("root_t1");
+                if (p.get("root_t2")) m.T2 = p.get("root_t2");
+                if (p.get("root_t3")) m.T3 = p.get("root_t3");
+                return m;
+            }
+            function loadRootMap() {
+                const fromQuery = parseRootMapFromQuery();
+                if (Object.keys(fromQuery).length) {
+                    try {
+                        localStorage.setItem(
+                            "gg_root_map",
+                            JSON.stringify(fromQuery),
+                        );
+                    } catch (_) {}
+                    return fromQuery;
+                }
+                try {
+                    const txt = localStorage.getItem("gg_root_map");
+                    if (txt) return JSON.parse(txt);
+                } catch (_) {}
+                return {}; // default empty -> falls back to current input value
+            }
+            const GG_ROOT_MAP = loadRootMap();
+            function applyTabRoot(tabId) {
+                const input = document.getElementById("rootId");
+                const mapped =
+                    GG_ROOT_MAP && GG_ROOT_MAP[tabId]
+                        ? GG_ROOT_MAP[tabId]
+                        : null;
+                if (input && mapped && input.value !== mapped) {
+                    input.value = mapped;
+                    // auto-refresh list when root changes via tab mapping
+                    input.dispatchEvent(new Event("change"));
+                }
+            }
+
+            // ---------- Initialization: roots dropdown + per-tab persistence + compact default ----------
+            (async function initInspector() {
+                try {
+                    if (localStorage.getItem("gg_compact") == null) {
+                        localStorage.setItem("gg_compact", "true");
+                    }
+                } catch (_) {}
+
+                // Replace #rootId input with a <select> and populate from /api/fs/roots (RO)
+                async function ensureRootDropdown() {
+                    const el = document.getElementById("rootId");
+                    if (!el) return;
+                    // If already a <select>, just populate options
+                    let selectEl = el;
+                    if (el.tagName.toLowerCase() !== "select") {
+                        const sel = document.createElement("select");
+                        sel.id = "rootId";
+                        sel.style.width = el.style.width || "148px";
+                        el.parentNode.replaceChild(sel, el);
+                        selectEl = sel;
+                    }
+                    // Fetch roots from bridge
+                    let roots = [];
+                    try {
+                        const resp = await fetch("/api/fs/roots", {
+                            headers: headers(),
+                        });
+                        const data = await resp.json().catch(() => ({}));
+                        const arr = (data && data.roots) || [];
+                        roots = Array.isArray(arr) ? arr : [];
+                    } catch (_) {}
+                    // Populate
+                    selectEl.innerHTML = "";
+                    const addOpt = (id, path) => {
+                        const o = document.createElement("option");
+                        o.value = id;
+                        o.textContent = id + (path ? " — " + path : "");
+                        selectEl.appendChild(o);
+                    };
+                    if (!roots.length) {
+                        // Fallback to existing value (keep current)
+                        const fallback = (state && state.rootId) || "ws";
+                        addOpt(fallback, "");
+                        selectEl.value = fallback;
+                        return;
+                    }
+                    roots.forEach((r) =>
+                        addOpt(String(r.id || ""), String(r.path || "")),
+                    );
+
+                    // Prefer mapped root for current tab if available
+                    const mapTxt = localStorage.getItem("gg_root_map");
+                    let mapped = null;
+                    try {
+                        mapped = mapTxt
+                            ? JSON.parse(mapTxt)[state.tab || "T1"]
+                            : null;
+                    } catch (_) {}
+                    const want =
+                        mapped ||
+                        selectEl.value ||
+                        (roots[0] && roots[0].id) ||
+                        "";
+                    if (want) selectEl.value = want;
+                }
+
+                // ---------- Per-tab state persistence ----------
+                const TAB_STATE_KEY = "gg_tab_state_v1";
+                function loadAllTabState() {
+                    try {
+                        const txt = localStorage.getItem(TAB_STATE_KEY);
+                        return txt ? JSON.parse(txt) : {};
+                    } catch (_) {
+                        return {};
+                    }
+                }
+                function saveAllTabState(obj) {
+                    try {
+                        localStorage.setItem(
+                            TAB_STATE_KEY,
+                            JSON.stringify(obj || {}),
+                        );
+                    } catch (_) {}
+                }
+                function saveTabState(tabId) {
+                    if (!tabId) return;
+                    const all = loadAllTabState();
+                    all[tabId] = {
+                        cwd: state.cwd || "",
+                        sort: state.sort || "name",
+                        order: state.order || "asc",
+                        foldersFirst: !!state.foldersFirst,
+                        page: state.page || 1,
+                        pageSize: state.pageSize || 200,
+                        q: state.q || "",
+                        recursive: !!state.recursive,
+                        rootId: state.rootId || "",
+                    };
+                    saveAllTabState(all);
+                }
+                function applyTabState(tabId) {
+                    const all = loadAllTabState();
+                    const s = all[tabId] || null;
+                    if (!s) return;
+
+                    // Core state
+                    state.cwd = s.cwd || "";
+                    state.sort = s.sort || "name";
+                    state.order = s.order || "asc";
+                    state.foldersFirst = !!s.foldersFirst;
+                    state.page = s.page || 1;
+                    state.pageSize = s.pageSize || 200;
+                    state.q = s.q || "";
+                    state.recursive = !!s.recursive;
+
+                    // Reflect to controls (if present)
+                    const sortEl = document.getElementById("sort");
+                    const orderEl = document.getElementById("order");
+                    const ffEl = document.getElementById("foldersFirst");
+                    const psEl = document.getElementById("pageSize");
+                    const qEl = document.getElementById("search");
+                    const recEl = document.getElementById("recursive");
+                    const rootEl = document.getElementById("rootId");
+
+                    if (sortEl) sortEl.value = state.sort;
+                    if (orderEl) orderEl.value = state.order;
+                    if (ffEl) ffEl.checked = !!state.foldersFirst;
+                    if (psEl) psEl.value = String(state.pageSize);
+                    if (qEl) qEl.value = state.q;
+                    if (recEl) recEl.checked = !!state.recursive;
+                    if (rootEl && s.rootId) rootEl.value = s.rootId;
+
+                    setCwdLabel();
+                }
+
+                // Persist per-tab root mapping when user changes root
+                // Root change (delegated) — works even if the input is replaced with a dropdown
+                document.addEventListener("change", function (e) {
+                    const t = e.target;
+                    if (!t || t.id !== "rootId") return;
+                    try {
+                        const txt = localStorage.getItem("gg_root_map");
+                        const map = txt ? JSON.parse(txt) : {};
+                        map[state.tab || "T1"] = state.rootId;
+                        localStorage.setItem(
+                            "gg_root_map",
+                            JSON.stringify(map),
+                        );
+                    } catch (_) {}
+                    // Reset pagination and selection when root changes
+                    state.cwd = "";
+                    state.selection = null;
+                    state.page = 1;
+                    saveTabState(state.tab || "T1");
+                    loadList();
+                });
+
+                // Save on unload
+                window.addEventListener("beforeunload", function () {
+                    saveTabState(state.tab || "T1");
+                });
+
+                // Keyboard shortcuts: c → toggle Compact, o → toggle Orchestrator
+                document.addEventListener("keydown", function (e) {
+                    if (e.metaKey || e.ctrlKey || e.altKey) return;
+                    const tag = (
+                        (e.target && e.target.tagName) ||
+                        ""
+                    ).toLowerCase();
+                    if (
+                        tag === "input" ||
+                        tag === "textarea" ||
+                        tag === "select"
+                    )
+                        return;
+                    const k = String(e.key || "").toLowerCase();
+                    if (k === "c") {
+                        const cur = document.body.classList.contains("compact");
+                        document.body.classList.toggle("compact", !cur);
+                        try {
+                            localStorage.setItem(
+                                "gg_compact",
+                                !cur ? "true" : "false",
+                            );
+                        } catch (_) {}
+                    } else if (k === "o") {
+                        const sec = document.querySelector(
+                            'section[aria-label="Orchestrator panel"]',
+                        );
+                        const visible = sec && sec.style.display !== "none";
+                        if (sec) sec.style.display = visible ? "none" : "";
+                        try {
+                            localStorage.setItem(
+                                "gg_orc_visible",
+                                visible ? "false" : "true",
+                            );
+                        } catch (_) {}
+                    }
+                });
+
+                // Boot sequence
+                await ensureRootDropdown();
+                applyTabRoot(state.tab || "T1");
+                applyTabState(state.tab || "T1");
+                loadList();
+
+                // Enhance tab click (capture phase): save current tab, restore target tab, and prevent upstream reset handler
+                tabs.forEach(function (btn) {
+                    btn.addEventListener(
+                        "click",
+                        function (e) {
+                            if (
+                                e &&
+                                typeof e.stopImmediatePropagation === "function"
+                            )
+                                e.stopImmediatePropagation();
+                            if (e && typeof e.stopPropagation === "function")
+                                e.stopPropagation();
+                            if (e && typeof e.preventDefault === "function")
+                                e.preventDefault();
+
+                            const t = btn.getAttribute("data-tab") || "T1";
+                            const prev = state.tab || "T1";
+
+                            // Update active tab button styles
+                            tabs.forEach((b) => b.classList.remove("active"));
+                            btn.classList.add("active");
+
+                            // Persist current tab state before switching
+                            if (typeof saveTabState === "function")
+                                saveTabState(prev);
+
+                            // Switch tab id
+                            state.tab = t;
+
+                            // Restore target tab mapping/state and then load list
+                            applyTabRoot(t);
+                            applyTabState(t);
+                            loadList();
+                        },
+                        true, // capture to run before the earlier bubbling handler
+                    );
+                });
+            })();
+
+            // ---------- Preview paging (offset controls; 128KB pages) ----------
+            const prevBtn = document.getElementById("prevChunk");
+            const nextBtn = document.getElementById("nextChunk");
+            const offsetInfo = document.getElementById("offsetInfo");
+
+            state.readOffset = 0;
+            state.readLimit = 131072;
+            state.currentFileSize = 0;
+
+            function updateReadControls() {
+                if (!prevBtn || !nextBtn || !offsetInfo) return;
+                prevBtn.disabled = state.readOffset <= 0;
+                const hasMore =
+                    state.currentFileSize > 0 &&
+                    state.readOffset + state.readLimit < state.currentFileSize;
+                nextBtn.disabled = !hasMore;
+                offsetInfo.textContent =
+                    "offset: " + state.readOffset.toLocaleString();
+            }
+
+            async function readWithOffset(off) {
+                setError(readError, null);
+                renderMeta(metaRead, null);
+                if (!state.selection || state.selection.type !== "file") {
+                    preview.textContent = "(select a file)";
+                    readInfo.textContent = "";
+                    state.currentFileSize = 0;
+                    state.readOffset = 0;
+                    updateReadControls();
+                    return;
+                }
+                preview.textContent = "Loading…";
+                readInfo.textContent = "";
+                const url = new URL("/api/fs/read", location.origin);
+                url.searchParams.set("rootId", state.rootId);
+                url.searchParams.set("path", state.selection.path);
+                url.searchParams.set("offset", String(Math.max(0, off || 0)));
+                url.searchParams.set("limit", String(state.readLimit));
+                try {
+                    const resp = await fetch(url.toString(), {
+                        headers: headers(),
+                    });
+                    const data = await resp.json().catch(() => ({}));
+                    renderMeta(metaRead, data && data.meta);
+                    if (!resp.ok) {
+                        const msg =
+                            (data && (data.error || data.message)) ||
+                            "Read failed";
+                        setError(readError, msg);
+                        preview.textContent = "(error)";
+                        readInfo.textContent = "";
+                        state.currentFileSize = 0;
+                        updateReadControls();
+                        return;
+                    }
+                    // track file size and current offset
+                    state.currentFileSize = Number(data.size || 0);
+                    state.readOffset = Number(data.offset || 0);
+
+                    readInfo.textContent = [
+                        "path: " + data.path,
+                        "size: " +
+                            (state.currentFileSize
+                                ? state.currentFileSize.toLocaleString() + " B"
+                                : "0 B"),
+                        "read: " +
+                            (data.read != null
+                                ? data.read.toLocaleString() + " B"
+                                : "0 B"),
+                        "binary: " + String(data.is_binary),
+                    ].join(" · ");
+
+                    if (data.is_binary) {
+                        preview.textContent = "[binary preview disabled]";
+                    } else {
+                        preview.textContent = data.content || "";
+                    }
+                    updateReadControls();
+                } catch (e) {
+                    setError(readError, (e && e.message) || "Network error");
+                    preview.textContent = "(error)";
+                    readInfo.textContent = "";
+                    state.currentFileSize = 0;
+                    updateReadControls();
+                }
+            }
+
+            // Override original loader to reset offset to 0 on new selection
+            window.loadRead = async function () {
+                state.readOffset = 0;
+                await readWithOffset(0);
+            };
+
+            if (prevBtn)
+                prevBtn.addEventListener("click", function () {
+                    if (state.readOffset > 0) {
+                        const nextOff = Math.max(
+                            0,
+                            state.readOffset - state.readLimit,
+                        );
+                        readWithOffset(nextOff);
+                    }
+                });
+            if (nextBtn)
+                nextBtn.addEventListener("click", function () {
+                    if (state.currentFileSize > 0) {
+                        const nextOff = state.readOffset + state.readLimit;
+                        if (nextOff < state.currentFileSize) {
+                            readWithOffset(nextOff);
+                        }
+                    }
+                });
+        </script>
+        <script>
+            // ---------- Orchestrator stub UI wiring (M0+ D) ----------
+            (function () {
+                const orcPrompt = document.getElementById("orc-prompt");
+                const orcJudge = document.getElementById("orc-judge");
+                const orcCall = document.getElementById("orc-call");
+                const orcOutput = document.getElementById("orc-output");
+                const orcMeta = document.getElementById("orc-meta");
+                const orcErr = document.getElementById("orc-error");
+
+                function clearOrcError() {
+                    if (!orcErr) return;
+                    orcErr.classList.remove("show");
+                    orcErr.textContent = "";
+                }
+
+                function setOrcError(msg) {
+                    if (!orcErr) return;
+                    orcErr.textContent =
+                        typeof msg === "string" ? msg : JSON.stringify(msg);
+                    orcErr.classList.add("show");
+                }
+
+                async function callOrchestrator() {
+                    clearOrcError();
+                    if (orcMeta && typeof renderMeta === "function")
+                        renderMeta(orcMeta, null);
+                    if (orcOutput) orcOutput.textContent = "Loading…";
+
+                    try {
+                        const resp = await fetch("/api/orchestrate", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                ...(typeof headers === "function"
+                                    ? headers()
+                                    : {}),
+                            },
+                            body: JSON.stringify({
+                                prompt: (orcPrompt && orcPrompt.value) || "",
+                                judge: (orcJudge && orcJudge.value) || "none",
+                            }),
+                        });
+                        const data = await resp.json().catch(() => ({}));
+                        if (!resp.ok || (data && data.ok === false)) {
+                            const msg =
+                                (data &&
+                                    ((data.error &&
+                                        (data.error.message || data.error)) ||
+                                        data.message)) ||
+                                "Call failed";
+                            setOrcError(msg);
+                            if (orcOutput) orcOutput.textContent = "(error)";
+                            return;
+                        }
+                        if (orcMeta && typeof renderMeta === "function")
+                            renderMeta(orcMeta, data && data.meta);
+                        const out =
+                            (data &&
+                                data.data &&
+                                typeof data.data.output === "string" &&
+                                data.data.output) ||
+                            "";
+                        if (orcOutput) orcOutput.textContent = out || "(empty)";
+                    } catch (e) {
+                        setOrcError((e && e.message) || "Network error");
+                        if (orcOutput) orcOutput.textContent = "(error)";
+                    }
+                }
+
+                if (orcCall) {
+                    orcCall.addEventListener("click", callOrchestrator);
+                }
+            })();
+        </script>
+        <script>
+            // Compact mode + Orchestrator toggle (persisted)
+            (function () {
+                try {
+                    const ctrlBar = document.querySelector("header .ctrls");
+                    const orcSection = document.querySelector(
+                        'section[aria-label="Orchestrator panel"]',
+                    );
+                    // Inject compact CSS
+                    const css = `
+                        body.compact .hint { display: none !important; }
+                        body.compact header .ctrls label.hint { display: none !important; }
+                        body.compact #badgeBar { display: none !important; }
+                        body.compact pre.preview { max-height: 420px; }
+                        body.compact .panel { padding-top: 8px; padding-bottom: 10px; }
+                    `;
+                    const style = document.createElement("style");
+                    style.setAttribute("data-from", "gg-compact");
+                    style.textContent = css;
+                    document.head.appendChild(style);
+
+                    // States
+                    const loadBool = (k, d) => {
+                        try {
+                            const v = localStorage.getItem(k);
+                            if (v == null) return !!d;
+                            return v === "true";
+                        } catch (_) {
+                            return !!d;
+                        }
+                    };
+                    const saveBool = (k, v) => {
+                        try {
+                            localStorage.setItem(k, v ? "true" : "false");
+                        } catch (_) {}
+                    };
+
+                    let compact = loadBool("gg_compact", true);
+                    let orcVisible = loadBool("gg_orc_visible", true);
+
+                    // Apply initial states
+                    document.body.classList.toggle("compact", !!compact);
+                    if (orcSection)
+                        orcSection.style.display = orcVisible ? "" : "none";
+
+                    // Build buttons
+                    function mkBtn(label) {
+                        const b = document.createElement("button");
+                        b.className = "secondary";
+                        b.type = "button";
+                        b.style.minWidth = "84px";
+                        b.textContent = label;
+                        return b;
+                    }
+
+                    const compactBtn = mkBtn(
+                        compact ? "Compact: on" : "Compact: off",
+                    );
+                    const orcBtn = mkBtn(
+                        orcVisible ? "Orchestrator: on" : "Orchestrator: off",
+                    );
+
+                    compactBtn.addEventListener("click", function () {
+                        compact = !compact;
+                        document.body.classList.toggle("compact", compact);
+                        compactBtn.textContent = compact
+                            ? "Compact: on"
+                            : "Compact: off";
+                        saveBool("gg_compact", compact);
+                    });
+                    orcBtn.addEventListener("click", function () {
+                        orcVisible = !orcVisible;
+                        if (orcSection)
+                            orcSection.style.display = orcVisible ? "" : "none";
+                        orcBtn.textContent = orcVisible
+                            ? "Orchestrator: on"
+                            : "Orchestrator: off";
+                        saveBool("gg_orc_visible", orcVisible);
+                    });
+
+                    if (ctrlBar) {
+                        const sep = document.createElement("span");
+                        sep.className = "hint";
+                        sep.textContent = "|";
+                        sep.style.margin = "0 4px";
+                        ctrlBar.appendChild(sep);
+                        ctrlBar.appendChild(compactBtn);
+                        ctrlBar.appendChild(orcBtn);
+                    }
+                } catch (e) {
+                    /* no-op */
+                }
+            })();
+        </script>
+    </body>
+</html>

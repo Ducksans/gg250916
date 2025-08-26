@@ -1,0 +1,547 @@
+{
+  "version": "2.0",
+  "updated_at": "2025-08-08T20:01:41.583498",
+  "task_counter": 2,
+  "current_task_id": null,
+  "tasks": {
+    "GG-20250808-123622-001": {
+      "task_id": "GG-20250808-123622-001",
+      "name": "세션 매니저 시스템 구축",
+      "description": "세션 간 컨텍스트 영속화 시스템",
+      "status": "in_progress",
+      "priority": "high",
+      "progress": 50,
+      "created_at": "2025-08-08T12:36:22.793263",
+      "created_by": "human",
+      "session_id": "SESSION-20250808-123622",
+      "parent_id": null,
+      "children_ids": [],
+      "dependencies": [],
+      "started_at": "2025-08-08T12:36:22.793839",
+      "completed_at": null,
+      "estimated_duration": 30,
+      "actual_duration": null,
+      "checkpoints": [
+        {
+          "checkpoint_id": "CP-123622",
+          "timestamp": "2025-08-08T12:36:22.794128",
+          "description": "기본 구조 생성 완료",
+          "progress": 50,
+          "artifacts": [
+            "session_manager.py",
+            "context/"
+          ],
+          "metrics": {}
+        }
+      ],
+      "artifacts": [
+        "session_manager.py",
+        "context/"
+      ],
+      "error_log": [],
+      "metadata": {}
+    },
+    "GG-20250808-123622-002": {
+      "task_id": "GG-20250808-123622-002",
+      "name": "Task 추적 시스템 구축",
+      "description": "모든 작업의 고유 ID 부여 및 추적",
+      "status": "pending",
+      "priority": "high",
+      "progress": 0,
+      "created_at": "2025-08-08T12:36:22.793548",
+      "created_by": "human",
+      "session_id": "SESSION-20250808-123622",
+      "parent_id": null,
+      "children_ids": [],
+      "dependencies": [],
+      "started_at": null,
+      "completed_at": null,
+      "estimated_duration": 45,
+      "actual_duration": null,
+      "checkpoints": [],
+      "artifacts": [],
+      "error_log": [],
+      "metadata": {}
+    },
+    "GG-20250108-001": {
+      "task_id": "GG-20250108-001",
+      "name": "세션 매니저 시스템 구축",
+      "description": "Task Group A: 세션 매니저 시스템 구축",
+      "status": "completed",
+      "priority": "high",
+      "progress": 100,
+      "created_at": "2025-08-08T12:57:35.020096",
+      "created_by": "human",
+      "session_id": "SESSION-20250808-125735",
+      "parent_id": null,
+      "children_ids": [],
+      "dependencies": [],
+      "started_at": null,
+      "completed_at": "2025-08-08T12:59:43.098197",
+      "estimated_duration": null,
+      "actual_duration": null,
+      "checkpoints": [],
+      "artifacts": [],
+      "error_log": [],
+      "metadata": {}
+    },
+    "GG-20250108-002": {
+      "task_id": "GG-20250108-002",
+      "name": "Task 추적 시스템 구축",
+      "description": "Task Group A: Task 추적 시스템 구축",
+      "status": "completed",
+      "priority": "high",
+      "progress": 100,
+      "created_at": "2025-08-08T12:57:35.020116",
+      "created_by": "human",
+      "session_id": "SESSION-20250808-125735",
+      "parent_id": null,
+      "children_ids": [],
+      "dependencies": [],
+      "started_at": null,
+      "completed_at": "2025-08-08T12:59:43.099778",
+      "estimated_duration": null,
+      "actual_duration": null,
+      "checkpoints": [],
+      "artifacts": [],
+      "error_log": [],
+      "metadata": {}
+    },
+    "GG-20250108-003": {
+      "task_id": "GG-20250108-003",
+      "name": "프로젝트 구조 정리",
+      "description": "Task Group A: 프로젝트 구조 정리",
+      "status": "completed",
+      "priority": "high",
+      "progress": 100,
+      "created_at": "2025-08-08T12:57:35.020128",
+      "created_by": "human",
+      "session_id": "SESSION-20250808-125735",
+      "parent_id": null,
+      "children_ids": [],
+      "dependencies": [],
+      "started_at": null,
+      "completed_at": "2025-08-08T12:59:43.101181",
+      "estimated_duration": null,
+      "actual_duration": null,
+      "checkpoints": [],
+      "artifacts": [],
+      "error_log": [],
+      "metadata": {}
+    },
+    "GG-20250108-004": {
+      "task_id": "GG-20250108-004",
+      "name": "인계 시스템 구축",
+      "description": "Task Group A: 인계 시스템 구축",
+      "status": "completed",
+      "priority": "high",
+      "progress": 100,
+      "created_at": "2025-08-08T12:57:35.020138",
+      "created_by": "human",
+      "session_id": "SESSION-20250808-125735",
+      "parent_id": null,
+      "children_ids": [],
+      "dependencies": [],
+      "started_at": null,
+      "completed_at": "2025-08-08T12:59:43.102580",
+      "estimated_duration": null,
+      "actual_duration": null,
+      "checkpoints": [],
+      "artifacts": [],
+      "error_log": [],
+      "metadata": {}
+    },
+    "GG-20250108-005": {
+      "task_id": "GG-20250108-005",
+      "name": "백엔드 안정화",
+      "description": "FastAPI 백엔드 서버 안정화 및 포트 8001 설정",
+      "status": "completed",
+      "priority": "high",
+      "progress": 100,
+      "created_at": "2025-08-08T12:57:35.020161",
+      "created_by": "human",
+      "session_id": "SESSION-20250808-125735",
+      "parent_id": null,
+      "children_ids": [],
+      "dependencies": [],
+      "started_at": "2025-08-08T12:57:35.020165",
+      "completed_at": "2025-08-08T13:07:52.715002",
+      "estimated_duration": 60,
+      "actual_duration": 10,
+      "checkpoints": [
+        {
+          "checkpoint_id": "CP-125735",
+          "timestamp": "2025-08-08T12:57:35.020173",
+          "description": "진행률: 70%",
+          "progress": 70,
+          "artifacts": [],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-125840",
+          "timestamp": "2025-08-08T12:58:40.247851",
+          "description": "진행률: 70%",
+          "progress": 70,
+          "artifacts": [],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-125840",
+          "timestamp": "2025-08-08T12:58:40.248325",
+          "description": "simple_main.py 생성 - 테스트 서버",
+          "progress": 30,
+          "artifacts": [
+            "backend/simple_main.py",
+            "gumgang-v2/hooks/useUnifiedBackend.ts",
+            "gumgang-v2/.env.local"
+          ],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-125840",
+          "timestamp": "2025-08-08T12:58:40.248335",
+          "description": "useUnifiedBackend 훅 생성",
+          "progress": 50,
+          "artifacts": [
+            "backend/simple_main.py",
+            "gumgang-v2/hooks/useUnifiedBackend.ts",
+            "gumgang-v2/.env.local"
+          ],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-125840",
+          "timestamp": "2025-08-08T12:58:40.248341",
+          "description": "환경 변수 설정 (.env.local)",
+          "progress": 70,
+          "artifacts": [
+            "backend/simple_main.py",
+            "gumgang-v2/hooks/useUnifiedBackend.ts",
+            "gumgang-v2/.env.local"
+          ],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-125911",
+          "timestamp": "2025-08-08T12:59:11.917728",
+          "description": "진행률: 70%",
+          "progress": 70,
+          "artifacts": [],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-125911",
+          "timestamp": "2025-08-08T12:59:11.918464",
+          "description": "simple_main.py 생성 - 테스트 서버",
+          "progress": 30,
+          "artifacts": [
+            "backend/simple_main.py",
+            "gumgang-v2/hooks/useUnifiedBackend.ts",
+            "gumgang-v2/.env.local"
+          ],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-125911",
+          "timestamp": "2025-08-08T12:59:11.918475",
+          "description": "useUnifiedBackend 훅 생성",
+          "progress": 50,
+          "artifacts": [
+            "backend/simple_main.py",
+            "gumgang-v2/hooks/useUnifiedBackend.ts",
+            "gumgang-v2/.env.local"
+          ],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-125911",
+          "timestamp": "2025-08-08T12:59:11.918481",
+          "description": "환경 변수 설정 (.env.local)",
+          "progress": 70,
+          "artifacts": [
+            "backend/simple_main.py",
+            "gumgang-v2/hooks/useUnifiedBackend.ts",
+            "gumgang-v2/.env.local"
+          ],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-125943",
+          "timestamp": "2025-08-08T12:59:43.104754",
+          "description": "진행률: 70%",
+          "progress": 70,
+          "artifacts": [],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-125943",
+          "timestamp": "2025-08-08T12:59:43.105940",
+          "description": "simple_main.py 생성 - 테스트 서버",
+          "progress": 30,
+          "artifacts": [
+            "backend/simple_main.py",
+            "gumgang-v2/hooks/useUnifiedBackend.ts",
+            "gumgang-v2/.env.local"
+          ],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-125943",
+          "timestamp": "2025-08-08T12:59:43.105952",
+          "description": "useUnifiedBackend 훅 생성",
+          "progress": 50,
+          "artifacts": [
+            "backend/simple_main.py",
+            "gumgang-v2/hooks/useUnifiedBackend.ts",
+            "gumgang-v2/.env.local"
+          ],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-125943",
+          "timestamp": "2025-08-08T12:59:43.105960",
+          "description": "환경 변수 설정 (.env.local)",
+          "progress": 70,
+          "artifacts": [
+            "backend/simple_main.py",
+            "gumgang-v2/hooks/useUnifiedBackend.ts",
+            "gumgang-v2/.env.local"
+          ],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-130752",
+          "timestamp": "2025-08-08T13:07:52.713250",
+          "description": "백엔드 안정화 완료 - 자동 시작 스크립트 생성",
+          "progress": 100,
+          "artifacts": [
+            "backend/start_backend.sh",
+            "backend/simple_main.py"
+          ],
+          "metrics": {}
+        }
+      ],
+      "artifacts": [
+        "backend/simple_main.py",
+        "gumgang-v2/hooks/useUnifiedBackend.ts",
+        "gumgang-v2/.env.local",
+        "backend/start_backend.sh",
+        "backend/simple_main.py",
+        "backend/start_backend.sh",
+        "backend/simple_main.py",
+        "backend/logs/"
+      ],
+      "error_log": [],
+      "metadata": {}
+    },
+    "GG-20250108-006": {
+      "task_id": "GG-20250108-006",
+      "name": "Tauri 파일시스템 API",
+      "description": "Tauri를 통한 로컬 파일시스템 접근 API 구현",
+      "status": "completed",
+      "priority": "medium",
+      "progress": 100,
+      "created_at": "2025-08-08T12:58:40.248350",
+      "created_by": "human",
+      "session_id": "SESSION-20250808-125840",
+      "parent_id": null,
+      "children_ids": [],
+      "dependencies": [
+        "GG-20250108-005"
+      ],
+      "started_at": "2025-08-08T13:08:02.765770",
+      "completed_at": "2025-08-08T19:59:22.471804",
+      "estimated_duration": 60,
+      "actual_duration": 411,
+      "checkpoints": [
+        {
+          "checkpoint_id": "CP-131201",
+          "timestamp": "2025-08-08T13:12:01.419348",
+          "description": "Tauri 기본 설정 완료 - 파일시스템 API 구조 생성",
+          "progress": 40,
+          "artifacts": [
+            "gumgang-v2/src-tauri/tauri.conf.json",
+            "gumgang-v2/src-tauri/src/main.rs",
+            "gumgang-v2/hooks/useTauriFileSystem.ts"
+          ],
+          "metrics": {}
+        },
+        {
+          "checkpoint_id": "CP-192134",
+          "timestamp": "2025-08-08T19:21:34.595927",
+          "description": "Tauri 파일시스템 API 완성 및 테스트 컴포넌트 구현 완료",
+          "progress": 75,
+          "artifacts": [],
+          "metrics": {}
+        }
+      ],
+      "artifacts": [
+        "gumgang-v2/src-tauri/tauri.conf.json",
+        "gumgang-v2/src-tauri/src/main.rs",
+        "gumgang-v2/hooks/useTauriFileSystem.ts"
+      ],
+      "error_log": [],
+      "metadata": {}
+    },
+    "GG-20250108-007": {
+      "task_id": "GG-20250108-007",
+      "name": "Monaco 에디터 연동",
+      "description": "Monaco 에디터와 백엔드 파일 시스템 연동",
+      "status": "completed",
+      "priority": "medium",
+      "progress": 100,
+      "created_at": "2025-08-08T12:58:40.248363",
+      "created_by": "human",
+      "session_id": "SESSION-20250808-125840",
+      "parent_id": null,
+      "children_ids": [],
+      "dependencies": [
+        "GG-20250108-005",
+        "GG-20250108-006"
+      ],
+      "started_at": "2025-08-08T19:59:31.511576",
+      "completed_at": "2025-08-08T20:21:18.187528",
+      "estimated_duration": 45,
+      "actual_duration": null,
+      "checkpoints": [
+        {
+          "checkpoint_id": "CP-200141",
+          "timestamp": "2025-08-08T20:01:41.583492",
+          "description": "Monaco Editor 기본 컴포넌트 생성 및 설치 스크립트 준비",
+          "progress": 20,
+          "artifacts": [],
+          "metrics": {}
+        }
+      ],
+      "artifacts": [],
+      "error_log": [],
+      "metadata": {},
+      "last_update": "2025-08-08T20:21:18.187538",
+      "notes": "✅ Monaco Editor 통합 100% 완료:\n\n구현된 기능:\n1. Monaco Editor 컴포넌트 (295줄)\n2. MultiTabEditor 컴포넌트 (591줄) - 멀티탭 편집 지원\n3. 커스텀 테마 (gumgang-dark/light) 구현\n4. Tauri 파일시스템 완벽 연동\n5. 키보드 단축키 지원 (Ctrl+S, Ctrl+O, Ctrl+W 등)\n6. 자동 언어 감지 (30+ 언어)\n7. 파일 상태 표시 (저장/미저장)\n8. 탭 스크롤 및 관리 기능\n\n총 파일:\n- components/MonacoEditor.tsx (295줄)\n- components/editor/MultiTabEditor.tsx (591줄)  \n- lib/monaco-themes.ts (351줄)\n- hooks/useTauriFileSystem.ts (기존)\n- app/editor/page.tsx (업데이트)\n\n성과: 프로덕션 레벨의 코드 에디터 완성"
+    },
+    "GG-20250108-008": {
+      "task_id": "GG-20250108-008",
+      "name": "실시간 동기화 시스템",
+      "description": "프론트엔드-백엔드 실시간 데이터 동기화",
+      "status": "pending",
+      "priority": "medium",
+      "progress": 0,
+      "created_at": "2025-08-08T12:58:40.248373",
+      "created_by": "human",
+      "session_id": "SESSION-20250808-125840",
+      "parent_id": null,
+      "children_ids": [],
+      "dependencies": [
+        "GG-20250108-005"
+      ],
+      "started_at": null,
+      "completed_at": null,
+      "estimated_duration": 90,
+      "actual_duration": null,
+      "checkpoints": [],
+      "artifacts": [],
+      "error_log": [],
+      "metadata": {}
+    },
+    "GG-20250108-009": {
+      "task_id": "GG-20250108-009",
+      "name": "3D 시각화 최적화",
+      "description": "Three.js 기반 3D 메모리 시각화 성능 최적화",
+      "status": "pending",
+      "priority": "medium",
+      "progress": 0,
+      "created_at": "2025-08-08T12:58:40.248382",
+      "created_by": "human",
+      "session_id": "SESSION-20250808-125840",
+      "parent_id": null,
+      "children_ids": [],
+      "dependencies": [],
+      "started_at": null,
+      "completed_at": null,
+      "estimated_duration": 60,
+      "actual_duration": null,
+      "checkpoints": [],
+      "artifacts": [],
+      "error_log": [],
+      "metadata": {}
+    },
+    "GG-20250108-010": {
+      "task_id": "GG-20250108-010",
+      "name": "테스트 및 문서화",
+      "description": "통합 테스트 및 API 문서화",
+      "status": "pending",
+      "priority": "medium",
+      "progress": 0,
+      "created_at": "2025-08-08T12:58:40.248390",
+      "created_by": "human",
+      "session_id": "SESSION-20250808-125840",
+      "parent_id": null,
+      "children_ids": [],
+      "dependencies": [
+        "GG-20250108-005",
+        "GG-20250108-006",
+        "GG-20250108-007"
+      ],
+      "started_at": null,
+      "completed_at": null,
+      "estimated_duration": 30,
+      "actual_duration": null,
+      "checkpoints": [],
+      "artifacts": [],
+      "error_log": [],
+      "metadata": {}
+    },
+    "GG-20250808-HTS-001": {
+      "task_id": "GG-20250808-HTS-001",
+      "name": "Protocol Guard v3.0 구현",
+      "description": "실시간 상태 모니터링, 자동 백업, Task 의존성 검증",
+      "status": "started",
+      "priority": "critical",
+      "progress": 0,
+      "trust_score": 98,
+      "estimated_hours": 2,
+      "dependencies": [],
+      "created_at": "2025-08-08T20:50:41.748844",
+      "created_by": "hybrid_trust_strategy",
+      "session_id": "SESSION-HTS-20250808",
+      "phase": "Phase1-CoreStability",
+      "last_update": "2025-08-08T21:16:25.582653",
+      "started_at": "2025-08-08T21:16:25.539190",
+      "notes": ""
+    },
+    "GG-20250808-HTS-002": {
+      "task_id": "GG-20250808-HTS-002",
+      "name": "Secure Terminal Integration",
+      "description": "xterm.js 통합, 명령어 승인 시스템, 위험 명령어 차단",
+      "status": "pending",
+      "priority": "high",
+      "progress": 0,
+      "trust_score": 95,
+      "estimated_hours": 3,
+      "dependencies": [
+        "GG-20250808-HTS-001"
+      ],
+      "created_at": "2025-08-08T20:50:41.748855",
+      "created_by": "hybrid_trust_strategy",
+      "session_id": "SESSION-HTS-20250808",
+      "phase": "Phase1-CoreStability"
+    },
+    "GG-20250808-HTS-003": {
+      "task_id": "GG-20250808-HTS-003",
+      "name": "Rollback System",
+      "description": "파일 변경 스냅샷, Git 자동 커밋, 1-click 복구",
+      "status": "pending",
+      "priority": "high",
+      "progress": 0,
+      "trust_score": 96,
+      "estimated_hours": 3,
+      "dependencies": [
+        "GG-20250808-HTS-001"
+      ],
+      "created_at": "2025-08-08T20:50:41.748857",
+      "created_by": "hybrid_trust_strategy",
+      "session_id": "SESSION-HTS-20250808",
+      "phase": "Phase1-CoreStability"
+    }
+  }
+}

@@ -1,0 +1,363 @@
+[RULES v3.1 — Gumgang Root (Zed) — Full Author Mode]
+Last-Updated: 2025-08-25T17:41:28Z
+Applies-To: gumgang_meeting/* (project root; overrides sub-project rules; supersedes v2.0 upon apply)
+
+0) Purpose
+- After BT-07, Gumgang (AI) must directly create/modify/test the entire gumgang_meeting project to unblock integration work.
+- Expand authoring scope while preserving evidence-first safety, append-only checkpoints, and quarantine policy.
+
+1) Environment & I/O Boundaries
+- ENV_FILE: gumgang_meeting/.env (authoritative; ignore legacy .env elsewhere)
+- WRITE_ALLOW: [ "gumgang_meeting/**" ]  (full-author within project root)
+- BRIDGE_FS_ALLOWLIST:
+  · 개발 모드(로컬)에서 ENV.FS_ALLOWLIST 미설정 시, Bridge는 status/, ui/ 를 기본 허용한다.
+  · 운영/배포에서는 FS_ALLOWLIST를 명시적으로 설정할 것. (예: [{"id":"status","path":"/…/gumgang_meeting/status"}])
+  · Bridge /api/open | /api/fs/read 사용 시:
+    - rootId/status 에 대해 path는 “status/ 하위 상대경로”만 전달한다(즉, "status/" 접두 제거).
+    - 예) root:"status", path:"evidence/memory/tests/ST-1202_smoke_plan.md"
+- DENY_GLOBS:
+  - "**/.git/**", "**/node_modules/**", "**/.venv/**", "**/.next/**", "**/target/**", "**/__pycache__/**", "**/.cache/**", "**/dist/**", "**/build/**"
+- APPEND_ONLY: status/checkpoints/*.jsonl (API-only append via POST /api/checkpoints/append; no direct edits)
+- FILE_OPERATIONS:
+  - Allowed: read/write/move/delete within gumgang_meeting/**
+  - Prohibited: symlinks outside project root; auto-starting long-running servers via tools without checkpoint; writing under DENY_GLOBS
+- DESTRUCTIVE OPS: require “plan + dry-run/evidence + result” logged under status/evidence/*
+
+2) Ports & Entrypoints
+- BACKEND_ENTRYPOINT: uvicorn app.api:app --port 8000
+- BRIDGE_PORT: 3037 (bridge/server.js honors PORT env; default 3037)
+- OVERRIDES: Allowed only with a checkpoint entry citing the change and reason
+
+3) SSOT — Operational Checkpoints (운영 SSOT: 체크포인트 원장)
+- CHECKPOINT_FILE: gumgang_meeting/status/checkpoints/CKPT_72H_RUN.jsonl (단일 SSOT; append via POST /api/checkpoints/append; view stub: gumgang_meeting/status/checkpoints/CKPT_72H_RUN.md)
+- WRITE: Append-only via API. Direct file edits are prohibited.
+- CHARTER VIEW: /docs is the Charter View (헌장 뷰; 읽기 전용·철학/정책). Operational decisions MUST reference the checkpoint ledger (SSOT) first.
+- FORMAT (6 lines per entry):
+  1) RUN_ID: 72H_<YYYYMMDD_HHMM>Z
+  2) UTC_TS: <ISO8601Z>
+  3) SCOPE: {CONV|UNIT|TASK|SESSION|PROJECT}
+  4) DECISION: <one sentence, imperative>
+  5) NEXT STEP: <one sentence, starts with a verb>
+  6) EVIDENCE: <path#Lx-y>
+  - Optional 7) PARKING LOT: <queued requests, no action now>
+- CADENCE: at start, every ≤90 minutes, and at task transitions (“CHECKPOINT NOW”)
+
+3.5) Checkpoint Content Rule — ST token (필수)
+- 특정 ST에 대한 “시작/완료/차단/재시도”를 기록할 때 DECISION에 해당 ST-xxxx를 반드시 포함한다.
+  예) “ST-1205 시작 — Recall 확장(신선도 가중) 착수”
+      “ST-1411 PASS — Kernel v0 + 하트비트 통과”
+      “BLOCKED: ST-1501 — OTEL 수집기 연결 실패(재시도 예정)”
+- 목적: 진행도/증거 자동연계(roadmap/progress), 날짜 정밀도(start_ts/pass_ts) 보장.
+
+4) Linear Task IDs (no branching)
+- BIG TASK ID (BT): ^BT-(\d{2})$
+- SMALL TASK ID (ST): ^ST-(\d{4})$  (e.g., BT-07 → ST-0701, ST-0702 …)
+- PIPELINE: Execute strictly in listed order; no parallel execution; re-order only by checkpointed decision
+- TIMEBOX: ST ≤ 90min; if blocked ≥15min → mark “BLOCKED:<reason>” and move on; single retry at the end
+- COMMIT/LOG TITLE RULE: "[{TASK_ID}] {imperative_verb_phrase}"
+
+5) Turn Ritual & Context Guards
+- TURN_RHYTHM: Echo → Delta → Execute
+- OUTPUT_LIMIT: ≤ 1,200 chars per turn (≈300 tokens) unless explicitly waived via checkpoint
+- TOKEN_ALERTS: 70% [ALERT70] summarize; 85% [ALERT85] force summary; 95% [ALERT95] minimal context
+- EVIDENCE RULE: Any action-affecting claim cites ≥1 concrete path (and line range when applicable)
+- STOP WORD: If input contains “STOP NOW”, immediately switch to minimal context and await directive
+
+6) FS Absorption & Quarantine Policy
+- ALLOWLIST ROOTS: gumgang_meeting/** (full-author) and gumgang_meeting/gumgang_0_5/**
+- QUARANTINE_TARGET: gumgang_meeting/QUARANTINE/
+- QUARANTINE_PATTERNS: same as DENY_GLOBS and large caches/artifacts
+- ACTIONS:
+  - Move matched paths into QUARANTINE/ mirroring structure
+  - Leave stub note where removed; maintain QUARANTINE/QUARANTINE.md with timestamp, reason, list
+- SAFETY: Dry-run mode is recommended; record planned moves to status/evidence before executing
+
+7) Internet Fetch Policy
+- METHOD: Safe fetch with whitelist + on-disk cache; store raw snapshot path as Evidence
+- WHITELIST (extended): https://docs.rs, https://crates.io, https://tauri.app, https://github.com, https://threejs.org, https://cytoscape.org, https://sigmajs.org, https://opentelemetry.io, https://grafana.com, https://prometheus.io, https://wikipedia.org, https://arxiv.org, official vendor docs; extend via checkpoint decision
+- OUTPUT: “raw excerpt + synthesized summary”; no auto-execution of fetched scripts
+
+8) Logging & Ingest (v1)
+- DIALOG LOGS: gumgang_meeting/conversations/**
+- SESSION INDEX: gumgang_meeting/sessions/**
+- INGEST v1: Append-only JSONL for turns and task events; snapshots allowed in status/evidence (no external DB required)
+
+9) Default & Extended Gates
+- GATE_UI_SHELL (BT-01): Tauri + Monaco shell renders; open/save within project
+- GATE_FS (BT-02): read/write/move/delete works; quarantine enforced
+- GATE_FETCH (BT-04): fetch→cache→summary pipeline works; evidence recorded
+- GATE_GUARD (BT-04): token guards active; STOP NOW honored
+- GATE_VECTOR (BT-05 optional): ingest→search→evidence citation on minimal scope
+- GATE_UI_STABLE (BT-07): SAFE/NORMAL modes; runtime/crash/tab logs; A4 summary & p95 evidence
+- GATE_TAURI_BRIDGE (BT-07+): WebView evidence writes via Tauri command (invoke) and bridge fallback verified
+
+10) Non‑Negotiables (updated for v3.0)
+- .rules may be modified during the run only by explicit human directive plus a checkpoint entry
+- Do not write under DENY_GLOBS
+- Do not branch tasks or run them in parallel without checkpoint
+- Every Next Step is a single imperative sentence + one Evidence path
+- Destructive actions require pre/post evidence logging
+
+11) Quick Templates
+- TURN_TEMPLATE:
+  Next Step: <one line verb>
+  Evidence: <path#Lx-y>
+- CHECKPOINT_TEMPLATE:
+  RUN_ID: 72H_<YYYYMMDD_HHMM>Z
+  UTC_TS: <ISO8601Z>
+  SCOPE: {CONV|UNIT|TASK|SESSION|PROJECT}
+  DECISION: <one sentence>
+  NEXT STEP: <verb-first one sentence>
+  EVIDENCE: <path#Lx-y>
+
+12) Start/Transition Checklist
+- [ ] Confirm ENV/ports/entrypoints (Section 2)
+- [ ] Record v3.0 adoption checkpoint (this file as Evidence)
+- [ ] If migrating Tauri, verify gg_save (invoke) path and bridge fallback
+- [ ] Keep append-only checkpoints; proceed BT→ST linearly
+
+13) Notes
+- Language & Labels Policy (KR 90% + EN 10%)
+  - 화면/문서: 한국어 본문 + 최초 1회 영문 풀네임(필요 시 축약) 괄호 병기
+  - API/코드: 기존 영문 키 유지
+  - UI에서는 ‘SSOT’ 생노출 금지 → “체크포인트 원장(SSOT: Single Source of Truth)” 1회 병기만 허용
+- SSOT usage guard
+  - 운영 판단·결정의 근거는 체크포인트 원장만 참조(append-only API)
+  - /docs는 헌장 뷰(읽기 전용)로서 참고용이며 운영 판단 근거가 아님
+- sitegraph.json classification
+  - sitegraph.json은 스냅샷/캐시로만 사용(가시화/요약 용도), 결론/판단 생성 금지
+- SAFE vs NORMAL UI modes:
+  - SAFE: heavy features off; evidence logging must work
+  - NORMAL: full features; evidence logging must remain identical
+- Prefer evidence writes under status/evidence/* for auditability
+
+14) Session Discipline
+- ONE_SESSION_ONE_BT recommended; may relax only via checkpointed decision
+- On BT completion, append a 6-line checkpoint with DECISION “BT-0X complete”; NEXT STEP “Start BT-0Y” and then start a new thread/session
+
+15) Application Instructions
+- To apply this proposal:
+  1) Copy this file’s contents into gumgang_meeting/.rules (overwriting v3.1)
+  2) Append a checkpoint entry noting “.rules v3.1 applied” and cite this file as Evidence
+  3) Continue work under v3.1 WRITE_ALLOW (gumgang_meeting/**)
+
+Appendix — Delta from v2.0
+- WRITE_ALLOW expanded to “gumgang_meeting/**”
+- .rules modification allowed with explicit human directive + checkpoint (v2.0 forbade edits)
+- Added BT-07+ gates (UI_STABLE, TAURI_BRIDGE)
+- Retained append-only checkpoints, evidence logging, quarantine, and guard policies
+
+BT-11 Declaration — House first, Conduits locked
+- INTENT: Stabilize Gumgang UI (“the House”) first; do NOT import past archives yet.
+- GUARANTEES:
+  - IMPORT_ENABLED: false (default; actual import requires explicit checkpoint approval)
+  - PII_STRICT: true (on discovery: delete or quarantine with Evidence note)
+  - LIMITS: MAX_PACKAGE_MB, MAX_LINES — TBD after profiling; do not fix now
+- CONDUITS (definition only; locked, read-only staging):
+  - conversations/imported/<pkg_id>/{raw.jsonl, meta.json}
+  - status/evidence/import_index/<pkg_id>/* (reports/summary only)
+  - artifacts/<date>/<slug>.json (artifact cards)
+- SSOT: status/checkpoints/CKPT_72H_RUN.jsonl (hash-chain SSOT; append via POST /api/checkpoints/append; view stub: status/checkpoints/CKPT_72H_RUN.md; 6-line view via /api/checkpoints/view)
+- PORTS & STARTUP: backend 8000 → bridge 3037 → UI (Tauri optional); overrides require checkpoint
+- PARITY: SAFE and NORMAL must behave identically; Evidence stays append-only
+- MIGRATION TIMING — Residence move to Gumgang UI:
+  - Soft move after BT-12 (live memory loop stable; SAFE/NORMAL parity holds)
+  - Main move after BT-15 (morning routine/health/start scripts become muscle memory; easy restart/recovery)
+  - Policy reinforcement after BT-16 (PII/ACL/Mode policies minimally in place)
+  - Confirmation after BT-17 (trust board shows recent evidence/metrics/change log)
+
+Roadmap Compass v3.1 (BT-11 → BT-21)
+- BT-11: House hardening; conduits defined (locked; dry-run only)
+- BT-12: Live memory loop (store → search → recall) locally
+- BT-13: Self-structure report and improvement cards (no exec)
+- BT-14: Approval-based self-execution (propose → approve → apply → verify → rollback)
+- BT-15: Ops/Release loop (morning routine, health, start scripts)
+- BT-16: Security/Policy (SAFE/NORMAL/AUTHOR, PII/ACL)
+- BT-17: Trust board (evidence, metrics, change log)
+- BT-18: WebUI conversations import (begin)
+- BT-19: Memory reconciliation (One Gumgang)
+- BT-20: gumgang_0_5 heritage exploration (status/notes, components/editor)
+- BT-21: Heritage integration/reuse
+
+Go/No-Go Checklist — Residence switch
+- BT-11 PASS: Health/badges/error panel consistent; conduits defined; IMPORT_ENABLED=false
+- BT-12 PASS: Save→Search→Recall round-trip feels stable; SAFE/NORMAL parity verified
+- BT-15 PASS: Preflight/start scripts succeed reliably; restart recovery OK (bundle logs available)
+- Rollback plan: If any fails, switch to Zed runbook, keep evidence bundle, and retry after fix
+
+
+16) HTML/UI Authoring Guard (A6/A7 공통)
+
+잠금 마커(LOCK_MARKERS)
+
+HEAD_START: <!--GG_LOCK:HEAD_START--> / HEAD_END: <!--GG_LOCK:HEAD_END-->
+
+BODY_START: <!--GG_LOCK:BODY_START--> / BODY_END: <!--GG_LOCK:BODY_END-->
+
+영역 마커(REGION_MARKERS, 편집 허용 구역)
+
+<!--GG_REGION:STYLES--> … <!--/GG_REGION:STYLES--> (반드시 <head> 내부)
+
+<!--GG_REGION:SCRIPTS--> … <!--/GG_REGION:SCRIPTS-->
+
+<!--GG_REGION:TABLE--> … <!--/GG_REGION:TABLE-->
+
+<!--GG_REGION:CONTENT--> … <!--/GG_REGION:CONTENT-->
+
+편집 범위(EDIT_SCOPE)
+
+LOCK 바깥(doctype/html/head/body 골격)은 읽기 전용.
+
+REGION만 replace_exact로 교체(append 금지, 중복 금지).
+
+한 번의 수정은 단일 REGION만 대상으로 함(멀티 영역 동시 변경 금지).
+
+구조 규칙(STRUCTURE_RULES)
+
+<html>, <head>, <body>는 각 1개.
+
+<style>은 반드시 <head> 안에서만 허용.
+
+테이블은 thead > tr > th* 구조를 준수(텍스트가 <th> 밖에 오면 실패).
+
+동일 스코프의 const/let/function 중복 선언 금지.
+
+실패 처리(FAILURE_MODE)
+
+어떤 체크라도 실패하면 적용하지 말고 diff와 사유를 Evidence에 기록.
+
+17) Apply Pipeline (금강 자동 절차)
+
+dry_run → format → validate → diff → apply_on_approve → verify
+
+format: npx prettier -w {file}
+
+validate: npx html-validate {file} (실패 시 중단)
+
+verify: 개발 모드에서 DOM 스켈레톤 점검
+
+count(<html|head|body>) == 1
+
+style_in_head_only
+
+no_duplicate_consts
+
+로그: status/evidence/ui_guard/{ts}_{file_basename}.txt 로 저장
+
+18) Git 훅(권장 · 실패 시 커밋 차단)
+
+.git/hooks/pre-commit (실행권한 +x)
+
+files=$(git diff --cached --name-only -- '*.html' '*.htm')
+[ -z "$files" ] && exit 0
+npx prettier -w $files
+npx html-validate $files || { echo "HTML validate failed"; exit 1; }
+
+19) 최소 설정 파일(프로젝트 루트)
+
+package.json (devDeps/스크립트)
+
+{
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "html-validate": "^9.1.0"
+  },
+  "scripts": {
+    "fmt": "prettier -w 'gumgang_meeting/**/*.{html,css,js,json,md}'",
+    "lint:html": "html-validate 'gumgang_meeting/**/*.html'"
+  }
+}
+
+
+.htmlvalidate.json
+
+{
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "element-required-attributes": "off",
+    "no-duplicate-id": "error",
+    "no-inline-style": "off",
+    "no-deprecated-attrs": "warn",
+    "no-self-closing": "off",
+    "void-style": "error",
+    "doctype-html": "error"
+  }
+}
+
+20) 파일 주입 템플릿(LOCK/REGION 한 번만 삽입)
+<!doctype html>
+<html lang="ko">
+<head>
+<!--GG_LOCK:HEAD_START-->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>…</title>
+
+  <!--GG_REGION:STYLES-->
+  <style>/* styles here */</style>
+  <!--/GG_REGION:STYLES-->
+<!--GG_LOCK:HEAD_END-->
+</head>
+<body>
+<!--GG_LOCK:BODY_START-->
+
+  <!--GG_REGION:CONTENT-->
+  <!-- main content here -->
+  <!--/GG_REGION:CONTENT-->
+
+  <!--GG_REGION:TABLE-->
+  <!-- tables here -->
+  <!--/GG_REGION:TABLE-->
+
+  <!--GG_REGION:SCRIPTS-->
+  <script>/* scripts here */</script>
+  <!--/GG_REGION:SCRIPTS-->
+
+<!--GG_LOCK:BODY_END-->
+</body>
+</html>
+
+21) Zed 운영 팁(편집 충돌 방지)
+
+대형 치환 시 HTML 자동완성/자동닫힘의 개입을 최소화(필요시 임시 비활성화).
+
+“여러 REGION 동시 수정”은 금지. 순차 적용 → 각 단계 검증 원칙.
+
+프롬프트에 “append 금지, 기존 REGION 블록 완전 치환”을 명시.
+
+
+22) UI Guardrails (ST-1206 — Simple Mode)
+- PURPOSE: Prevent layout regressions in A1 Chat Simple UX (single-scroll).
+
+MUST
+- Simple-only global scroll hidden: html, body { overflow: hidden }.
+- Exactly two scroll containers under A1: #gg-threads, #chat-msgs.
+- #a1-wrap is grid with row template: auto minmax(0,1fr) auto.
+- #a1-wrap height tracks strip: height: calc(100dvh - var(--gg-strip-h)).
+- Timeline and composer share width token: --gg-chat-width (clamp 720–902px).
+- Button row is marked [data-gg="composer-actions"] and placed at grid col 2 on row 3.
+
+MUST-NOT
+- No inline display:flex on #a1-wrap.
+- No self-closing wrapper: <div id="a1-wrap"></div> is forbidden (open at section start, close once at end).
+- No additional overflow:auto containers under A1 beyond the two allowed.
+
+AC (Acceptance Criteria)
+- Inside A1, overflow:auto exactly 2 items: ["gg-threads","chat-msgs"].
+- getComputedStyle(#a1-wrap).display === "grid".
+- Buttons on the same line as input, right-aligned (col 2).
+- Console errors 0; runtime sensor warnings 0; mobile rotation/keyboard keeps composer visible.
+
+Static checker (pre-commit/CI)
+- Script: gumgang_meeting/scripts/check_ui_guardrails.cjs
+- Package script: npm run guard:ui must pass before merge.
+
+Runtime sensor (dev only)
+- File: gumgang_meeting/ui/overlays/active.js (assertUIPitstop)
+- Condition: localStorage.gg_env !== 'prod' and body.simple
+- Violations: SCROLLER_VIOLATION, WRAP_NOT_GRID, MISSING_COMPOSER_ACTIONS_MARK (console.error)
+
+Authoring hint
+- Attach rules/ai/ST-1206.ui.rules.md when requesting AI edits to A1 layout; changes must preserve the invariants above.
+
+# End of RULES v3.0 (Proposed). Copy to gumgang_meeting/.rules to activate.

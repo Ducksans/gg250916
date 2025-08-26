@@ -1,0 +1,92 @@
+[
+  {
+    "file": "__init__.py",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `__init__.py` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/__init__.py\n- /home/duksan/바탕화면/gumgang_0_5/backend/app/__init__.py\n- /home/duksan/바탕화면/gumgang_0_5/backend/app/routes/__init__.py\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "memory.cpython-310.pyc",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `memory.cpython-310.pyc` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/app/routes/__pycache__/memory.cpython-310.pyc\n- /home/duksan/바탕화면/gumgang_0_5/backend/app/__pycache__/memory.cpython-310.pyc\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "__init__.cpython-310.pyc",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `__init__.cpython-310.pyc` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/app/routes/__pycache__/__init__.cpython-310.pyc\n- /home/duksan/바탕화면/gumgang_0_5/backend/app/__pycache__/__init__.cpython-310.pyc\n- /home/duksan/바탕화면/gumgang_0_5/backend/__pycache__/__init__.cpython-310.pyc\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "ingest.cpython-310.pyc",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `ingest.cpython-310.pyc` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/app/routes/__pycache__/ingest.cpython-310.pyc\n- /home/duksan/바탕화면/gumgang_0_5/backend/app/__pycache__/ingest.cpython-310.pyc\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "edit.cpython-310.pyc",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `edit.cpython-310.pyc` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/app/routes/__pycache__/edit.cpython-310.pyc\n- /home/duksan/바탕화면/gumgang_0_5/backend/app/__pycache__/edit.cpython-310.pyc\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "main.cpython-310.pyc",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `main.cpython-310.pyc` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/app/__pycache__/main.cpython-310.pyc\n- /home/duksan/바탕화면/gumgang_0_5/backend/__pycache__/main.cpython-310.pyc\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "core_identity.json",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `core_identity.json` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/data/core_identity.json\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/sources/core_identity.json\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "link_lists.bin",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `link_lists.bin` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/chatgpt_memory_backup_20250726_190914/c1514ca4-b96f-46a0-a5fa-7e12741e71d5/link_lists.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/legacy/c62a63a1-62f9-4576-ae03-3108a0063406/link_lists.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/roadmap/223af9db-9eef-4ad6-bb1e-3c8902828e8f/link_lists.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/chatgpt_memory/e268367b-de3d-40d6-b086-8ee9ff67f528/link_lists.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/gumgang_memory/4281ce5e-b504-4e58-9e6d-7486b49e34f0/link_lists.bin\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "length.bin",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `length.bin` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/chatgpt_memory_backup_20250726_190914/c1514ca4-b96f-46a0-a5fa-7e12741e71d5/length.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/legacy/c62a63a1-62f9-4576-ae03-3108a0063406/length.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/roadmap/223af9db-9eef-4ad6-bb1e-3c8902828e8f/length.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/chatgpt_memory/e268367b-de3d-40d6-b086-8ee9ff67f528/length.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/gumgang_memory/4281ce5e-b504-4e58-9e6d-7486b49e34f0/length.bin\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "index_metadata.pickle",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `index_metadata.pickle` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/chatgpt_memory_backup_20250726_190914/c1514ca4-b96f-46a0-a5fa-7e12741e71d5/index_metadata.pickle\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/roadmap/223af9db-9eef-4ad6-bb1e-3c8902828e8f/index_metadata.pickle\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/chatgpt_memory/e268367b-de3d-40d6-b086-8ee9ff67f528/index_metadata.pickle\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "data_level0.bin",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `data_level0.bin` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/chatgpt_memory_backup_20250726_190914/c1514ca4-b96f-46a0-a5fa-7e12741e71d5/data_level0.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/legacy/c62a63a1-62f9-4576-ae03-3108a0063406/data_level0.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/roadmap/223af9db-9eef-4ad6-bb1e-3c8902828e8f/data_level0.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/chatgpt_memory/e268367b-de3d-40d6-b086-8ee9ff67f528/data_level0.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/gumgang_memory/4281ce5e-b504-4e58-9e6d-7486b49e34f0/data_level0.bin\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "header.bin",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `header.bin` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/chatgpt_memory_backup_20250726_190914/c1514ca4-b96f-46a0-a5fa-7e12741e71d5/header.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/legacy/c62a63a1-62f9-4576-ae03-3108a0063406/header.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/roadmap/223af9db-9eef-4ad6-bb1e-3c8902828e8f/header.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/chatgpt_memory/e268367b-de3d-40d6-b086-8ee9ff67f528/header.bin\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/gumgang_memory/4281ce5e-b504-4e58-9e6d-7486b49e34f0/header.bin\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "chroma.sqlite3",
+    "issue": "duplicate_file",
+    "proposal": "⚠️ `chroma.sqlite3` 파일이 여러 경로에 중복 존재합니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/vectors/chatgpt_memory/chroma.sqlite3\n- /home/duksan/바탕화면/gumgang_0_5/backend/memory/gumgang_memory/chroma.sqlite3\n\n필요 없는 중복 파일은 정리하거나 `.bak` 또는 `archive/` 폴더로 분리보관하는 것이 좋습니다."
+  },
+  {
+    "file": "test_reflect_query_self.py",
+    "issue": "unlinked_file",
+    "proposal": "🔍 `test_reflect_query_self.py`은(는) 현재 코드 어디에서도 연결되지 않은 파일입니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/tests/test_reflect_query_self.py\n\n테스트 전용이라면 괜찮지만, 사용 의도가 명확하지 않다면 주석을 추가하거나 문서화하는 것이 좋습니다."
+  },
+  {
+    "file": "test_langgraph_status.py",
+    "issue": "unlinked_file",
+    "proposal": "🔍 `test_langgraph_status.py`은(는) 현재 코드 어디에서도 연결되지 않은 파일입니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/tests/test_langgraph_status.py\n\n테스트 전용이라면 괜찮지만, 사용 의도가 명확하지 않다면 주석을 추가하거나 문서화하는 것이 좋습니다."
+  },
+  {
+    "file": "test_openai_key.py",
+    "issue": "unlinked_file",
+    "proposal": "🔍 `test_openai_key.py`은(는) 현재 코드 어디에서도 연결되지 않은 파일입니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/app/test_openai_key.py\n\n테스트 전용이라면 괜찮지만, 사용 의도가 명확하지 않다면 주석을 추가하거나 문서화하는 것이 좋습니다."
+  },
+  {
+    "file": "test_api.http",
+    "issue": "unlinked_file",
+    "proposal": "🔍 `test_api.http`은(는) 현재 코드 어디에서도 연결되지 않은 파일입니다:\n- /home/duksan/바탕화면/gumgang_0_5/backend/logs/test_api.http\n\n테스트 전용이라면 괜찮지만, 사용 의도가 명확하지 않다면 주석을 추가하거나 문서화하는 것이 좋습니다."
+  },
+  {
+    "file": "N/A",
+    "issue": "backend_frontend_mismatch",
+    "proposal": "🌐 백엔드-프론트 간 연결 문제:\nbackend에서 상태 API가 존재하지만 연결된 프론트 페이지가 없습니다.\n\n예: `/status_report` API가 있지만 이를 호출하는 프론트 페이지가 없으면, 연결이 누락된 상태일 수 있습니다."
+  }
+]

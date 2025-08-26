@@ -1,0 +1,11 @@
+{
+  "name": "gumgang_0_5",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.2",
+    "express": "^5.1.0",
+    "puppeteer": "^24.15.0",
+    "zod": "^3.25.76"
+  }
+}

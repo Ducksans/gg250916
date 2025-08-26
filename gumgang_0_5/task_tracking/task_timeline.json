@@ -1,0 +1,231 @@
+{
+  "updated_at": "2025-08-08T20:01:41.584104",
+  "sessions": {
+    "SESSION-20250808-123622": {
+      "tasks": [
+        {
+          "task_id": "GG-20250808-123622-001",
+          "name": "세션 매니저 시스템 구축",
+          "status": "in_progress",
+          "progress": 50,
+          "started_at": "2025-08-08T12:36:22.793839",
+          "completed_at": null
+        },
+        {
+          "task_id": "GG-20250808-123622-002",
+          "name": "Task 추적 시스템 구축",
+          "status": "pending",
+          "progress": 0,
+          "started_at": null,
+          "completed_at": null
+        }
+      ],
+      "start_time": "2025-08-08T12:36:22.793263",
+      "end_time": null
+    },
+    "SESSION-20250808-125735": {
+      "tasks": [
+        {
+          "task_id": "GG-20250108-001",
+          "name": "세션 매니저 시스템 구축",
+          "status": "completed",
+          "progress": 100,
+          "started_at": null,
+          "completed_at": "2025-08-08T12:59:43.098197"
+        },
+        {
+          "task_id": "GG-20250108-002",
+          "name": "Task 추적 시스템 구축",
+          "status": "completed",
+          "progress": 100,
+          "started_at": null,
+          "completed_at": "2025-08-08T12:59:43.099778"
+        },
+        {
+          "task_id": "GG-20250108-003",
+          "name": "프로젝트 구조 정리",
+          "status": "completed",
+          "progress": 100,
+          "started_at": null,
+          "completed_at": "2025-08-08T12:59:43.101181"
+        },
+        {
+          "task_id": "GG-20250108-004",
+          "name": "인계 시스템 구축",
+          "status": "completed",
+          "progress": 100,
+          "started_at": null,
+          "completed_at": "2025-08-08T12:59:43.102580"
+        },
+        {
+          "task_id": "GG-20250108-005",
+          "name": "백엔드 안정화",
+          "status": "completed",
+          "progress": 100,
+          "started_at": "2025-08-08T12:57:35.020165",
+          "completed_at": "2025-08-08T13:07:52.715002"
+        }
+      ],
+      "start_time": "2025-08-08T12:57:35.020096",
+      "end_time": "2025-08-08T13:07:52.715002"
+    },
+    "SESSION-20250808-125840": {
+      "tasks": [
+        {
+          "task_id": "GG-20250108-006",
+          "name": "Tauri 파일시스템 API",
+          "status": "completed",
+          "progress": 100,
+          "started_at": "2025-08-08T13:08:02.765770",
+          "completed_at": "2025-08-08T19:59:22.471804"
+        },
+        {
+          "task_id": "GG-20250108-007",
+          "name": "Monaco 에디터 연동",
+          "status": "in_progress",
+          "progress": 20,
+          "started_at": "2025-08-08T19:59:31.511576",
+          "completed_at": null
+        },
+        {
+          "task_id": "GG-20250108-008",
+          "name": "실시간 동기화 시스템",
+          "status": "pending",
+          "progress": 0,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "task_id": "GG-20250108-009",
+          "name": "3D 시각화 최적화",
+          "status": "pending",
+          "progress": 0,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "task_id": "GG-20250108-010",
+          "name": "테스트 및 문서화",
+          "status": "pending",
+          "progress": 0,
+          "started_at": null,
+          "completed_at": null
+        }
+      ],
+      "start_time": "2025-08-08T12:58:40.248350",
+      "end_time": "2025-08-08T19:59:22.471804"
+    }
+  },
+  "task_flow": [
+    {
+      "task_id": "GG-20250808-123622-001",
+      "timestamp": "2025-08-08T12:36:22.793263",
+      "event": "created"
+    },
+    {
+      "task_id": "GG-20250808-123622-001",
+      "timestamp": "2025-08-08T12:36:22.793839",
+      "event": "started"
+    },
+    {
+      "task_id": "GG-20250808-123622-002",
+      "timestamp": "2025-08-08T12:36:22.793548",
+      "event": "created"
+    },
+    {
+      "task_id": "GG-20250108-001",
+      "timestamp": "2025-08-08T12:57:35.020096",
+      "event": "created"
+    },
+    {
+      "task_id": "GG-20250108-001",
+      "timestamp": "2025-08-08T12:59:43.098197",
+      "event": "completed"
+    },
+    {
+      "task_id": "GG-20250108-002",
+      "timestamp": "2025-08-08T12:57:35.020116",
+      "event": "created"
+    },
+    {
+      "task_id": "GG-20250108-002",
+      "timestamp": "2025-08-08T12:59:43.099778",
+      "event": "completed"
+    },
+    {
+      "task_id": "GG-20250108-003",
+      "timestamp": "2025-08-08T12:57:35.020128",
+      "event": "created"
+    },
+    {
+      "task_id": "GG-20250108-003",
+      "timestamp": "2025-08-08T12:59:43.101181",
+      "event": "completed"
+    },
+    {
+      "task_id": "GG-20250108-004",
+      "timestamp": "2025-08-08T12:57:35.020138",
+      "event": "created"
+    },
+    {
+      "task_id": "GG-20250108-004",
+      "timestamp": "2025-08-08T12:59:43.102580",
+      "event": "completed"
+    },
+    {
+      "task_id": "GG-20250108-005",
+      "timestamp": "2025-08-08T12:57:35.020161",
+      "event": "created"
+    },
+    {
+      "task_id": "GG-20250108-005",
+      "timestamp": "2025-08-08T12:57:35.020165",
+      "event": "started"
+    },
+    {
+      "task_id": "GG-20250108-005",
+      "timestamp": "2025-08-08T13:07:52.715002",
+      "event": "completed"
+    },
+    {
+      "task_id": "GG-20250108-006",
+      "timestamp": "2025-08-08T12:58:40.248350",
+      "event": "created"
+    },
+    {
+      "task_id": "GG-20250108-006",
+      "timestamp": "2025-08-08T13:08:02.765770",
+      "event": "started"
+    },
+    {
+      "task_id": "GG-20250108-006",
+      "timestamp": "2025-08-08T19:59:22.471804",
+      "event": "completed"
+    },
+    {
+      "task_id": "GG-20250108-007",
+      "timestamp": "2025-08-08T12:58:40.248363",
+      "event": "created"
+    },
+    {
+      "task_id": "GG-20250108-007",
+      "timestamp": "2025-08-08T19:59:31.511576",
+      "event": "started"
+    },
+    {
+      "task_id": "GG-20250108-008",
+      "timestamp": "2025-08-08T12:58:40.248373",
+      "event": "created"
+    },
+    {
+      "task_id": "GG-20250108-009",
+      "timestamp": "2025-08-08T12:58:40.248382",
+      "event": "created"
+    },
+    {
+      "task_id": "GG-20250108-010",
+      "timestamp": "2025-08-08T12:58:40.248390",
+      "event": "created"
+    }
+  ]
+}

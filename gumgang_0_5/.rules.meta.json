@@ -1,0 +1,15 @@
+{
+  "fixed_timestamp_kst": "2025-08-09 12:33",
+  "locked": true,
+  "note": "Unlock only after 'project provisional success' declaration.",
+  "hash": "sha256:rules_v1.0",
+  "version": "1.0",
+  "created_at": "2025-08-09 12:33",
+  "last_verified": "2025-08-09 12:33",
+  "enforcement": {
+    "http_middleware": true,
+    "protocol_guard": true,
+    "pre_commit_hook": true,
+    "token_tracking": true
+  }
+}

@@ -1,0 +1,637 @@
+"use client";
+
+import React, { useRef, useEffect, useState, useCallback } from "react";
+import Editor, { Monaco, OnMount } from "@monaco-editor/react";
+import { editor, Range } from "monaco-editor";
+import {
+  getAICompletionService,
+  AICompletionService,
+} from "../../services/AICompletionService";
+import {
+  getCodeDiagnosticsService,
+  CodeDiagnosticsService,
+  CodeMetrics,
+} from "../../services/CodeDiagnosticsService";
+import {
+  SparklesIcon,
+  BrainIcon,
+  RefreshCwIcon,
+  WandIcon,
+  ShieldIcon,
+  ZapIcon,
+  CodeIcon,
+  MessageSquareIcon,
+  CopyIcon,
+  ChevronDownIcon,
+} from "lucide-react";
+
+interface AIEnhancedMonacoEditorProps {
+  value: string;
+  onChange?: (value: string | undefined) => void;
+  language?: string;
+  height?: string;
+  readOnly?: boolean;
+  theme?: "vs-dark" | "light";
+  className?: string;
+  fileName?: string;
+  showAIPanel?: boolean;
+  showMetrics?: boolean;
+  enableAICompletions?: boolean;
+  enableDiagnostics?: boolean;
+}
+
+interface AIAction {
+  icon: React.ReactNode;
+  label: string;
+  action: string;
+  color: string;
+  hotkey?: string;
+}
+
+interface DiagnosticSummary {
+  errors: number;
+  warnings: number;
+  info: number;
+  hints: number;
+}
+
+export const AIEnhancedMonacoEditor: React.FC<AIEnhancedMonacoEditorProps> = ({
+  value,
+  onChange,
+  language = "javascript",
+  height = "600px",
+  readOnly = false,
+  theme = "vs-dark",
+  className = "",
+  fileName,
+  showAIPanel = true,
+  showMetrics = true,
+  enableAICompletions = true,
+  enableDiagnostics = true,
+}) => {
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+  const monacoRef = useRef<Monaco | null>(null);
+  const aiServiceRef = useRef<AICompletionService | null>(null);
+  const diagnosticsServiceRef = useRef<CodeDiagnosticsService | null>(null);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [aiPanelOpen, setAiPanelOpen] = useState(false);
+  const [selectedText, setSelectedText] = useState("");
+  const [aiResponse, setAiResponse] = useState<string>("");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [metrics, setMetrics] = useState<CodeMetrics | null>(null);
+  const [diagnosticSummary, setDiagnosticSummary] = useState<DiagnosticSummary>(
+    {
+      errors: 0,
+      warnings: 0,
+      info: 0,
+      hints: 0,
+    },
+  );
+  const [currentAction, setCurrentAction] = useState<string>("");
+
+  const aiActions: AIAction[] = [
+    {
+      icon: <WandIcon className="w-4 h-4" />,
+      label: "Generate Code",
+      action: "generate",
+      color: "text-purple-400",
+      hotkey: "Alt+G",
+    },
+    {
+      icon: <MessageSquareIcon className="w-4 h-4" />,
+      label: "Explain Code",
+      action: "explain",
+      color: "text-blue-400",
+      hotkey: "Alt+E",
+    },
+    {
+      icon: <RefreshCwIcon className="w-4 h-4" />,
+      label: "Refactor",
+      action: "refactor",
+      color: "text-green-400",
+      hotkey: "Alt+R",
+    },
+    {
+      icon: <ShieldIcon className="w-4 h-4" />,
+      label: "Security Check",
+      action: "security",
+      color: "text-red-400",
+      hotkey: "Alt+S",
+    },
+    {
+      icon: <ZapIcon className="w-4 h-4" />,
+      label: "Optimize",
+      action: "optimize",
+      color: "text-yellow-400",
+      hotkey: "Alt+O",
+    },
+    {
+      icon: <CopyIcon className="w-4 h-4" />,
+      label: "Find Duplicates",
+      action: "duplicates",
+      color: "text-indigo-400",
+      hotkey: "Alt+D",
+    },
+  ];
+
+  const handleEditorDidMount: OnMount = (editor, monaco) => {
+    editorRef.current = editor;
+    monacoRef.current = monaco;
+    setIsLoading(false);
+
+    // Initialize AI services
+    if (enableAICompletions) {
+      aiServiceRef.current = getAICompletionService();
+      aiServiceRef.current.registerCompletionProvider(language);
+    }
+
+    if (enableDiagnostics && editor.getModel()) {
+      diagnosticsServiceRef.current = getCodeDiagnosticsService();
+      const model = editor.getModel();
+      if (model) diagnosticsServiceRef.current.registerDiagnostics(model);
+    }
+
+    // Custom theme
+    monaco.editor.defineTheme("gumgang-ai-dark", {
+      base: "vs-dark",
+      inherit: true,
+      rules: [
+        { token: "comment", foreground: "6A9955" },
+        { token: "keyword", foreground: "569CD6" },
+        { token: "string", foreground: "CE9178" },
+        { token: "number", foreground: "B5CEA8" },
+        { token: "function", foreground: "DCDCAA" },
+        { token: "variable", foreground: "9CDCFE" },
+        { token: "class", foreground: "4EC9B0" },
+        { token: "interface", foreground: "4EC9B0" },
+        { token: "type", foreground: "4EC9B0" },
+        { token: "parameter", foreground: "9CDCFE" },
+      ],
+      colors: {
+        "editor.background": "#0A0E1A",
+        "editor.foreground": "#E2E8F0",
+        "editor.lineHighlightBackground": "#1A1F35",
+        "editor.selectionBackground": "#2D3555",
+        "editorCursor.foreground": "#3B82F6",
+        "editorWhitespace.foreground": "#334155",
+        "editorIndentGuide.background": "#1E293B",
+        "editorIndentGuide.activeBackground": "#334155",
+        "editorLineNumber.foreground": "#4A5568",
+        "editorLineNumber.activeForeground": "#CBD5E0",
+        "editorGutter.background": "#0A0E1A",
+        "editor.selectionHighlightBackground": "#2D355588",
+        "editor.wordHighlightBackground": "#2D355588",
+        "editor.wordHighlightStrongBackground": "#2D3555AA",
+        "editorBracketMatch.background": "#2D3555",
+        "editorBracketMatch.border": "#3B82F6",
+      },
+    });
+
+    monaco.editor.setTheme("gumgang-ai-dark");
+
+    // Track selection changes
+    editor.onDidChangeCursorSelection((_e) => {
+      const selection = editor.getSelection();
+      if (selection && !selection.isEmpty()) {
+        const text = editor.getModel()?.getValueInRange(selection);
+        setSelectedText(text || "");
+      } else {
+        setSelectedText("");
+      }
+    });
+
+    // Set up keyboard shortcuts
+    editor.addAction({
+      id: "ai-generate",
+      label: "Generate Code with AI",
+      keybindings: [monaco.KeyMod.Alt | monaco.KeyCode.KeyG],
+      run: () => handleAIAction("generate"),
+    });
+
+    editor.addAction({
+      id: "ai-explain",
+      label: "Explain Code with AI",
+      keybindings: [monaco.KeyMod.Alt | monaco.KeyCode.KeyE],
+      run: () => handleAIAction("explain"),
+    });
+
+    editor.addAction({
+      id: "ai-refactor",
+      label: "Refactor Code with AI",
+      keybindings: [monaco.KeyMod.Alt | monaco.KeyCode.KeyR],
+      run: () => handleAIAction("refactor"),
+    });
+
+    // Calculate initial metrics
+    if (showMetrics) {
+      calculateMetrics(value);
+    }
+  };
+
+  const handleAIAction = async (action: string) => {
+    if (!aiServiceRef.current || !editorRef.current) return;
+
+    setCurrentAction(action);
+    setIsProcessing(true);
+    setAiPanelOpen(true);
+    setAiResponse("");
+
+    const model = editorRef.current.getModel();
+    if (!model) return;
+
+    const selection = editorRef.current.getSelection();
+    const code = selectedText || model.getValue();
+
+    try {
+      let response = "";
+
+      switch (action) {
+        case "generate":
+          const prompt = window.prompt("What code would you like to generate?");
+          if (prompt) {
+            const generated = await aiServiceRef.current.generateCode(
+              prompt,
+              language,
+              code,
+            );
+            response = `Generated Code:\n\n\`\`\`${language}\n${generated}\n\`\`\``;
+
+            // Insert generated code at cursor position
+            if (selection && !selectedText) {
+              const position = selection.getPosition();
+              editorRef.current.executeEdits("ai-generate", [
+                {
+                  range: new Range(
+                    position.lineNumber,
+                    position.column,
+                    position.lineNumber,
+                    position.column,
+                  ),
+                  text: generated,
+                },
+              ]);
+            }
+          }
+          break;
+
+        case "explain":
+          response = await aiServiceRef.current.explainCode(code, language);
+          break;
+
+        case "refactor":
+          const suggestions = await aiServiceRef.current.suggestRefactorings(
+            code,
+            language,
+            selection || undefined,
+          );
+          if (suggestions.length > 0) {
+            response = "Refactoring Suggestions:\n\n";
+            suggestions.forEach((s, i) => {
+              response += `${i + 1}. **${s.title}**\n`;
+              if (s.description) response += `   ${s.description}\n`;
+              response += "\n";
+            });
+          } else {
+            response = "No refactoring suggestions available for this code.";
+          }
+          break;
+
+        case "security":
+          if (diagnosticsServiceRef.current) {
+            const vulnerabilities =
+              await diagnosticsServiceRef.current.checkSecurity(code, language);
+            if (vulnerabilities.length > 0) {
+              response = "Security Issues Found:\n\n";
+              vulnerabilities.forEach((v, i) => {
+                response += `${i + 1}. **${v.severity.toUpperCase()}**: ${v.message}\n`;
+                response += `   Line ${v.range.startLine}-${v.range.endLine}\n\n`;
+              });
+            } else {
+              response = "✅ No security vulnerabilities detected!";
+            }
+          }
+          break;
+
+        case "optimize":
+          const analysis = await aiServiceRef.current.analyzeCode(
+            code,
+            language,
+            fileName,
+          );
+          response = "Optimization Suggestions:\n\n";
+          if (analysis.suggestions) {
+            analysis.suggestions.forEach((s, i) => {
+              response += `${i + 1}. **${s.title}** (${s.priority} priority)\n`;
+              if (s.description) response += `   ${s.description}\n`;
+              response += "\n";
+            });
+          }
+          if (analysis.complexity) {
+            response += `\nComplexity Score: ${analysis.complexity}`;
+          }
+          break;
+
+        case "duplicates":
+          if (diagnosticsServiceRef.current) {
+            const duplicates =
+              await diagnosticsServiceRef.current.findDuplicates(
+                code,
+                language,
+              );
+            if (duplicates.length > 0) {
+              response = `Found ${duplicates.length} duplicate code blocks:\n\n`;
+              duplicates.forEach((d, i) => {
+                response += `${i + 1}. Lines ${d.range.startLineNumber}-${d.range.endLineNumber}\n`;
+                response += `   Duplicated at ${d.duplicateLocations.length} locations\n\n`;
+              });
+            } else {
+              response = "✅ No duplicate code blocks found!";
+            }
+          }
+          break;
+      }
+
+      setAiResponse(response);
+    } catch (error) {
+      console.error(`AI ${action} error:`, error);
+      setAiResponse(
+        `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const calculateMetrics = useCallback(
+    async (code: string) => {
+      if (!diagnosticsServiceRef.current) return;
+
+      try {
+        const metricsData =
+          await diagnosticsServiceRef.current.calculateMetrics(code, language);
+        setMetrics(metricsData);
+      } catch (error) {
+        console.error("Metrics calculation error:", error);
+      }
+    },
+    [language],
+  );
+
+  const updateDiagnosticSummary = useCallback(() => {
+    if (!editorRef.current) return;
+
+    const model = editorRef.current.getModel();
+    if (!model) return;
+
+    const markers = editor.getModelMarkers({ resource: model.uri });
+    const summary: DiagnosticSummary = {
+      errors: 0,
+      warnings: 0,
+      info: 0,
+      hints: 0,
+    };
+
+    markers.forEach((marker) => {
+      switch (marker.severity) {
+        case 8:
+          summary.errors++;
+          break; // MarkerSeverity.Error
+        case 4:
+          summary.warnings++;
+          break; // MarkerSeverity.Warning
+        case 2:
+          summary.info++;
+          break; // MarkerSeverity.Info
+        case 1:
+          summary.hints++;
+          break; // MarkerSeverity.Hint
+      }
+    });
+
+    setDiagnosticSummary(summary);
+  }, []);
+
+  useEffect(() => {
+    if (editorRef.current && onChange) {
+      const disposable = editorRef.current.onDidChangeModelContent(() => {
+        const value = editorRef.current?.getValue();
+        onChange(value);
+
+        // Update metrics
+        if (showMetrics && value) {
+          calculateMetrics(value);
+        }
+
+        // Update diagnostic summary
+        setTimeout(updateDiagnosticSummary, 1500);
+      });
+
+      return () => disposable.dispose();
+    }
+  }, [onChange, calculateMetrics, updateDiagnosticSummary, showMetrics]);
+
+  return (
+    <div
+      className={`flex flex-col bg-slate-900 rounded-lg overflow-hidden ${className}`}
+    >
+      {/* AI Toolbar */}
+      {showAIPanel && (
+        <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700 px-4 py-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-1">
+              <SparklesIcon className="w-5 h-5 text-purple-400 mr-2" />
+              {aiActions.map((action) => (
+                <button
+                  key={action.action}
+                  onClick={() => handleAIAction(action.action)}
+                  disabled={isProcessing}
+                  className={`flex items-center space-x-1 px-3 py-1 rounded-lg hover:bg-slate-700/50 transition-colors text-sm ${
+                    currentAction === action.action ? "bg-slate-700" : ""
+                  } ${isProcessing ? "opacity-50 cursor-not-allowed" : ""}`}
+                  title={`${action.label} (${action.hotkey})`}
+                >
+                  <span className={action.color}>{action.icon}</span>
+                  <span className="text-slate-300">{action.label}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Metrics Display */}
+            {showMetrics && metrics && (
+              <div className="flex items-center space-x-4 text-xs">
+                <div className="flex items-center space-x-1">
+                  <CodeIcon className="w-3 h-3 text-slate-500" />
+                  <span className="text-slate-400">{metrics.lines} lines</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <BrainIcon className="w-3 h-3 text-slate-500" />
+                  <span className="text-slate-400">
+                    Complexity: {metrics.complexity}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Diagnostic Summary Bar */}
+      {enableDiagnostics &&
+        (diagnosticSummary.errors > 0 || diagnosticSummary.warnings > 0) && (
+          <div className="bg-slate-800/50 border-b border-slate-700 px-4 py-1">
+            <div className="flex items-center space-x-4 text-xs">
+              {diagnosticSummary.errors > 0 && (
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                  <span className="text-red-400">
+                    {diagnosticSummary.errors} errors
+                  </span>
+                </div>
+              )}
+              {diagnosticSummary.warnings > 0 && (
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                  <span className="text-yellow-400">
+                    {diagnosticSummary.warnings} warnings
+                  </span>
+                </div>
+              )}
+              {diagnosticSummary.info > 0 && (
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <span className="text-blue-400">
+                    {diagnosticSummary.info} info
+                  </span>
+                </div>
+              )}
+              {diagnosticSummary.hints > 0 && (
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
+                  <span className="text-gray-400">
+                    {diagnosticSummary.hints} hints
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+      {/* Main Editor */}
+      <div className="flex-1 relative">
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-slate-900 z-10">
+            <div className="flex flex-col items-center space-y-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce delay-0"></div>
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce delay-75"></div>
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce delay-150"></div>
+              </div>
+              <span className="text-sm text-slate-400">
+                Initializing AI Editor...
+              </span>
+            </div>
+          </div>
+        )}
+        <Editor
+          height={
+            aiPanelOpen && aiResponse ? `calc(${height} - 200px)` : height
+          }
+          language={language}
+          value={value}
+          theme={theme}
+          onMount={handleEditorDidMount}
+          options={{
+            selectOnLineNumbers: true,
+            minimap: {
+              enabled: true,
+              maxColumn: 120,
+            },
+            scrollBeyondLastLine: false,
+            fontSize: 14,
+            lineNumbers: "on",
+            renderLineHighlight: "all",
+            automaticLayout: true,
+            padding: {
+              top: 10,
+              bottom: 10,
+            },
+            suggestOnTriggerCharacters: true,
+            quickSuggestions: {
+              other: true,
+              comments: false,
+              strings: true,
+            },
+            folding: true,
+            foldingStrategy: "indentation",
+            showFoldingControls: "mouseover",
+            bracketPairColorization: {
+              enabled: true,
+            },
+            inlineSuggest: {
+              enabled: true,
+            },
+            suggest: {
+              preview: true,
+              showMethods: true,
+              showFunctions: true,
+              showConstructors: true,
+              showFields: true,
+              showVariables: true,
+              showClasses: true,
+              showStructs: true,
+              showInterfaces: true,
+              showModules: true,
+              showProperties: true,
+              showEvents: true,
+              showOperators: true,
+              showUnits: true,
+              showValues: true,
+              showConstants: true,
+              showEnums: true,
+              showEnumMembers: true,
+              showKeywords: true,
+              showWords: true,
+              showColors: true,
+              showFiles: true,
+              showReferences: true,
+            },
+            readOnly,
+          }}
+        />
+      </div>
+
+      {/* AI Response Panel */}
+      {aiPanelOpen && aiResponse && (
+        <div className="bg-slate-800 border-t border-slate-700 h-48 overflow-y-auto">
+          <div className="p-4">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-semibold text-slate-300 flex items-center space-x-2">
+                <SparklesIcon className="w-4 h-4 text-purple-400" />
+                <span>AI Assistant Response</span>
+              </h3>
+              <button
+                onClick={() => setAiPanelOpen(false)}
+                className="text-slate-500 hover:text-slate-300"
+              >
+                <ChevronDownIcon className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="text-sm text-slate-400 whitespace-pre-wrap">
+              {isProcessing ? (
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+                  <span>Processing...</span>
+                </div>
+              ) : (
+                aiResponse
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AIEnhancedMonacoEditor;

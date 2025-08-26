@@ -1,0 +1,47 @@
+{
+  "ts": "2025-08-25T02:00:53.455284Z",
+  "params": {
+    "k": 5,
+    "halflife_days": 7.0,
+    "fresh_weight": 0.9,
+    "self_rag": 1,
+    "day": "20250825"
+  },
+  "queries": [
+    "ST-1205 신선도",
+    "Self-RAG 루브릭",
+    "ST-1205 테스트"
+  ],
+  "results": [
+    {
+      "query": "ST-1205 신선도",
+      "off_top3_avg": 1.4428,
+      "on_pre_top3_avg": 1.6136,
+      "fresh_lift": 0.1708,
+      "rerank_top3_avg_pre": 1.6136,
+      "rerank_top3_avg_post": 1.612,
+      "rerank_lift": -0.0016,
+      "recall_runs_path": "status/evidence/memory/recall_runs/20250825/run_1756087253437.json"
+    },
+    {
+      "query": "Self-RAG 루브릭",
+      "off_top3_avg": 1.1073,
+      "on_pre_top3_avg": 1.3342,
+      "fresh_lift": 0.2269,
+      "rerank_top3_avg_pre": 1.3342,
+      "rerank_top3_avg_post": 1.3342,
+      "rerank_lift": 0.0,
+      "recall_runs_path": "status/evidence/memory/recall_runs/20250825/run_1756087253446.json"
+    },
+    {
+      "query": "ST-1205 테스트",
+      "off_top3_avg": 1.4428,
+      "on_pre_top3_avg": 1.6136,
+      "fresh_lift": 0.1708,
+      "rerank_top3_avg_pre": 1.6136,
+      "rerank_top3_avg_post": 1.612,
+      "rerank_lift": -0.0016,
+      "recall_runs_path": "status/evidence/memory/recall_runs/20250825/run_1756087253453.json"
+    }
+  ]
+}

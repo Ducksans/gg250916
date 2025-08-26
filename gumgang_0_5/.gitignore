@@ -1,0 +1,57 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ===== Node / Next / Web =====
+node_modules/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.next/
+out/
+dist/
+build/
+.turbo/
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== Tauri / Rust =====
+src-tauri/target/
+target/
+
+# ===== Env / Secrets (예외: 예시 파일은 추적) =====
+.env
+.env.*
+!.env.example
+
+# ===== Logs =====
+logs/
+*.log
+
+# ===== IDE / OS =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ===== Caches (general) =====
+.cache/
+.parcel-cache/
+.tmp/
+temp/
+tmp/

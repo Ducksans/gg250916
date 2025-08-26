@@ -1,0 +1,56 @@
+.
+├── .env
+├── __pycache__
+│   ├── graph.cpython-310.pyc
+│   ├── ingest.cpython-310.pyc
+│   ├── main.cpython-310.pyc
+│   └── memory.cpython-310.pyc
+├── app
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-310.pyc
+│   │   ├── edit.cpython-310.pyc
+│   │   ├── graph.cpython-310.pyc
+│   │   ├── ingest.cpython-310.pyc
+│   │   └── memory.cpython-310.pyc
+│   ├── edit.py
+│   ├── graph.py
+│   ├── ingest.py
+│   ├── memory.py
+│   ├── nodes
+│   │   ├── __pycache__
+│   │   ├── status_report.py
+│   │   └── version_check.py
+│   ├── routes
+│   │   ├── __pycache__
+│   │   └── status.py
+│   ├── setup_edit_api.sh
+│   └── test_openai_key.py
+├── backend
+├── backend_file_tree.txt
+├── backend_tree.txt
+├── backendserverstart.sh
+├── data
+│   ├── backend
+│   │   └── scripts
+│   ├── file_summaries.json
+│   ├── folder_structure.json
+│   └── roadmap_gold.json
+├── main.py
+├── memory
+│   ├── gumgang_memory
+│   │   ├── 223af9db-9eef-4ad6-bb1e-3c8902828e8f
+│   │   └── chroma.sqlite3
+│   └── memory
+│       └── gumgang_memory
+├── requirements.txt
+├── scripts
+│   ├── ingest_roadmap.py
+│   ├── ingest_self_knowledge.py
+│   ├── reflect_test.py
+│   ├── self_reflect.py
+│   └── self_structure_scan.py
+├── test_api.http
+└── test_langgraph_status.py
+
+17 directories, 36 files

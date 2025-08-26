@@ -1,0 +1,54 @@
+[package]
+name = "gumgang-tauri"
+version = "2.0.0"
+description = "금강 2.0 - AI 기반 코드 분석 및 편집 시스템"
+authors = ["Gumgang Team"]
+license = "MIT"
+repository = "https://github.com/gumgang/gumgang-2.0"
+edition = "2021"
+rust-version = "1.77.2"
+
+[lib]
+name = "app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+# Tauri 핵심 의존성
+tauri = { version = "2", features = [] }
+
+# 로깅
+tauri-plugin-log = "2"
+log = "0.4"
+
+# 직렬화/역직렬화
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# 시스템 디렉토리
+dirs = "5.0"
+
+# 비동기 런타임
+tokio = { version = "1", features = ["full"] }
+
+# 파일 감시
+notify = "6.1"
+
+# 정규식
+regex = "1.10"
+
+# 날짜/시간
+chrono = { version = "0.4", features = ["serde"] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+panic = "abort"     # 패닉 시 즉시 종료
+codegen-units = 1   # 코드 생성 단위 최소화
+lto = true          # 링크 타임 최적화
+opt-level = "s"     # 사이즈 최적화
+strip = true        # 심볼 제거

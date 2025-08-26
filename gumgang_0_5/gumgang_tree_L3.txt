@@ -1,0 +1,175 @@
+.
+├── #!
+│   └── bin
+│       └── bash  echo "📦 ChatGPT 세션 백업 스크립트 실행 시작..."  # 🗂️ 날짜 기반 디렉토리 생성 TODAY=$(date +"%Y-%m-%d") BASE_DIR="memory
+├── README.md
+├── backend
+│   ├── __init__.py
+│   ├── app
+│   │   ├── chains
+│   │   ├── graph.py
+│   │   ├── gumgang_graph_0_7_backup.py
+│   │   ├── main_legacy.py
+│   │   ├── nodes
+│   │   ├── routes
+│   │   ├── setup_edit_api.sh
+│   │   └── utils
+│   ├── backend_file_tree.txt
+│   ├── backend_tree.txt
+│   ├── backendserverstart.sh
+│   ├── backup_ingest_scripts_20250727_035453
+│   │   ├── ingest_chatgpt_memory.py.bak
+│   │   ├── ingest_identity.py.bak
+│   │   ├── ingest_roadmap.py.bak
+│   │   ├── ingest_self_knowledge.py.bak
+│   │   └── roadmap_ingest.py.bak
+│   ├── data
+│   │   ├── backend_structure_natural.json
+│   │   ├── core_identity.json
+│   │   ├── frontend_structure_0.7.json
+│   │   ├── frontend_structure_natural.json
+│   │   ├── roadmap_gold.json
+│   │   ├── structure_full.json
+│   │   ├── structure_proposals.json
+│   │   ├── structure_report.json
+│   │   ├── structure_report_natural.json
+│   │   └── vector_store_scan_report.json
+│   ├── gumgang_tree.txt
+│   ├── logs
+│   │   └── refactor_log_20250723_124923.txt
+│   ├── main.py
+│   ├── memory
+│   │   ├── backup_edit_files
+│   │   ├── chat_logs
+│   │   ├── gumgang_memory
+│   │   ├── history
+│   │   ├── logs
+│   │   ├── reports
+│   │   ├── retrievers.py
+│   │   ├── sources
+│   │   ├── structure_fixes_backup
+│   │   ├── structure_fixes_history.json
+│   │   ├── unlinked
+│   │   └── vectors
+│   ├── os
+│   ├── refactor_backend_structure.sh
+│   ├── requirements.txt
+│   ├── scripts
+│   │   ├── __init__.py
+│   │   ├── analyze_structure.py
+│   │   ├── check_and_fix_tailwind.py
+│   │   ├── check_vector_memory.py
+│   │   ├── check_vector_memory_debug.py
+│   │   ├── component_creator.py
+│   │   ├── convert_master_list_format.py
+│   │   ├── convert_roadmap_to_natural.py
+│   │   ├── convert_saved_json_to_md.py
+│   │   ├── convert_structure_report_to_natural.py
+│   │   ├── electron_scaffold_creator.py
+│   │   ├── frontend_scaffold_creator.py
+│   │   ├── generate_file_summaries.py
+│   │   ├── ingest_backend_natural.py
+│   │   ├── ingest_backend_structure.py
+│   │   ├── ingest_chat_ui_log.py
+│   │   ├── ingest_chatgpt_memory.py
+│   │   ├── ingest_frontend_natural.py
+│   │   ├── ingest_frontend_structure.py
+│   │   ├── ingest_identity.py
+│   │   ├── ingest_roadmap.py
+│   │   ├── ingest_self_knowledge.py
+│   │   ├── ingest_structure_full.py
+│   │   ├── ingest_structure_natural.py
+│   │   ├── ingest_structure_report.py
+│   │   ├── ingest_structure_split.py
+│   │   ├── ingest_theory.py
+│   │   ├── refactor
+│   │   ├── reflect_test.py
+│   │   ├── roadmap_ingest.py
+│   │   ├── safe_edit_runner_vscode.py
+│   │   ├── scan_all_vector_stores.py
+│   │   ├── self_reflect.py
+│   │   ├── self_structure_scan.py
+│   │   ├── setup_memory_dirs.py
+│   │   ├── structure_improvement_suggester.py
+│   │   ├── wiki_ingest_auto.py
+│   │   ├── wiki_read_deep.py
+│   │   └── wiki_read_once.py
+│   ├── structure_fix.md
+│   └── tests
+├── backend_tree.txt
+├── backup
+│   ├── gumgang_backup.sh
+│   └── push_to_github.sh
+├── backup_chroma_duplicates_20250727_034650
+│   ├── chatgpt_memory_backup_20250726_190914_chroma.sqlite3
+│   ├── chatgpt_memory_chroma.sqlite3
+│   └── sources_chroma.sqlite3
+├── backup_gumgang.sh
+├── backup_ingest_scripts_20250727_035019
+├── chatgpt_urls.txt
+├── cleanup_chroma_db.sh
+├── collect_debug_files.sh
+├── debug_log_targets.txt
+├── dry_run_cleanup_chroma.sh
+├── extract_chatgpt_sessions.js
+├── extract_chatgpt_sessions.sh
+├── fix_scripts_path.sh
+├── frontend
+│   ├── frontend_README.md
+│   ├── frontend_tree.txt
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   └── roadmap.json
+│   ├── src
+│   │   ├── App.jsx
+│   │   ├── components
+│   │   ├── index.css
+│   │   ├── main.tsx
+│   │   ├── pages
+│   │   └── types.ts
+│   ├── tailwind.config.js
+│   └── tsconfig.json
+├── gather_chatgpt_sessions.sh
+├── google-chrome-stable_current_amd64.deb
+├── gumgang0.5_chatlog_2025-07-20_17-23-35.md
+├── gumgang_memory_tree.txt
+├── gumgang_tree.txt
+├── gumgang_tree_L3.txt
+├── keytest.py
+├── letter_to_gumgang.html
+├── logs
+│   ├── puppeteer_20250725_144846.log
+│   ├── puppeteer_20250725_145945.log
+│   ├── puppeteer_20250725_150717.log
+│   └── puppeteer_20250725_150805.log
+├── memory
+│   └── sources
+│       └── wiki
+├── package-lock.json
+├── package.json
+├── readme.txt
+├── refactor_langchain.sh
+├── refactor_memory_structure.sh
+├── rewrite_ingest_paths.sh
+├── rewrite_ingest_paths_interactive.sh
+├── roadmap_ingest.sh
+├── scripts
+│   ├── check_and_fix_tailwind.py
+│   ├── extract_all_chatgpt_sessions.js
+│   ├── extract_chatgpt_sessions.js
+│   ├── package-lock.json
+│   └── package.json
+├── setup_status_ui.sh
+├── start.sh
+├── start_gumgang_gui.sh
+├── test_langgraph_selfreport.py
+├── test_langgraph_status.py
+├── test_memory_connection.py
+├── test_reflect_query.py
+├── test_reflect_query_self.py
+├── 덕산기억_텍스트파일.txt
+└── 덕산기억_후보.txt
+
+39 directories, 133 files

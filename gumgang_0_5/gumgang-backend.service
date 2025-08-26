@@ -1,0 +1,43 @@
+[Unit]
+Description=Gumgang 2.0 Backend Service
+Documentation=https://github.com/gumgang/backend
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=duksan
+Group=duksan
+WorkingDirectory=/home/duksan/바탕화면/gumgang_0_5/backend
+Environment="PATH=/usr/bin:/usr/local/bin"
+Environment="PYTHONUNBUFFERED=1"
+
+# 메인 실행 명령
+ExecStart=/usr/bin/python3 /home/duksan/바탕화면/gumgang_0_5/backend/simple_main.py
+
+# 정지 명령
+ExecStop=/bin/kill -TERM $MAINPID
+ExecStopPost=/bin/rm -f /home/duksan/바탕화면/gumgang_0_5/backend/backend.pid
+
+# 재시작 정책
+Restart=always
+RestartSec=10
+StartLimitInterval=60
+StartLimitBurst=3
+
+# 로그 설정
+StandardOutput=append:/home/duksan/바탕화면/gumgang_0_5/backend/logs/systemd.log
+StandardError=append:/home/duksan/바탕화면/gumgang_0_5/backend/logs/systemd_error.log
+
+# 타임아웃 설정
+TimeoutStartSec=30
+TimeoutStopSec=10
+
+# 보안 설정
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectHome=false
+ProtectSystem=false
+
+[Install]
+WantedBy=multi-user.target

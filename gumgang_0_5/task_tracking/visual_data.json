@@ -1,0 +1,123 @@
+{
+  "timestamp": "2025-08-08T12:36:22.794450",
+  "gantt_data": [
+    {
+      "id": "GG-20250808-123622-001",
+      "name": "세션 매니저 시스템 구축",
+      "start": "2025-08-08T12:36:22.793839",
+      "end": null,
+      "progress": 50,
+      "status": "in_progress",
+      "priority": "high",
+      "dependencies": []
+    },
+    {
+      "id": "GG-20250808-123622-002",
+      "name": "Task 추적 시스템 구축",
+      "start": "2025-08-08T12:36:22.793548",
+      "end": null,
+      "progress": 0,
+      "status": "pending",
+      "priority": "high",
+      "dependencies": []
+    }
+  ],
+  "kanban_data": {
+    "pending": [
+      {
+        "id": "GG-20250808-123622-002",
+        "name": "Task 추적 시스템 구축",
+        "priority": "high",
+        "progress": 0,
+        "assigned_to": "human"
+      }
+    ],
+    "in_progress": [
+      {
+        "id": "GG-20250808-123622-001",
+        "name": "세션 매니저 시스템 구축",
+        "priority": "high",
+        "progress": 50,
+        "assigned_to": "human"
+      }
+    ],
+    "completed": [],
+    "failed": [],
+    "blocked": [],
+    "cancelled": []
+  },
+  "timeline_data": [
+    {
+      "timestamp": "2025-08-08T12:36:22.793263",
+      "type": "created",
+      "task_id": "GG-20250808-123622-001",
+      "task_name": "세션 매니저 시스템 구축"
+    },
+    {
+      "timestamp": "2025-08-08T12:36:22.793548",
+      "type": "created",
+      "task_id": "GG-20250808-123622-002",
+      "task_name": "Task 추적 시스템 구축"
+    },
+    {
+      "timestamp": "2025-08-08T12:36:22.793839",
+      "type": "started",
+      "task_id": "GG-20250808-123622-001",
+      "task_name": "세션 매니저 시스템 구축"
+    }
+  ],
+  "dependency_graph": [],
+  "progress_chart": {
+    "total_tasks": 2,
+    "overall_progress": 25.0,
+    "status_distribution": {
+      "pending": {
+        "count": 1,
+        "percentage": 50.0
+      },
+      "in_progress": {
+        "count": 1,
+        "percentage": 50.0
+      },
+      "completed": {
+        "count": 0,
+        "percentage": 0.0
+      },
+      "failed": {
+        "count": 0,
+        "percentage": 0.0
+      },
+      "blocked": {
+        "count": 0,
+        "percentage": 0.0
+      },
+      "cancelled": {
+        "count": 0,
+        "percentage": 0.0
+      }
+    },
+    "priority_distribution": {
+      "critical": {
+        "count": 0,
+        "percentage": 0.0
+      },
+      "high": {
+        "count": 2,
+        "percentage": 100.0
+      },
+      "medium": {
+        "count": 0,
+        "percentage": 0.0
+      },
+      "low": {
+        "count": 0,
+        "percentage": 0.0
+      }
+    },
+    "in_progress_count": 1,
+    "completed_count": 0,
+    "failed_count": 0,
+    "blocked_count": 0,
+    "current_task": "GG-20250808-123622-001"
+  }
+}

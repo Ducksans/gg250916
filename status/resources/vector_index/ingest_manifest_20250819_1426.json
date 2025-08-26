@@ -1,0 +1,102 @@
+{
+  "schema": "ingest-manifest/v1",
+  "description": "Vector ingest manifest (corpus enumeration plan) for ST-0501",
+  "run_id": "72H_20250819_1114Z",
+  "created_utc": "2025-08-19T14:26:18Z",
+  "stage": "ST-0501",
+  "purpose": "Define corpus and guards for embedding→HNSW→snapshot pipeline",
+  "include_globs": [
+    "gumgang_meeting/status/**/*.md",
+    "gumgang_meeting/docs/**/*.md",
+    "gumgang_meeting/ui/logs/*.json",
+    "gumgang_meeting/.rules"
+  ],
+  "exclude_globs": [
+    "**/.git/**",
+    "**/node_modules/**",
+    "**/.venv/**",
+    "**/.next/**",
+    "**/target/**",
+    "**/__pycache__/**",
+    "**/.cache/**",
+    "**/dist/**",
+    "**/build/**"
+  ],
+  "buckets": [
+    {
+      "name": "status_md",
+      "glob": "gumgang_meeting/status/**/*.md",
+      "count": 37,
+      "paths_sample": [
+        "gumgang_meeting/status/roadmap/72H_TASK_BREAKDOWN.md",
+        "gumgang_meeting/status/resources/fetch_snapshot_20250819_tauri.app.md",
+        "gumgang_meeting/status/tools_probe/jsonl_validation_report_20250819_1407.md"
+      ],
+      "notes": "Use glob at runtime to expand full list; keep path + approx L-start for chunks."
+    },
+    {
+      "name": "docs_md",
+      "glob": "gumgang_meeting/docs/**/*.md",
+      "count": 14,
+      "paths_sample": [
+        "gumgang_meeting/docs/1_SSOT_개념.md",
+        "gumgang_meeting/docs/8_UI_MVP_요구사항.md",
+        "gumgang_meeting/docs/readme.md"
+      ]
+    },
+    {
+      "name": "ui_logs_json",
+      "glob": "gumgang_meeting/ui/logs/*.json",
+      "count": 2,
+      "paths": [
+        "gumgang_meeting/ui/logs/fetch_summary_20250819.json",
+        "gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json"
+      ]
+    },
+    {
+      "name": "rules",
+      "glob": "gumgang_meeting/.rules",
+      "count": 1,
+      "paths": ["gumgang_meeting/.rules"]
+    }
+  ],
+  "totals": { "files": 54 },
+  "guards": {
+    "write_allow": [
+      "gumgang_meeting/status",
+      "gumgang_meeting/ui",
+      "gumgang_meeting/conversations",
+      "gumgang_meeting/sessions"
+    ],
+    "deny_globs": [
+      "**/.git/**",
+      "**/node_modules/**",
+      "**/.venv/**",
+      "**/.next/**",
+      "**/target/**",
+      "**/__pycache__/**",
+      "**/.cache/**",
+      "**/dist/**",
+      "**/build/**"
+    ]
+  },
+  "embedding": {
+    "provider": "openai",
+    "model_plan": "text-embedding-3-small",
+    "env_key": "OPENAI_API_KEY"
+  },
+  "space": { "metric": "cosine", "dimensions": 1536 },
+  "hnsw": { "M": 16, "ef_construction": 200, "ef_search": 64 },
+  "output": {
+    "snapshot_json": "gumgang_meeting/status/resources/vector_index/VECTOR_INDEX_SNAPSHOT_20250819_1426.json",
+    "hnsw_bin": "gumgang_meeting/status/resources/vector_index/index_20250819_1426.bin",
+    "hnsw_meta": "gumgang_meeting/status/resources/vector_index/index_20250819_1426.meta"
+  },
+  "rebuild_instructions": "Enumerate files using include_globs minus exclude_globs; chunk markdown/json with 800–1200 chars and 120 overlap; attach metadata {path, approx_line, sha256(file||chunk)}; compute embeddings in batches; build HNSW with specified params; write artifacts only within WRITE_ALLOW.",
+  "evidence": [
+    "gumgang_meeting/status/roadmap/72H_TASK_BREAKDOWN.md#L44-50",
+    "gumgang_meeting/status/tools_probe/vector_ingest_plan_20250819_1426.md#L1-37",
+    "gumgang_meeting/ui/logs/fetch_summary_20250819.json#L1-10"
+  ],
+  "notes": "This manifest is compact to honor OUTPUT_LIMIT; expand full path list at runtime using the provided globs."
+}

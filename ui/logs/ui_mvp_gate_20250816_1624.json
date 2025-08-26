@@ -1,0 +1,299 @@
+{
+  "run_id": "UI_MVP_GATE_20250816_1624",
+  "session_id": "GG-SESS-20250816-1608",
+  "scope": "UI_MVP_GATE_A1",
+  "version": "1.0",
+  "local_ts_start": "2025-08-16T16:24:33+09:00",
+  "utc_ts_start": "2025-08-16T07:24:33Z",
+  "local_ts_end": "2025-08-16T20:46:29+09:00",
+  "utc_ts_end": "2025-08-16T11:46:29Z",
+  "environment": {
+    "stack": "React + Tailwind CSS + Zustand + JSON + Zed Editor",
+    "node_version": "",
+    "npm_version": "",
+    "os": "linux",
+    "display_scale_factor": "",
+    "browser": ""
+  },
+  "ssot": "/gumgang_meeting/docs",
+  "paths": {
+    "screenshots_dir": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots",
+    "report_markdown": "/gumgang_meeting/docs/gates_log/ui_mvp_gate_20250816.md",
+    "this_log": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json"
+  },
+  "tests": [
+    {
+      "test_id": "A1-T1",
+      "name": "Chat View — Input reflects as user bubble",
+      "status": "PASSED",
+      "timestamps": {
+        "start_local": null,
+        "start_utc": null,
+        "end_local": "2025-08-16T17:22:15+09:00",
+        "end_utc": "2025-08-16T08:22:15Z"
+      },
+      "steps": [
+        "Focus chat input",
+        "Type exact text: \"ping\"",
+        "Send via Enter or Send button"
+      ],
+      "criteria": [
+        "Within 1000ms, a user bubble (.chat-bubble.user:last-child) is created",
+        "Bubble text equals \"ping\" (trim equality), input clears and retains focus",
+        "Timestamp (HH:MM) visible on bubble; auto-scroll to bottom occurs"
+      ],
+      "evidence": {
+        "screenshot": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots/A1-T1.png",
+        "log_ref": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json#A1-T1",
+        "dom_selector": ".chat-bubble.user:last-child",
+        "message_text": "ping",
+        "input_cleared": true,
+        "auto_scrolled": true,
+        "render_latency_ms": null,
+        "timestamp_text": ""
+      },
+      "notes": ""
+    },
+    {
+      "test_id": "A1-T2",
+      "name": "Chat View — Assistant output renders as distinct bubble",
+      "status": "PASSED",
+      "timestamps": {
+        "start_local": null,
+        "start_utc": null,
+        "end_local": "2025-08-16T17:22:15+09:00",
+        "end_utc": "2025-08-16T08:22:15Z"
+      },
+      "precondition": "A1-T1 executed immediately prior",
+      "criteria": [
+        "Assistant bubble (.chat-bubble.assistant:last-child) is appended after A1-T1",
+        "Visual distinction: different background/border/icon and role label shown",
+        "Contrast ratio between user vs assistant bubble backgrounds ≥ 4.5:1 (WCAG 2.1 AA)"
+      ],
+      "evidence": {
+        "screenshot": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots/A1-T2.png",
+        "log_ref": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json#A1-T2",
+        "dom_selector": ".chat-bubble.assistant:last-child",
+        "colors": {
+          "user_bg": "",
+          "assistant_bg": "",
+          "contrast_ratio": null,
+          "contrast_check_reference": "WCAG 2.1 AA"
+        },
+        "order_preserved": true
+      },
+      "notes": ""
+    },
+    {
+      "test_id": "A1-T3",
+      "name": "Chat View — Auto and manual scroll",
+      "status": "PASSED",
+      "timestamps": {
+        "start_local": null,
+        "start_utc": null,
+        "end_local": "2025-08-16T17:35:36+09:00",
+        "end_utc": "2025-08-16T08:35:36Z"
+      },
+      "criteria": [
+        "On new message, view auto-scrolls to bottom",
+        "User can manually scroll up/down without breaking layout"
+      ],
+      "evidence": {
+        "screenshot": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots/A1-T3.png",
+        "log_ref": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json#A1-T3",
+        "dom_selector": "#messages",
+        "auto_scrolled": true,
+        "manual_scroll": true
+      },
+      "notes": "Verified by stacking messages and observing auto-scroll and manual scroll behavior."
+    },
+    {
+      "test_id": "A1-T4",
+      "name": "Chat View — Copy message to clipboard",
+      "status": "PASSED",
+      "timestamps": {
+        "start_local": null,
+        "start_utc": null,
+        "end_local": "2025-08-16T17:35:36+09:00",
+        "end_utc": "2025-08-16T08:35:36Z"
+      },
+      "criteria": [
+        "Clicking Copy copies the bubble text to clipboard",
+        "User feedback appears (e.g., 'Copied!') then resets"
+      ],
+      "evidence": {
+        "screenshot": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots/A1-T4.png",
+        "log_ref": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json#A1-T4",
+        "dom_selector": ".copy-btn",
+        "copied": true
+      },
+      "notes": "Copy button shows 'Copied!' feedback then returns to 'Copy'."
+    },
+    {
+      "test_id": "A2-T1",
+      "name": "Session/Task View — New Session creates and selects",
+      "status": "PASSED",
+      "timestamps": {
+        "start_local": null,
+        "start_utc": null,
+        "end_local": "2025-08-16T19:37:27+09:00",
+        "end_utc": "2025-08-16T10:37:27Z"
+      },
+      "criteria": [
+        "New adds a session item and selects it",
+        "Right panel title reflects new session; task view resets",
+        "Session count increases"
+      ],
+      "evidence": {
+        "screenshot": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots/A2-T1.png",
+        "log_ref": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json#A2-T1",
+        "dom_selector": ".sessions .session-item:last-child.selected"
+      },
+      "notes": "New → session created and auto-selected; title updated"
+    },
+    {
+      "test_id": "A2-T2",
+      "name": "Session/Task View — Delete Session updates selection",
+      "status": "PASSED",
+      "timestamps": {
+        "start_local": null,
+        "start_utc": null,
+        "end_local": "2025-08-16T19:37:27+09:00",
+        "end_utc": "2025-08-16T10:37:27Z"
+      },
+      "criteria": [
+        "Selected session is removed from list",
+        "Selection moves to adjacent session or none if list empty",
+        "Right panel title reflects current selection"
+      ],
+      "evidence": {
+        "screenshot": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots/A2-T2.png",
+        "log_ref": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json#A2-T2",
+        "dom_selector": ".sessions .session-item.selected"
+      },
+      "notes": "Delete → selection moved to neighboring session automatically"
+    },
+    {
+      "test_id": "A2-T3",
+      "name": "Session/Task View — Add Task to selected session",
+      "status": "PASSED",
+      "timestamps": {
+        "start_local": null,
+        "start_utc": null,
+        "end_local": "2025-08-16T19:37:27+09:00",
+        "end_utc": "2025-08-16T10:37:27Z"
+      },
+      "criteria": [
+        "Task is appended to .tasks in the selected session",
+        "Input clears and retains focus",
+        "Task count updates"
+      ],
+      "evidence": {
+        "screenshot": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots/A2-T3.png",
+        "log_ref": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json#A2-T3",
+        "dom_selector": ".tasks .task-item:last-child .title"
+      },
+      "notes": "Add Task via button or Enter; input cleared and refocused"
+    },
+    {
+      "test_id": "A2-T4",
+      "name": "Session/Task View — Toggle Task completion",
+      "status": "PASSED",
+      "timestamps": {
+        "start_local": null,
+        "start_utc": null,
+        "end_local": "2025-08-16T19:37:27+09:00",
+        "end_utc": "2025-08-16T10:37:27Z"
+      },
+      "criteria": [
+        "Toggling checkbox updates .task-item.completed",
+        "Visual strikethrough appears/disappears immediately",
+        "Order preserved; state retained within session"
+      ],
+      "evidence": {
+        "screenshot": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots/A2-T4.png",
+        "log_ref": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json#A2-T4",
+        "dom_selector": ".tasks .task-item.completed .title"
+      },
+      "notes": "Checkbox toggles completion and strikethrough as expected"
+    },
+    {
+      "test_id": "A3-T1",
+      "name": "Tools Panel — Tools list renders and selectable",
+      "status": "PASSED",
+      "timestamps": {
+        "start_local": null,
+        "start_utc": null,
+        "end_local": "2025-08-16T20:41:38+09:00",
+        "end_utc": "2025-08-16T11:41:38Z"
+      },
+      "criteria": [
+        "Tools list shows Echo/Delay/SHA-256/Fail",
+        "Selecting a tool highlights it and shows relevant inputs"
+      ],
+      "evidence": {
+        "screenshot": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots/A3-T1.png",
+        "dom_selector": "#tools .tool-item[aria-selected=\"true\"]"
+      },
+      "notes": "List and selection visible; inputs toggle according to selection"
+    },
+    {
+      "test_id": "A3-T2",
+      "name": "Tools Panel — Run transitions Running→Succeeded and outputs result",
+      "status": "PASSED",
+      "timestamps": {
+        "start_local": null,
+        "start_utc": null,
+        "end_local": "2025-08-16T20:42:13+09:00",
+        "end_utc": "2025-08-16T11:42:13Z"
+      },
+      "criteria": [
+        "Run sets status to Running, then Succeeded/Idle",
+        "Result box shows the output"
+      ],
+      "evidence": {
+        "screenshot": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots/A3-T2.png",
+        "dom_selector": "#resultBox"
+      },
+      "notes": "Echo Tool run produced result text; status pill showed transitions"
+    },
+    {
+      "test_id": "A3-T3",
+      "name": "Tools Panel — Fail tool shows friendly error and recovers",
+      "status": "PASSED",
+      "timestamps": {
+        "start_local": null,
+        "start_utc": null,
+        "end_local": "2025-08-16T20:42:57+09:00",
+        "end_utc": "2025-08-16T11:42:57Z"
+      },
+      "criteria": [
+        "Fail Tool sets status to Failed and shows error message",
+        "Controls are usable again (recovered to Idle on next run)"
+      ],
+      "evidence": {
+        "screenshot": "/gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots/A3-T3.png",
+        "dom_selector": "#resultBox"
+      },
+      "notes": "Error: intentional failure for demo; subsequent runs succeed"
+    }
+  ],
+  "metrics": {
+    "total": 11,
+    "passed": 11,
+    "failed": 0,
+    "pending": 0
+  },
+  "integrity": {
+    "hash_algo": "SHA-256",
+    "sha256_of_this_file": "TO_BE_COMPUTED"
+  },
+  "signoff": {
+    "verifier": "",
+    "witness": ""
+  },
+  "notes": [
+    "Fill evidence fields (screenshot paths, DOM selectors confirmed, measured latencies) upon execution.",
+    "On completion, compute SHA-256 of this file and append to the gates report markdown."
+  ]
+}

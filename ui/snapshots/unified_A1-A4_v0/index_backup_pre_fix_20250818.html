@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset</head>="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>금강 UI</title> — index_full.html (A1–A4 Minimal + Shortcuts + Theme + Session Meta)</title>
+  <style></style>
+    :root {
+      --bg: #0b0c10;
+      --fg: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #22c55e;
+      --border: #1f2937;
+      --panel: #0f172a;
+      --panel-2: #111827;
+      --shadow: 0 8px 28px rgba(0,0,0,.22);
+    }
+    html[data-theme="light"] {
+      --bg: #f8fafc;
+      --fg: #0f172a;
+      --muted: #475569;
+      --accent: #16a34a;
+      --border: #e2e8f0;
+      --panel: #ffffff;
+      --panel-2: #f8fafc;
+      --shadow: 0 8px 24px rgba(0,0,0,.08);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: var(--fg);
+      background:
+        radial-gradient(900px 520px at 100% -20%, rgba(34,197,94,.06), transparent 50%),
+        linear-gradient(180deg, rgba(2,6,23,.82), rgba(2,6,23,.62)),
+        var(--bg);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(15,23,42,.65);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+    html[data-theme="light"] header { background: rgba(255,255,255,.85); }
+
+    .hdr {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px 10px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+    h1.title { margin: 0; font-size: 18px; letter-spacing: .1px; }
+
+    .toolbar { display: inline-flex; gap: 8px; align-items: center; }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--fg);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+    .btn:focus-visible { outline: 2px solid rgba(34,197,94,.35); outline-offset: 2px; }
+
+    p.diag {
+      grid-column: 1 / -1;
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+
+    nav.tabs {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 8px;
+      padding: 8px 16px 12px;
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15,23,42,.45);
+    }
+    html[data-theme="light"] nav.tabs { background: rgba(255,255,255,.85); }
+    nav.tabs a {
+      display: inline-block;
+      padding: 8px 10px;
+      font-size: 13px;
+      color: var(--fg);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel);
+    }
+    nav.tabs a[aria-current="page"] {
+      outline: 1px solid rgba(34,197,94,.45);
+      box-shadow: 0 0 0 2px rgba(34,197,94,.2);
+    }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    section.panel {
+      display: none;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(15,23,42,.55);
+    }
+    html[data-theme="light"] section.panel { background: #fff; }
+    section.panel.active { display: block; }
+    section.panel h2 { margin: 0 0 8px; font-size: 16px; }
+    section.panel p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 6px 12px;
+      align-items: baseline;
+    }
+    .label { color: var(--muted); font-size: 13px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; word-break: break-all; }
+    .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+    footer {
+      max-width: 1100px;
+      margin: 18px auto 30px;
+      padding: 0 16px;
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    dialog#kbd-help {
+      border: none;
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: var(--panel);
+      color: var(--fg);
+      box-shadow: var(--shadow);
+      width: min(560px, 92vw);
+    }
+    dialog#kbd-help::backdrop { background: rgba(0,0,0,.45); }
+    .kbd-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 6px 10px;
+      font-size: 14px;
+    }
+    .kbd {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body></body>
+  <header></header>
+    <div class="hdr">
+      <h1 class="title">금강 UI — index_full.html</h1>
+      <div class="toolbar" role="toolbar" aria-label="View controls">
+        <button id="btn-theme" class="btn" type="button" title="테마 토글 (T)">다크</button>
+        <button id="btn-help" class="btn" type="button" title="단축키 도움말 (?)">도움말</button>
+      </div>
+      <p id="diag" class="diag" aria-live="polite">
+• 기능 포함 미니멀(탭/단축키/테마/세션메타)
+• 쿼리 예: ?session=GG-SESS-20250816-2249&date=20250816&version=v0
+• 단축키: [1–4]=탭, Ctrl+←/→=탭이동, T=테마, ?=도움말, Esc=닫기
+      </p>
+    </div>
+    <nav class="tabs" aria-label="A1–A4 Tabs">
+      <a href="#a1" id="tab-a1">A1 — 채팅</a>
+      <a href="#a2" id="tab-a2">A2 — 세션/태스크</a>
+      <a href="#a3" id="tab-a3">A3 — 도구 패널</a>
+      <a href="#a4" id="tab-a4">A4 — 상태/로그</a>
+    </nav>
+  </header>
+
+  <main></main>
+    <noscript><p class="label">브라우저에서 JavaScript가 꺼져 있습니다. 주소창의 #a1~#a4 해시로 패널을 이동하세요.</p></noscript>
+
+    <section id="a1" class="panel active" aria-labelledby="tab-a1">
+      <h2>A1 — 채팅(Chat)</h2>
+      <div id="a1-info" class="label">로컬 브릿지 연결 확인 중…</div>
+      <script></script>
+        (function () {
+          try {
+            var base = (localStorage.getItem("gg_bridge_url") || "http://localhost:3037").replace(/\/+$/, "");
+            var info = document.getElementById("a1-info");
+            if (info) info.textContent = "로컬 브릿지 연결 확인 중…";
+            fetch(base + "/health")
+              .then(function (r) { return r.json().catch(function () { return null; }); })
+              .then(function (j) {
+                if (!info) return;
+                if (j && j.ok && j.env && j.env.hasApiKey) {
+                  info.textContent = "브릿지 연결 OK — 모델 호출 가능 (" + (j.env.model || "-") + ")";
+                } else if (j && j.ok) {
+                  info.textContent = "브릿지 연결 OK — API 키 미설정";
+                } else {
+                  info.textContent = "브릿지 응답 오류";
+                }
+              })
+              .catch(function () {
+                if (info) info.textContent = "브릿지 미연결 또는 네트워크 오류";
+              });
+          } catch (e) {
+            var info = document.getElementById("a1-info");
+            if (info) info.textContent = "브릿지 상태 확인 오류";
+          }
+        })();
+      </script>
+    </section>
+
+    <section id="a2" class="panel" aria-labelledby="tab-a2">
+      <h2>A2 — 세션/태스크</h2>
+      <div class="grid" id="session-card" style="margin-top:6px;">
+        <div class="label">SESSION_ID</div><div id="meta-session" class="mono">-</div>
+        <div class="label">CAPTURE_DATE</div><div id="meta-date" class="mono">-</div>
+        <div class="label">SNAPSHOT</div><div id="meta-version" class="mono">v0</div>
+        <div class="label">SCREENSHOTS</div><div id="meta-path" class="mono">-</div>
+      </div>
+      <div class="row" style="margin-top:10px; gap:8px; align-items:center;">
+        <label for="a2-session-id" class="label" style="min-width:90px;">Session</label>
+        <input id="a2-session-id" class="mono" style="flex:1; min-width:200px; padding:6px 8px; border:1px solid var(--border); border-radius:8px; background:var(--panel); color:var(--fg);" />
+        <label for="a2-task-id" class="label" style="min-width:60px;">Task</label>
+        <input id="a2-task-id" class="mono" style="flex:1; min-width:160px; padding:6px 8px; border:1px solid var(--border); border-radius:8px; background:var(--panel); color:var(--fg);" />
+        <button id="btn-save-scope" class="btn" type="button" title="세션/태스크 저장">저장</button>
+        <button id="btn-copy-meta" class="btn" type="button" title="세션 메타 복사">메타 복사</button>
+      </div>
+    </section>
+
+    <section id="a3" class="panel" aria-labelledby="tab-a3">
+      <h2>A3 — 도구 패널</h2>
+      <style>
+        /*</style> A3 warning banner (scoped to this page) */
+        .warnbar {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 10px 12px;
+          border: 1px solid var(--border);
+          border-radius: 10px;
+          background: rgba(245, 158, 11, 0.12);
+        }
+        .warnbar.warn {
+          background: rgba(245, 158, 11, 0.12);
+          border-color: rgba(245, 158, 11, 0.35);
+        }
+        .warnbar.error {
+          background: rgba(239, 68, 68, 0.12);
+          border-color: rgba(239, 68, 68, 0.35);
+        }
+        .warnbar .actions {
+          display: inline-flex;
+          gap: 8px;
+        }
+        .btn.accent { background: var(--accent); color: var(--fg); }
+        .btn.warn { background: #d97706; color: #fff; border-color: var(--border); }
+        .btn.danger { background: #ef4444; color: #fff; border-color: var(--border); }
+      </style>
+      <div class="row" style="margin:6px 0 8px;">
+        <button id="btnSimWarn" class="btn warn" type="button" title="Simulate WARN">Sim WARN</button>
+        <button id="btnSimError" class="btn danger" type="button" title="Simulate ERROR">Sim ERROR</button>
+      </div>
+      <div id="warnBanner" class="warnbar warn" hidden aria-live="assertive" style="margin-bottom:10px;">
+        <div id="warnText">Threshold warning: context usage high.</div>
+        <div class="actions">
+          <button id="btnSummarize" class="btn accent" type="button">Summarize then continue</button>
+          <button id="btnAbort" class="btn danger" type="button">Abort</button>
+        </div>
+      </div>
+      <div class="grid" style="margin:6px 0 10px;">
+        <div class="label">Tokenizer</div>
+        <div class="mono">Heuristic estimator (T0) — offline</div>
+      </div>
+      <div class="row" style="margin:6px 0 6px;">
+        <label for="tk-model" class="label" style="min-width:80px;">Model</label>
+        <select id="tk-model" class="mono" style="flex:1; min-width:280px;"></select>
+      </div>
+      <div class="row" style="margin:0 0 10px;">
+        <label for="tk-encoding" class="label" style="min-width:80px;">Encoding</label>
+        <select id="tk-encoding" class="mono" style="flex:1; min-width:280px;"></select>
+      </div>
+      <div class="row" style="margin:6px 0 10px;">
+        <label for="tokenizer-text" class="label" style="min-width:80px;">Input</label>
+        <textarea id="tokenizer-text" class="mono" rows="4" style="flex:1; min-width:280px;"></textarea>
+      </div>
+      <div id="tokenizer-board" style="margin-top:10px;"></div>
+      <p class="label" style="margin-top:8px;">모델/인코딩/Max/Current/Headroom/상태를 표시하고, 측정 버튼으로 현재 입력을 계측합니다.</p>
+      <script></script>
+        (function () {
+          // A3 warning banner wiring (unified)
+          var warnBanner = document.getElementById("warnBanner");
+          var warnText = document.getElementById("warnText");
+          var btnSimWarn = document.getElementById("btnSimWarn");
+          var btnSimError = document.getElementById("btnSimError");
+          var btnSummarize = document.getElementById("btnSummarize");
+          var btnAbort = document.getElementById("btnAbort");
+
+          function pad2(n){ return (n<10?"0":"")+n; }
+          function hhmmss(d){ return pad2(d.getHours())+":"+pad2(d.getMinutes())+":"+pad2(d.getSeconds()); }
+          function setStatus(msg){ var el = document.getElementById("status"); if (el) el.textContent = msg; }
+          function clamp(n,min,max){ return Math.min(max, Math.max(min, n)); }
+
+          // Test budget tokens (reduced scale)
+          // Use localStorage key 'gg_test_budget_tokens' to override (e.g., 3000)
+          function getTestBudgetTokens() {
+            var v = parseInt((localStorage.getItem("gg_test_budget_tokens") || "").trim(), 10);
+            if (!Number.isFinite(v) || v <= 0) return 3000; // default small budget for testing
+            return clamp(v, 500, 400000);
+          }
+
+          // Heuristic estimator from A1 messages DOM
+          function estimateTokensFromA1() {
+            var msgs = document.getElementById("chat-msgs");
+            if (!msgs) return null;
+            var text = (msgs.textContent || "").trim();
+            if (!text) return 0;
+            // Rough estimate: chars/4
+            return Math.ceil(text.length / 4);
+          }
+
+          // Keep last warning context
+          window.lastWarning = null;
+
+          function showWarning(severity, message) {
+            if (!warnBanner) return;
+            window.lastWarning = { severity: severity, message: message, ts: new Date().toISOString() };
+            if (warnText) warnText.textContent = message || "Threshold warning";
+            warnBanner.hidden = false;
+            warnBanner.classList.remove("warn","error");
+            warnBanner.classList.add(severity === "error" ? "error" : "warn");
+            setStatus("A3: " + (severity === "error" ? "ERROR" : "WARN") + " — " + (message || ""));
+            try { console.warn("[A3] warning", window.lastWarning); } catch(_) {}
+          }
+          function hideWarning(){ if (warnBanner) warnBanner.hidden = true; }
+          function recordWarningAction(action) {
+            try { console.info("[A3] action", { action: action, last: window.lastWarning }); } catch(_) {}
+          }
+
+          // Core evaluator: accepts usage-like data or falls back to heuristic
+          function evaluateUtilization(usage) {
+            var budget = getTestBudgetTokens();
+            var total = null;
+
+            if (usage && typeof usage === "object") {
+              // Prefer total_tokens if present
+              if (Number.isFinite(usage.total_tokens)) total = usage.total_tokens;
+              else {
+                var pt = Number(usage.prompt_tokens || 0);
+                var ct = Number(usage.completion_tokens || 0);
+                total = pt + ct;
+              }
+            }
+            if (!Number.isFinite(total)) {
+              // Fallback to heuristic based on A1 message DOM
+              total = estimateTokensFromA1();
+            }
+            if (!Number.isFinite(total) || total <= 0) return;
+
+            var ratio = total / budget;
+            var pct = Math.round(ratio * 100);
+            if (ratio >= 0.95) {
+              showWarning("error", "Context usage " + total + " / " + budget + " (" + pct + "%) — test budget");
+            } else if (ratio >= 0.85) {
+              showWarning("warn", "Context usage " + total + " / " + budget + " (" + pct + "%) — test budget");
+            } else {
+              // Below thresholds: auto-hide if previously visible
+              hideWarning();
+              setStatus("A3: usage " + total + "/" + budget + " (" + pct + "%) — below threshold");
+            }
+          }
+
+          // Sim buttons
+          if (btnSimWarn) btnSimWarn.addEventListener("click", function(){ showWarning("warn", "Simulated WARN: context usage ≥ 85%"); });
+          if (btnSimError) btnSimError.addEventListener("click", function(){ showWarning("error", "Simulated ERROR: context usage ≥ 95%"); });
+
+          // Actions
+          if (btnSummarize) btnSummarize.addEventListener("click", function(){
+            recordWarningAction("summarize_then_continue");
+            setStatus("A3: summarizing…");
+            setTimeout(function(){
+              hideWarning();
+              setStatus("A3: (simulated) summary completed @ " + hhmmss(new Date()));
+            }, 300);
+          });
+          if (btnAbort) btnAbort.addEventListener("click", function(){
+            recordWarningAction("abort");
+            hideWarning();
+            setStatus("A3: aborted due to warning");
+          });
+
+          // Observe A1 DOM to auto-evaluate on message updates (heuristic path)
+          (function observeA1() {
+            var msgs = document.getElementById("chat-msgs");
+            if (!msgs || !window.MutationObserver) return;
+            var tid = null;
+            var obs = new MutationObserver(function () {
+              if (tid) clearTimeout(tid);
+              tid = setTimeout(function () {
+                try { evaluateUtilization(null); } catch (_) {}
+              }, 150);
+            });
+            obs.observe(msgs, { childList: true, subtree: true, characterData: true });
+          })();
+
+          // Expose for cross-panel or external triggers (A1 can call with real usage)
+          window.A3 = window.A3 || {};
+          window.A3.showWarning = showWarning;
+          window.A3.hideWarning = hideWarning;
+          window.A3.recordWarningAction = recordWarningAction;
+          window.A3.evaluateUtilization = evaluateUtilization; // call with resp.data.usage when available
+          Object.defineProperty(window.A3, "lastWarning", { get: function(){ return window.lastWarning || null; } });
+
+          // Initial evaluation (in case DOM is pre-populated)
+          try { evaluateUtilization(null); } catch (_) {}
+        })();
+      </script>
+    </section>
+
+    <section id="a4" class="panel" aria-labelledby="tab-a4">
+      <h2>A4 — 상태/로그</h2>
+      <div class="row" style="margin:6px 0 8px;">
+        <label for="ops-input" class="label" style="min-width:120px;">Ops Log (1줄)</label>
+        <input id="ops-input" class="mono" placeholder="오늘 바뀐 점 1줄" style="flex:1; min-width:280px; padding:6px 8px; border:1px solid var(--border); border-radius:8px; background:var(--panel); color:var(--fg);" />
+        <button id="btn-ops-log" class="btn" type="button">기록</button>
+      </div>
+      <p id="ops-status" class="label">좌측 상단의 도움말(?)을 참고하세요. 상태 라인은 하단에 표시됩니다.</p>
+    </section>
+  </main>
+
+  <footer>
+    <</footer>div id="status" aria-live="polite">Ready.</div>
+    <div id="ts" aria-label="Rendered timestamp" class="mono"></div>
+  </footer>
+
+  <dialog id="kbd-help" aria-label="Keyboard shortcuts">
+    <form method="dialog" style="margin:0;">
+      <h3 style="margin:0 0 8px; font-size:16px;">단축키</h3>
+      <div class="kbd-grid" role="list">
+        <div class="kbd" role="listitem">1 / 2 / 3 / 4</div><div></div>각 탭으로 이동</div>
+        <div class="kbd" role="listitem">Ctrl + ← / →</div><div>이</div>전/다음 탭</div>
+        <div class="kbd" role="listitem">T</div><div></div>다크/라이트 테마 토글</div>
+        <div class="kbd" role="listitem">?</div><div>도움말 열</div>기/닫기</div>
+        <div class="kbd" role="listitem">Esc</div><div>대화상자 닫기</div>
+      </div></div>
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+        <button class="btn" value="cancel" type="submit">닫기 (Esc)</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="../../tools/tokenizer/estimator.js"></script>
+  <script>
+    (function () {
+      function boot() {
+        if (!window.GGTokenizer</script>) return;
+        GGTokenizer.loadModelTable("../../tools/tokenizer/model_table.json")
+          .then(function (table) {
+            var input = document.getElementById("tokenizer-text");
+            var selModel = document.getElementById("tk-model");
+            var selEnc = document.getElementById("tk-encoding");
+            var gpt5 = (Array.isArray(table.models) && table.models.find(function (m) { return m && typeof m.id === "string" && m.id.indexOf("openai/gpt-5") === 0; }));
+            var defaultModelId = gpt5 ? gpt5.id : "openai/gpt-4o-2024-05-13";
+
+            // populate model options
+            if (selModel && Array.isArray(table.models)) {
+              table.models.forEach(function (m) {
+                var opt = document.createElement("option");
+                opt.value = m.id;
+                opt.textContent = m.display || m.id;
+                if (m.id === defaultModelId) opt.selected = true;
+                selModel.appendChild(opt);
+              });
+            }
+
+            // populate encoding options
+            function populateEncodings(encId) {
+              if (!selEnc) return;
+              while (selEnc.firstChild) selEnc.removeChild(selEnc.firstChild);
+              Object.keys(table.encodings || {}).forEach(function (k) {
+                var e = table.encodings[k];
+                var opt = document.createElement("option");
+                opt.value = k;
+                opt.textContent = (e && e.display) ? e.display : k;
+                if (k === encId) opt.selected = true;
+                selEnc.appendChild(opt);
+              });
+            }
+
+            var meta = GGTokenizer.resolveModel(defaultModelId, table);
+            var initialEncoding = (meta && meta.encoding) || (table.defaults && table.defaults.encoding) || "cl100k_base";
+            populateEncodings(initialEncoding);
+
+            var ctrl = GGTokenizer.renderBoard("#tokenizer-board", {
+              modelId: defaultModelId,
+              table: table,
+              textProvider: function () { return (input && input.value) || ""; }
+            });
+
+            // change handlers
+            if (selModel) {
+              selModel.addEventListener("change", function () {
+                var id = selModel.value;
+                var m = GGTokenizer.resolveModel(id, table);
+                var enc = (m && m.encoding) || (selEnc && selEnc.value) || initialEncoding;
+                populateEncodings(enc);
+                ctrl.updateModel({
+                  modelId: id,
+                  encodingId: enc,
+                  contextWindow: m && m.context_window
+                });
+                ctrl.measureNow();
+              });
+            }
+            if (selEnc) {
+              selEnc.addEventListener("change", function () {
+                var enc = selEnc.value;
+                ctrl.updateModel({ encodingId: enc });
+                ctrl.measureNow();
+              });
+            }
+          });
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", boot, { once: true });
+      } else {
+        boot();
+      }
+    })();
+  </script>
+  <script src="feature_full.js"></script>
+  <script>
+    (function ()</script> {
+      "use strict";
+
+      function onReady(fn) {
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", fn, { once: true });
+        } else {
+          fn();
+        }
+      }
+
+      onReady(function () {
+        var a1 = document.getElementById("a1");
+        if (!a1) return;
+
+        // 1) Minimal UI (config + messages + input + send)
+        // Remove placeholder paragraphs if any
+        Array.from(a1.querySelectorAll("p")).forEach(function (p) { p.remove(); });
+
+        var wrap = document.createElement("div");
+        wrap.style.display = "flex";
+        wrap.style.flexDirection = "column";
+        wrap.style.gap = "8px";
+
+        // Bridge URL config
+        var cfg = document.createElement("div");
+        cfg.style.display = "flex";
+        cfg.style.gap = "6px";
+        cfg.style.alignItems = "center";
+        cfg.style.flexWrap = "wrap";
+        var lbl = document.createElement("label");
+        lbl.textContent = "Bridge";
+        lbl.className = "label";
+        lbl.style.minWidth = "60px";
+        var inUrl = document.createElement("input");
+        inUrl.type = "text";
+        inUrl.id = "bridge-url";
+        inUrl.value = (localStorage.getItem("gg_bridge_url") || "http://localhost:3037");
+        inUrl.style.minWidth = "260px";
+        inUrl.style.padding = "6px 8px";
+        inUrl.style.border = "1px solid var(--border)";
+        inUrl.style.borderRadius = "8px";
+        inUrl.style.background = "var(--panel)";
+        inUrl.style.color = "var(--fg)";
+        inUrl.addEventListener("change", function () {
+          localStorage.setItem("gg_bridge_url", inUrl.value.trim());
+        });
+        cfg.appendChild(lbl);
+        cfg.appendChild(inUrl);
+        // Engine badge (updates after first response)
+        var eng = document.createElement("span");
+        eng.id = "engine-badge";
+        eng.className = "label";
+        eng.style.marginLeft = "8px";
+        eng.style.padding = "2px 6px";
+        eng.style.border = "1px solid var(--border)";
+        eng.style.borderRadius = "6px";
+        eng.textContent = "engine: -";
+        cfg.appendChild(eng);
+        var conv = document.createElement("span");
+        conv.id = "conv-badge";
+        conv.className = "label";
+        conv.style.marginLeft = "6px";
+        conv.style.padding = "2px 6px";
+        conv.style.border = "1px solid var(--border)";
+        conv.style.borderRadius = "6px";
+        conv.textContent = "conv: -";
+        cfg.appendChild(conv);
+
+        // Messages area
+        var msgs = document.createElement("div");
+        msgs.id = "chat-msgs";
+        msgs.className = "mono";
+        msgs.style.border = "1px solid var(--border)";
+        msgs.style.borderRadius = "8px";
+        msgs.style.padding = "8px";
+        msgs.style.maxHeight = "240px";
+        msgs.style.overflow = "auto";
+        msgs.style.background = "var(--panel-2)";
+
+        // Input + send
+        var ta = document.createElement("textarea");
+        ta.id = "chat-input";
+        ta.className = "mono";
+        ta.rows = 4;
+        ta.placeholder = "메시지를 입력하고 Ctrl+Enter로 보내기";
+        ta.style.width = "100%";
+        ta.style.minHeight = "88px";
+
+        var row = document.createElement("div");
+        row.style.display = "flex";
+        row.style.gap = "8px";
+        row.style.alignItems = "center";
+        row.style.flexWrap = "wrap";
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.id = "btn-send";
+        btn.className = "btn";
+        btn.textContent = "보내기";
+
+        row.appendChild(btn);
+
+        wrap.appendChild(cfg);
+        wrap.appendChild(msgs);
+        wrap.appendChild(ta);
+        wrap.appendChild(row);
+
+        a1.appendChild(wrap);
+
+        // 2) State and helpers
+        var qs = new URLSearchParams(location.search);
+        var lsSession = (localStorage.getItem("gg_session_id") || "").trim();
+        var lsTask = (localStorage.getItem("gg_task_id") || "").trim();
+        var sessionId = (lsSession || (qs.get("session") || "GG-SESS-LOCAL")).trim();
+        var taskId = (lsTask || (qs.get("task") || "TASK-ROOT")).trim();
+        var convId = (localStorage.getItem("gg_last_conv") || "").trim() || null;
+        var history = [];
+
+        function addMsg(role, content) {
+          var div = document.createElement("div");
+          div.style.margin = "4px 0";
+          var r = document.createElement("span");
+          r.textContent = role + ": ";
+          r.style.opacity = ".8";
+          r.style.fontSize = "12px";
+          r.style.marginRight = "6px";
+          var c = document.createElement("span");
+          c.textContent = content;
+          div.appendChild(r);
+          div.appendChild(c);
+          msgs.appendChild(div);
+          msgs.scrollTop = msgs.scrollHeight;
+        }
+
+        // 3) Send handler (calls local bridge /api/chat)
+        function send() {
+          var text = (ta.value || "").trim();
+          if (!text) return;
+          var bridge = (inUrl.value || "http://localhost:3037").replace(/\/+$/, "");
+
+          addMsg("user", text);
+          // In-flight feedback: pending line + disable inputs + timeouts
+          var pending = document.createElement("div");
+          pending.className = "mono";
+          pending.style.margin = "4px 0";
+          pending.textContent = "assistant: …생성 중";
+          msgs.appendChild(pending);
+          msgs.scrollTop = msgs.scrollHeight;
+          btn.disabled = true;
+          ta.disabled = true;
+          var done = false;
+          var slowTimer = setTimeout(function () {
+            if (!done) pending.textContent = "assistant: 처리 중(느림)…";
+          }, 12000);
+          var hardTimer = setTimeout(function () {
+            if (!done) {
+              pending.textContent = "assistant: 시간 초과";
+              btn.disabled = false;
+              ta.disabled = false;
+            }
+          }, 45000);
+          history.push({ role: "user", content: text });
+          ta.value = "";
+
+          fetch(bridge + "/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              messages: history,
+              sessionId: sessionId,
+              taskId: taskId,
+              convId: convId || undefined,
+              model: localStorage.getItem("gg_openai_model") || undefined
+            })
+          })
+            .then(function (r) {
+              return r.json().catch(function () {
+                return { ok: false, error: { message: "Invalid JSON" } };
+              });
+            })
+            .then(function (resp) {
+              if (!resp || !resp.ok) {
+                var msg = (resp && resp.error && resp.error.message) ? resp.error.message : "요청 실패";
+                // Update pending line to error state
+                pending.textContent = "assistant: 오류 — " + msg;
+                btn.disabled = false;
+                ta.disabled = false;
+                done = true;
+                clearTimeout(slowTimer);
+                clearTimeout(hardTimer);
+                return;
+              }
+              convId = (resp.data && resp.data.convId) || convId;
+              if (convId) {
+                try { localStorage.setItem("gg_last_conv", convId); } catch(_) {}
+                var convEl = document.getElementById("conv-badge");
+                if (convEl) convEl.textContent = "conv: " + convId;
+              }
+              var m = resp.data && resp.data.message;
+              var content = (m && m.content) ? m.content : "";
+              history.push({ role: "assistant", content: content });
+              // Replace pending with final assistant message
+              pending.textContent = "assistant: " + content;
+              btn.disabled = false;
+              ta.disabled = false;
+              done = true;
+              clearTimeout(slowTimer);
+              clearTimeout(hardTimer);
+              // Update engine badge from bridge response
+              var engEl = document.getElementById("engine-badge");
+              if (engEl) engEl.textContent = "engine: " + ((resp.data && resp.data.model) || "-");
+              // A1→A3: evaluate utilization with real usage if available
+              try {
+                if (window.A3 && typeof window.A3.evaluateUtilization === "function") {
+                  window.A3.evaluateUtilization(resp.data && resp.data.usage);
+                }
+              } catch (_) {}
+            })
+            .catch(function (err) {
+              var em = (err && err.message ? err.message : String(err));
+              pending.textContent = "assistant: 네트워크 오류 — " + em;
+              btn.disabled = false;
+              ta.disabled = false;
+              done = true;
+              clearTimeout(slowTimer);
+              clearTimeout(hardTimer);
+            });
+        }
+
+        btn.addEventListener("click", send);
+        ta.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            send();
+          }
+        });
+        // A2 wiring: populate and save session/task to localStorage and runtime
+        var a2Session = document.getElementById("a2-session-id");
+        var a2Task = document.getElementById("a2-task-id");
+        var btnScope = document.getElementById("btn-save-scope");
+        if (a2Session) a2Session.value = sessionId;
+        if (a2Task) a2Task.value = taskId;
+        if (btnScope) {
+          btnScope.addEventListener("click", function () {
+            var s = (a2Session && a2Session.value || "").trim() || "GG-SESS-LOCAL";
+            var t = (a2Task && a2Task.value || "").trim() || "TASK-ROOT";
+            try {
+              localStorage.setItem("gg_session_id", s);
+              localStorage.setItem("gg_task_id", t);
+              sessionId = s;
+              taskId = t;
+              var st = document.getElementById("status");
+              if (st) st.textContent = "세션/태스크 저장: " + s + " / " + t;
+            } catch (_) {}
+          });
+        }
+        // A4 one-line ops log via bridge (logs as a tiny chat turn)
+        var opsInput = document.getElementById("ops-input");
+        var opsBtn = document.getElementById("btn-ops-log");
+        var opsStatus = document.getElementById("ops-status");
+        if (opsBtn) {
+          opsBtn.addEventListener("click", function () {
+            var txt = (opsInput && opsInput.value || "").trim();
+            if (!txt) { if (opsStatus) opsStatus.textContent = "빈 로그는 기록하지 않습니다."; return; }
+            var bridge = (inUrl.value || "http://localhost:3037").replace(/\/+$/, "");
+            var msg = "[ops] " + txt;
+            var msgs = history.concat([{ role: "user", content: msg }]);
+            fetch(bridge + "/api/chat", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                messages: msgs,
+                sessionId: sessionId,
+                taskId: taskId,
+                convId: convId || undefined,
+                model: localStorage.getItem("gg_openai_model") || undefined
+              })
+            })
+            .then(function (r) { return r.json().catch(function(){ return { ok:false, error:{message:"Invalid JSON"} }; }); })
+            .then(function (resp) {
+              if (!resp || !resp.ok) {
+                if (opsStatus) opsStatus.textContent = "기록 실패: " + (resp && resp.error && resp.error.message ? resp.error.message : "요청 실패");
+                return;
+              }
+              convId = (resp.data && resp.data.convId) || convId;
+              if (convId) {
+                try { localStorage.setItem("gg_last_conv", convId); } catch (_) {}
+                var convEl = document.getElementById("conv-badge");
+                if (convEl) convEl.textContent = "conv: " + convId;
+              }
+              // A1→A3: evaluate utilization with real usage if available (ops-log response)
+              try {
+                if (window.A3 && typeof window.A3.evaluateUtilization === "function") {
+                  window.A3.evaluateUtilization(resp.data && resp.data.usage);
+                }
+              } catch (_) {}
+              if (opsStatus) opsStatus.textContent = "기록 완료";
+            })
+            .catch(function (e) {
+              if (opsStatus) opsStatus.textContent = "네트워크 오류: " + (e && e.message ? e.message : String(e));
+            });
+          });
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

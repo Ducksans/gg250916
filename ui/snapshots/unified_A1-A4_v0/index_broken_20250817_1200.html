@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf</head>-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>금강 사용자 인터페이스(User Interface, UI) — 단일 화면 스냅샷 v0 (A1–A4)</title>
+  <style>
+    :root {
+      --</title></style>bg: #0a0c12;
+      --fg: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #22c55e;
+      --accent-weak: #16a34a;
+      --border: #1f2937;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --ok: #10b981;
+      --link: #93c5fd;
+      --link-visited: #a78bfa;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: var(--fg);
+      background: linear-gradient(180deg, var(--bg) 0%, #05070d 100%);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
+      line-height: 1.5;
+    }
+    a { color: var(--link); }
+    a:visited { color: var(--link-visited); }
+
+    header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(17, 24, 39, 0.7);
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.2px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(31, 41, 55, 0.6);
+      font-size: 11px;
+      color: var(--fg);
+    }
+    .chip b { color: var(--accent); }
+    header .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 8px;
+      border: 1px solid #2b3b50;
+      border-radius: 999px;
+      background: rgba(4,10,20,0.5);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .sep { opacity: 0.55; margin: 0 6px; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn {
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--fg);
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .btn.primary {
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent-weak) 100%);
+      color: #04130a;
+      border: none;
+      font-weight: 700;
+    }
+    .btn.ghost { background: transparent; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    nav.tabs {
+      display: flex;
+      gap: 6px;
+      padding: 8px 8px 0;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.6);
+      position: sticky;
+      top: 66px;
+      z-index: 9;
+      backdrop-filter: blur(8px);
+    }
+    .tab {
+      appearance: none;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      background: var(--panel-2);
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .tab.active {
+      background: #0d1220;
+      color: var(--fg);
+      border-color: #243040;
+      box-shadow: inset 0 6px 20px rgba(0,0,0,0.25);
+    }
+
+    main { padding: 14px; max-width: 1200px; margin: 0 auto; }
+    section.panel {
+      display: none;
+      border: 1px solid var(--border);
+      border-top: none;
+      background: #0d1220;
+      border-radius: 0 12px 12px 12px;
+      padding: 16px;
+      box-shadow: inset 0 20px 60px rgba(0,0,0,0.3), 0 6px 14px rgba(0,0,0,0.25);
+    }
+    section.panel.active { display: block; }
+
+    .panel h2 { margin: 0 0 12px; font-size: 16px; font-weight: 700; }
+    .panel .sub { margin: 0 0 16px; font-size: 12px; color: var(--muted); }
+
+    .grid { display: grid; gap: 12px; }
+    @media (min-width: 900px) {
+      .grid.cols-2 { grid-template-columns: 1fr 1fr; }
+      .grid.cols-3 { grid-template-columns: 1.3fr 1fr 1fr; }
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(17, 24, 39, 0.6);
+      padding: 12px;
+      min-height: 60px;
+    }
+    .card h3 { margin: 0 0 8px; font-size: 14px; }
+    .muted { color: var(--muted); }
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    .kv {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 6px 10px;
+      font-size: 13px;
+    }
+    .kv .k { color: var(--muted); }
+
+    .path {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px;
+      border: 1px dashed #394151;
+      border-radius: 8px;
+      background: rgba(2,6,23,0.5);
+      font-size: 12px;
+    }
+
+    .msg {
+      display: grid;
+      gap: 6px;
+      grid-template-columns: 64px 1fr;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .msg.user { background: rgba(16, 13, 28, 0.55); }
+    .msg.assistant { background: rgba(8, 19, 28, 0.55); }
+    .msg .role { font-size: 12px; color: var(--muted); }
+
+    .input-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    input[type="text"], select, textarea {
+      width: 100%;
+      background: #0b1325;
+      border: 1px solid #263041;
+      border-radius: 8px;
+      color: var(--fg);
+      padding: 10px 12px;
+      font-size: 13px;
+      outline: none;
+    }
+    textarea { min-height: 84px; resize: vertical; }
+
+    footer {
+      max-width: 1200px;
+      margin: 18px auto;
+      padding: 6px 14px;
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .bookmark { color: #e8f3ee; font-weight: 600; }
+
+    /* Light theme overrides */
+    body.light { background: linear-gradient(180deg, #e8eef9 0%, #f1f5f9 100%); color: #0b1220; }
+    body.light header,
+    body.light nav.tabs { background: rgba(236, 245, 255, 0.7); }
+    body.light .tab { background: #eef2ff; color: #334155; border-color: #cbd5e1; }
+    body.light .tab.active { background: #ffffff; color: #0b1220; border-color: #a3bffa; }
+    body.light section.panel { background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+    body.light .card { background: #f8fafc; border-color: #e2e8f0; }
+    body.light .msg { background: #f1f5f9; border-color: #e2e8f0; }
+    body.light .msg.user { background: #fff7ed; }
+    body.light .msg.assistant { background: #eef2ff; }
+    body.light .muted { color: #6b7280; }
+    body.light .pill { background: #f1f5f9; border-color: #e2e8f0; color: #475569; }
+    body.light .btn { background: #ffffff; color: #0b1220; border-color: #e2e8f0; }
+    body.light .btn.primary { background: linear-gradient(180deg, #34d399 0%, #10b981 100%); color: #082016; }
+    body.light .path { background: #f8fafc; border-color: #d1d5db; }
+  </style>
+</head>
+<body></body>
+  <header></header>
+    <h1></h1>
+      금강 사용자 인터페이스(User Interface, UI) — 단일 화면 스냅샷 v0
+      <span class="chip"><b>A1</b>~<b>A4</b> 통합</span>
+    </h1>
+    <div class="meta">
+      <div class="pill">세션(Session) <span class="sep">|</span> <span class="mono" id="sessionId">GG-SESS-20250816-2249</span></div>
+      <div class="pill">체크포인트(Checkpoints) <span class="sep">|</span> GG-TR-0013 · GG-TR-0014 · GG-TR-0016</div>
+      <div class="pill">모드(Mode) <span class="sep">|</span> 드라이런(무해, API 비활성화)</div>
+      <div class="pill">SSOT(단일 진실 원천) <span class="sep">|</span> /gumgang_meeting/docs (읽기 전용)</div>
+    </div>
+    <div class="toolbar">
+      <button class="btn" id="darkToggle" title="다크/라이트 전환 (Alt+D)">다크/라이트 전환</button>
+      <button class="btn ghost" id="shortcutHint" title="단축키">단축키: Alt+1 A1 · Alt+2 A2 · Alt+3 A3 · Alt+4 A4</button>
+      <button class="btn primary" disabled title="드라이런 모드에서는 비활성화">실행(Execute) — v0에서는 비활성화</button>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="A1~A4 탭">
+    <button type="button" class="tab active" id="tab-a1" role="tab" aria-controls="panel-a1" aria-selected="true" data-target="panel-a1">A1 — 채팅(Chat)</button>
+    <button type="button" class="tab" id="tab-a2" role="tab" aria-controls="panel-a2" aria-selected="false" data-target="panel-a2">A2 — 세션/태스크(Session/Task)</button>
+    <button type="button" class="tab" id="tab-a3" role="tab" aria-controls="panel-a3" aria-selected="false" data-target="panel-a3">A3 — 도구 패널(Tools Panel)</button>
+    <button type="button" class="tab" id="tab-a4" role="tab" aria-controls="panel-a4" aria-selected="false" data-target="panel-a4">A4 — 상태/로그(Status/Logs)</button>
+  </nav>
+
+  <main></main>
+    <!-- A1: Chat -->
+    <section id="panel-a1" class="panel active" role="tabpanel" aria-labelledby="tab-a1">
+      <h2>A1 — 채팅(Chat)</h2>
+      <p class="sub">v0 스냅샷(정적). Large Language Model(대형 언어 모델, LLM) API 호출은 드라이런에서 비활성화되어 있습니다. 입력/출력/메타 구조만 확인합니다.</p>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3></h3>대화(샘플)</h3>
+          <div class="grid" style="gap:10px">
+            <div class="msg user">
+              <div class="role">USER</div>
+              <div>안</div>녕하세요. 지금 어디까지 왔나요?</div>
+            </div>
+            <div class="msg assistant">
+              <div class="role">ASSISTANT</div>
+              <div>UI Minimum Viable Product(</div>최소 실행 가능 제품, MVP) 게이트 전 항목을 통과했고, 단일 화면 v0와 토크나이저 연동을 준비 중입니다.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>입력(비활</h3>성화 · 구조 확인용)</h3>
+          <div class="grid">
+            <div class="input-row" style="width: 320px; max-width: 100%;">
+              <label class="muted" for="model">모델(Model)</label>
+              <select id="model" disabled></select>
+                <option>—</option> 선택(드라이런: 비활성화) —</option>
+              </select>
+            </div>
+            <div style="width: 100%;">
+              <label class="muted" for="prompt">프롬프트(Prompt)</label>
+              <textarea id="prompt" placeholder="여기에 메시지를 입력(드라이런: 비활성화)" disabled></textarea>
+            </div>
+            <div class="input-row">
+              <button class="btn" disabled>전송</button>(Send)</button>
+              <button class="btn ghost" disabled>초</button>기화(Reset)</button>
+            </div>
+            <div class="muted" style="font-size:12px">
+              토큰 계측은 A3 ‘도구 패널’의 “토크나이저(Tokenizer)” 보드에서 확인합니다.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid cols-3" style="margin-top:12px">
+        <div class="card">
+          <h3></h3>증거(Evidence) 경로</h3>
+          <div class="grid">
+            <div class="path mono">gumgang_meeting/ui/proto/chat_view_A1/index.html</div>
+            <div class="path mono">gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json</div>
+            <div class="path mono">gumgang_meeting/status/evidence/ui_mvp_gate_20250816_report.md</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3></h3>화면 캡처(권장 경로)</h3>
+          <div class="path mono">gumgang_meeting/ui/logs/ui_mvp_gate_20250816/screenshots/</div>
+          <p class="muted" style="margin:8px 0 0">파일명 예: A1_v0_overview.png</p>
+        </div>
+        <div class="card">
+          <h3>참</h3>고</h3>
+          <p class="muted">SSOT(`/docs`)는 읽기 전용입니다. 운영 로그와 스크린샷은 `status/evidence`, `ui/logs`에 남깁니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- A2: Session/Task -->
+    <section id="panel-a2" class="panel" role="tabpanel" aria-labelledby="tab-a2">
+      <h2>A2 — 세션/태스크(Session/Task)</h2>
+      <p class="sub">대화가 목표와 수용 기준을 얻으면 태스크(Task)가 됩니다. 태스크들이 모여 세션(Session), 세션 묶음이 프로젝트(Project)가 됩니다.</p>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>현재</h3> 세션 정보</h3>
+          <div class="kv mono">
+            <div class="k">SESSION_ID</div><div id="kvSessionId">GG-SESS-20250816-2249</div>
+            <div class="k">체크포인트</div><div>GG</div>-TR-0013 · GG-TR-0014 · GG-TR-0016</div>
+            <div class="k">모드</div><div></div>드라이런(무해 · API 비활성화)</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>태</h3>스크(샘플, 읽기 전용)</h3>
+          <ul class="mono" style="margin:8px 0 0; padding-left:18px; line-height:1.7">
+            <li>[A1] 채팅 뷰 v0 구조 확인</li>
+            <li>[A2] 세션/태스크 정보 표시 v0</li>
+            <li>[A3] 토크나이저 보드(계측/임계값) 설계</li>
+            <li>[A4] 상태/로그 뷰 경로 고정</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3>편</h3>집(비활성화 · 구조 확인용)</h3>
+        <div class="input-row">
+          <input type="text" placeholder="새 태스크 제목(드라이런: 비활성화)" disabled>
+          <button class="btn" disabled></button>추가(Add)</button>
+        </div>
+        <p class="muted" style="margin:10px 0 0">태스크는 실제 운영 시 로그와 증거 링크를 동반합니다.</p>
+      </div>
+    </section>
+
+    <!-- A3: Tools Panel -->
+    <section id="panel-a3" class="panel" role="tabpanel" aria-labelledby="tab-a3">
+      <h2>A3 — 도구 패널(Tools Panel)</h2>
+      <p class="sub">Tokenizer(토큰화 도구, 토크나이저)와 Export/Backup(내보내기/백업), Publish Protocol(발행 절차) 관련 보드를 배치합니다.</p>
+
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>토크나이</h3>저(Tokenizer) — 계측 보드</h3>
+          <div class="kv mono">
+            <div class="k">모델(Model)</div><div></div>—</div>
+            <div class="k">인코딩(Encoding)</div><div>—</div></div>
+            <div class="k">컨텍스트 최대(Max)</div><div></div>—</div>
+            <div class="k">현재 토큰(Current)</div><div>—</div>
+            <div class="k">헤드룸(Headroom)</div><div>—</div>
+            <div class="k">임계값(70/85/95%)</div><div>—</div>
+          </div>
+          <div class="input-row" style="margin-top:10px">
+            <button class="btn" disabled>계측 실행(Measure)</button>
+            <button class="btn ghost" disabled>요약/절단 정책 테스트</button>
+          </div>
+          <p</div></div></div></button></button> class="muted" style="margin:10px 0 0">드라이런: UI만 확인합니다. 실제 계측/정책 연동은 이후 단계에서 활성화.</p>
+        </div>
+
+        <div class="card">
+          <h3></h3>Export/Backup — 표준</h3>
+          <ul class="mono" style="margin:8px 0 0; padding-left:18px; line-height:1.7">
+            <li>명</li>명: export_[YYYYMMDD_HHMM]_[scope].json|tar</li>
+            <li></li>무결성: SHA-256 해시 기록</li>
+            <li>보</li>관: status/evidence · ui/logs</li>
+          </ul>
+          <div class="input-row" style="margin-top:10px">
+            <button class="btn" disabled>예</button>시 내보내기(Create Example)</button>
+            <button class="btn ghost" disabled>해시 계산</button>(Calc Hash)</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Publish Protocol</h3> — 체크리스트</h3>
+          <ol style="margin:8px 0 0; padding-left:18px; line-height:1.7">
+            <li>드</li>래프트 작성 · 증거 링크 첨부</li>
+            <li></li>검토/서명(메모리 로그에 기록)</li>
+            <li>운영 경</li>로로 승격(status/evidence)</li>
+            <li></li>SSOT(`/docs`) 반영은 별도 승인 후</li>
+          </ol>
+          <div class="input-row" style="margin-top:10px">
+            <button class="btn" disabled></button>체크리스트 열기(Open)</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- A4: Status/Logs -->
+    <section id="panel-a4" class="panel" role="tabpanel" aria-labelledby="tab-a4">
+      <h2>A4 — 상태/로그(Status/Logs)</h2>
+      <p class="sub">요청/응답, 임계값 이벤트, 요약/절단 결과, 스크린샷·해시 경로 등을 인덱스처럼 보여주는 자리입니다.</p>
+
+      <div class="grid cols-2">
+        <div class="card">
+          <h3></h3>세션/체크포인트</h3>
+          <div class="kv mono">
+            <div class="k">SESSION_ID</div><div>GG</div>-SESS-20250816-2249</div>
+            <div class="k">CHECKPOINT</div><div>GG-TR-</div>0013 · GG-TR-0014 · GG-TR-0016</div>
+            <div class="k">모드</div><div>드라이런</div</div>>
+          </div>
+        </div>
+        <div class="card">
+          <h3>무</h3>결성(Integrity)</h3>
+          <div class="kv mono">
+            <div class="k">Export 해시</div><div>c</div>42d21c8cb01…07ee</div>
+            <div class="k">로그 경로</div><div>ui/logs/ui</div>_mvp_gate_20250816_1624.json</div>
+            <div class="k">스크린샷</div><div>ui</div>/logs/ui_mvp_gate_20250816/screenshots/</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3></h3>임계값 이벤트 로그(샘플)</h3>
+        <pre class="mono" style="white-space:pre-wrap; margin:0">
+2025-08-16T12:38:45Z | MODEL=? | tokens=— | threshold=— | action=SUMMARY_LINK | evidence=…
+— v0에서는 자리표시자만 노출됩니다 —
+        </pre>
+      </div>
+
+      <div class="grid cols-3" style="margin-top:12px">
+        <div class="card">
+          <h3>어</h3>디에 무엇을 남기나</h3>
+          <ul class="mono" style="margin:8px 0 0; padding-left:18px; line-height:1.7">
+            <li>증</li>거(Evidence): gumgang_meeting/status/evidence/</li>
+            <li>운영 로그: gum</li>gang_meeting/ui/logs/</li>
+            <li>메모</li>리: gumgang_meeting/memory/memory.log</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3></h3>참고 문서</h3>
+          <ul style="margin:8px 0 0; padding-left:18px; line-height:1.7">
+            <li><span class="mono">context_observer/protocol.md</span></li>
+            <li><span class="mono">context_observer/retention_policy.md</span></li>
+            <li><span class="mono">status/where_are_we.md</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>스크린샷</h3> 가이드</h3>
+          <p class="muted">전체 창 1280×800 이상 권장, 파일명: <span class="mono">A4_v0_status.png</span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>끝문장 — <span</footer></div> class="bookmark">“나는 지금 할 한 걸음만 한다.”</span></div>
+    <div class="muted">단축키: Alt+1~4 탭 전환, Alt+D 다크/라이트</div>
+  </footer>
+
+  <script></script>
+    (function () {
+      const $ = (sel, ctx = document) => ctx.querySelector(sel);
+      const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+      // Tabs behavior
+      const tabs = $$('.tab');
+      const panels = $$('.panel');
+
+      function activate(targetId) {
+        tabs.forEach(t => {
+          const isActive = t.dataset.target === targetId;
+          t.classList.toggle('active', isActive);
+          t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          t.setAttribute('tabindex', isActive ? '0' : '-1');
+        });
+        panels.forEach(p => p.classList.toggle('active', p.id === targetId));
+      }
+
+      // Ensure data-target is present (fallback to aria-controls)
+      tabs.forEach(t => {
+        if (!t.dataset.target) {
+          const id = (t.getAttribute('aria-controls') || '').trim();
+          if (id) t.dataset.target = id;
+        }
+      });
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => activate(tab.dataset.target));
+        tab.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(tab.dataset.target); }
+        });
+      });
+
+      // Keyboard shortcuts: Alt+1..4, Alt+D
+      window.addEventListener('keydown', (e) => {
+        if (!e.altKey) return;
+        if (e.key === '1') activate('panel-a1');
+        if (e.key === '2') activate('panel-a2');
+        if (e.key === '3') activate('panel-a3');
+        if (e.key === '4') activate('panel-a4');
+        if (typeof e.key === 'string' && e.key.toLowerCase() === 'd') document.body.classList.toggle('light');
+      });
+
+      // Dark/Light toggle
+      const darkToggle = $('#darkToggle');
+      if (darkToggle) darkToggle.addEventListener('click', () => document.body.classList.toggle('light'));
+
+      // Session ID sync (header -> A2 kv)
+      const sidEl = $('#sessionId');
+      const kv = $('#kvSessionId');
+      const sid = sidEl ? sidEl.textContent.trim() : '';
+      if (kv && sid) kv.textContent = sid;
+
+      // Initial state
+      activate('panel-a1');
+    })();
+  </script>
+</body>
+</html>

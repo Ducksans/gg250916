@@ -1,0 +1,203 @@
+# 금강 2.0 - Docker Compose 오케스트레이션
+version: '3.9'
+
+services:
+  # PostgreSQL 데이터베이스
+  postgres:
+    image: postgres:15-alpine
+    container_name: gumgang-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-gumgang}
+      POSTGRES_USER: ${POSTGRES_USER:-gumgang_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secure_password_123}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - gumgang-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gumgang_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis 캐시
+  redis:
+    image: redis:7-alpine
+    container_name: gumgang-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-redis_secure_123}
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - gumgang-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 백엔드 API 서버
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        - APP_ENV=${APP_ENV:-production}
+    container_name: gumgang-backend
+    restart: unless-stopped
+    environment:
+      # Database
+      DATABASE_URL: postgresql://${POSTGRES_USER:-gumgang_user}:${POSTGRES_PASSWORD:-secure_password_123}@postgres:5432/${POSTGRES_DB:-gumgang}
+      # Redis
+      REDIS_URL: redis://:${REDIS_PASSWORD:-redis_secure_123}@redis:6379/0
+      # JWT
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-your-super-secret-jwt-key-change-this}
+      JWT_ALGORITHM: ${JWT_ALGORITHM:-HS256}
+      # AI Keys
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+      # App Config
+      APP_ENV: ${APP_ENV:-production}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://localhost}
+      # Email
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+    volumes:
+      - ./backend/app:/app/app
+      - backend_logs:/app/logs
+      - uploaded_files:/app/uploads
+    ports:
+      - "8001:8001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - gumgang-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # 프론트엔드 애플리케이션
+  frontend:
+    build:
+      context: ./gumgang-v2
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_API_URL=${REACT_APP_API_URL:-http://localhost:8001}
+        - REACT_APP_WS_URL=${REACT_APP_WS_URL:-ws://localhost:8001}
+        - REACT_APP_ENV=${REACT_APP_ENV:-production}
+    container_name: gumgang-frontend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./gumgang-v2/nginx.conf:/etc/nginx/nginx.conf:ro
+      - frontend_logs:/var/log/nginx
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - gumgang-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Nginx 리버스 프록시
+  nginx:
+    image: nginx:alpine
+    container_name: gumgang-nginx
+    restart: unless-stopped
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - nginx_logs:/var/log/nginx
+      - static_files:/usr/share/nginx/html
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - gumgang-network
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 백업 서비스
+  backup:
+    image: postgres:15-alpine
+    container_name: gumgang-backup
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-gumgang}
+      POSTGRES_USER: ${POSTGRES_USER:-gumgang_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secure_password_123}
+    volumes:
+      - ./backups:/backups
+      - ./scripts/backup.sh:/backup.sh:ro
+    depends_on:
+      - postgres
+    networks:
+      - gumgang-network
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        while true; do
+          echo "백업 시작: $$(date)"
+          PGPASSWORD=$$POSTGRES_PASSWORD pg_dump \
+            -h postgres \
+            -U $$POSTGRES_USER \
+            -d $$POSTGRES_DB \
+            -f /backups/backup_$$(date +%Y%m%d_%H%M%S).sql
+          echo "백업 완료: $$(date)"
+          # 7일 이상 된 백업 삭제
+          find /backups -name "*.sql" -mtime +7 -delete
+          # 24시간마다 백업
+          sleep 86400
+        done
+
+# 네트워크 정의
+networks:
+  gumgang-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# 볼륨 정의
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  backend_logs:
+    driver: local
+  frontend_logs:
+    driver: local
+  nginx_logs:
+    driver: local
+  uploaded_files:
+    driver: local
+  static_files:
+    driver: local

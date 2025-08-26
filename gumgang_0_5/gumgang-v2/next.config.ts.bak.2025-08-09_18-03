@@ -1,0 +1,78 @@
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  // Remove static export to enable SSR for dynamic components
+  // output: "export",  // Commenting this out to enable SSR
+
+  // Keep distDir for build output
+  distDir: ".next",
+
+  // Image optimization settings
+  images: {
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "8001",
+        pathname: "/**",
+      },
+    ],
+  },
+
+  // Webpack configuration
+  webpack: (config) => {
+    // Add fallbacks for Node.js modules not available in the browser
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+      dns: false,
+      child_process: false,
+    };
+
+    // Add support for WebAssembly if needed
+    config.experiments = {
+      ...config.experiments,
+      asyncWebAssembly: true,
+    };
+
+    return config;
+  },
+
+  // Disable SWC minification if having issues
+  swcMinify: true,
+
+  // React strict mode for better debugging
+  // Disabled to prevent double rendering in development
+  reactStrictMode: false,
+
+  // PoweredByHeader
+  poweredByHeader: false,
+
+  // Compression
+  compress: true,
+
+  // Environment variables that should be available on the client
+  env: {
+    NEXT_PUBLIC_API_URL:
+      process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001",
+    NEXT_PUBLIC_WS_URL:
+      process.env.NEXT_PUBLIC_WS_URL || "http://localhost:8001",
+  },
+
+  // TypeScript configuration
+  typescript: {
+    // During development, we can ignore build errors to keep moving
+    ignoreBuildErrors: false,
+  },
+
+  // ESLint configuration
+  eslint: {
+    // During development, we can ignore linting errors
+    ignoreDuringBuilds: false,
+  },
+};
+
+export default nextConfig;

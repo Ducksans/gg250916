@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>금강 UI — index_full.html (A1–A4 Minimal + Shortcuts + Theme + Session Meta)</title>
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --fg: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #22c55e;
+      --border: #1f2937;
+      --panel: #0f172a;
+      --panel-2: #111827;
+      --shadow: 0 8px 28px rgba(0,0,0,.22);
+    }
+    html[data-theme="light"] {
+      --bg: #f8fafc;
+      --fg: #0f172a;
+      --muted: #475569;
+      --accent: #16a34a;
+      --border: #e2e8f0;
+      --panel: #ffffff;
+      --panel-2: #f8fafc;
+      --shadow: 0 8px 24px rgba(0,0,0,.08);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: var(--fg);
+      background:
+        radial-gradient(900px 520px at 100% -20%, rgba(34,197,94,.06), transparent 50%),
+        linear-gradient(180deg, rgba(2,6,23,.82), rgba(2,6,23,.62)),
+        var(--bg);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(15,23,42,.65);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+    html[data-theme="light"] header { background: rgba(255,255,255,.85); }
+
+    .hdr {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px 10px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+    h1.title { margin: 0; font-size: 18px; letter-spacing: .1px; }
+
+    .toolbar { display: inline-flex; gap: 8px; align-items: center; }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--fg);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+    .btn:focus-visible { outline: 2px solid rgba(34,197,94,.35); outline-offset: 2px; }
+
+    p.diag {
+      grid-column: 1 / -1;
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+
+    nav.tabs {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 8px;
+      padding: 8px 16px 12px;
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15,23,42,.45);
+    }
+    html[data-theme="light"] nav.tabs { background: rgba(255,255,255,.85); }
+    nav.tabs a {
+      display: inline-block;
+      padding: 8px 10px;
+      font-size: 13px;
+      color: var(--fg);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel);
+    }
+    nav.tabs a[aria-current="page"] {
+      outline: 1px solid rgba(34,197,94,.45);
+      box-shadow: 0 0 0 2px rgba(34,197,94,.2);
+    }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    section.panel {
+      display: none;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(15,23,42,.55);
+    }
+    html[data-theme="light"] section.panel { background: #fff; }
+    section.panel.active { display: block; }
+    section.panel h2 { margin: 0 0 8px; font-size: 16px; }
+    section.panel p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 6px 12px;
+      align-items: baseline;
+    }
+    .label { color: var(--muted); font-size: 13px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; word-break: break-all; }
+    .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+    footer {
+      max-width: 1100px;
+      margin: 18px auto 30px;
+      padding: 0 16px;
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    dialog#kbd-help {
+      border: none;
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: var(--panel);
+      color: var(--fg);
+      box-shadow: var(--shadow);
+      width: min(560px, 92vw);
+    }
+    dialog#kbd-help::backdrop { background: rgba(0,0,0,.45); }
+    .kbd-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 6px 10px;
+      font-size: 14px;
+    }
+    .kbd {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body></body>
+  <header></header>
+    <div class="hdr">
+      <h1 class="title">금강 UI — index_full.html</h1>
+      <div class="toolbar" role="toolbar" aria-label="View controls">
+        <button id="btn-theme" class="btn" type="button" title="테마 토글 (T)">다크</button>
+        <button id="btn-help" class="btn" type="button" title="단축키 도움말 (?)">도움말</button>
+      </div>
+      <p id="diag" class="diag" aria-live="polite">
+• 기능 포함 미니멀(탭/단축키/테마/세션메타)
+• 쿼리 예: ?session=GG-SESS-20250816-2249&date=20250816&version=v0
+• 단축키: [1–4]=탭, Ctrl+←/→=탭이동, T=테마, ?=도움말, Esc=닫기
+      </p>
+    </div>
+    <nav class="tabs" aria-label="A1–A4 Tabs">
+      <a href="#a1" id="tab-a1">A1 — 채팅</a>
+      <a href="#a2" id="tab-a2">A2 — 세션/태스크</a>
+      <a href="#a3" id="tab-a3">A3 — 도구 패널</a>
+      <a href="#a4" id="tab-a4">A4 — 상태/로그</a>
+    </nav>
+  </header>
+
+  <main></main>
+    <noscript><p class="label">브라우저에서 JavaScript가 꺼져 있습니다. 주소창의 #a1~#a4 해시로 패널을 이동하세요.</p></noscript>
+
+    <section id="a1" class="panel active" aria-labelledby="tab-a1">
+      <h2>A1 — 채팅(Chat)</h2>
+      <p>렌</p>더링 검증용 미니멀 + 기능 포함. 모델/도구 호출은 없습니다.</p>
+    </section>
+
+    <section id="a2" class="panel" aria-labelledby="tab-a2">
+      <h2>A2 — 세션/태스크</h2>
+      <div class="grid" id="session-card" style="margin-top:6px;">
+        <div class="label">SESSION_ID</div><div id="meta-session" class="mono">-</div>
+        <div class="label">CAPTURE_DATE</div><div id="meta-date" class="mono">-</div>
+        <div class="label">SNAPSHOT</div><div id="meta-version" class="mono">v0</div>
+        <div class="label">SCREENSHOTS</div><div id="meta-path" class="mono">-</div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <button id="btn-copy-meta" class="btn" type="button" title="세션 메타 복사">메타 복사</button>
+      </div>
+    </section>
+
+    <section id="a3" class="panel" aria-labelledby="tab-a3">
+      <h2>A3 — 도구 패널</h2>
+      <p>토</p>크나이저/내보내기 등은 비활성화. 레이아웃/단축키/테마/메타 확인 목적.</p>
+    </section>
+
+    <section id="a4" class="panel" aria-labelledby="tab-a4">
+      <h2>A4 — 상태/로그</h2>
+      <p></p>좌측 상단의 도움말(?)을 참고하세요. 상태 라인은 하단에 표시됩니다.</p>
+    </section>
+  </main>
+
+  <footer></footer>
+    <div id="status" aria-live="polite">Ready.</div>
+    <div id="ts" aria-label="Rendered timestamp" class="mono"></div>
+  </footer>
+
+  <dialog id="kbd-help" aria-label="Keyboard shortcuts">
+    <form method="dialog" style="margin:0;">
+      <h3 style="margin:0 0 8px; font-size:16px;">단축키</h3>
+      <div class="kbd-grid">
+        <div class="kbd">1 / 2 / 3 / 4</div><div></div>각 탭으로 이동</div>
+        <div class="kbd">Ctrl + ← / →</div><div>이전</div>/다음 탭</div>
+        <div class="kbd">T</div><div></div>다크/라이트 테마 토글</div>
+        <div class="kbd">?</div><div></div>도움말 열기/닫기</div>
+        <div class="kbd">Esc</div><div></div>대화상자 닫기</div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+        <button class="btn" value="cancel" type="submit">닫기 (Esc)</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="feature_full.js"></script>
+</body>
+</html>

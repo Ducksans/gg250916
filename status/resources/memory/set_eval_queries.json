@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "title": "ST-1205 Default Eval Set",
+  "updated": "2025-08-25T00:00:00Z",
+  "description": "Evaluate Fresh weighting and conditional Self‑RAG using a small, stable query set. Results are written to status/evidence/memory/set_eval/<UTC_YYYYMMDD>/set_eval_<day>.json.",
+  "queries": [
+    "ST-1205 신선도",
+    "Self-RAG 루브릭",
+    "ST-1205 테스트"
+  ],
+  "params": {
+    "k": 5,
+    "need_fresh": 1,
+    "halflife_days": 7.0,
+    "fresh_weight": 0.9,
+    "self_rag": 1
+  },
+  "rerank_policy": {
+    "apply_if": "recency<0.2 AND refs<0.2",
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "bonus": {
+      "refs_ge_1_add": 0.05,
+      "normalized_threshold": 0.2
+    },
+    "cap": {
+      "kw_ge": 0.9,
+      "max_uplift": 0.02
+    },
+    "blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    }
+  },
+  "output": {
+    "dir": "status/evidence/memory/set_eval/{UTC_YYYYMMDD}",
+    "file": "set_eval_{UTC_YYYYMMDD}.json"
+  },
+  "script_hint": "python scripts/run_st1205_eval.py --queries \"ST-1205 신선도,Self-RAG 루브릭,ST-1205 테스트\" --k 5 --halflife-days 7 --fresh-weight 0.9 --self-rag 1 --stdout",
+  "notes": [
+    "Fresh weighting (need_fresh=1, halflife_days≈7, fresh_weight≈0.9) showed consistent top-3 average lift (~+0.17 to +0.23) across queries.",
+    "Self‑RAG v0 with conditional application and rubric/bonus/cap/0.92:0.08 blend is stabilized (near-zero average impact) to avoid harming baseline.",
+    "Recall run evidence is written per ON search under status/evidence/memory/recall_runs/<day>/run_*.json (pre_items vs post_items).",
+    "Set eval summary consolidates OFF vs ON (pre/post) top‑3 averages for each query."
+  ]
+}

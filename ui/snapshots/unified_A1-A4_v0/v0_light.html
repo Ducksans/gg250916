@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>금강 UI — v0_light.html (A1–A4 Minimal Tabs, Light)</title>
+        <style>
+            :root {
+                --bg: #f8fafc;
+                --fg: #0f172a;
+                --muted: #475569;
+                --accent: #16a34a;
+                --border: #e5e7eb;
+                --panel: #ffffff;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                height: 100%;
+            }
+            body {
+                margin: 0;
+                color: var(--fg);
+                background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    "Segoe UI",
+                    Roboto,
+                    "Noto Sans KR",
+                    "Apple SD Gothic Neo",
+                    Arial,
+                    sans-serif;
+                line-height: 1.5;
+            }
+            header {
+                padding: 16px 20px;
+                border-bottom: 1px solid var(--border);
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(6px);
+                position: sticky;
+                top: 0;
+            }
+            header h1 {
+                margin: 0 0 6px;
+                font-size: 18px;
+            }
+            header .diag {
+                margin: 0;
+                font-size: 12px;
+                color: var(--muted);
+                white-space: pre-wrap;
+            }
+            nav {
+                display: flex;
+                gap: 8px;
+                padding: 10px 12px;
+                border-bottom: 1px solid var(--border);
+                background: rgba(255, 255, 255, 0.8);
+                backdrop-filter: blur(4px);
+            }
+            nav a {
+                display: inline-block;
+                padding: 8px 10px;
+                font-size: 13px;
+                color: var(--fg);
+                text-decoration: none;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                background: var(--panel);
+            }
+            nav a[aria-current="page"] {
+                border-color: #bfe3c9;
+                outline: 1px solid #bfe3c9;
+                box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.12);
+            }
+            main {
+                padding: 16px 14px;
+                max-width: 960px;
+                margin: 0 auto;
+            }
+            section {
+                display: none;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                background: #ffffff;
+                padding: 14px;
+            }
+            section.active {
+                display: block;
+            }
+            section h2 {
+                margin: 0 0 8px;
+                font-size: 16px;
+            }
+            section p {
+                margin: 0;
+                color: var(--muted);
+                font-size: 14px;
+            }
+            footer {
+                max-width: 960px;
+                margin: 18px auto;
+                padding: 0 14px 20px;
+                font-size: 12px;
+                color: var(--muted);
+                display: flex;
+                justify-content: space-between;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+            .no-js-note {
+                font-size: 13px;
+                color: var(--muted);
+                border-left: 3px solid var(--accent);
+                padding-left: 10px;
+                margin: 10px 0 0;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>금강 사용자 인터페이스(UI) — v0_light.html</h1>
+            <p class="diag">
+                • 목적: 렌더링 이슈 격리를 위한 최소 HTML (엄격 구조, 간결 CSS,
+                해시 탭 내비게이션, 라이트 테마) • 파일:
+                gumgang_meeting/ui/snapshots/unified_A1-A4_v0/v0_light.html •
+                안내: 상단 탭(A1~A4)을 눌러 패널 전환. (기본: A1)
+            </p>
+        </header>
+
+        <nav aria-label="A1–A4 Tabs">
+            <a href="#a1" id="tab-a1">A1 — 채팅(Chat)</a>
+            <a href="#a2" id="tab-a2">A2 — 세션/태스크</a>
+            <a href="#a3" id="tab-a3">A3 — 도구 패널</a>
+            <a href="#a4" id="tab-a4">A4 — 상태/로그</a>
+        </nav>
+
+        <main>
+            <noscript>
+                <p class="no-js-note">
+                    브라우저에서 JavaScript가 꺼져 있습니다. 주소창에 #a1, #a2,
+                    #a3, #a4를 붙여 이동할 수 있습니다.
+                </p>
+            </noscript>
+
+            <section id="a1" aria-labelledby="tab-a1" class="active">
+                <h2>A1 — 채팅(Chat)</h2>
+                <p>
+                    이 패널이 보이면 v0_light.html의 기본 렌더링이 정상입니다.
+                    (API/모델 호출 없음)
+                </p>
+            </section>
+
+            <section id="a2" aria-labelledby="tab-a2">
+                <h2>A2 — 세션/태스크</h2>
+                <p>
+                    간단한 설명 텍스트만 렌더링합니다. 레이아웃/스타일이 깨지지
+                    않으면 기본 구조는 정상입니다.
+                </p>
+            </section>
+
+            <section id="a3" aria-labelledby="tab-a3">
+                <h2>A3 — 도구 패널</h2>
+                <p>
+                    토크나이저/내보내기 등은 비활성화(더미). 본 파일은 렌더링
+                    검증만 목적입니다.
+                </p>
+            </section>
+
+            <section id="a4" aria-labelledby="tab-a4">
+                <h2>A4 — 상태/로그</h2>
+                <p>
+                    스크린샷/로그 경로 안내 등은 생략. 본 파일이 깨끗이 보이는지
+                    먼저 확인하세요.
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            <div>끝문장 — “나는 지금 할 한 걸음만 한다.”</div>
+            <div id="ts" aria-label="Rendered timestamp"></div>
+        </footer>
+
+        <script>
+            (function () {
+                "use strict";
+                var valid = {
+                    "#a1": true,
+                    "#a2": true,
+                    "#a3": true,
+                    "#a4": true,
+                };
+                var def = "#a1";
+
+                function activate() {
+                    var hash = location.hash || def;
+                    if (!valid[hash]) hash = def;
+
+                    // tabs
+                    ["#tab-a1", "#tab-a2", "#tab-a3", "#tab-a4"].forEach(
+                        function (s) {
+                            var el = document.querySelector(s);
+                            if (el) el.removeAttribute("aria-current");
+                        },
+                    );
+                    var tab = document.querySelector("#tab-" + hash.slice(1));
+                    if (tab) tab.setAttribute("aria-current", "page");
+
+                    // panels
+                    ["#a1", "#a2", "#a3", "#a4"].forEach(function (s) {
+                        var sec = document.querySelector(s);
+                        if (sec) sec.classList.remove("active");
+                    });
+                    var active = document.querySelector(hash);
+                    if (active) active.classList.add("active");
+                }
+
+                if (!location.hash || !valid[location.hash]) {
+                    try {
+                        history.replaceState(null, "", def);
+                    } catch (_) {
+                        location.hash = def;
+                    }
+                }
+                window.addEventListener("hashchange", activate);
+                document.addEventListener("DOMContentLoaded", function () {
+                    activate();
+                    var ts = document.getElementById("ts");
+                    if (ts)
+                        ts.textContent =
+                            "Rendered at: " + new Date().toISOString();
+                });
+            })();
+        </script>
+    </body>
+</html>

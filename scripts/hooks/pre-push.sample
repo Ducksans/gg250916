@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+# pre-push.sample — Strong checkpoint lint before push (BT-14 ST-1403)
+#
+# Install options:
+#   A) Local (this repo only)
+#      cp scripts/hooks/pre-push.sample .git/hooks/pre-push
+#      chmod +x .git/hooks/pre-push
+#
+#   B) Repository-managed hooks path (recommended)
+#      git config core.hooksPath scripts/hooks
+#      mv scripts/hooks/pre-push.sample scripts/hooks/pre-push
+#      chmod +x scripts/hooks/pre-push
+#
+# Behavior:
+# - Runs strong lint on the JSONL SSOT (hash-chain + UTC monotonic + evidence path policy).
+# - Blocks push on failure with a short human-readable report.
+# - Optionally probes server health (non-blocking).
+#
+# Bypass (emergency only):
+#   GIT_ALLOW_UNGUARDED=1 git push
+# Any bypass should be followed by an EOF CORRECTION checkpoint entry explaining the reason.
+
+set -euo pipefail
+
+warn() { printf "pre-push: %s\n" "$*" >&2; }
+fail() { warn "$*"; exit 1; }
+
+# ----------------------------
+# 0) Bypass
+# ----------------------------
+if [[ "${GIT_ALLOW_UNGUARDED:-}" == "1" ]]; then
+  warn "Bypass enabled via GIT_ALLOW_UNGUARDED=1"
+  exit 0
+fi
+
+# ----------------------------
+# 1) Ensure repo root and cd
+# ----------------------------
+if ! REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+  fail "Not inside a Git repository"
+fi
+cd "$REPO_ROOT"
+
+# ----------------------------
+# 2) Paths and config
+# ----------------------------
+ROOT="gumgang_meeting"
+CKPT_JSONL="$ROOT/status/checkpoints/CKPT_72H_RUN.jsonl"
+LINTER="scripts/ckpt_lint.py"
+# Optional API base for a friendly probe (non-blocking)
+BASE="${CKPT_API_BASE:-http://127.0.0.1:8000}"
+
+# ----------------------------
+# 3) Pick Python
+# ----------------------------
+if command -v python3 >/dev/null 2>&1; then
+  PYTHON=python3
+elif command -v python >/dev/null 2>&1; then
+  PYTHON=python
+else
+  fail "Python not found; cannot run linter $LINTER"
+fi
+
+# ----------------------------
+# 4) Strong lint (fail-on-evidence)
+# ----------------------------
+if [[ -f "$LINTER" ]]; then
+  # Quiet pass/fail check first
+  if ! "$PYTHON, " $LINTER" --path "$CKPT_JSONL" --fail-on-evidence --format json --max-lines 200000 --quiet; then
+    warn "Checkpoint integrity/policy check failed. Summary:"
+    # Human-readable summary (best effort; do not fail on printing)
+    "$PYTHON" "$LINTER" --path "$CKPT_JSONL" --fail-on-evidence --format md || true
+    fail "Push aborted due to checkpoint lint failure."
+  fi
+else
+  warn "Missing linter: $LINTER — skipping strong checkpoint checks (add it to enforce policy)."
+fi
+
+# ----------------------------
+# 5) Optional server health probe (non-blocking)
+# ----------------------------
+if command -v curl >/dev/null 2>&1; then
+  if curl -sS "$BASE/api/health" >/dev/null 2>&1; then
+    warn "Server health OK ($BASE)."
+  else
+    warn "Server not reachable; skipping health probe."
+  fi
+fi
+
+# All checks passed
+exit 0

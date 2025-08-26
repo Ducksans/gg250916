@@ -1,0 +1,396 @@
+// @ts-nocheck
+"use client";
+
+import React, { useMemo } from "react";
+import { MonacoEditor } from "@/components/editor/MonacoEditor";
+import { ChatMessage } from "@/lib/api/client";
+import {
+  User,
+  Bot,
+  AlertCircle,
+  Copy,
+  Check,
+  Terminal,
+  Code2,
+  FileCode2
+} from "lucide-react";
+import { useState } from "react";
+
+interface MessageRendererProps {
+  message: ChatMessage;
+  className?: string;
+}
+
+interface ParsedContent {
+  type: "text" | "code" | "inline-code";
+  content: string;
+  language?: string;
+}
+
+// 언어 감지 함수
+const detectLanguage = (code: string, lang?: string): string => {
+  if (lang) {
+    const langMap: Record<string, string> = {
+      js: "javascript",
+      ts: "typescript",
+      py: "python",
+      rb: "ruby",
+      rs: "rust",
+      go: "go",
+      cpp: "cpp",
+      c: "c",
+      java: "java",
+      cs: "csharp",
+      php: "php",
+      swift: "swift",
+      kt: "kotlin",
+      scala: "scala",
+      r: "r",
+      m: "matlab",
+      sql: "sql",
+      sh: "shell",
+      bash: "shell",
+      zsh: "shell",
+      ps1: "powershell",
+      html: "html",
+      css: "css",
+      scss: "scss",
+      sass: "sass",
+      less: "less",
+      xml: "xml",
+      json: "json",
+      yaml: "yaml",
+      yml: "yaml",
+      toml: "toml",
+      ini: "ini",
+      md: "markdown",
+      tex: "latex",
+      dockerfile: "dockerfile",
+      makefile: "makefile",
+      nginx: "nginx",
+      apache: "apache",
+    };
+    return langMap[lang.toLowerCase()] || lang.toLowerCase();
+  }
+
+  // 코드 내용으로 언어 추측
+  if (code.includes("import React") || code.includes("jsx")) return "javascript";
+  if (code.includes("interface") || code.includes("type ")) return "typescript";
+  if (code.includes("def ") || code.includes("import numpy")) return "python";
+  if (code.includes("fn main") || code.includes("let mut")) return "rust";
+  if (code.includes("package main")) return "go";
+  if (code.includes("#include")) return "cpp";
+  if (code.includes("SELECT") || code.includes("FROM")) return "sql";
+  if (code.includes("#!/bin/bash") || code.includes("echo")) return "shell";
+  if (code.includes("<!DOCTYPE") || code.includes("<html")) return "html";
+  if (code.includes("{") && code.includes("}")) return "json";
+
+  return "plaintext";
+};
+
+// 메시지 내용 파싱 함수
+const parseMessageContent = (content: string): ParsedContent[] => {
+  const parts: ParsedContent[] = [];
+
+  // 코드 블록 패턴: ```언어\n코드\n```
+  const codeBlockRegex = /```(\w+)?\n?([\s\S]*?)```/g;
+  // 인라인 코드 패턴: `코드`
+  const inlineCodeRegex = /`([^`]+)`/g;
+
+  let lastIndex = 0;
+  let match;
+
+  // 먼저 코드 블록 처리
+  const codeBlocks: Array<{start: number, end: number, language: string, content: string}> = [];
+  while ((match = codeBlockRegex.exec(content)) !== null) {
+    codeBlocks.push({
+      start: match.index,
+      end: match.index + match[0].length,
+      language: match[1] || "plaintext",
+      content: match[2].trim()
+    });
+  }
+
+  // 텍스트와 코드 블록 분리
+  codeBlocks.forEach((block, index) => {
+    // 이전 블록 끝부터 현재 블록 시작까지의 텍스트
+    if (lastIndex < block.start) {
+      const textContent = content.substring(lastIndex, block.start);
+
+      // 인라인 코드 처리
+      const textParts = processInlineCode(textContent);
+      parts.push(...textParts);
+    }
+
+    // 코드 블록 추가
+    parts.push({
+      type: "code",
+      content: block.content,
+      language: detectLanguage(block.content, block.language)
+    });
+
+    lastIndex = block.end;
+  });
+
+  // 마지막 코드 블록 이후의 텍스트
+  if (lastIndex < content.length) {
+    const remainingText = content.substring(lastIndex);
+    const textParts = processInlineCode(remainingText);
+    parts.push(...textParts);
+  }
+
+  // 코드 블록이 없는 경우
+  if (codeBlocks.length === 0) {
+    const textParts = processInlineCode(content);
+    parts.push(...textParts);
+  }
+
+  return parts;
+};
+
+// 인라인 코드 처리 함수
+const processInlineCode = (text: string): ParsedContent[] => {
+  const parts: ParsedContent[] = [];
+  const inlineCodeRegex = /`([^`]+)`/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = inlineCodeRegex.exec(text)) !== null) {
+    // 인라인 코드 이전 텍스트
+    if (lastIndex < match.index) {
+      parts.push({
+        type: "text",
+        content: text.substring(lastIndex, match.index)
+      });
+    }
+
+    // 인라인 코드
+    parts.push({
+      type: "inline-code",
+      content: match[1]
+    });
+
+    lastIndex = match.index + match[0].length;
+  }
+
+  // 남은 텍스트
+  if (lastIndex < text.length) {
+    parts.push({
+      type: "text",
+      content: text.substring(lastIndex)
+    });
+  }
+
+  // 인라인 코드가 없는 경우
+  if (parts.length === 0 && text) {
+    parts.push({
+      type: "text",
+      content: text
+    });
+  }
+
+  return parts;
+};
+
+// 코드 복사 컴포넌트
+const CodeCopyButton: React.FC<{ code: string }> = ({ code }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="absolute top-2 right-2 p-2 rounded-lg bg-slate-700 hover:bg-slate-600 transition-all text-slate-300 hover:text-white group"
+      title="코드 복사"
+    >
+      {copied ? (
+        <Check className="w-4 h-4 text-green-400" />
+      ) : (
+        <Copy className="w-4 h-4" />
+      )}
+    </button>
+  );
+};
+
+export const MessageRenderer: React.FC<MessageRendererProps> = ({
+  message,
+  className = "",
+}) => {
+  const parsedContent = useMemo(
+    () => parseMessageContent(message.content),
+    [message.content]
+  );
+
+  const getMessageIcon = () => {
+    switch (message.role) {
+      case "user":
+        return <User className="w-5 h-5" />;
+      case "assistant":
+        return <Bot className="w-5 h-5" />;
+      case "error":
+        return <AlertCircle className="w-5 h-5 text-red-400" />;
+      default:
+        return null;
+    }
+  };
+
+  const getMessageStyle = () => {
+    switch (message.role) {
+      case "user":
+        return "bg-blue-600/20 border-blue-500/50 ml-auto";
+      case "assistant":
+        return "bg-purple-600/20 border-purple-500/50";
+      case "error":
+        return "bg-red-600/20 border-red-500/50";
+      default:
+        return "bg-slate-700/50 border-slate-600/50";
+    }
+  };
+
+  const getRoleName = () => {
+    switch (message.role) {
+      case "user":
+        return "사용자";
+      case "assistant":
+        return "금강 AI";
+      case "error":
+        return "오류";
+      default:
+        return "시스템";
+    }
+  };
+
+  return (
+    <div
+      className={`mb-4 ${message.role === "user" ? "flex justify-end" : ""} ${className}`}
+    >
+      <div
+        className={`max-w-[85%] rounded-lg border backdrop-blur-sm p-4 ${getMessageStyle()}`}
+      >
+        {/* 메시지 헤더 */}
+        <div className="flex items-center gap-2 mb-2 text-sm opacity-70">
+          {getMessageIcon()}
+          <span className="font-medium">{getRoleName()}</span>
+          <span className="text-xs opacity-60">
+            {new Date(message.timestamp || new Date().toISOString()).toLocaleTimeString()}
+          </span>
+        </div>
+
+        {/* 메시지 내용 */}
+        <div className="space-y-2">
+          {parsedContent.map((part, index) => {
+            switch (part.type) {
+              case "text":
+                return (
+                  <p
+                    key={index}
+                    className="text-slate-100 leading-relaxed whitespace-pre-wrap"
+                  >
+                    {part.content}
+                  </p>
+                );
+
+              case "inline-code":
+                return (
+                  <code
+                    key={index}
+                    className="px-2 py-1 bg-slate-800 text-cyan-400 rounded text-sm font-mono"
+                  >
+                    {part.content}
+                  </code>
+                );
+
+              case "code":
+                return (
+                  <div key={index} className="relative my-3">
+                    {/* 코드 블록 헤더 */}
+                    <div className="flex items-center justify-between bg-slate-800 rounded-t-lg px-3 py-2 border-b border-slate-700">
+                      <div className="flex items-center gap-2">
+                        <FileCode2 className="w-4 h-4 text-purple-400" />
+                        <span className="text-xs text-slate-400 font-mono">
+                          {part.language}
+                        </span>
+                      </div>
+                      <CodeCopyButton code={part.content} />
+                    </div>
+
+                    {/* Monaco Editor */}
+                    <div className="rounded-b-lg overflow-hidden border border-t-0 border-slate-700">
+                      <MonacoEditor
+                        value={part.content}
+                        language={part.language}
+                        height={`${Math.min(
+                          part.content.split("\n").length * 20 + 40,
+                          500
+                        )}px`}
+                        readOnly={true}
+                        theme="vs-dark"
+                        options={{
+                          minimap: { enabled: false },
+                          scrollBeyondLastLine: false,
+                          fontSize: 13,
+                          lineNumbers: "on",
+                          renderLineHighlight: "none",
+                          overviewRulerLanes: 0,
+                          hideCursorInOverviewRuler: true,
+                          overviewRulerBorder: false,
+                          scrollbar: {
+                            vertical: "auto",
+                            horizontal: "auto",
+                            verticalScrollbarSize: 10,
+                            horizontalScrollbarSize: 10,
+                          },
+                          wordWrap: "on",
+                          wrappingIndent: "indent",
+                          automaticLayout: true,
+                          padding: { top: 10, bottom: 10 },
+                          fixedOverflowWidgets: true,
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+
+              default:
+                return null;
+            }
+          })}
+        </div>
+
+        {/* 메타데이터 (있는 경우) */}
+        {message.metadata && (
+          <div className="mt-3 pt-3 border-t border-slate-700/50">
+            <div className="flex flex-wrap gap-2">
+              {message.metadata.model && (
+                <span className="text-xs px-2 py-1 bg-slate-700 rounded">
+                  모델: {message.metadata.model}
+                </span>
+              )}
+              {message.metadata.tokens && (
+                <span className="text-xs px-2 py-1 bg-slate-700 rounded">
+                  토큰: {message.metadata.tokens}
+                </span>
+              )}
+              {message.metadata.processingTime && (
+                <span className="text-xs px-2 py-1 bg-slate-700 rounded">
+                  처리 시간: {message.metadata.processingTime}ms
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default MessageRenderer;

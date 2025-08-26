@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>A6.3 체크포인트 — 프로토타입(읽기 전용)</title>
+        <style>
+            :root {
+                --bg: #0b1020;
+                --panel: #121933;
+                --muted: #8aa0bf;
+                --text: #e6eefb;
+                --ok: #14b8a6;
+                --fail: #ef4444;
+                --border: #24304f;
+                --accent: #60a5fa;
+                --field: #0e152b;
+                --code: #0f1830;
+                --hover: #0e142a;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                height: 100%;
+            }
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: var(--text);
+                font:
+                    14px/1.5 system-ui,
+                    -apple-system,
+                    Segoe UI,
+                    Roboto,
+                    Noto Sans,
+                    Apple SD Gothic Neo,
+                    Malgun Gothic,
+                    sans-serif;
+            }
+            #app {
+                display: grid;
+                grid-template-rows: auto 1fr auto;
+                min-height: 100%;
+            }
+            header.topbar {
+                display: flex;
+                gap: 0.75rem;
+                align-items: center;
+                padding: 0.75rem 1rem;
+                background: var(--panel);
+                border-bottom: 1px solid var(--border);
+            }
+            header .spacer {
+                flex: 1;
+            }
+            label {
+                color: var(--muted);
+                font-size: 0.9rem;
+            }
+            input,
+            select,
+            button {
+                background: var(--field);
+                color: var(--text);
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                padding: 0.45rem 0.55rem;
+            }
+            button {
+                cursor: pointer;
+            }
+            button:hover {
+                border-color: #3a4a75;
+            }
+            .badge {
+                display: inline-flex;
+                gap: 0.4rem;
+                align-items: center;
+                padding: 0.25rem 0.6rem;
+                border-radius: 999px;
+                border: 1px solid var(--border);
+                color: var(--muted);
+            }
+            .badge.ok {
+                background: rgba(20, 184, 166, 0.12);
+                color: var(--ok);
+                border-color: rgba(20, 184, 166, 0.35);
+            }
+            .badge.fail {
+                background: rgba(239, 68, 68, 0.12);
+                color: var(--fail);
+                border-color: rgba(239, 68, 68, 0.35);
+            }
+            main {
+                display: grid;
+                grid-template-columns: 1.1fr 0.9fr;
+                min-height: 0;
+            }
+            section,
+            aside {
+                display: flex;
+                flex-direction: column;
+                min-height: 0;
+            }
+            section.left {
+                border-right: 1px solid var(--border);
+            }
+            .title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.65rem 1rem;
+                background: var(--field);
+                border-bottom: 1px solid var(--border);
+                color: var(--muted);
+                font-weight: 600;
+            }
+            .body {
+                flex: 1;
+                overflow: auto;
+            }
+            pre {
+                margin: 0;
+                padding: 1rem;
+                white-space: pre-wrap;
+                word-break: break-word;
+                font-family:
+                    ui-monospace, SFMono-Regular, Menlo, Consolas,
+                    "Liberation Mono", monospace;
+                font-size: 0.92rem;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            thead {
+                position: sticky;
+                top: 0;
+                background: #0f1830;
+            }
+            th,
+            td {
+                padding: 0.5rem 0.6rem;
+                border-bottom: 1px solid var(--border);
+                vertical-align: top;
+            }
+            th {
+                text-align: left;
+                color: var(--muted);
+                font-size: 0.85rem;
+            }
+            tbody tr:hover td {
+                background: var(--hover);
+            }
+            code {
+                background: var(--code);
+                border: 1px solid var(--border);
+                padding: 0.1rem 0.3rem;
+                border-radius: 4px;
+            }
+            .kv {
+                display: grid;
+                grid-template-columns: 110px 1fr;
+                gap: 0.4rem 0.8rem;
+                padding: 0.75rem 1rem;
+            }
+            .kv .k {
+                color: var(--muted);
+            }
+            .tail {
+                list-style: none;
+                margin: 0;
+                padding: 0.4rem 0;
+            }
+            .tail li {
+                padding: 0.5rem 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+            .tail li:hover {
+                background: var(--hover);
+            }
+            .error {
+                display: none;
+                margin: 0.6rem 1rem;
+                padding: 0.6rem 0.8rem;
+                border: 1px solid rgba(239, 68, 68, 0.35);
+                background: rgba(239, 68, 68, 0.08);
+                color: #fecaca;
+                border-radius: 8px;
+            }
+            .hidden {
+                display: none !important;
+            }
+            .muted {
+                color: var(--muted);
+            }
+            .row-actions {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+            }
+            footer {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                padding: 0.55rem 1rem;
+                border-top: 1px solid var(--border);
+                background: var(--field);
+                color: var(--muted);
+            }
+            .pill {
+                padding: 0.1rem 0.4rem;
+                border-radius: 999px;
+                border: 1px solid var(--border);
+                background: var(--code);
+            }
+            a.link {
+                color: var(--accent);
+                text-decoration: none;
+            }
+            a.link:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <div
+            id="app"
+            role="application"
+            aria-label="A6.3 체크포인트 (읽기 전용)"
+        >
+            <header class="topbar">
+                <strong>A6.3 체크포인트</strong>
+                <label for="dateInput">날짜(UTC)</label>
+                <input id="dateInput" type="date" />
+                <label for="fmtSelect">형식</label>
+                <select id="fmtSelect" title="표시 형식 선택 (Markdown/JSON)">
+                    <option value="md">md</option>
+                    <option value="json">json</option>
+                </select>
+                <button id="btnRefresh" title="데이터 새로고침">
+                    새로고침
+                </button>
+                <button id="btnCopyDay" title="선택한 날짜의 체크포인트를 복사">
+                    하루 복사
+                </button>
+                <div class="spacer"></div>
+                <span id="chainBadge" class="badge">체인: —</span>
+            </header>
+
+            <div id="err" class="error" role="alert" aria-live="polite"></div>
+
+            <main aria-label="일간 보기와 체인 패널">
+                <section class="left" aria-labelledby="viewTitle">
+                    <div class="title">
+                        <span id="viewTitle">일간 보기</span>
+                        <span id="viewMeta" class="muted"></span>
+                    </div>
+                    <div class="body">
+                        <pre id="mdView"></pre>
+                        <table
+                            id="jsonView"
+                            class="hidden"
+                            aria-label="JSON 일간 보기"
+                        >
+                            <thead>
+                                <tr>
+                                    <th title="실행 식별자">
+                                        실행 ID (RUN_ID)
+                                    </th>
+                                    <th title="UTC 타임스탬프(순번)">
+                                        UTC 시각(순번) (UTC_TS)
+                                    </th>
+                                    <th title="범위">범위 (SCOPE)</th>
+                                    <th title="결정">결정 (DECISION)</th>
+                                    <th title="다음 단계">
+                                        다음 단계 (NEXT STEP)
+                                    </th>
+                                    <th>EVIDENCE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="jsonTbody"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <aside aria-labelledby="chainTitle">
+                    <div class="title">
+                        <span id="chainTitle">체인 / 최근 50</span>
+                        <div class="row-actions">
+                            <button
+                                id="btnCopyHash"
+                                title="체인의 마지막 해시를 복사"
+                            >
+                                마지막 해시 복사
+                            </button>
+                            <button
+                                id="btnCopyTail"
+                                title="최근 50개 체크포인트 JSON 복사"
+                            >
+                                최근 50개 복사
+                            </button>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <div class="kv">
+                            <div class="k">상태 (status)</div>
+                            <div id="kvStatus">—</div>
+                            <div class="k">마지막 시각 (last_ts)</div>
+                            <div id="kvTs">—</div>
+                            <div class="k">마지막 순번 (last_seq)</div>
+                            <div id="kvSeq">—</div>
+                            <div class="k">마지막 해시 (last_hash)</div>
+                            <div id="kvHash" style="word-break: break-all">
+                                —
+                            </div>
+                            <div class="k">개수 (count)</div>
+                            <div id="kvCount">—</div>
+                        </div>
+                        <ul
+                            class="tail"
+                            id="tailList"
+                            aria-label="최근 50개 체크포인트"
+                        ></ul>
+                    </div>
+                </aside>
+            </main>
+
+            <footer>
+                <span>효력은 <strong>EOF</strong> 기준</span>
+                <span class="pill">Read‑only</span>
+                <span>Server: <span id="serverTs">—</span></span>
+                <span>API: <span id="apiBaseLabel">—</span></span>
+            </footer>
+        </div>
+
+        <script>
+            (function () {
+                "use strict";
+
+                // ---------- Config / Elements ----------
+                const qs = new URLSearchParams(location.search);
+                const DEFAULT_BASE = "http://127.0.0.1:8000";
+                const API_BASE =
+                    qs.get("base") ||
+                    (location.origin && location.origin.startsWith("http")
+                        ? location.origin
+                        : DEFAULT_BASE);
+
+                const dateInput = document.getElementById("dateInput");
+                const fmtSelect = document.getElementById("fmtSelect");
+                const btnRefresh = document.getElementById("btnRefresh");
+                const btnCopyDay = document.getElementById("btnCopyDay");
+                const btnCopyHash = document.getElementById("btnCopyHash");
+                const btnCopyTail = document.getElementById("btnCopyTail");
+
+                const mdView = document.getElementById("mdView");
+                const jsonView = document.getElementById("jsonView");
+                const jsonTbody = document.getElementById("jsonTbody");
+                const chainBadge = document.getElementById("chainBadge");
+                const kvStatus = document.getElementById("kvStatus");
+                const kvTs = document.getElementById("kvTs");
+                const kvSeq = document.getElementById("kvSeq");
+                const kvHash = document.getElementById("kvHash");
+                const kvCount = document.getElementById("kvCount");
+                const tailList = document.getElementById("tailList");
+                const serverTsEl = document.getElementById("serverTs");
+                const apiBaseEl = document.getElementById("apiBaseLabel");
+                const errBox = document.getElementById("err");
+                const viewMeta = document.getElementById("viewMeta");
+
+                apiBaseEl.textContent = API_BASE;
+
+                function utcToday() {
+                    return new Date().toISOString().slice(0, 10);
+                }
+                dateInput.value = utcToday();
+                fmtSelect.value = "md";
+
+                // ---------- UX helpers ----------
+                function showError(msg) {
+                    errBox.style.display = "block";
+                    errBox.textContent = msg;
+                }
+                function clearError() {
+                    errBox.style.display = "none";
+                    errBox.textContent = "";
+                }
+                function setBadge(status) {
+                    chainBadge.classList.remove("ok", "fail");
+                    if (status === "OK" || status === true) {
+                        chainBadge.classList.add("ok");
+                        chainBadge.textContent = "체인: 정상(OK)";
+                    } else if (status === "FAIL" || status === false) {
+                        chainBadge.classList.add("fail");
+                        chainBadge.textContent = "체인: 실패(FAIL)";
+                    } else {
+                        chainBadge.textContent = "체인: —";
+                    }
+                }
+                function copyToClipboard(text, label) {
+                    if (!navigator.clipboard) return;
+                    const prev = chainBadge.textContent;
+                    navigator.clipboard
+                        .writeText(text)
+                        .then(() => {
+                            chainBadge.textContent = label || "Copied";
+                            setTimeout(() => {
+                                chainBadge.textContent = prev;
+                            }, 900);
+                        })
+                        .catch(() => {});
+                }
+
+                // ---------- Fetch ----------
+                async function jget(url) {
+                    const res = await fetch(url, {
+                        headers: { Accept: "application/json" },
+                    });
+                    if (!res.ok)
+                        throw new Error(`${res.status} ${res.statusText}`);
+                    return res.json();
+                }
+
+                // ---------- Renderers ----------
+                function renderMD(view, meta) {
+                    mdView.classList.remove("hidden");
+                    jsonView.classList.add("hidden");
+                    const text = (view || "").trim();
+                    mdView.textContent = text ? text + "\n" : "";
+                    viewMeta.textContent = `count:${meta ? (meta.count ?? "—") : "—"}`;
+                }
+                function renderJSON(items, meta) {
+                    jsonTbody.innerHTML = "";
+                    (items || []).forEach((it) => {
+                        const tr = document.createElement("tr");
+                        const td = (t) => {
+                            const el = document.createElement("td");
+                            el.textContent = t;
+                            return el;
+                        };
+                        tr.appendChild(td(it.run_id || ""));
+                        tr.appendChild(
+                            td(
+                                `${it.utc_ts || ""}${it.seq ? " (" + it.seq + ")" : ""}`,
+                            ),
+                        );
+                        tr.appendChild(td(it.scope || ""));
+                        tr.appendChild(td(it.decision || ""));
+                        tr.appendChild(td(it.next_step || ""));
+                        const ev = document.createElement("td");
+                        const code = document.createElement("code");
+                        code.textContent = it.evidence || "";
+                        ev.appendChild(code);
+                        tr.appendChild(ev);
+                        jsonTbody.appendChild(tr);
+                    });
+                    mdView.classList.add("hidden");
+                    jsonView.classList.remove("hidden");
+                    viewMeta.textContent = `count:${meta ? (meta.count ?? (items || []).length) : (items || []).length}`;
+                }
+                function renderChainMeta(meta) {
+                    const status =
+                        meta &&
+                        (meta.chain_status ||
+                            (meta.chain_ok === true
+                                ? "OK"
+                                : meta.chain_ok === false
+                                  ? "FAIL"
+                                  : "—"));
+                    setBadge(status);
+                    kvStatus.textContent = status || "—";
+                    kvTs.textContent = (meta && meta.last_ts) || "—";
+                    kvSeq.textContent = (
+                        meta &&
+                        (meta.last_seq ?? "—")
+                    ).toString();
+                    kvHash.textContent = (meta && meta.last_hash) || "—";
+                    kvCount.textContent = (
+                        meta &&
+                        (meta.count ?? "—")
+                    ).toString();
+                }
+                function renderTail(tail) {
+                    tailList.innerHTML = "";
+                    const items = (tail && tail.items) || [];
+                    items.forEach((it) => {
+                        const li = document.createElement("li");
+                        const l1 = document.createElement("div");
+                        l1.innerHTML = `<strong>${it.run_id || ""}</strong> — <span class="muted">${it.scope || ""}</span>`;
+                        const l2 = document.createElement("div");
+                        l2.className = "muted";
+                        l2.textContent = `${it.utc_ts || ""}${it.seq ? " (" + it.seq + ")" : ""}`;
+                        const l3 = document.createElement("div");
+                        const c = document.createElement("code");
+                        c.textContent = it.evidence || "";
+                        l3.appendChild(c);
+                        li.appendChild(l1);
+                        li.appendChild(l2);
+                        li.appendChild(l3);
+                        tailList.appendChild(li);
+                    });
+                }
+
+                // ---------- Controller ----------
+                async function updateAll() {
+                    clearError();
+                    const date = dateInput.value || utcToday();
+                    const fmt = fmtSelect.value || "md";
+                    try {
+                        const [view, tail] = await Promise.all([
+                            jget(
+                                `${API_BASE}/api/checkpoints/view?date=${encodeURIComponent(date)}&fmt=${encodeURIComponent(fmt)}`,
+                            ),
+                            jget(`${API_BASE}/api/checkpoints/tail?n=50`),
+                        ]);
+
+                        // server ts (best effort)
+                        jget(`${API_BASE}/api/health`)
+                            .then((h) => {
+                                serverTsEl.textContent = (h && h.ts) || "—";
+                            })
+                            .catch(() => {});
+
+                        if (fmt === "md")
+                            renderMD(view && view.view, view && view.meta);
+                        else renderJSON(view && view.items, view && view.meta);
+
+                        renderChainMeta((view && view.meta) || tail || {});
+                        renderTail(tail || {});
+                    } catch (e) {
+                        console.error(e);
+                        showError(`로드 실패: ${(e && e.message) || e}`);
+                        setBadge("FAIL");
+                    }
+                }
+
+                // ---------- Events ----------
+                btnRefresh.addEventListener("click", updateAll);
+                btnCopyDay.addEventListener("click", async () => {
+                    try {
+                        const date = dateInput.value || utcToday();
+                        const v = await jget(
+                            `${API_BASE}/api/checkpoints/view?date=${encodeURIComponent(date)}&fmt=md`,
+                        );
+                        copyToClipboard((v && v.view) || "", "복사됨");
+                    } catch (e) {
+                        showError("복사 실패: " + ((e && e.message) || e));
+                    }
+                });
+                btnCopyHash.addEventListener("click", () => {
+                    const hash = (kvHash.textContent || "").trim();
+                    if (hash) copyToClipboard(hash, "해시 복사됨");
+                });
+                btnCopyTail.addEventListener("click", async () => {
+                    try {
+                        const t = await jget(
+                            `${API_BASE}/api/checkpoints/tail?n=50`,
+                        );
+                        copyToClipboard(
+                            JSON.stringify(t, null, 2),
+                            "최근 50개 복사됨",
+                        );
+                    } catch (e) {
+                        showError("복사 실패: " + ((e && e.message) || e));
+                    }
+                });
+                dateInput.addEventListener("change", updateAll);
+                fmtSelect.addEventListener("change", updateAll);
+
+                // Init
+                updateAll();
+            })();
+        </script>
+    </body>
+</html>

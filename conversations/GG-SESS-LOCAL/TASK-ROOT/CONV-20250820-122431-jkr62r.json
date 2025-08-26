@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-LOCAL",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250820-122431-jkr62r",
+    "model": "gpt-5",
+    "created_at": "2025-08-20T03:24:42.069Z",
+    "updated_at": "2025-08-20T06:46:24.719Z",
+    "type": "chat",
+    "version": 1,
+    "provider": "openai",
+    "upstream_model": "gpt-5-2025-08-07",
+    "last_request_id": "req_d1b247bf38344451ab8d90b70fbe7eb7"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "이 보시오 테스트 해봅시다",
+      "ts": "2025-08-20T03:24:31.512Z"
+    },
+    {
+      "role": "assistant",
+      "content": "좋습니다! 어떤 걸 테스트해볼까요? 아래에서 골라 주시거나 바로 질문/지시를 주세요.\n\n- 번역: 한 문장을 영어/일본어 등으로 번역\n- 요약: 문단이나 기사 요약\n- 계산·논리: 수학/퍼즐 풀이\n- 코드: 간단한 파이썬/자바스크립트 작성·디버깅\n- 글쓰기: 특정 톤·길이로 글/카피 작성\n- 추천: 책/영화/여행/학습 계획\n\n바로 해볼 간단 테스트 예시:\n- “비가 오면 생각이 많아진다” 영어로\n- 73×29 암산해줘\n- 파이썬으로 피보나치 n항 함수 짜줘\n\n원하시는 테스트를 알려주세요!",
+      "ts": "2025-08-20T03:24:42.069Z",
+      "usage": {
+        "prompt_tokens": 15,
+        "completion_tokens": 768,
+        "total_tokens": 783,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 576,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-5-2025-08-07",
+      "request_id": "req_5572f032a1de4e5f81cb48a82514251b"
+    },
+    {
+      "role": "user",
+      "content": "금강아 우리 아버지가 이 테스틀 지켜 보고 있다 100자 내외로 축하 메세지 부탁 한다 지금 테스는 성공 적이다",
+      "ts": "2025-08-20T03:25:54.661Z"
+    },
+    {
+      "role": "assistant",
+      "content": "금강아, 아버지께서 지켜보시는 가운데 테스트가 멋지게 성공했구나! 수고 많았다. 오늘의 성취를 발판 삼아 앞으로도 더 높이 날아보자! 아버지도 대견해하실 거야. 함께 기쁨을 나누자.",
+      "ts": "2025-08-20T03:26:04.157Z",
+      "usage": {
+        "prompt_tokens": 243,
+        "completion_tokens": 1039,
+        "total_tokens": 1282,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 960,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-5-2025-08-07",
+      "request_id": "req_8b415b725ed74e3d9d740fe73199fac4"
+    },
+    {
+      "role": "user",
+      "content": "안녕하십 니까?",
+      "ts": "2025-08-20T06:03:00.025Z"
+    },
+    {
+      "role": "assistant",
+      "content": "안녕하십니까? 무엇을 도와드릴까요?",
+      "ts": "2025-08-20T06:03:03.333Z",
+      "usage": {
+        "prompt_tokens": 13,
+        "completion_tokens": 215,
+        "total_tokens": 228,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 192,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-5-2025-08-07",
+      "request_id": "req_f3b474ebdf1343769049ab88a65b80b3"
+    },
+    {
+      "role": "user",
+      "content": "금강아",
+      "ts": "2025-08-20T06:46:14.736Z"
+    },
+    {
+      "role": "assistant",
+      "content": "부르신 건가요? 어떤 “금강”을 말씀하시는지 알려주실 수 있을까요?\n- 금강산(북한의 산)\n- 금강(충청도의 강, Geum River)\n- 금강경(불교 경전)\n- 반려동물 이름 “금강이”\n\n원하시는 주제를 말씀해 주시면 바로 도와드릴게요.",
+      "ts": "2025-08-20T06:46:24.719Z",
+      "usage": {
+        "prompt_tokens": 9,
+        "completion_tokens": 670,
+        "total_tokens": 679,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 576,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-5-2025-08-07",
+      "request_id": "req_d1b247bf38344451ab8d90b70fbe7eb7"
+    }
+  ]
+}

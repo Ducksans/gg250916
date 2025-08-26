@@ -1,0 +1,35 @@
+{
+  "timestamp": "2025-08-08T12:59:43.106761",
+  "groups": {
+    "A": {
+      "name": "기초 인프라",
+      "status": "completed",
+      "tasks": [
+        "GG-20250108-001",
+        "GG-20250108-002",
+        "GG-20250108-003",
+        "GG-20250108-004"
+      ],
+      "progress": 100
+    },
+    "B": {
+      "name": "백엔드 연동",
+      "status": "in_progress",
+      "tasks": [
+        "GG-20250108-005",
+        "GG-20250108-006",
+        "GG-20250108-007",
+        "GG-20250108-008",
+        "GG-20250108-009",
+        "GG-20250108-010"
+      ],
+      "progress": 11.7
+    }
+  },
+  "metrics": {
+    "backend_status": "running",
+    "frontend_status": "running",
+    "api_endpoint": "http://localhost:8001",
+    "memory_system": "initialized"
+  }
+}

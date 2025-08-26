@@ -1,0 +1,175 @@
+{
+  "schema": "gumgang.tokenizer.model_table/0.1.0",
+  "updated_utc": "2025-08-17T23:06:01Z",
+  "defaults": {
+    "language": "ko",
+    "estimation_language": "ko",
+    "encoding": "cl100k_base"
+  },
+  "ui_thresholds": {
+    "warn_usage": 0.85,
+    "error_usage": 0.95,
+    "units": "tokens"
+  },
+  "encodings": {
+    "cl100k_base": {
+      "display": "cl100k_base (OpenAI GPT-3.5/4)",
+      "family": "bpe",
+      "approx_chars_per_token": {
+        "en": 4.0,
+        "ko": 2.4
+      },
+      "notes": "Widely used for GPT-3.5 Turbo and early GPT-4 variants. Values are heuristic averages."
+    },
+    "o200k_base": {
+      "display": "o200k_base (OpenAI GPT-4o family)",
+      "family": "bpe",
+      "approx_chars_per_token": {
+        "en": 4.0,
+        "ko": 2.4
+      },
+      "notes": "Used by GPT-4o/4o-mini and some GPT-4 Turbo releases. Context windows vary by model."
+    },
+    "llama3_sp": {
+      "display": "LLaMA-3.x SentencePiece",
+      "family": "sentencepiece",
+      "approx_chars_per_token": {
+        "en": 3.6,
+        "ko": 1.8
+      },
+      "notes": "SentencePiece-based tokenization common in LLaMA-3.x and derivatives."
+    },
+    "sentencepiece_kr": {
+      "display": "Generic Korean SentencePiece",
+      "family": "sentencepiece",
+      "approx_chars_per_token": {
+        "en": 3.6,
+        "ko": 1.6
+      },
+      "notes": "Catch-all for Korean SP tokenizers (HyperCLOVA, KoAlpaca variants, etc.). Use with needs_verification models."
+    }
+  },
+  "models": [
+    {
+      "id": "openai/gpt-3.5-turbo-0125",
+      "display": "GPT-3.5 Turbo (0125)",
+      "provider": "openai",
+      "family": "gpt-3.5",
+      "encoding": "cl100k_base",
+      "context_window": 16385,
+      "language_hint": ["en", "ko"],
+      "needs_verification": false,
+      "notes": "Legacy but common. Uses cl100k_base; 16k context tier."
+    },
+    {
+      "id": "openai/gpt-4-turbo-2024-04-09",
+      "display": "GPT-4 Turbo (2024-04-09)",
+      "provider": "openai",
+      "family": "gpt-4-turbo",
+      "encoding": "o200k_base",
+      "context_window": 128000,
+      "language_hint": ["en", "ko"],
+      "needs_verification": false,
+      "notes": "Turbo-series with larger context; represented with o200k_base encoding."
+    },
+    {
+      "id": "openai/gpt-4o-2024-05-13",
+      "display": "GPT-4o (2024-05-13)",
+      "provider": "openai",
+      "family": "gpt-4o",
+      "encoding": "o200k_base",
+      "context_window": 128000,
+      "language_hint": ["en", "ko"],
+      "needs_verification": false,
+      "notes": "Omni model family; text tokenization approximated by o200k_base."
+    },
+    {
+      "id": "openai/gpt-4o-mini-2024-07-18",
+      "display": "GPT-4o Mini (2024-07-18)",
+      "provider": "openai",
+      "family": "gpt-4o-mini",
+      "encoding": "o200k_base",
+      "context_window": 128000,
+      "language_hint": ["en", "ko"],
+      "needs_verification": false,
+      "notes": "Smaller 4o variant; text tokenization approximated by o200k_base."
+    },
+    {
+      "id": "meta/llama-3.1-8b-instruct",
+      "display": "LLaMA 3.1 8B Instruct",
+      "provider": "meta",
+      "family": "llama-3.1",
+      "encoding": "llama3_sp",
+      "context_window": 128000,
+      "language_hint": ["en", "ko"],
+      "needs_verification": true,
+      "notes": "Context window and KO characteristics require confirmation per specific distribution."
+    },
+    {
+      "id": "upstage/solar-pro-preview",
+      "display": "Upstage SOLAR Pro (preview)",
+      "provider": "upstage",
+      "family": "solar",
+      "encoding": "llama3_sp",
+      "context_window": null,
+      "language_hint": ["ko", "en"],
+      "needs_verification": true,
+      "notes": "Placeholder for SOLAR tokenizer family; fill exact context once confirmed."
+    },
+    {
+      "id": "naver-clova/hyperclova-x",
+      "display": "HyperCLOVA X",
+      "provider": "naver-clova",
+      "family": "hyperclova-x",
+      "encoding": "sentencepiece_kr",
+      "context_window": null,
+      "language_hint": ["ko"],
+      "needs_verification": true,
+      "notes": "Korean-first SP tokenizer. Use as generic KO SP until exact params confirmed."
+    },
+    {
+      "id": "snunlp/kullm-polyglot-12.8b",
+      "display": "KULLM Polyglot 12.8B",
+      "provider": "snunlp",
+      "family": "polyglot",
+      "encoding": "sentencepiece_kr",
+      "context_window": null,
+      "language_hint": ["ko"],
+      "needs_verification": true,
+      "notes": "Korean SP family; specify exact context for deployed checkpoint."
+    },
+    {
+      "id": "openai/gpt-5",
+      "display": "GPT-5",
+      "provider": "openai",
+      "family": "gpt-5",
+      "encoding": "o200k_base",
+      "context_window": 272000,
+      "language_hint": ["en", "ko"],
+      "needs_verification": true,
+      "notes": "Context 272k (project conservative cap), 128k max output per OpenAI API page (heuristic encoding)."
+    },
+    {
+      "id": "openai/gpt-5-mini",
+      "display": "GPT-5 Mini",
+      "provider": "openai",
+      "family": "gpt-5-mini",
+      "encoding": "o200k_base",
+      "context_window": 272000,
+      "language_hint": ["en", "ko"],
+      "needs_verification": true,
+      "notes": "Context 272k (project conservative cap; heuristic encoding)."
+    },
+    {
+      "id": "openai/gpt-5-nano",
+      "display": "GPT-5 Nano",
+      "provider": "openai",
+      "family": "gpt-5-nano",
+      "encoding": "o200k_base",
+      "context_window": 272000,
+      "language_hint": ["en", "ko"],
+      "needs_verification": true,
+      "notes": "Context 272k (project conservative cap; heuristic encoding)."
+    }
+  ]
+}

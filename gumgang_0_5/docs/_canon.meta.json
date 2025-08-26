@@ -1,0 +1,40 @@
+{
+  "sealed_at_kst": "2025-08-09 18:35",
+  "docs": [
+    {
+      "path": "docs/blueprint_v1.2.md",
+      "title": "Gumgang 2.0 Blueprint",
+      "version": "1.2",
+      "hash_sha256": "29164e88fb1ecf7704ba0bcb04e2879142da4a185e7296f4ad781df241a4db96",
+      "hash12": "29164e88fb1e"
+    },
+    {
+      "path": "docs/workflow_compact_v1.2.md",
+      "title": "Workflow Compact",
+      "version": "1.2",
+      "hash_sha256": "2f2756bbf94bf5c03f68d811cb11c62d48b3a035df12e345f06906a6bd222eed",
+      "hash12": "2f2756bbf94b"
+    },
+    {
+      "path": "docs/ws_schema_v0.1.yaml",
+      "title": "ws_schema_v0.1.yaml",
+      "version": "0.1",
+      "hash_sha256": "f3d78b9a3e712e3a90270d48e0bf5e56116381c5901bf5111c2827afed4fd0b2",
+      "hash12": "f3d78b9a3e71"
+    },
+    {
+      "path": "docs/websocket_schema_v0.1.json",
+      "title": "websocket_schema_v0.1.json",
+      "version": "0.1",
+      "hash_sha256": "a342be0f363c735951d13047a6b02269dc5c4a5e9bc166ca1f17676c23027dc8",
+      "hash12": "a342be0f363c"
+    },
+    {
+      "path": "docs/policy_model.md",
+      "title": "Policy Model",
+      "version": "1.0",
+      "hash_sha256": "8515d32bdf0adc125635698a676ac799eed7383ecd5073b22300b819104dca79",
+      "hash12": "8515d32bdf0a"
+    }
+  ]
+}

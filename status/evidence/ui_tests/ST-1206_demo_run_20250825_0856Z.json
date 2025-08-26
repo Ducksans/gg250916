@@ -1,0 +1,164 @@
+{
+  "run_id": "72H_20250825_0856Z",
+  "utc_ts": "2025-08-25T08:56:34.536786Z",
+  "task": "ST-1206 — Thread UX v1",
+  "summary": "Append-only thread logging, title upgrade+lock, SGM blocked line, recent/read API verified end-to-end.",
+  "thread": {
+    "convId": "gg_20250825_z11cdkdk",
+    "day": "20250825",
+    "path": "conversations/threads/20250825/gg_20250825_z11cdkdk.jsonl"
+  },
+  "api_calls": [
+    {
+      "name": "append_user_draft_title",
+      "request": {
+        "method": "POST",
+        "path": "/api/threads/append",
+        "body_keys": ["convId", "role", "text", "refs", "meta.title", "meta.title_locked", "meta.tz_client"]
+      },
+      "response": {
+        "ok": true,
+        "data": {
+          "convId": "gg_20250825_z11cdkdk",
+          "turn": 1,
+          "path": "conversations/threads/20250825/gg_20250825_z11cdkdk.jsonl",
+          "bytes_written": 369
+        },
+        "meta": { "ts": "2025-08-25T08:55:01.874557Z" }
+      }
+    },
+    {
+      "name": "append_assistant_upgrade_and_lock",
+      "request": {
+        "method": "POST",
+        "path": "/api/threads/append",
+        "body_keys": ["convId", "role", "text(>=200 or refs>0)", "refs", "meta.title", "meta.title_locked"]
+      },
+      "response": {
+        "ok": true,
+        "data": {
+          "convId": "gg_20250825_z11cdkdk",
+          "turn": 2,
+          "path": "conversations/threads/20250825/gg_20250825_z11cdkdk.jsonl",
+          "bytes_written": 513
+        },
+        "meta": { "ts": "2025-08-25T08:55:01.881187Z" }
+      }
+    },
+    {
+      "name": "lock_conflict_after_title_locked",
+      "request": {
+        "method": "POST",
+        "path": "/api/threads/append",
+        "body_keys": ["convId", "role", "meta.title", "meta.title_locked"]
+      },
+      "response": {
+        "status": 409,
+        "detail": "TITLE_LOCKED"
+      }
+    },
+    {
+      "name": "append_assistant_sgm_blocked_line",
+      "request": {
+        "method": "POST",
+        "path": "/api/threads/append",
+        "body_keys": ["convId", "role", "text='[SGM: … 보류]'", "refs=[]", "meta.sgm_blocked=true", "meta.hint.reason='zero_refs'"]
+      },
+      "response": {
+        "ok": true,
+        "data": {
+          "convId": "gg_20250825_z11cdkdk",
+          "turn": 3,
+          "path": "conversations/threads/20250825/gg_20250825_z11cdkdk.jsonl",
+          "bytes_written": 396
+        },
+        "meta": { "ts": "2025-08-25T08:55:01.894063Z" }
+      }
+    },
+    {
+      "name": "recent_list_minimal",
+      "request": {
+        "method": "GET",
+        "path": "/api/threads/recent?limit=1"
+      },
+      "response": {
+        "ok": true,
+        "data": {
+          "items": [
+            {
+              "convId": "gg_20250825_z11cdkdk",
+              "title": "회의 모드 스레드 UX v1 설계 검증 시작.",
+              "title_locked": true,
+              "last_ts": "2025-08-25T08:55:01.894063Z",
+              "top_tags": [],
+              "approx_turns": 3
+            }
+          ],
+          "count": 4
+        },
+        "meta": { "ts": "2025-08-25T08:55:01.900625Z" }
+      }
+    },
+    {
+      "name": "read_full_thread",
+      "request": {
+        "method": "GET",
+        "path": "/api/threads/read?convId=gg_20250825_z11cdkdk"
+      },
+      "response_excerpt": {
+        "ok": true,
+        "data": {
+          "convId": "gg_20250825_z11cdkdk",
+          "day": "20250825",
+          "turns_len": 3,
+          "path": "conversations/threads/20250825/gg_20250825_z11cdkdk.jsonl",
+          "turns_meta": [
+            { "turn": 1, "role": "user", "meta.title_locked": false },
+            { "turn": 2, "role": "assistant", "meta.title_locked": true, "refs_len": 1 },
+            { "turn": 3, "role": "assistant", "meta.sgm_blocked": true, "meta.hint.reason": "zero_refs" }
+          ]
+        }
+      }
+    }
+    ,
+    {
+      "name": "checkpoint_append",
+      "request": {
+        "method": "POST",
+        "path": "/api/checkpoints/append",
+        "body_keys": ["run_id", "scope", "decision", "next_step", "evidence(repo-rel)"]
+      },
+      "response": {
+        "ok": true,
+        "data": {
+          "run_id": "72H_20250825_0856Z",
+          "scope": "TASK",
+          "decision": "ST-1206 데모 PASS — Thread UX v1 핵심 AC 검증(제목 업그레이드·잠금, SGM 차단, recent/read)",
+          "next_step": "테스트 로그와 스크린샷 증거를 정리하고 최근 목록 미니칩 표시를 점검한다",
+          "evidence": "gumgang_meeting/conversations/threads/20250825/gg_20250825_z11cdkdk.jsonl#L1-3",
+          "utc_ts": "2025-08-25T08:56:34.535606Z",
+          "seq": 1
+        }
+      }
+    }
+  ],
+  "assertions": [
+    { "id": "A1", "desc": "server decides ts (UTC, ISO8601Z) for every turn", "pass": true },
+    { "id": "A2", "desc": "title upgrades once and locks; further changes rejected (409)", "pass": true },
+    { "id": "A3", "desc": "SGM zero-refs blocked line appended with meta.hint.reason=zero_refs", "pass": true },
+    { "id": "A4", "desc": "recent returns convId/title/title_locked/last_ts/top_tags/approx_turns", "pass": true },
+    { "id": "A5", "desc": "read returns ordered turns with meta fields", "pass": true },
+    { "id": "A6", "desc": "evidence path in checkpoint is repo-relative under gumgang_meeting/**", "pass": true }
+  ],
+  "notes": {
+    "limits": { "text_max_bytes": 16384, "jsonl_line_max_bytes": 65536 },
+    "sgm_template": "[SGM: 근거 부족 – 답변 보류]",
+    "ui_recent_mini_chips": "top_tags (<=3) are surfaced in Recent dropdown in UI",
+    "follow_up": "Collect UI screenshots for A1-T1/A1-T2 and Recent list with mini-chips; attach to evidence bundle."
+  },
+  "evidence_refs": [
+    "gumgang_meeting/conversations/threads/20250825/gg_20250825_z11cdkdk.jsonl#L1-3",
+    "gumgang_meeting/status/checkpoints/CKPT_72H_RUN.jsonl#L-"
+  ],
+  "version": 1
+}

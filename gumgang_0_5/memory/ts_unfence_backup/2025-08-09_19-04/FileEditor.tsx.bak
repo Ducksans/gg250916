@@ -1,0 +1,490 @@
+// @ts-nocheck
+"use client";
+
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { MonacoEditor, getLanguageFromExtension } from "./MonacoEditor";
+import { useTauriFileSystem } from "../../hooks/useTauriFileSystem";
+import {
+  FileIcon,
+  SaveIcon,
+  FolderOpenIcon,
+  XIcon,
+  AlertCircleIcon,
+  CheckCircleIcon,
+  FileTextIcon,
+  CodeIcon,
+  RefreshCwIcon
+} from "lucide-react";
+
+interface FileEditorProps {
+  initialPath?: string;
+  onClose?: () => void;
+  onSave?: (path: string, content: string) => void;
+  height?: string;
+  className?: string;
+}
+
+interface FileTab {
+  path: string;
+  name: string;
+  content: string;
+  originalContent: string;
+  language: string;
+  isDirty: boolean;
+  isLoading: boolean;
+}
+
+export const FileEditor: React.FC<FileEditorProps> = ({
+  initialPath,
+  onClose,
+  onSave,
+  height = "600px",
+  className = "",
+}) => {
+  const {
+    isAvailable,
+    readFile,
+    writeFile,
+    getFileInfo,
+    openFileDialog,
+    saveFileDialog,
+    formatFileSize,
+    formatDate,
+    error,
+    clearError,
+  } = useTauriFileSystem();
+
+  const [tabs, setTabs] = useState<FileTab[]>([]);
+  const [activeTabIndex, setActiveTabIndex] = useState<number>(-1);
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState<string>("");
+
+  // Get active tab
+  const activeTab = useMemo(() => {
+    return tabs[activeTabIndex] || null;
+  }, [tabs, activeTabIndex]);
+
+  // Load initial file if provided
+  useEffect(() => {
+    if (initialPath && isAvailable) {
+      loadFile(initialPath);
+    }
+  }, [initialPath, isAvailable]);
+
+  // Load file into editor
+  const loadFile = useCallback(async (path: string) => {
+    // Check if file is already open
+    const existingTabIndex = tabs.findIndex(tab => tab.path === path);
+    if (existingTabIndex !== -1) {
+      setActiveTabIndex(existingTabIndex);
+      return;
+    }
+
+    // Get file info
+    const fileInfo = await getFileInfo(path);
+    if (!fileInfo) {
+      setStatusMessage(`Failed to get info for: ${path}`);
+      setSaveStatus("error");
+      return;
+    }
+
+    if (fileInfo.is_dir) {
+      setStatusMessage("Cannot open directory as file");
+      setSaveStatus("error");
+      return;
+    }
+
+    // Create new tab with loading state
+    const newTab: FileTab = {
+      path,
+      name: fileInfo.name,
+      content: "",
+      originalContent: "",
+      language: getLanguageFromExtension(fileInfo.name),
+      isDirty: false,
+      isLoading: true,
+    };
+
+    setTabs(prev => [...prev, newTab]);
+    const newTabIndex = tabs.length;
+    setActiveTabIndex(newTabIndex);
+
+    // Load file content
+    const content = await readFile(path);
+    if (content !== null) {
+      setTabs(prev => prev.map((tab, index) =>
+        index === newTabIndex
+          ? {
+              ...tab,
+              content,
+              originalContent: content,
+              isLoading: false,
+            }
+          : tab
+      ));
+      setStatusMessage(`Loaded: ${fileInfo.name} (${formatFileSize(fileInfo.size)})`);
+      setSaveStatus("idle");
+    } else {
+      // Remove tab if loading failed
+      setTabs(prev => prev.filter((_, index) => index !== newTabIndex));
+      setActiveTabIndex(-1);
+      setStatusMessage(`Failed to load: ${path}`);
+      setSaveStatus("error");
+    }
+  }, [tabs, getFileInfo, readFile, formatFileSize]);
+
+  // Handle content change
+  const handleContentChange = useCallback((value: string | undefined) => {
+    if (activeTabIndex === -1 || !value) return;
+
+    setTabs(prev => prev.map((tab, index) =>
+      index === activeTabIndex
+        ? {
+            ...tab,
+            content: value,
+            isDirty: value !== tab.originalContent,
+          }
+        : tab
+    ));
+  }, [activeTabIndex]);
+
+  // Save current file
+  const handleSave = useCallback(async () => {
+    if (!activeTab || !activeTab.isDirty) return;
+
+    setSaveStatus("saving");
+    setStatusMessage(`Saving ${activeTab.name}...`);
+
+    const success = await writeFile(activeTab.path, activeTab.content);
+
+    if (success) {
+      setTabs(prev => prev.map((tab, index) =>
+        index === activeTabIndex
+          ? {
+              ...tab,
+              originalContent: tab.content,
+              isDirty: false,
+            }
+          : tab
+      ));
+      setSaveStatus("saved");
+      setStatusMessage(`Saved: ${activeTab.name}`);
+
+      // Call parent save handler if provided
+      if (onSave) {
+        onSave(activeTab.path, activeTab.content);
+      }
+
+      // Reset status after delay
+      setTimeout(() => {
+        setSaveStatus("idle");
+        setStatusMessage("");
+      }, 2000);
+    } else {
+      setSaveStatus("error");
+      setStatusMessage(`Failed to save: ${activeTab.name}`);
+    }
+  }, [activeTab, activeTabIndex, writeFile, onSave]);
+
+  // Save as new file
+  const handleSaveAs = useCallback(async () => {
+    if (!activeTab) return;
+
+    const newPath = await saveFileDialog({
+      defaultPath: activeTab.path,
+      filters: [
+        { name: "All Files", extensions: ["*"] },
+        { name: "JavaScript", extensions: ["js", "jsx"] },
+        { name: "TypeScript", extensions: ["ts", "tsx"] },
+        { name: "Python", extensions: ["py"] },
+        { name: "Rust", extensions: ["rs"] },
+      ],
+    });
+
+    if (newPath) {
+      const success = await writeFile(newPath, activeTab.content);
+
+      if (success) {
+        // Update tab with new path
+        const fileName = newPath.split("/").pop() || "untitled";
+        setTabs(prev => prev.map((tab, index) =>
+          index === activeTabIndex
+            ? {
+                ...tab,
+                path: newPath,
+                name: fileName,
+                originalContent: tab.content,
+                isDirty: false,
+                language: getLanguageFromExtension(fileName),
+              }
+            : tab
+        ));
+        setSaveStatus("saved");
+        setStatusMessage(`Saved as: ${fileName}`);
+      } else {
+        setSaveStatus("error");
+        setStatusMessage(`Failed to save as: ${newPath}`);
+      }
+    }
+  }, [activeTab, activeTabIndex, saveFileDialog, writeFile]);
+
+  // Open file dialog
+  const handleOpen = useCallback(async () => {
+    const filePath = await openFileDialog({
+      multiple: false,
+      filters: [
+        { name: "All Files", extensions: ["*"] },
+        { name: "JavaScript", extensions: ["js", "jsx"] },
+        { name: "TypeScript", extensions: ["ts", "tsx"] },
+        { name: "Python", extensions: ["py"] },
+        { name: "Rust", extensions: ["rs"] },
+        { name: "JSON", extensions: ["json"] },
+        { name: "Markdown", extensions: ["md"] },
+      ],
+    });
+
+    if (filePath && typeof filePath === "string") {
+      loadFile(filePath);
+    }
+  }, [openFileDialog, loadFile]);
+
+  // Close tab
+  const handleCloseTab = useCallback((index: number) => {
+    const tabToClose = tabs[index];
+
+    // Check if tab has unsaved changes
+    if (tabToClose.isDirty) {
+      const confirm = window.confirm(
+        `"${tabToClose.name}" has unsaved changes. Close anyway?`
+      );
+      if (!confirm) return;
+    }
+
+    setTabs(prev => prev.filter((_, i) => i !== index));
+
+    // Adjust active tab index
+    if (index === activeTabIndex) {
+      setActiveTabIndex(Math.max(0, index - 1));
+    } else if (index < activeTabIndex) {
+      setActiveTabIndex(activeTabIndex - 1);
+    }
+  }, [tabs, activeTabIndex]);
+
+  // Reload file
+  const handleReload = useCallback(async () => {
+    if (!activeTab) return;
+
+    if (activeTab.isDirty) {
+      const confirm = window.confirm(
+        `"${activeTab.name}" has unsaved changes. Reload and lose changes?`
+      );
+      if (!confirm) return;
+    }
+
+    const content = await readFile(activeTab.path);
+    if (content !== null) {
+      setTabs(prev => prev.map((tab, index) =>
+        index === activeTabIndex
+          ? {
+              ...tab,
+              content,
+              originalContent: content,
+              isDirty: false,
+            }
+          : tab
+      ));
+      setStatusMessage(`Reloaded: ${activeTab.name}`);
+    } else {
+      setStatusMessage(`Failed to reload: ${activeTab.name}`);
+      setSaveStatus("error");
+    }
+  }, [activeTab, activeTabIndex, readFile]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Save: Ctrl/Cmd + S
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+        e.preventDefault();
+        handleSave();
+      }
+      // Save As: Ctrl/Cmd + Shift + S
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "S") {
+        e.preventDefault();
+        handleSaveAs();
+      }
+      // Open: Ctrl/Cmd + O
+      if ((e.ctrlKey || e.metaKey) && e.key === "o") {
+        e.preventDefault();
+        handleOpen();
+      }
+      // Close tab: Ctrl/Cmd + W
+      if ((e.ctrlKey || e.metaKey) && e.key === "w") {
+        e.preventDefault();
+        if (activeTabIndex !== -1) {
+          handleCloseTab(activeTabIndex);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleSave, handleSaveAs, handleOpen, handleCloseTab, activeTabIndex]);
+
+  if (!isAvailable) {
+    return (
+      <div className={`flex items-center justify-center h-full bg-slate-900 rounded-lg ${className}`}>
+        <div className="text-center">
+          <AlertCircleIcon className="w-12 h-12 mx-auto mb-4 text-yellow-500" />
+          <p className="text-slate-400">Tauri filesystem not available</p>
+          <p className="text-sm text-slate-500 mt-2">Running in web mode</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`flex flex-col bg-slate-900 rounded-lg ${className}`}>
+      {/* Toolbar */}
+      <div className="flex items-center justify-between p-2 border-b border-slate-700">
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={handleOpen}
+            className="p-2 hover:bg-slate-800 rounded transition-colors"
+            title="Open File (Ctrl+O)"
+          >
+            <FolderOpenIcon className="w-4 h-4" />
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={!activeTab || !activeTab.isDirty}
+            className="p-2 hover:bg-slate-800 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            title="Save (Ctrl+S)"
+          >
+            <SaveIcon className="w-4 h-4" />
+          </button>
+          <button
+            onClick={handleReload}
+            disabled={!activeTab}
+            className="p-2 hover:bg-slate-800 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            title="Reload File"
+          >
+            <RefreshCwIcon className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Status */}
+        <div className="flex items-center space-x-2">
+          {statusMessage && (
+            <div className="flex items-center space-x-1 text-sm">
+              {saveStatus === "saving" && (
+                <div className="w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+              )}
+              {saveStatus === "saved" && (
+                <CheckCircleIcon className="w-4 h-4 text-green-500" />
+              )}
+              {saveStatus === "error" && (
+                <AlertCircleIcon className="w-4 h-4 text-red-500" />
+              )}
+              <span className="text-slate-400">{statusMessage}</span>
+            </div>
+          )}
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-slate-800 rounded transition-colors"
+              title="Close Editor"
+            >
+              <XIcon className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Tabs */}
+      {tabs.length > 0 && (
+        <div className="flex items-center overflow-x-auto bg-slate-800 border-b border-slate-700">
+          {tabs.map((tab, index) => (
+            <div
+              key={tab.path}
+              className={`flex items-center px-3 py-2 border-r border-slate-700 cursor-pointer transition-colors ${
+                index === activeTabIndex
+                  ? "bg-slate-900 text-white"
+                  : "hover:bg-slate-700 text-slate-400"
+              }`}
+              onClick={() => setActiveTabIndex(index)}
+            >
+              <FileTextIcon className="w-3 h-3 mr-2" />
+              <span className="text-sm whitespace-nowrap">
+                {tab.isDirty && <span className="text-yellow-500 mr-1">●</span>}
+                {tab.name}
+              </span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCloseTab(index);
+                }}
+                className="ml-2 p-1 hover:bg-slate-600 rounded"
+              >
+                <XIcon className="w-3 h-3" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Editor */}
+      {activeTab ? (
+        <div className="flex-1">
+          {activeTab.isLoading ? (
+            <div className="flex items-center justify-center h-full">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce delay-0"></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce delay-75"></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce delay-150"></div>
+              </div>
+            </div>
+          ) : (
+            <MonacoEditor
+              value={activeTab.content}
+              onChange={handleContentChange}
+              language={activeTab.language}
+              height={height}
+            />
+          )}
+        </div>
+      ) : (
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <CodeIcon className="w-12 h-12 mx-auto mb-4 text-slate-600" />
+            <p className="text-slate-400">No file open</p>
+            <button
+              onClick={handleOpen}
+              className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded transition-colors"
+            >
+              Open File
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Error display */}
+      {error && (
+        <div className="p-2 bg-red-900/20 border-t border-red-800">
+          <div className="flex items-center space-x-2">
+            <AlertCircleIcon className="w-4 h-4 text-red-500" />
+            <span className="text-sm text-red-400">{error.message}</span>
+            <button
+              onClick={clearError}
+              className="ml-auto text-xs text-red-400 hover:text-red-300"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default FileEditor;

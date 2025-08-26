@@ -1,0 +1,16 @@
+🔍 금강 디버깅 로그 포함 파일 목록
+==============================
+./backend/app/routes/save_chat.py
+./backend/app/routes/ingest.py
+./backend/app/main_legacy.py
+./backend/app/nodes/router_node.py
+./backend/app/nodes/generate_only_node.py
+./backend/app/nodes/file_tree_analyzer.py
+./backend/app/nodes/identity_reflect_node.py
+./backend/app/nodes/status_report.py
+./backend/app/nodes/no_memory_generate_node.py
+./backend/app/utils/structure_fix_applier.py
+./backend/app/utils/chat_logger.py
+./backend/app/utils/edit_history_reader.py
+./backend/app/gumgang_graph_0_7_backup.py
+./backend/app/graph.py

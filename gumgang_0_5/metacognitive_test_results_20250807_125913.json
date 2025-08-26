@@ -1,0 +1,13 @@
+{
+  "session_id": "metacog_test_20250807_125912",
+  "timestamp": "2025-08-07T12:59:13.117334",
+  "summary": {
+    "total": 14,
+    "success": 9,
+    "rate": 100.0
+  },
+  "details": [
+    {
+      "test": "think_reflect_create",
+      "case": "인공지능이 자아를 가질 수 있을까?",
+      "success": 

@@ -1,0 +1,21 @@
+{
+  "auto_save_interval": 60,
+  "max_checkpoints": 100,
+  "dangerous_patterns": [
+    "rm -rf",
+    "DROP TABLE",
+    "DELETE FROM",
+    "format",
+    "mkfs"
+  ],
+  "safe_patterns": [
+    ".tsx",
+    ".ts",
+    ".jsx",
+    ".js",
+    ".css",
+    ".md"
+  ],
+  "branch_prefix": "safety",
+  "commit_prefix": "CHECKPOINT"
+}

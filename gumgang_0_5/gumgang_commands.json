@@ -1,0 +1,39 @@
+{
+  "금강:전체분석": {
+    "tool": "server_list_directory",
+    "args": {
+      "path": "/home/duksan/바탕화면/gumgang_0_5"
+    }
+  },
+  "금강:파일정보": {
+    "tool": "server_get_file_info",
+    "args": {
+      "path": "/home/duksan/바탕화면/gumgang_0_5/backend/requirements.txt"
+    }
+  },
+  "금강:파일읽기": {
+    "tool": "server_read_text_file",
+    "args": {
+      "path": "/home/duksan/바탕화면/gumgang_0_5/backend/requirements.txt"
+    }
+  },
+  "금강:파일쓰기": {
+    "tool": "server_write_file",
+    "args": {
+      "path": "/home/duksan/바탕화면/gumgang_0_5/backend/GumGangFS_Write_Test.txt",
+      "content": "Hello world GumGangFS! MCP v1 명령 세트 작성 완료~"
+    }
+  },
+  "금강:파일수정": {
+    "tool": "server_edit_file",
+    "args": {
+      "path": "/home/duksan/바탕화면/gumgang_0_5/backend/GumGangFS_Write_Test.txt",
+      "edits": [
+        {
+          "oldText": "Hello world GumGangFS! MCP v1 명령 세트 작성 완료~",
+          "newText": "Hello world GumGangFS! MCP v1 — 수정 완료!"
+        }
+      ]
+    }
+  }
+}

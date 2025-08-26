@@ -1,0 +1,42 @@
+[RULES — Gumgang Root | Slim Core]
+Last-Updated: 2025-08-25
+Applies-To: gumgang_meeting/* (project root; overrides v2.0)
+
+SCOPE
+- WRITE_ALLOW: gumgang_meeting/**
+- DENY_GLOBS: .git/** node_modules/** __pycache__/** dist/** build/**
+- CHECKPOINT_FILE: status/checkpoints/CKPT_72H_RUN.jsonl (append-only API)
+
+TURN & EVIDENCE
+- Rhythm: Echo → Delta → Execute
+- Every action-affecting claim must cite ≥1 Evidence path
+- CHECKPOINT: 6 lines (RUN_ID, UTC_TS, SCOPE, DECISION, NEXT STEP, EVIDENCE)
+
+UI GUARDRAILS — ST-1206 (Simple mode only, NON-NEGOTIABLE)
+MUST
+  1) Global scroll hidden (Simple only): html, body { overflow:hidden }
+  2) Exactly 2 scrollers in #a1: #gg-threads, #chat-msgs
+  3) #a1-wrap is grid; rows = auto minmax(0,1fr) auto
+  4) #a1-wrap height = calc(100dvh - var(--gg-strip-h))
+  5) Timeline & composer share --gg-chat-width (clamp 720–902px)
+  6) Composer actions marked: [data-gg="composer-actions"], grid col 2 (row 3)
+
+MUST-NOT
+  - No inline display:flex on #a1-wrap
+  - No self-closing #a1-wrap
+  - No extra overflow:auto under #a1
+
+ACCEPTANCE
+- DevTools: overflow:auto only ["gg-threads","chat-msgs"]
+- getComputedStyle(#a1-wrap).display === "grid"
+- Composer visible on mobile rotation/keyboard
+- Console/runtime warnings = 0
+
+ENFORCEMENT
+- Static: `npm run guard:ui` (blocks on fail)
+- Runtime (dev only): assertUIPitstop in ui/overlays/active.js
+- Authoring: Always attach rules/ai/ST-1206.ui.rules.md for layout edits
+
+REFERENCES
+- Full ops rules: rules/ai/RULES_full.md
+- UI guardrails detail: rules/ai/ST-1206.ui.rules.md

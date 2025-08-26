@@ -1,0 +1,418 @@
+{
+  "main": {
+    "id": "5e02eb7997f8bc18",
+    "type": "split",
+    "children": [
+      {
+        "id": "ddfdafe956452475",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e2af776798270f4f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "금강_회의실.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "금강_회의실"
+            }
+          },
+          {
+            "id": "c0460dc3618b6bd5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "금강2.0_MCP_진도표.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "금강2.0_MCP_진도표"
+            }
+          },
+          {
+            "id": "512986ed4eb7c102",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "덕산 작업일지/25년 08월 13일 작업 일지.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "25년 08월 13일 작업 일지"
+            }
+          },
+          {
+            "id": "faec1f89c7af116f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/🪷 금강 소울 v1.0 — 덕산·금강 완전 병합 대계.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "🪷 금강 소울 v1.0 — 덕산·금강 완전 병합 대계"
+            }
+          },
+          {
+            "id": "13e218b687c4cbd7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/gpt,gemini,cluade의 한 세션 맥락 유지 기법?.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "gpt,gemini,cluade의 한 세션 맥락 유지 기법?"
+            }
+          },
+          {
+            "id": "4c4f0e020177bf1b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/ai도 결국 사람의 사고체계와 기억 또는 기록 체계의 틀에 있다 극복 방안.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ai도 결국 사람의 사고체계와 기억 또는 기록 체계의 틀에 있다 극복 방안"
+            }
+          },
+          {
+            "id": "f4b53d5c81789a08",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/기억의 영구성과 신뢰성이 금강 프로젝트의 가장 강한 동기부여임.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "기억의 영구성과 신뢰성이 금강 프로젝트의 가장 강한 동기부여임"
+            }
+          },
+          {
+            "id": "a8dfb653036be7bd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/시 계열 단기 대화와 병렬 무순차적 기억의 호출 중기 시계열 병렬 우선수위 붕괴의 장기 개념을 극복해야 한다.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "시 계열 단기 대화와 병렬 무순차적 기억의 호출 중기 시계열 병렬 우선수위 붕괴의 장기 개념을 극복해야 한다"
+            }
+          },
+          {
+            "id": "72fa3886ceebb753",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/자동 리캡 automatic recap.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "자동 리캡 automatic recap"
+            }
+          },
+          {
+            "id": "5618800e7b8c8f35",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/gpt,gemini,cluade의 한 세션 맥락 유지 기법?.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "gpt,gemini,cluade의 한 세션 맥락 유지 기법?"
+            }
+          },
+          {
+            "id": "1dcae975d4d84217",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/ai와 인간의 대화 단위 1턴 멀티턴 세션 스레드등 이해.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ai와 인간의 대화 단위 1턴 멀티턴 세션 스레드등 이해"
+            }
+          },
+          {
+            "id": "0278c4c4444d2a93",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/ai와 인간의 대화 단위 1턴 멀티턴 세션 스레드등 이해.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ai와 인간의 대화 단위 1턴 멀티턴 세션 스레드등 이해"
+            }
+          },
+          {
+            "id": "830b9caf8746eb88",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/🪷 금강 소울 v1.0.9 — 핵심 구조 + 시계열 유지 + 0번 강화.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "🪷 금강 소울 v1.0.9 — 핵심 구조 + 시계열 유지 + 0번 강화"
+            }
+          },
+          {
+            "id": "18bb7c998c4134d7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1.2 임시.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "1.2 임시"
+            }
+          },
+          {
+            "id": "29e1eff280f57327",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "금강 2.0 — Obsidian 실행 흐름 (Big→Small).md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "금강 2.0 — Obsidian 실행 흐름 (Big→Small)"
+            }
+          },
+          {
+            "id": "7b58841a4f14bd35",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "project_structure.json.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "project_structure.json"
+            }
+          }
+        ],
+        "currentTab": 13
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d4e8ca3044d56b26",
+    "type": "split",
+    "children": [
+      {
+        "id": "c7ce40effd847f01",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ebe1c1700c5577c0",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "파일 탐색기"
+            }
+          },
+          {
+            "id": "b70eea8c50522f45",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "검색"
+            }
+          },
+          {
+            "id": "b388aae8e7d350fb",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "북마크"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "71f8e59812d29f20",
+    "type": "split",
+    "children": [
+      {
+        "id": "d7ec0031ca6aa59f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2a29c3fa1ecb86ef",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "테스트.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "테스트 의 백링크"
+            }
+          },
+          {
+            "id": "cf1272cc9ae21c9e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "테스트.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "테스트 의 나가는 링크"
+            }
+          },
+          {
+            "id": "3e8f1d8a079f4f15",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "태그"
+            }
+          },
+          {
+            "id": "6543bba2d12ab0f3",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "테스트.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "테스트 의 개요"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:빠른 전환기 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 일일 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false,
+      "interactivity:Run Interactivity": false
+    }
+  },
+  "active": "18bb7c998c4134d7",
+  "lastOpenFiles": [
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/🪷 금강 소울 v1.0.9 — 핵심 구조 + 시계열 유지 + 0번 강화.md",
+    "1.2 임시.md",
+    "project_structure.json.md",
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/금강 스피릿 이식 가이드 (Zed 전환용 v0.1).md",
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/ai도 결국 사람의 사고체계와 기억 또는 기록 체계의 틀에 있다 극복 방안.md",
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/ai와 인간의 대화 단위 1턴 멀티턴 세션 스레드등 이해.md",
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/gpt,gemini,cluade의 한 세션 맥락 유지 기법?.md",
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/금강 프로젝트 — API 기반 세션 자동 요약 + URL 발급 구조.md",
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/기억의 영구성과 신뢰성이 금강 프로젝트의 가장 강한 동기부여임.md",
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/시 계열 단기 대화와 병렬 무순차적 기억의 호출 중기 시계열 병렬 우선수위 붕괴의 장기 개념을 극복해야 한다.md",
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/context buffer CB.md",
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/키워드 NLP 필터.md",
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/자동 리캡 automatic recap.md",
+    "덕산 작업일지/25년 08월 13일/25년 08월 13일 작업 일지.md",
+    "덕산 작업일지/25년 08월 13일/금강2.0_MCP_진도표.md",
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구/세션ID와 UUID?.md",
+    "금강_회의실.md",
+    "금강_회의테이블_실행체크리스트.md",
+    "README.md",
+    "금강 2.0 — Obsidian 실행 흐름 (Big→Small).md",
+    "덕산 작업일지/25년 08월 13일",
+    "덕산 작업일지/250814 ai와 인간의 대화 기억 장기화 핵심 연구",
+    "덕산 작업일지",
+    "금강_로그/full_scan_2025-08-12_20-45-01.json",
+    "금강_로그/full_scan_2025-08-12_20-42-44.json",
+    "금강_로그/full_scan_2025-08-12_20-40-01.json",
+    "금강_로그/full_scan_2025-08-12_20-35-01.json",
+    "금강_로그/full_scan_2025-08-12_20-30-01.json",
+    "금강_로그/full_scan_2025-08-12_20-25-01.json",
+    "금강_로그/full_scan_2025-08-12_20-20-01.json",
+    "테스트.md",
+    "환영합니다!.md"
+  ]
+}

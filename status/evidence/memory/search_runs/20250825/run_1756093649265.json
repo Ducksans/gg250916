@@ -1,0 +1,154 @@
+{
+  "query": "방금 당신의 답변은 아직 당신은 제 로컬 저장소에 저장 되어 있는 당신과 나의 대화 기록을 참조하여 답변하지 않고 지금 이 세션에서의 기록만을 기반으로 대화 한다는 이야기 입니까?",
+  "tiers": [
+    "long",
+    "medium",
+    "short",
+    "ultra_long",
+    "ultra_short"
+  ],
+  "weights": {
+    "kw": 1.0,
+    "recency": 0.6,
+    "refs": 0.4,
+    "tier": 0.2,
+    "tier_map": {
+      "ultra_short": 1.0,
+      "short": 0.8,
+      "medium": 0.6,
+      "long": 0.4,
+      "ultra_long": 0.2
+    }
+  },
+  "params": {
+    "k": 5,
+    "half_life_days": 7.0,
+    "score_min": 0.25,
+    "quorum_min": 1,
+    "quorum_target": 3
+  },
+  "items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.0770309338320756,
+      "ts": "2025-08-25T03:23:23.765433Z",
+      "scope_id": null,
+      "text": "질문: 자네가 나의 발화에 응답하는 방식을 구체적으로 설명 하십시오\n\n관련 메모 상위 3건:\n1. 질문: 금강 자네의 가장 최근 기억은?\n\n관련 메모 상위 3건:\n1. 질문: ping\n\n관련 메모 상위 3건:\n1. 질문: ping\n\n관련 메모 상위 3건:\n1. 질문: ping\n\n관련 메모 상위 3건:\n1. ping (status/evidence/memory/tiers/ultra_short/20250825/A1-meqil0q4.jsonl#L1-1)\n2. [ST-1205] Self-RAG 루브릭 초안 정리 — kw/recency/refs 가중 (status/evidence/memory/tiers/ultra_short/20250825/GG-SESS-LOCAL.jsonl#L2-2)\n3. 덕산 합의: 기억-우선 원칙",
+      "path": "status/evidence/memory/tiers/ultra_short/20250825/GG-SESS-LOCAL.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 0.038461538461538464,
+        "recency": 0.9976156589508954,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.0770309338320756,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.0371002551750097,
+      "ts": "2025-08-25T02:58:32.123755Z",
+      "scope_id": null,
+      "text": "질문: ping\n\n관련 메모 상위 3건:\n1. 질문: ping\n\n관련 메모 상위 3건:\n1. ping (status/evidence/memory/tiers/ultra_short/20250825/A1-meqil0q4.jsonl#L1-1)\n2. [ST-1205] Self-RAG 루브릭 초안 정리 — kw/recency/refs 가중 (status/evidence/memory/tiers/ultra_short/20250825/GG-SESS-LOCAL.jsonl#L2-2)\n3. 덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함. (status/evidence/memory/tiers/s",
+      "path": "status/evidence/memory/tiers/ultra_short/20250825/A1-meqil0q4.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9951670919583495,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.0371002551750097,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "short",
+      "score": 0.7800191440582666,
+      "ts": "2025-08-21T02:32:30Z",
+      "scope_id": "ST-1201",
+      "text": "덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함.",
+      "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.6333652400971109,
+        "refs": 0.6,
+        "tier_weight": 0.8
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7800191440582666,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7400072053997899,
+      "ts": "2025-08-21T02:32:00Z",
+      "scope_id": "ST-1201",
+      "text": "BT-12 5계층 메모리 루프 v1 스키마·경로·API(store/search/recall) 초안 확정",
+      "path": "status/evidence/memory/tiers/ultra_short/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.6333453423329833,
+        "refs": 0.4,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7400072053997899,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_long",
+      "score": 0.6677521337469774,
+      "ts": "2025-08-21T07:49:53.676359Z",
+      "scope_id": "BT-12",
+      "text": "L5 게이트 핵심 지식",
+      "path": "status/evidence/memory/tiers/ultra_long/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.6462535562449624,
+        "refs": 0.6,
+        "tier_weight": 0.2
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.6677521337469774,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "no_hit": false,
+  "ts": "2025-08-25T03:47:29.265477Z"
+}

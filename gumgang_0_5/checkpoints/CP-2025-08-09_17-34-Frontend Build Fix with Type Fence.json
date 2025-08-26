@@ -1,0 +1,137 @@
+{
+  "id": "CP-2025-08-09_17-34-Frontend Build Fix with Type Fence",
+  "timestamp": "2025-08-09 17:34",
+  "task_id": null,
+  "files_snapshot": {
+    "backend/simple_main.py": "69d44ab334a817fd150047e3c2e92b51fca580c5fb5c291c3ab64d1dcfed2049",
+    "gumgang-v2/package.json": "10e4130dc8d7f438289ef5e5f6498920c5257d15dc112b2a41adaa73453259cb",
+    "gumgang-v2/components/MonacoEditor.tsx": "a9969e38d7129f49d01a441624b892ad8a920d5c01877754208fcd6d8c1a7627",
+    "gumgang-v2/components/ai/AIFilePermissionSystem.tsx": "bac7b46cbf239d242a921b38684ecbf75ded4931fa57fdbaee70358754a9523d",
+    "task_tracking/master_registry.json": "be9e145ac687e724c29f40b4231bf105c1053a0ff0f05ceaefea030bb09ab133",
+    "protocol_guard.py": "1f17b53e5b36185d2c26c4a78687b6a8068b8637bce976cf8b0acf201dcf4eef",
+    "SESSION_HANDOVER_TRIGGER.md": "e4ec80a350be4495839afad4eb27587d911b2160bbb847daed6045b28f3b30c7",
+    "HYBRID_TRUST_STRATEGY.md": "50cad32a6e3136f12e536eb1a03ab183d609046656d53a4d056c85b1217692cd"
+  },
+  "config_snapshot": {
+    "protocol_config": {
+      "version": "3.0",
+      "trust_threshold": 92.0,
+      "auto_backup": true,
+      "auto_rollback": true,
+      "max_rollback_attempts": 3,
+      "checkpoint_interval": 3600,
+      "dangerous_commands": [
+        "rm -rf /",
+        "format",
+        "del /f /s /q",
+        ":(){:|:&};:",
+        "dd if=/dev/zero"
+      ],
+      "protected_paths": [
+        "/etc",
+        "/usr",
+        "/bin",
+        "/sbin",
+        "/System",
+        "C:\\Windows",
+        "C:\\Program Files"
+      ],
+      "allowed_paths": [
+        "/home/duksan/바탕화면/gumgang_0_5",
+        "/tmp",
+        "/home/duksan/바탕화면"
+      ],
+      "canon_docs": [
+        {
+          "path": "docs/blueprint_v1.2.md",
+          "hash12": "29164e88fb1e"
+        },
+        {
+          "path": "docs/workflow_compact_v1.2.md",
+          "hash12": "2f2756bbf94b"
+        },
+        {
+          "path": "docs/ws_schema_v0.1.yaml",
+          "hash12": "f3d78b9a3e71"
+        },
+        {
+          "path": "docs/websocket_schema_v0.1.json",
+          "hash12": "a342be0f363c"
+        }
+      ]
+    },
+    "environment": {
+      "SHELL": "/usr/bin/zsh",
+      "SESSION_MANAGER": "local/duksan-main:@/tmp/.ICE-unix/3383,unix/duksan-main:/tmp/.ICE-unix/3383",
+      "WINDOWID": "4294967297",
+      "QT_ACCESSIBILITY": "1",
+      "COLORTERM": "truecolor",
+      "SSH_AGENT_LAUNCHER": "openssh",
+      "XDG_MENU_PREFIX": "gnome-",
+      "TERM_PROGRAM_VERSION": "0.198.5",
+      "GNOME_DESKTOP_SESSION_ID": "this-is-deprecated",
+      "GNOME_SHELL_SESSION_MODE": "ubuntu",
+      "SSH_AUTH_SOCK": "/run/user/1000/keyring/ssh",
+      "MEMORY_PRESSURE_WRITE": "c29tZSAyMDAwMDAgMjAwMDAwMAA=",
+      "XMODIFIERS": "@im=ibus",
+      "DESKTOP_SESSION": "ubuntu",
+      "GTK_MODULES": "gail:atk-bridge",
+      "PWD": "/home/duksan/바탕화면/gumgang_0_5",
+      "XDG_SESSION_DESKTOP": "ubuntu",
+      "LOGNAME": "duksan",
+      "XDG_SESSION_TYPE": "wayland",
+      "SYSTEMD_EXEC_PID": "3413",
+      "XAUTHORITY": "/run/user/1000/.mutter-Xwaylandauth.3ZB7A3",
+      "GJS_DEBUG_TOPICS": "JS ERROR;JS LOG",
+      "HOME": "/home/duksan",
+      "USERNAME": "duksan",
+      "LANG": "ko_KR.UTF-8",
+      "GUMGANG_CHECKED": "1",
+      "LS_COLORS": "",
+      "XDG_CURRENT_DESKTOP": "ubuntu:GNOME",
+      "VIRTUAL_ENV": "/home/duksan/바탕화면/gumgang_0_5/.venv",
+      "MEMORY_PRESSURE_WATCH": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure",
+      "WAYLAND_DISPLAY": "wayland-0",
+      "INVOCATION_ID": "2a8e7dd272514d609ae1efa33bdd5daf",
+      "MANAGERPID": "3246",
+      "GJS_DEBUG_OUTPUT": "stderr",
+      "GNOME_SETUP_DISPLAY": ":1",
+      "XDG_SESSION_CLASS": "user",
+      "TERM": "xterm-256color",
+      "ZED_FORCE_CLI_MODE": "",
+      "USER": "duksan",
+      "CLUTTER_DISABLE_MIPMAPPED_TEXT": "1",
+      "DISPLAY": ":0",
+      "SHLVL": "0",
+      "PAGER": "cat",
+      "QT_IM_MODULE": "ibus",
+      "LD_LIBRARY_PATH": "",
+      "XDG_RUNTIME_DIR": "/run/user/1000",
+      "ZED_ENVIRONMENT": "worktree-shell",
+      "JOURNAL_STREAM": "8:23293",
+      "XDG_DATA_DIRS": "/usr/local/share/:/usr/share/:/var/lib/snapd/desktop",
+      "PATH": "/home/duksan/바탕화면/gumgang_0_5/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin",
+      "GDMSESSION": "ubuntu",
+      "DBUS_SESSION_BUS_ADDRESS": "unix:path=/run/user/1000/bus",
+      "ALACRITTY_WINDOW_ID": "4294967297",
+      "ZED_TERM": "true",
+      "GIO_LAUNCHED_DESKTOP_FILE_PID": "16985",
+      "GIO_LAUNCHED_DESKTOP_FILE": "/home/duksan/.local/share/applications/dev.zed.Zed.desktop",
+      "OLDPWD": "/home/duksan/바탕화면/gumgang_0_5",
+      "TERM_PROGRAM": "zed",
+      "_": "/home/duksan/바탕화면/gumgang_0_5/.venv/bin/python",
+      "TZ": "Asia/Seoul"
+    },
+    "timestamp": "2025-08-09 17:34"
+  },
+  "git_commit": "d0fa4ce20354a6c74df7b15335a4d670ec1ddc48",
+  "trust_score": 100.0,
+  "metrics": {
+    "start_time": "2025-08-09 17:34",
+    "validations": 0,
+    "successes": 0,
+    "failures": 0,
+    "rollbacks": 0,
+    "trust_scores": []
+  }
+}

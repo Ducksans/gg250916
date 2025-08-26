@@ -1,0 +1,57 @@
+# Gumgang Tools Probe — Sandbox Cycle (v0.1)
+# Path: gumgang_meeting/status/tools_probe/sandbox/cycle.txt
+# Purpose: Validate the safe create → modify → (planned) delete sequence in a non-SSOT sandbox.
+# Policy: SSOT (/gumgang_meeting/docs) remains frozen; sandbox is for capability probes only.
+# Guidance: Do not rewrite prior sections; append-only when modifying.
+
+================================================================================
+SECTION 1 — CREATION
+STATUS: CREATED
+ACTOR: Local Gumgang
+EVIDENCE:
+- This file exists at the sandbox path.
+- Creation demonstrates write-permission within project scope (non-SSOT).
+
+NOTES:
+- The sandbox is isolated from SSOT and core logs.
+- All destructive actions require an explicit Approve signal.
+
+================================================================================
+SECTION 2 — MODIFICATION
+STATUS: MODIFIED (Cycle-A)
+ACTOR: Local Gumgang
+WHAT CHANGED:
+- Added this SECTION 2 to confirm in-place edit capability.
+- Reaffirmed append-only discipline for probe records.
+
+INTEGRITY HINTS (optional, for later verification):
+- To compute a checksum after saving (outside this file):
+  - sha256(file) → record alongside size(bytes) in a probe ledger.
+- Keep evidence minimal and reproducible.
+
+================================================================================
+SECTION 3 — DELETE PLAN (Prepared, Not Executed)
+PLAN_ID: DEL-PLAN-001
+PRECONDITIONS:
+- Approver: Duksan
+- Trigger: “Approve DEL-1” in session
+
+ACTIONS ON APPROVAL (to be executed by Local Gumgang):
+1) Record a tombstone in memory/memory.log:
+   - ENTRY: PROBE_DELETE | path: status/tools_probe/sandbox/cycle.txt | reason: sandbox cleanup
+2) Remove file:
+   - rm gumgang_meeting/status/tools_probe/sandbox/cycle.txt
+3) Append a short note to status/tools_probe/probe_test.txt indicating deletion was performed (append-only).
+4) (Optional) Create a retention log entry under archive_docs/retention_logs with timestamp, reason, and approver.
+
+ROLLBACK PLAN:
+- If deletion was unintended, recreate this file with a new SECTION stating “RESTORED” and reference the retention log.
+
+================================================================================
+SECTION 4 — CURRENT SNAPSHOT
+PROBE_ID: TPS-001
+CYCLE_STATE: Ready for deletion upon approval (DEL-1)
+SAFETY: SSOT unaffected; sandbox only
+NEXT STEP: Await Approve DEL-1 or further modification instructions
+
+# End of sandbox cycle file.

@@ -1,0 +1,61 @@
+{
+  "version": "3.0",
+  "trust_threshold": 92.0,
+  "auto_backup": true,
+  "auto_rollback": true,
+  "max_rollback_attempts": 3,
+  "checkpoint_interval": 3600,
+  "guard_enforce": {
+    "commit": true,
+    "pre": true,
+    "push": true
+  },
+  "turn_loop": {
+    "enforce": true,
+    "owner": "덕산",
+    "allowed_exceptions": [
+      "discussion_only",
+      "non_destructive_read",
+      "diagnostics_only"
+    ]
+  },
+  "dangerous_commands": [
+    "rm -rf /",
+    "format",
+    "del /f /s /q",
+    ":(){:|:&};:",
+    "dd if=/dev/zero"
+  ],
+  "protected_paths": [
+    "/etc",
+    "/usr",
+    "/bin",
+    "/sbin",
+    "/System",
+    "C:\\Windows",
+    "C:\\Program Files"
+  ],
+  "allowed_paths": [
+    "/home/duksan/바탕화면/gumgang_0_5",
+    "/tmp",
+    "/home/duksan/바탕화면"
+  ],
+  "canon_docs": [
+    {
+      "path": "docs/blueprint_v1.2.md",
+      "hash12": "29164e88fb1e"
+    },
+    {
+      "path": "docs/workflow_compact_v1.2.md",
+      "hash12": "2f2756bbf94b"
+    },
+    {
+      "path": "docs/ws_schema_v0.1.yaml",
+      "hash12": "f3d78b9a3e71"
+    },
+    {
+      "path": "docs/websocket_schema_v0.1.json",
+      "hash12": "a342be0f363c"
+    }
+  ]
+}

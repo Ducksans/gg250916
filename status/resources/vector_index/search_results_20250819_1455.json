@@ -1,0 +1,127 @@
+{
+  "created_utc": "2025-08-19T14:54:27Z",
+  "dims": 384,
+  "k": 5,
+  "results": [
+    {
+      "query": "CHECKPOINT_FILE 규격 6줄",
+      "topk": [
+        {
+          "path": "gumgang_meeting/docs/readme.md",
+          "chunk_id": 0,
+          "approx_line": 1,
+          "score": 0.2052,
+          "snippet": "# 📖 Gumgang SSOT Reading Guide  You are **Gumgang**, the soul that Duksan has been carefully preparing and transferring.  "
+        },
+        {
+          "path": "gumgang_meeting/status/evidence/전이확정선언_20250816.md",
+          "chunk_id": 0,
+          "approx_line": 1,
+          "score": 0.1918,
+          "snippet": "# 🪷 전이확정선언(Transition Confirmation Declaration) — 初安(첫 평안)  문서 목적  "
+        },
+        {
+          "path": "gumgang_meeting/status/notes/token_guard_demos.md",
+          "chunk_id": 0,
+          "approx_line": 1,
+          "score": 0.1667,
+          "snippet": "# Token Guard Demo Outputs — BT-03/ST-0301  This file demonstrates compliant sample replies for ALERT70, ALERT85, ALERT95, and STOP NOW, each with Next Step and Evidence."
+        },
+        {
+          "path": "gumgang_meeting/status/checkpoints/CKPT_2025-08-19_bundleA_roots_tabstate_compact.md",
+          "chunk_id": 6,
+          "approx_line": 103,
+          "score": 0.1575,
+          "snippet": "ration.   - Visual badges/tags in list and sticky summary in preview. - Preview page jump:"
+        },
+        {
+          "path": "gumgang_meeting/ui/logs/fetch_summary_20250819.json",
+          "chunk_id": 0,
+          "approx_line": 1,
+          "score": 0.139,
+          "snippet": "[   {     \"source_url\": \"https://tauri.app\","
+        }
+      ]
+    },
+    {
+      "query": "화이트리스트 fetch 파이프라인",
+      "topk": [
+        {
+          "path": "gumgang_meeting/status/evidence/ui_mvp_gate_20250816_report.md",
+          "chunk_id": 7,
+          "approx_line": 166,
+          "score": 0.2182,
+          "snippet": "blish Summary - Scope: Chat View A1 (T1–T4) - Result: PASSED (4/4)"
+        },
+        {
+          "path": "gumgang_meeting/status/tools_probe/fetch_probe.md",
+          "chunk_id": 1,
+          "approx_line": 31,
+          "score": 0.1645,
+          "snippet": "xt/plain (RFC text) - Title observed: “The JavaScript Object Notation (JSON) Data Interchange Format” (RFC 8259) - Byte length: N/A (not measured in this run)"
+        },
+        {
+          "path": "gumgang_meeting/.rules",
+          "chunk_id": 6,
+          "approx_line": 96,
+          "score": 0.1561,
+          "snippet": "entry (RUN_ID issued) - [ ] Lock env/ports/entrypoints per section 2 - [ ] Enable FS absorption dry-run; produce quarantine plan"
+        },
+        {
+          "path": "gumgang_meeting/status/checkpoints/CKPT_2025-08-19_memorylog_ack_and_ro_guide.md",
+          "chunk_id": 1,
+          "approx_line": 26,
+          "score": 0.1529,
+          "snippet": "_0_5 전체 복사본 정리:   - 대용량/불필요 산출물·캐시 삭제(.git pack, node_modules/.next, venv/.venv, 대형 압축/백업 등)   - 16GB → 약 617MB로 축소"
+        },
+        {
+          "path": "gumgang_meeting/status/checkpoints/CKPT_2025-08-19_bundleA_roots_tabstate_compact.md",
+          "chunk_id": 3,
+          "approx_line": 52,
+          "score": 0.1464,
+          "snippet": "ting\", \"path\": \"/home/duksan/바탕화면/gumgang_meeting\"}   - {\"id\": \"gg_obs\", \"path\": \"/home/duksan/바탕화면/gumgang_meeting/obsidian_vault\"}   - {\"id\": \"gg_proj\", \"path\": \"/home/duksan/바탕화면/gumgang_meeting/projects\"}"
+        }
+      ]
+    },
+    {
+      "query": "WRITE_ALLOW 경로",
+      "topk": [
+        {
+          "path": "gumgang_meeting/status/resources/openai_docs_index.md",
+          "chunk_id": 2,
+          "approx_line": 31,
+          "score": 0.1961,
+          "snippet": "ps://platform.openai.com/docs/guides/speech-to-text   - Text-to-Speech (TTS): https://platform.openai.com/docs/guides/text-to-speech   - Vision (image understanding): https://platform.openai.com/docs/guides/vision"
+        },
+        {
+          "path": "gumgang_meeting/status/roadmap/20250816_48h.md",
+          "chunk_id": 3,
+          "approx_line": 58,
+          "score": 0.1853,
+          "snippet": "gumgang_meeting/status/evidence/ui_mvp_gate_20250816_report.md` - 런 로그(JSON): `gumgang_meeting/ui/logs/ui_mvp_gate_20250816_1624.json` - Export 예시(JSON): `/home/duksan/다운로드/ui_mvp_gate_20250816_2119_A3.json`"
+        },
+        {
+          "path": "gumgang_meeting/status/tools_probe/jsonl_validation_report_20250819_1407.md",
+          "chunk_id": 0,
+          "approx_line": 1,
+          "score": 0.1594,
+          "snippet": "# JSONL Validation Report — ST-0302 Date: 2025-08-19T14:07:44Z Subject: Append-only conversation/task log validation"
+        },
+        {
+          "path": "gumgang_meeting/status/evidence/QUARANTINE_EXECUTION_MANIFEST_20250819.md",
+          "chunk_id": 2,
+          "approx_line": 41,
+          "score": 0.1474,
+          "snippet": "ang_meeting/QUARANTINE/QUARANTINE.md - Stubs at original locations - Checkpoint append to gumgang_meeting/status/checkpoints/CKPT_72H_RUN.md"
+        },
+        {
+          "path": "gumgang_meeting/status/notes/RULES_KR_CHEATSHEET.md",
+          "chunk_id": 2,
+          "approx_line": 52,
+          "score": 0.1374,
+          "snippet": "kpoints/CKPT_72H_RUN.md - SCOPE: TASK(BT-0X) - DECISION: BT-0X를 선형 파이프라인으로 수행한다"
+        }
+      ]
+    }
+  ]
+}

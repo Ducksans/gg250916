@@ -1,0 +1,101 @@
+/home/duksan/바탕화면/gumgang_0_5/backend
+├── __init__.py
+├── __pycache__
+│   ├── __init__.cpython-310.pyc
+│   └── main.cpython-310.pyc
+├── app
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-310.pyc
+│   │   ├── edit.cpython-310.pyc
+│   │   ├── graph.cpython-310.pyc
+│   │   ├── ingest.cpython-310.pyc
+│   │   ├── main.cpython-310.pyc
+│   │   └── memory.cpython-310.pyc
+│   ├── graph.py
+│   ├── gumgang_graph_0_7_backup.py
+│   ├── main.py
+│   ├── nodes
+│   │   ├── __pycache__
+│   │   ├── file_tree_analyzer.py
+│   │   ├── gumgang_status.json
+│   │   ├── identity_reflect_node.py
+│   │   ├── status_report.py
+│   │   └── version_check.py
+│   ├── routes
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   ├── ask.py
+│   │   ├── edit.py
+│   │   ├── ingest.py
+│   │   ├── memory.py
+│   │   ├── save_chat.py
+│   │   └── status.py
+│   ├── setup_edit_api.sh
+│   └── test_openai_key.py
+├── backend_backup_20250725_092607.zip
+├── backend_file_tree.txt
+├── backend_tree.txt
+├── backendserverstart.sh
+├── backup_ingest_scripts_20250727_035453
+│   ├── ingest_chatgpt_memory.py.bak
+│   ├── ingest_identity.py.bak
+│   ├── ingest_roadmap.py.bak
+│   ├── ingest_self_knowledge.py.bak
+│   └── roadmap_ingest.py.bak
+├── data
+│   ├── core_identity.json
+│   ├── frontend_structure_0.7.json
+│   └── frontend_structure_natural.json
+├── gumgang_tree.txt
+├── logs
+│   ├── refactor_log_20250723_124923.txt
+│   └── test_api.http
+├── memory
+│   ├── backup_edit_files
+│   │   ├── Header.tsx.20250727_120717.bak
+│   │   ├── Header.tsx.20250727_120932.bak
+│   │   ├── Header.tsx.20250727_121104.bak
+│   │   └── tailwind.config.js.20250727_122458.bak
+│   ├── gumgang_memory
+│   │   ├── 4281ce5e-b504-4e58-9e6d-7486b49e34f0
+│   │   └── chroma.sqlite3
+│   ├── logs
+│   │   └── refactor_history.log
+│   ├── retrievers.py
+│   ├── sources
+│   │   ├── chatgpt
+│   │   ├── chatgpt_sessions
+│   │   ├── core_identity.json
+│   │   ├── file_summaries.json
+│   │   ├── folder_structure.json
+│   │   ├── roadmap_gold.json
+│   │   ├── roadmap_natural.json
+│   │   └── structure
+│   └── vectors
+│       ├── chatgpt_memory
+│       ├── chatgpt_memory_backup_20250726_190914
+│       ├── legacy
+│       └── roadmap
+├── refactor_backend_structure.sh
+├── requirements.txt
+├── scripts
+│   ├── check_and_fix_tailwind.py
+│   ├── convert_roadmap_to_natural.py
+│   ├── convert_saved_json_to_md.py
+│   ├── ingest_backend_structure.py
+│   ├── ingest_chatgpt_memory.py
+│   ├── ingest_frontend_natural.py
+│   ├── ingest_frontend_structure.py
+│   ├── ingest_identity.py
+│   ├── ingest_roadmap.py
+│   ├── ingest_self_knowledge.py
+│   ├── reflect_test.py
+│   ├── roadmap_ingest.py
+│   ├── self_reflect.py
+│   └── self_structure_scan.py
+└── tests
+    ├── test_langgraph_status.py
+    └── test_reflect_query_self.py
+
+26 directories, 72 files

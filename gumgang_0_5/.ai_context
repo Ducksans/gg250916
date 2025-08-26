@@ -1,0 +1,71 @@
+# ⚠️ CRITICAL AI CONTEXT - MUST READ FIRST
+
+Generated: 2025-08-08T20:45:51.928845
+Protocol Version: 2.0-GUARD
+
+## 🚨 ABSOLUTE RULES - DO NOT VIOLATE
+
+### 1. DATE AND TIME
+- Current Date: 2025년 8월 8일 (AUGUST, not January!)
+- Task Group: B (Backend Integration)
+- Session Type: RECOVERY/CONTINUATION
+
+### 2. CURRENT TASK STATUS
+- Active Task: GG-20250108-006
+- Task Name: Tauri 파일시스템 API
+- Previous: GG-20250108-005 (Backend) - COMPLETED ✅
+- DO NOT restart completed tasks!
+
+### 3. TECHNOLOGY STACK
+- Backend: FastAPI on port 8001 (NOT 3000!)
+- Frontend: Tauri + Monaco Editor
+- NOT React/Next.js/Vercel!
+- Project: /home/duksan/바탕화면/gumgang_0_5
+
+### 4. FORBIDDEN ACTIONS ❌
+1. Creating new React/Next.js projects
+2. Changing Task IDs format
+3. Starting from scratch
+4. Ignoring existing files
+5. Using port 3000 for backend
+6. Skipping to unrelated tasks
+
+### 5. REQUIRED CHECKS BEFORE ANY ACTION
+```bash
+# 1. Verify protocol
+python protocol_guard.py
+
+# 2. Check backend
+curl http://localhost:8001/health
+
+# 3. View current tasks
+cat task_tracking/master_registry.json | grep GG-20250108
+```
+
+### 6. TASK GROUP B ROADMAP
+- [x] GG-20250108-005: 백엔드 안정화 (100%)
+- [ ] GG-20250108-006: Tauri 파일시스템 API (40%)  ← CURRENT
+- [ ] GG-20250108-007: Monaco 에디터 연동 (0%)
+- [ ] GG-20250108-008: 실시간 동기화 (0%)
+- [ ] GG-20250108-009: 3D 시각화 최적화 (0%)
+- [ ] GG-20250108-010: 테스트 및 문서화 (0%)
+
+### 7. FILES TO WORK WITH
+- Backend: backend/simple_main.py
+- Tauri Config: gumgang-v2/src-tauri/tauri.conf.json
+- Frontend: gumgang-v2/components/
+- DO NOT create new project directories!
+
+### 8. HALLUCINATION PREVENTION
+If you find yourself:
+- Typing "npx create-react-app" → STOP!
+- Creating new task IDs → STOP!
+- Ignoring this file → STOP!
+
+## NEXT IMMEDIATE ACTIONS
+1. Continue GG-20250108-006 (Tauri integration)
+2. Create src-tauri/src/main.rs with file system APIs
+3. Update hooks/useTauriFileSystem.ts
+4. Test with Monaco editor integration
+
+Remember: We're CONTINUING work, not starting over!

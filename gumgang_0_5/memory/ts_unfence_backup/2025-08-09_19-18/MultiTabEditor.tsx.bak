@@ -1,0 +1,713 @@
+// @ts-nocheck
+"use client";
+
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { MonacoEditor } from "./MonacoEditor";
+import { useTauriFileSystem } from "../../hooks/useTauriFileSystem";
+import { WebFileHandler, useWebFileHandler } from "./WebFileHandler";
+import FloatingProtocolWidget from "../protocol/FloatingProtocolWidget";
+import GitSafetyMonitor from "../git/GitSafetyMonitor";
+import {
+  XIcon,
+  SaveIcon,
+  FileIcon,
+  FolderOpenIcon,
+  PlusIcon,
+  AlertCircleIcon,
+  CheckCircleIcon,
+  FileTextIcon,
+  CodeIcon,
+  ChevronRightIcon,
+  ChevronLeftIcon,
+  MoreVerticalIcon,
+  RefreshCwIcon,
+  DownloadIcon,
+  UploadIcon,
+  GitBranchIcon,
+  ShieldIcon,
+} from "lucide-react";
+
+interface FileTab {
+  id: string;
+  path: string;
+  name: string;
+  content: string;
+  originalContent: string;
+  language: string;
+  isDirty: boolean;
+  isActive: boolean;
+  lastSaved?: Date;
+  cursor?: { line: number; column: number };
+  scrollPosition?: number;
+}
+
+interface MultiTabEditorProps {
+  height?: string;
+  theme?: "vs-dark" | "vs" | "hc-black";
+  maxTabs?: number;
+  onTabChange?: (tab: FileTab) => void;
+  onAllTabsClosed?: () => void;
+  className?: string;
+}
+
+export const MultiTabEditor: React.FC<MultiTabEditorProps> = ({
+  height = "600px",
+  theme = "vs-dark",
+  maxTabs = 10,
+  onTabChange,
+  onAllTabsClosed,
+  className = "",
+}) => {
+  const [tabs, setTabs] = useState<FileTab[]>([]);
+  const [activeTabId, setActiveTabId] = useState<string | null>(null);
+  const [contextMenuTab, setContextMenuTab] = useState<string | null>(null);
+  const [showTabMenu, setShowTabMenu] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<
+    Record<string, "idle" | "saving" | "saved" | "error">
+  >({});
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [isTauriAvailable, setIsTauriAvailable] = useState(false);
+  const [showGitMonitor, setShowGitMonitor] = useState(false);
+
+  // Check if Tauri is available
+  useEffect(() => {
+    setIsTauriAvailable(typeof window !== "undefined" && "__TAURI__" in window);
+  }, []);
+
+  const {
+    readFile,
+    writeFile,
+    openFileDialog,
+    saveFileDialog,
+    isLoading,
+    error,
+    clearError,
+  } = useTauriFileSystem();
+
+  const webFileHandler = useWebFileHandler();
+
+  // Get language from file extension
+  const getLanguageFromPath = (filePath: string): string => {
+    const ext = filePath.split(".").pop()?.toLowerCase();
+    const languageMap: Record<string, string> = {
+      js: "javascript",
+      jsx: "javascript",
+      ts: "typescript",
+      tsx: "typescript",
+      py: "python",
+      rs: "rust",
+      go: "go",
+      java: "java",
+      cpp: "cpp",
+      c: "c",
+      h: "c",
+      hpp: "cpp",
+      cs: "csharp",
+      php: "php",
+      rb: "ruby",
+      swift: "swift",
+      kt: "kotlin",
+      scala: "scala",
+      sh: "shell",
+      bash: "shell",
+      json: "json",
+      xml: "xml",
+      html: "html",
+      css: "css",
+      scss: "scss",
+      sass: "sass",
+      less: "less",
+      sql: "sql",
+      md: "markdown",
+      yaml: "yaml",
+      yml: "yaml",
+      toml: "toml",
+      ini: "ini",
+      conf: "ini",
+      txt: "plaintext",
+    };
+    return languageMap[ext || ""] || "plaintext";
+  };
+
+  // Generate unique tab ID
+  const generateTabId = () =>
+    `tab-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+  // Check if tabs container can scroll
+  const checkScrollability = useCallback(() => {
+    if (tabsContainerRef.current) {
+      const { scrollWidth, clientWidth, scrollLeft } = tabsContainerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkScrollability();
+    window.addEventListener("resize", checkScrollability);
+    return () => window.removeEventListener("resize", checkScrollability);
+  }, [tabs, checkScrollability]);
+
+  // Scroll tabs container
+  const scrollTabs = (direction: "left" | "right") => {
+    if (tabsContainerRef.current) {
+      const scrollAmount = 200;
+      tabsContainerRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+      setTimeout(checkScrollability, 300);
+    }
+  };
+
+  // Open new file
+  const openNewFile = async () => {
+    if (tabs.length >= maxTabs) {
+      alert(`Maximum ${maxTabs} tabs allowed`);
+      return;
+    }
+
+    try {
+      let filePath: string | null = null;
+      let content: string = "";
+      let fileName: string = "";
+
+      if (isTauriAvailable) {
+        // Use Tauri file dialog
+        const dialogResult = await openFileDialog({
+          filters: [
+            { name: "All Files", extensions: ["*"] },
+            {
+              name: "Source Code",
+              extensions: ["js", "ts", "jsx", "tsx", "py", "rs", "go", "java"],
+            },
+            { name: "Web Files", extensions: ["html", "css", "scss", "json"] },
+            { name: "Documents", extensions: ["md", "txt", "pdf"] },
+          ],
+        });
+
+        // Handle both string and string[] return types
+        if (dialogResult) {
+          filePath = Array.isArray(dialogResult)
+            ? dialogResult[0]
+            : dialogResult;
+        }
+
+        if (filePath) {
+          content = await readFile(filePath);
+          fileName = filePath.split("/").pop() || "untitled";
+        }
+      } else {
+        // Use web file handler
+        const fileInfo = await webFileHandler.openFile();
+        if (fileInfo) {
+          filePath = fileInfo.name;
+          content = fileInfo.content;
+          fileName = fileInfo.name;
+        }
+      }
+
+      if (filePath) {
+        // Check if file is already open
+        const existingTab = tabs.find((tab) => tab.path === filePath);
+        if (existingTab) {
+          setActiveTabId(existingTab.id);
+          return;
+        }
+
+        const newTab: FileTab = {
+          id: generateTabId(),
+          path: filePath,
+          name: fileName,
+          content: content,
+          originalContent: content,
+          language: getLanguageFromPath(filePath),
+          isDirty: false,
+          isActive: true,
+        };
+
+        setTabs((prev) => [...prev, newTab]);
+        setActiveTabId(newTab.id);
+        onTabChange?.(newTab);
+      }
+    } catch (err) {
+      console.error("Failed to open file:", err);
+    }
+  };
+
+  // Create new untitled file
+  const createNewFile = () => {
+    if (tabs.length >= maxTabs) {
+      alert(`Maximum ${maxTabs} tabs allowed`);
+      return;
+    }
+
+    const untitledCount = tabs.filter((tab) =>
+      tab.path.startsWith("untitled"),
+    ).length;
+    const newTab: FileTab = {
+      id: generateTabId(),
+      path: `untitled-${untitledCount + 1}`,
+      name: `untitled-${untitledCount + 1}`,
+      content: "",
+      originalContent: "",
+      language: "plaintext",
+      isDirty: false,
+      isActive: true,
+    };
+
+    setTabs((prev) => [...prev, newTab]);
+    setActiveTabId(newTab.id);
+    onTabChange?.(newTab);
+  };
+
+  // Save file
+  const saveFile = async (tabId: string) => {
+    const tab = tabs.find((t) => t.id === tabId);
+    if (!tab) return;
+
+    setSaveStatus((prev) => ({ ...prev, [tabId]: "saving" }));
+
+    try {
+      let filePath = tab.path;
+
+      if (isTauriAvailable) {
+        // If untitled, show save dialog
+        if (filePath.startsWith("untitled")) {
+          filePath =
+            (await saveFileDialog({
+              defaultPath: `${tab.name}.txt`,
+              filters: [
+                { name: "All Files", extensions: ["*"] },
+                { name: "Text Files", extensions: ["txt", "md"] },
+                { name: "Source Code", extensions: ["js", "ts", "py", "rs"] },
+              ],
+            })) || "";
+
+          if (!filePath) {
+            setSaveStatus((prev) => ({ ...prev, [tabId]: "idle" }));
+            return;
+          }
+        }
+
+        await writeFile(filePath, tab.content);
+      } else {
+        // Use web save (download)
+        const fileName = filePath.startsWith("untitled")
+          ? `${tab.name}.${
+              tab.language === "javascript"
+                ? "js"
+                : tab.language === "typescript"
+                  ? "ts"
+                  : tab.language === "python"
+                    ? "py"
+                    : "txt"
+            }`
+          : tab.name;
+
+        webFileHandler.saveFile(tab.content, fileName);
+      }
+
+      const fileName = filePath.split("/").pop() || "untitled";
+      setTabs((prev) =>
+        prev.map((t) =>
+          t.id === tabId
+            ? {
+                ...t,
+                path: filePath,
+                name: fileName,
+                originalContent: t.content,
+                isDirty: false,
+                lastSaved: new Date(),
+                language: getLanguageFromPath(filePath),
+              }
+            : t,
+        ),
+      );
+
+      setSaveStatus((prev) => ({ ...prev, [tabId]: "saved" }));
+      setTimeout(() => {
+        setSaveStatus((prev) => ({ ...prev, [tabId]: "idle" }));
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to save file:", err);
+      setSaveStatus((prev) => ({ ...prev, [tabId]: "error" }));
+      setTimeout(() => {
+        setSaveStatus((prev) => ({ ...prev, [tabId]: "idle" }));
+      }, 3000);
+    }
+  };
+
+  // Save all dirty files
+  const saveAllFiles = async () => {
+    const dirtyTabs = tabs.filter((tab) => tab.isDirty);
+    for (const tab of dirtyTabs) {
+      await saveFile(tab.id);
+    }
+  };
+
+  // Close tab
+  const closeTab = async (tabId: string, force: boolean = false) => {
+    const tab = tabs.find((t) => t.id === tabId);
+    if (!tab) return;
+
+    // Check if file has unsaved changes
+    if (!force && tab.isDirty) {
+      const confirmed = window.confirm(
+        `"${tab.name}" has unsaved changes. Do you want to save before closing?`,
+      );
+      if (confirmed) {
+        await saveFile(tabId);
+      }
+    }
+
+    const newTabs = tabs.filter((t) => t.id !== tabId);
+    setTabs(newTabs);
+
+    // Set new active tab if closing active tab
+    if (activeTabId === tabId && newTabs.length > 0) {
+      const tabIndex = tabs.findIndex((t) => t.id === tabId);
+      const newActiveTab = newTabs[Math.min(tabIndex, newTabs.length - 1)];
+      setActiveTabId(newActiveTab.id);
+      onTabChange?.(newActiveTab);
+    } else if (newTabs.length === 0) {
+      setActiveTabId(null);
+      onAllTabsClosed?.();
+    }
+  };
+
+  // Close all tabs
+  const closeAllTabs = async () => {
+    const dirtyTabs = tabs.filter((tab) => tab.isDirty);
+    if (dirtyTabs.length > 0) {
+      const confirmed = window.confirm(
+        `${dirtyTabs.length} file(s) have unsaved changes. Close without saving?`,
+      );
+      if (!confirmed) return;
+    }
+    setTabs([]);
+    setActiveTabId(null);
+    onAllTabsClosed?.();
+  };
+
+  // Close other tabs
+  const closeOtherTabs = (keepTabId: string) => {
+    const keepTab = tabs.find((t) => t.id === keepTabId);
+    if (keepTab) {
+      setTabs([keepTab]);
+      setActiveTabId(keepTabId);
+    }
+  };
+
+  // Handle content change
+  const handleContentChange = (tabId: string, newContent: string) => {
+    setTabs((prev) =>
+      prev.map((tab) =>
+        tab.id === tabId
+          ? {
+              ...tab,
+              content: newContent,
+              isDirty: newContent !== tab.originalContent,
+            }
+          : tab,
+      ),
+    );
+  };
+
+  // Handle tab click
+  const handleTabClick = (tabId: string) => {
+    setActiveTabId(tabId);
+    const tab = tabs.find((t) => t.id === tabId);
+    if (tab) {
+      onTabChange?.(tab);
+    }
+  };
+
+  // Get active tab
+  const activeTab = tabs.find((tab) => tab.id === activeTabId);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ctrl+S or Cmd+S to save
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+        e.preventDefault();
+        if (activeTabId) {
+          saveFile(activeTabId);
+        }
+      }
+      // Ctrl+Shift+S or Cmd+Shift+S to save all
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "s") {
+        e.preventDefault();
+        saveAllFiles();
+      }
+      // Ctrl+W or Cmd+W to close tab
+      if ((e.ctrlKey || e.metaKey) && e.key === "w") {
+        e.preventDefault();
+        if (activeTabId) {
+          closeTab(activeTabId);
+        }
+      }
+      // Ctrl+O or Cmd+O to open file
+      if ((e.ctrlKey || e.metaKey) && e.key === "o") {
+        e.preventDefault();
+        openNewFile();
+      }
+      // Ctrl+N or Cmd+N to create new file
+      if ((e.ctrlKey || e.metaKey) && e.key === "n") {
+        e.preventDefault();
+        createNewFile();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeTabId, tabs]);
+
+  return (
+    <div
+      className={`flex flex-col bg-slate-900 rounded-lg border border-slate-800 ${className}`}
+    >
+      {/* Tab Bar */}
+      <div className="flex items-center bg-slate-800/50 border-b border-slate-700">
+        {/* New File Button */}
+        <button
+          onClick={createNewFile}
+          className="p-2 hover:bg-slate-700 transition-colors"
+          title="New File (Ctrl+N)"
+        >
+          <PlusIcon className="w-4 h-4 text-slate-400" />
+        </button>
+
+        {/* Open File Button */}
+        <button
+          onClick={openNewFile}
+          className="p-2 hover:bg-slate-700 transition-colors"
+          title="Open File (Ctrl+O)"
+        >
+          <FolderOpenIcon className="w-4 h-4 text-slate-400" />
+        </button>
+
+        {/* Scroll Left Button */}
+        {canScrollLeft && (
+          <button
+            onClick={() => scrollTabs("left")}
+            className="p-1 hover:bg-slate-700 transition-colors"
+          >
+            <ChevronLeftIcon className="w-4 h-4 text-slate-400" />
+          </button>
+        )}
+
+        {/* Tabs Container */}
+        <div
+          ref={tabsContainerRef}
+          className="flex-1 flex overflow-x-auto scrollbar-thin scrollbar-thumb-slate-600"
+          onScroll={checkScrollability}
+          style={{ scrollbarWidth: "none" }}
+        >
+          {tabs.map((tab) => (
+            <div
+              key={tab.id}
+              className={`
+                flex items-center min-w-[120px] max-w-[200px] px-3 py-2
+                border-r border-slate-700 cursor-pointer transition-colors
+                ${
+                  activeTabId === tab.id
+                    ? "bg-slate-900 text-white"
+                    : "bg-slate-800/50 text-slate-400 hover:bg-slate-800"
+                }
+              `}
+              onClick={() => handleTabClick(tab.id)}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                setContextMenuTab(tab.id);
+                setShowTabMenu(true);
+              }}
+            >
+              <FileIcon className="w-3 h-3 mr-2 flex-shrink-0" />
+              <span className="flex-1 truncate text-sm">{tab.name}</span>
+              {tab.isDirty && (
+                <span className="w-2 h-2 bg-blue-500 rounded-full ml-2 flex-shrink-0" />
+              )}
+              {saveStatus[tab.id] === "saving" && (
+                <RefreshCwIcon className="w-3 h-3 ml-2 text-blue-400 animate-spin flex-shrink-0" />
+              )}
+              {saveStatus[tab.id] === "saved" && (
+                <CheckCircleIcon className="w-3 h-3 ml-2 text-green-400 flex-shrink-0" />
+              )}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeTab(tab.id);
+                }}
+                className="ml-2 p-0.5 hover:bg-slate-700 rounded transition-colors flex-shrink-0"
+              >
+                <XIcon className="w-3 h-3" />
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Scroll Right Button */}
+        {canScrollRight && (
+          <button
+            onClick={() => scrollTabs("right")}
+            className="p-1 hover:bg-slate-700 transition-colors"
+          >
+            <ChevronRightIcon className="w-4 h-4 text-slate-400" />
+          </button>
+        )}
+
+        {/* Git Monitor Toggle Button */}
+        <button
+          onClick={() => setShowGitMonitor(!showGitMonitor)}
+          className={`p-2 hover:bg-slate-700 transition-colors ${
+            showGitMonitor ? "bg-slate-700 text-blue-400" : ""
+          }`}
+          title="Toggle Git Safety Monitor"
+        >
+          <GitBranchIcon className="w-4 h-4" />
+        </button>
+
+        {/* Tab Menu Button */}
+        <button
+          onClick={() => setShowTabMenu(!showTabMenu)}
+          className="p-2 hover:bg-slate-700 transition-colors relative"
+          title="Tab Options"
+        >
+          <MoreVerticalIcon className="w-4 h-4 text-slate-400" />
+          {showTabMenu && (
+            <div className="absolute right-0 top-full mt-1 bg-slate-800 border border-slate-700 rounded-lg shadow-xl z-50">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  saveAllFiles();
+                  setShowTabMenu(false);
+                }}
+                className="flex items-center px-4 py-2 hover:bg-slate-700 text-sm text-slate-300 whitespace-nowrap"
+              >
+                <SaveIcon className="w-4 h-4 mr-2" />
+                Save All
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeAllTabs();
+                  setShowTabMenu(false);
+                }}
+                className="flex items-center px-4 py-2 hover:bg-slate-700 text-sm text-slate-300 whitespace-nowrap"
+              >
+                <XIcon className="w-4 h-4 mr-2" />
+                Close All
+              </button>
+              {contextMenuTab && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    closeOtherTabs(contextMenuTab);
+                    setShowTabMenu(false);
+                  }}
+                  className="flex items-center px-4 py-2 hover:bg-slate-700 text-sm text-slate-300 whitespace-nowrap"
+                >
+                  <XIcon className="w-4 h-4 mr-2" />
+                  Close Others
+                </button>
+              )}
+            </div>
+          )}
+        </button>
+      </div>
+
+      {/* Editor Area */}
+      <div className="flex-1" style={{ height }}>
+        {activeTab ? (
+          <MonacoEditor
+            key={activeTab.id}
+            initialPath={activeTab.path}
+            height="100%"
+            theme={theme}
+            onSave={(path, content) => saveFile(activeTab.id)}
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full text-slate-500">
+            <FileTextIcon className="w-16 h-16 mb-4 text-slate-700" />
+            <p className="text-lg mb-2">No files open</p>
+            <div className="flex gap-2">
+              {isTauriAvailable ? (
+                <button
+                  onClick={openNewFile}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
+                >
+                  Open File
+                </button>
+              ) : (
+                <WebFileHandler
+                  onFileOpen={(fileInfo) => {
+                    const newTab: FileTab = {
+                      id: generateTabId(),
+                      path: fileInfo.name,
+                      name: fileInfo.name,
+                      content: fileInfo.content,
+                      originalContent: fileInfo.content,
+                      language: getLanguageFromPath(fileInfo.name),
+                      isDirty: false,
+                      isActive: true,
+                    };
+                    setTabs((prev) => [...prev, newTab]);
+                    setActiveTabId(newTab.id);
+                    onTabChange?.(newTab);
+                  }}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
+                />
+              )}
+              <button
+                onClick={createNewFile}
+                className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors text-sm"
+              >
+                New File
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Status Bar */}
+      <div className="flex items-center justify-between px-4 py-2 bg-slate-800/50 border-t border-slate-700 text-xs text-slate-400">
+        <div className="flex items-center gap-4">
+          <span>
+            {tabs.length} file{tabs.length !== 1 ? "s" : ""} open
+          </span>
+          {tabs.filter((t) => t.isDirty).length > 0 && (
+            <span className="text-yellow-400">
+              {tabs.filter((t) => t.isDirty).length} unsaved
+            </span>
+          )}
+        </div>
+        {activeTab && (
+          <div className="flex items-center gap-4">
+            <span>{activeTab.language}</span>
+            {activeTab.lastSaved && (
+              <span>
+                Last saved: {activeTab.lastSaved.toLocaleTimeString()}
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Git Safety Monitor 사이드바 */}
+        {showGitMonitor && (
+          <div className="w-96 bg-gray-900 border-l border-gray-700 overflow-y-auto">
+            <GitSafetyMonitor />
+          </div>
+        )}
+      </div>
+
+      {/* Floating Protocol Widget */}
+      <FloatingProtocolWidget />
+    </div>
+  );
+};
+
+export default MultiTabEditor;

@@ -1,0 +1,3 @@
+- Keep prompts explicit (append vs replace).
+- Use /api/protocol/checkpoint after each change.
+- Prefer local gateway later; keep GPT-5 as reviewer.

@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# pre-commit.sample — Checkpoint guards (block MD edits, lint JSONL chain)
+# Rename to `pre-commit` and make executable:
+#   cp scripts/hooks/pre-commit.sample .git/hooks/pre-commit
+#   chmod +x .git/hooks/pre-commit
+# Or set: git config core.hooksPath scripts/hooks  (then rename within scripts/hooks)
+
+set -euo pipefail
+
+# ----------------------------
+# Config
+# ----------------------------
+ROOT="gumgang_meeting"
+CKPT_MD="$ROOT/status/checkpoints/CKPT_72H_RUN.md"
+CKPT_DAILY_DIR="$ROOT/status/checkpoints/daily/"
+CKPT_JSONL="$ROOT/status/checkpoints/CKPT_72H_RUN.jsonl"
+LINTER="scripts/ckpt_lint.py"
+
+# Allow bypass only if explicitly set (emergency)
+if [[ "${GIT_ALLOW_UNGUARDED:-}" == "1" ]]; then
+  echo "pre-commit: bypass enabled via GIT_ALLOW_UNGUARDED=1" >&2
+  exit 0
+fi
+
+warn() { printf "pre-commit: %s\n" "$*" >&2; }
+fail() { warn "$*"; exit 1; }
+
+# Ensure we're at repo root
+if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
+  fail "Not inside a Git repository"
+fi
+
+CHANGED="$(git diff --name-only --cached || true)"
+
+# ----------------------------
+# 1) Block edits to MD stub and generated daily views
+# ----------------------------
+if printf "%s\n" "$CHANGED" | grep -Fxq "$CKPT_MD"; then
+  fail "Blocked: $CKPT_MD is view-only. Append via POST /api/checkpoints/append. Unstage your changes."
+fi
+
+if printf "%s\n" "$CHANGED" | grep -E "^${CKPT_DAILY_DIR//\//\\/}" >/dev/null 2>&1; then
+  fail "Blocked: $CKPT_DAILY_DIR* are generated views. Do not commit direct edits."
+fi
+
+# ----------------------------
+# 2) Lint JSONL hash-chain & monotonic UTC (tolerate missing file)
+# ----------------------------
+if [[ -f "$LINTER" ]]; then
+  # Choose python
+  if command -v python3 >/dev/null 2>&1; then
+    PYTHON=python3
+  elif command -v python >/dev/null 2>&1; then
+    PYTHON=python
+  else
+    fail "Python not found; cannot run linter $LINTER"
+  fi
+
+  if ! "$PYTHON" "$LINTER" --path "$CKPT_JSONL" --format json --max-lines 200000 --quiet; then
+    warn "Checkpoint lint failed. Summary:"
+    "$PYTHON" "$LINTER" --path "$CKPT_JSONL" --format md || true
+    fail "Fix checkpoint issues or revert before committing."
+  fi
+else
+  warn "Linter missing: $LINTER — skipping chain/monotonic checks (add the linter for strong guard)."
+fi
+
+# All checks passed
+exit 0

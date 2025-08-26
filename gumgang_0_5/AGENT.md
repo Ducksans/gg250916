@@ -1,0 +1,241 @@
+# 🚨 금강 2.0 - TASK PROTOCOL 필수 준수 사항
+
+## ⚡ 세션 시작 즉시 실행 (MANDATORY)
+
+### 1️⃣ 필수 문서 확인 (순서 엄수)
+```bash
+# 새 세션 시작시 반드시 이 순서대로 읽을 것
+1. cat /home/duksan/바탕화면/gumgang_0_5/NEXT_SESSION_IMMEDIATE.md
+2. cat /home/duksan/바탕화면/gumgang_0_5/TASK_CONTEXT_BRIDGE.md
+3. cat /home/duksan/바탕화면/gumgang_0_5/.session_state.json
+4. python /home/duksan/바탕화면/gumgang_0_5/protocol_guard_v3.py --status
+```
+
+## 🛡️ PROTOCOL GUARD v3.0 - 절대 규칙
+
+### 체크포인트 관리
+- **작업 시작 전**: `python protocol_guard_v3.py --checkpoint "작업명"`
+- **위험한 변경 전**: 반드시 체크포인트 생성
+- **작업 완료 후**: 검증 실행 `python protocol_guard_v3.py --validate`
+- **문제 발생시**: `python protocol_guard_v3.py --rollback LAST`
+
+### 신뢰도 점수 관리
+- 100%에서 시작, 70% 이하시 작업 중단
+- 위험 작업: -10점
+- 실패: -5점
+- 성공: +1점
+
+## 📋 TASK CONTEXT BRIDGE - 세션 연속성
+
+### 작업 시작
+```python
+from task_context_bridge import TaskContextBridge
+bridge = TaskContextBridge()
+
+# 새 작업 시작
+bridge.start_task("GG-YYYYMMDD-XXX", "작업 설명")
+
+# 기존 작업 재개
+context = bridge.resume_task("GG-YYYYMMDD-XXX")
+```
+
+### 진행 상황 업데이트
+```python
+bridge.update_progress(50, "50% 완료: 컴포넌트 생성 완료")
+bridge.add_breadcrumb("중요 변경사항")
+```
+
+## 🎯 HYBRID TRUST STRATEGY - 의사결정 프로토콜
+
+### 위험도 평가 (모든 작업 전 실행)
+```yaml
+SAFE (신뢰도 90%+):
+  - 자동 진행
+  - 체크포인트 선택적
+
+CAUTION (신뢰도 70-89%):
+  - 사용자 확인 필요
+  - 체크포인트 필수
+
+DANGEROUS (신뢰도 70% 미만):
+  - 작업 중단
+  - 수동 개입 필요
+```
+
+## 🏔️ 프로젝트 개요
+- **이름**: 금강 2.0 (Gumgang v2)
+- **목표**: Zed Editor를 완전히 대체하는 자립형 코드 에디터
+- **아키텍처**: Tauri (Rust) + Next.js + Monaco Editor
+- **현재 단계**: 터미널 통합 완료, AI 코딩 기능 개발 중
+
+## 📁 필수 확인 파일 구조
+
+```
+/home/duksan/바탕화면/gumgang_0_5/
+├── NEXT_SESSION_IMMEDIATE.md    # ⚡ 최우선 읽기
+├── TASK_CONTEXT_BRIDGE.md       # 📋 현재 작업 상태
+├── SESSION_CONTINUITY_PROTOCOL.md # 🔄 세션 프로토콜
+├── HYBRID_TRUST_STRATEGY.md     # 🎯 신뢰도 전략
+├── .session_state.json           # 💾 세션 상태
+├── protocol_guard_v3.py         # 🛡️ 검증 시스템
+├── task_context_bridge.py       # 🌉 세션 브릿지
+├── task_tracker.py              # 📊 작업 추적기
+├── gumgang-v2/                  # Tauri + Next.js 프론트엔드
+│   ├── components/
+│   │   ├── ai/                  # AI 관련 컴포넌트
+│   │   ├── editor/              # Monaco 에디터
+│   │   └── terminal/            # 보안 터미널 (SecureTerminalManager)
+│   └── src-tauri/               # Rust 백엔드
+├── backend/                     # FastAPI 백엔드 (포트 8001)
+└── terminal_server.py           # 터미널 서버 (포트 8002)
+```
+
+## ⚠️ 절대 금지 사항
+
+1. **체크포인트 없이 시스템 파일 수정 금지**
+2. **신뢰도 70% 이하에서 자동 진행 금지**
+3. **NEXT_SESSION_IMMEDIATE.md 확인 없이 작업 시작 금지**
+4. **롤백 없이 에러 무시 금지**
+
+## 🔄 작업 플로우 (반드시 준수)
+
+```mermaid
+1. 세션 시작
+   ↓
+2. NEXT_SESSION_IMMEDIATE.md 읽기
+   ↓
+3. Protocol Guard 상태 확인
+   ↓
+4. Task Context Bridge 로드
+   ↓
+5. 체크포인트 생성
+   ↓
+6. 작업 수행
+   ↓
+7. 검증 실행
+   ↓
+8. 진행 상황 업데이트
+   ↓
+9. 다음 세션 문서 생성
+```
+
+## ✅ 완료된 작업
+- [x] 완료됨
+- GG-20250108-005: 백엔드 (100%)
+- [x] GG-20250108-005: 백엔드 아키텍처 (100%)
+- [x] GG-20250108-006: Tauri 셋업 (100%)
+- [x] GG-20250108-007: Monaco 에디터 통합 (100%)
+- [x] 터미널 통합 (SecureTerminalManager)
+- [x] 위험 명령어 차단 시스템
+- [x] Protocol Guard v3.0 구현
+- [x] Task Context Bridge 구현
+
+## 🚧 진행 중인 작업
+- [ ] GG-20250808-HTS-001 - Protocol Guard v3.0 실행 (0%)
+- [ ] AI 코딩 어시스턴트
+- [ ] Git 통합
+- [ ] 파일 동기화
+- [ ] 프로젝트 관리 시스템
+
+## 💾 세션 종료 전 필수 작업
+
+```bash
+# 1. 현재 상태 저장
+python task_tracker.py --save-state
+
+# 2. 다음 세션 문서 생성
+python task_context_bridge.py --generate-handover
+
+# 3. 최종 검증
+python protocol_guard_v3.py --final-check
+
+# 4. NEXT_SESSION_IMMEDIATE.md 업데이트
+echo "다음 세션 지침" >> NEXT_SESSION_IMMEDIATE.md
+```
+
+## 🚨 긴급 복구 프로토콜
+
+문제 발생시 즉시:
+```bash
+# 1. 최근 체크포인트로 롤백
+python protocol_guard_v3.py --rollback LAST
+
+# 2. Git 상태 확인
+git status
+git diff
+
+# 3. 안전 모드로 재시작
+python protocol_guard_v3.py --safe-mode
+```
+
+## 🛡️ 보안 규칙
+1. **위험 명령어 차단**: rm -rf /, dd, mkfs, fork bomb
+2. **승인 시스템**: 모든 명령어 실행 전 사용자 승인
+3. **신뢰도 점수**: 100%에서 시작, 위험 행동시 감소
+
+## 💻 개발 환경
+- **OS**: Linux (Ubuntu/Debian)
+- **Node.js**: v20+
+- **Rust**: 최신 stable
+- **Python**: 3.10+
+- **포트**:
+  - 3000: Next.js 개발 서버
+  - 8001: 메인 백엔드
+  - 8002: 터미널 서버
+
+## 📊 작업 코드 형식
+
+모든 작업은 다음 형식 준수:
+- **GG-YYYYMMDD-XXX**: 일반 작업
+- **GG-YYYYMMDD-HTS-XXX**: Hybrid Trust Strategy 작업
+- **GG-YYYYMMDD-EMG-XXX**: 긴급 작업
+
+## 🎯 우선순위
+
+1. **CRITICAL**: NEXT_SESSION_IMMEDIATE.md의 지침
+2. **HIGH**: 체크포인트 생성 및 검증
+3. **MEDIUM**: 진행 상황 업데이트
+4. **LOW**: 문서화 및 주석
+
+## ⚡ 토큰 관리
+
+- **80k/120k 도달시**: Task Context Bridge 활성화
+- **100k/120k 도달시**: 즉시 핸드오버 문서 생성
+- **110k/120k 도달시**: 필수 작업만 수행 후 세션 종료
+
+## 🎯 AI 작업 지침
+1. **항상 체크포인트 생성**: 중요 변경 전 `protocol_guard_v3.py --checkpoint`
+2. **테스트 우선**: 모든 기능은 테스트 스크립트 작성
+3. **문서화**: 각 컴포넌트에 명확한 주석
+4. **에러 처리**: try-catch로 모든 비동기 작업 보호
+5. **타입 안정성**: TypeScript 타입 정의 필수
+
+## 📝 커밋 메시지 규칙
+- feat: 새 기능
+- fix: 버그 수정
+- docs: 문서 변경
+- style: 코드 스타일
+- refactor: 리팩토링
+- test: 테스트 추가
+- chore: 기타 변경
+
+## ⚠️ 주의사항
+- 백엔드 재시작시 터미널 서버도 재시작
+- Monaco 에디터 변경시 타입 체크
+- Tauri 빌드 전 Next.js 빌드 확인
+- 토큰 한계 근접시 Task Context Bridge 활용
+
+
+
+# 📅 마지막 업데이트: 2025-08-08 22:34:34
+
+---
+
+# ⚠️ 이 규칙은 절대적입니다.
+# 모든 AI 세션은 이 프로토콜을 반드시 따라야 합니다.
+# 규칙 위반시 즉시 작업 중단하고 사용자에게 보고하세요.
+
+# 🎯 목표: "3일 내 Zed Editor 완전 대체"
+- 오늘: 터미널 + 안전장치 (완료)
+- 내일: AI 코딩 + 동기화
+- 모레: Git + 자립

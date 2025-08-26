@@ -1,0 +1,597 @@
+openapi: 3.0.3
+info:
+  title: ST-1204 — Memory Gate API (ultra_long)
+  version: "0.1.0"
+  description: |
+    Approval-based gate to admit knowledge into ultra_long (L5) memory.
+    - Procedure: propose → approve/reject → L5 admission (server-internal write)
+    - SSOT: status/design/memory_gate/SSOT.md
+    - All responses include evidence-friendly fields (paths, ids, timestamps) where applicable.
+
+servers:
+  - url: http://127.0.0.1:8000
+    description: Local backend (FastAPI)
+
+tags:
+  - name: gate
+    description: Memory Gate endpoints
+
+paths:
+  /api/memory/gate/propose:
+    post:
+      tags: [gate]
+      summary: Propose a candidate for ultra_long memory
+      operationId: gatePropose
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProposeRequest"
+      responses:
+        "201":
+          description: Proposal stored in pending queue
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProposeResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/memory/gate/propose/{id}:
+    patch:
+      tags: [gate]
+      summary: Patch a pending proposal (minor edits, redaction)
+      operationId: gatePatchProposal
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+          description: Proposal ULID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchProposeRequest"
+      responses:
+        "200":
+          description: Pending proposal updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProposeResponse"
+        "404":
+          description: Proposal not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Not editable (already approved/rejected)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/memory/gate/withdraw:
+    post:
+      tags: [gate]
+      summary: Withdraw a pending proposal by proposer
+      operationId: gateWithdraw
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WithdrawRequest"
+      responses:
+        "200":
+          description: Withdrawn
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuditAppendResponse"
+        "404":
+          description: Proposal not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Not allowed (already decided)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/memory/gate/approve:
+    post:
+      tags: [gate]
+      summary: Approve a proposal (server emits gate_token and performs internal L5 write)
+      operationId: gateApprove
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApproveRequest"
+      responses:
+        "201":
+          description: Approved and admitted to ultra_long (with index updates)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApproveResponse"
+        "403":
+          description: FOUR_EYES or GATE_REQUIRED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: DUPLICATE (sha256)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
+          description: WEAK_EVIDENCE or PII
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/memory/gate/reject:
+    post:
+      tags: [gate]
+      summary: Reject a proposal with a standardized code
+      operationId: gateReject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RejectRequest"
+      responses:
+        "201":
+          description: Rejected record persisted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RejectResponse"
+        "404":
+          description: Proposal not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/memory/gate/list:
+    get:
+      tags: [gate]
+      summary: List gate items by state
+      operationId: gateList
+      parameters:
+        - in: query
+          name: state
+          schema:
+            type: string
+            enum: [pending, approved, rejected]
+          description: Filter by state (optional)
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 200, default: 50 }
+        - in: query
+          name: offset
+          schema: { type: integer, minimum: 0, default: 0 }
+      responses:
+        "200":
+          description: Summary list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GateListResponse"
+
+  /api/memory/gate/item/{id}:
+    get:
+      tags: [gate]
+      summary: Get a single gate record by id (any state)
+      operationId: gateGetItem
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Gate record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GateItemResponse"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/memory/gate/stats:
+    get:
+      tags: [gate]
+      summary: Operational stats for the gate
+      operationId: gateStats
+      responses:
+        "200":
+          description: Stats snapshot
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GateStatsResponse"
+
+components:
+  schemas:
+    ProposeRequest:
+      type: object
+      required: [text, refs, proposer]
+      properties:
+        text:
+          type: string
+          description: Candidate knowledge text
+          minLength: 1
+        redacted_text:
+          type: string
+          description: Optional redacted variant for PII
+        refs:
+          type: array
+          description: Evidence references like "path#Lx-y"
+          minItems: 1
+          items:
+            type: string
+        rationale:
+          type: string
+          description: Why this belongs to ultra_long
+        scope_id:
+          type: string
+          description: ST/BT/PROJECT scope hint
+        sessionId:
+          type: string
+          description: Logical session id
+        proposer:
+          type: string
+          description: Proposer identity (account id or name)
+
+    ProposeResponse:
+      type: object
+      properties:
+        ok: { type: boolean, default: true }
+        data:
+          type: object
+          properties:
+            state: { type: string, enum: [pending] }
+            proposal:
+              $ref: "#/components/schemas/ProposalPending"
+            path:
+              type: string
+              description: Pending JSON path (relative to project)
+            audit_appended:
+              type: boolean
+        meta:
+          type: object
+          properties:
+            ts: { type: string }
+            checks:
+              $ref: "#/components/schemas/AutoChecks"
+
+    ProposalPending:
+      type: object
+      properties:
+        id: { type: string, description: "ULID" }
+        created_at: { type: string, description: "ISO8601Z" }
+        proposer: { type: string }
+        scope_id: { type: string }
+        session_id: { type: string }
+        text: { type: string }
+        redacted_text: { type: string }
+        refs:
+          type: array
+          items: { type: string }
+        rationale: { type: string }
+        sha256: { type: string, description: "sha256(text)" }
+        source_diversity_ok: { type: boolean }
+        dup_candidates:
+          type: array
+          items:
+            $ref: "#/components/schemas/DupCandidate"
+        pii_flags:
+          type: array
+          items:
+            $ref: "#/components/schemas/PiiFlag"
+        auto_checks:
+          $ref: "#/components/schemas/AutoChecks"
+        embedding_version: { type: string }
+
+    PatchProposeRequest:
+      type: object
+      properties:
+        redacted_text:
+          type: string
+          description: Apply redaction to pending item
+        typo_fixes:
+          type: object
+          additionalProperties: { type: string }
+          description: Optional small corrections map
+
+    WithdrawRequest:
+      type: object
+      required: [id, actor]
+      properties:
+        id: { type: string }
+        actor: { type: string }
+
+    ApproveRequest:
+      type: object
+      required: [id, approver, runId, checkpointEvidence]
+      properties:
+        id: { type: string }
+        approver: { type: string }
+        runId: { type: string, description: "Latest RUN_ID in CKPT_72H_RUN.md" }
+        checkpointEvidence: { type: string, description: "path#Lx-y to checkpoint line(s)" }
+        override_reason:
+          type: string
+          description: Explain why approving despite WARNs (if any)
+
+    ApproveResponse:
+      type: object
+      properties:
+        ok: { type: boolean, default: true }
+        data:
+          type: object
+          properties:
+            state: { type: string, enum: [approved] }
+            approved:
+              $ref: "#/components/schemas/ApprovedRecord"
+            l5_record:
+              type: object
+              properties:
+                tier: { type: string, enum: [ultra_long] }
+                path: { type: string }
+                bytes_written: { type: integer }
+            indexes:
+              type: object
+              properties:
+                inverted_updated: { type: boolean }
+                vector_upserted: { type: boolean }
+                backlink_count: { type: integer }
+            audit_appended:
+              type: boolean
+        meta:
+          type: object
+          properties:
+            ts: { type: string }
+
+    ApprovedRecord:
+      type: object
+      properties:
+        id: { type: string }
+        approved_at: { type: string }
+        approver: { type: string }
+        run_id: { type: string }
+        checkpoint_evidence: { type: string }
+        approved_sha256: { type: string }
+        gate_token: { type: string, description: "HMAC-based token for internal L5 write" }
+        prev_hash: { type: string }
+        review_at: { type: string }
+
+    RejectRequest:
+      type: object
+      required: [id, approver, reject_code, runId]
+      properties:
+        id: { type: string }
+        approver: { type: string }
+        reject_code:
+          $ref: "#/components/schemas/RejectCode"
+        reason: { type: string }
+        runId: { type: string }
+
+    RejectResponse:
+      type: object
+      properties:
+        ok: { type: boolean, default: true }
+        data:
+          type: object
+          properties:
+            state: { type: string, enum: [rejected] }
+            rejected:
+              $ref: "#/components/schemas/RejectedRecord"
+            audit_appended:
+              type: boolean
+        meta:
+          type: object
+          properties:
+            ts: { type: string }
+
+    RejectedRecord:
+      type: object
+      properties:
+        id: { type: string }
+        rejected_at: { type: string }
+        approver: { type: string }
+        reject_code:
+          $ref: "#/components/schemas/RejectCode"
+        reason: { type: string }
+        prev_hash: { type: string }
+
+    GateListResponse:
+      type: object
+      properties:
+        ok: { type: boolean, default: true }
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: "#/components/schemas/GateSummary"
+            count: { type: integer }
+            state: { type: string }
+        meta:
+          type: object
+          properties:
+            ts: { type: string }
+
+    GateSummary:
+      type: object
+      properties:
+        id: { type: string }
+        state:
+          type: string
+          enum: [pending, approved, rejected]
+        created_at: { type: string }
+        proposer: { type: string }
+        approver: { type: string }
+        excerpt:
+          type: string
+          description: First 120 chars of (redacted_)text
+        refs_count: { type: integer }
+        source_roots:
+          type: array
+          items: { type: string }
+
+    GateItemResponse:
+      type: object
+      properties:
+        ok: { type: boolean, default: true }
+        data:
+          type: object
+          properties:
+            state:
+              type: string
+              enum: [pending, approved, rejected]
+            proposal:
+              $ref: "#/components/schemas/ProposalPending"
+            approved:
+              $ref: "#/components/schemas/ApprovedRecord"
+            rejected:
+              $ref: "#/components/schemas/RejectedRecord"
+            path: { type: string }
+        meta:
+          type: object
+          properties:
+            ts: { type: string }
+
+    GateStatsResponse:
+      type: object
+      properties:
+        ok: { type: boolean, default: true }
+        data:
+          type: object
+          properties:
+            pending_count: { type: integer }
+            approved_count: { type: integer }
+            rejected_count: { type: integer }
+            approval_rate: { type: number, format: float }
+            avg_wait_seconds: { type: number, format: float }
+            pii_warning_rate: { type: number, format: float }
+            duplicate_block_rate: { type: number, format: float }
+        meta:
+          type: object
+          properties:
+            ts: { type: string }
+            snapshot_path: { type: string }
+
+    AutoChecks:
+      type: object
+      properties:
+        ref_count_ok: { type: boolean }
+        source_diversity_ok: { type: boolean }
+        pii_detected: { type: boolean }
+        redaction_suggested: { type: boolean }
+        duplicate_sha256: { type: boolean }
+        similarity_warning:
+          type: boolean
+          description: true if 0.95 ≤ cos < 0.98
+        similarity_block:
+          type: boolean
+          description: true if cos ≥ 0.98
+        top_similarity:
+          type: number
+          format: float
+        notes:
+          type: array
+          items: { type: string }
+
+    PiiFlag:
+      type: object
+      properties:
+        kind:
+          type: string
+          description: email|phone|card|id|other
+        match: { type: string }
+        start: { type: integer }
+        end: { type: integer }
+
+    DupCandidate:
+      type: object
+      properties:
+        id: { type: string }
+        reason:
+          type: string
+          enum: [sha256, cosine]
+        cosine:
+          type: number
+          format: float
+
+    RejectCode:
+      type: string
+      enum: [PII, DUPLICATE, WEAK_EVIDENCE, OTHER]
+
+    AuditAppendResponse:
+      type: object
+      properties:
+        ok: { type: boolean, default: true }
+        data:
+          type: object
+          properties:
+            audit_appended: { type: boolean }
+            prev_hash: { type: string }
+            this_hash: { type: string }
+        meta:
+          type: object
+          properties:
+            ts: { type: string }
+
+    ErrorResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          default: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: |
+                FOUR_EYES | GATE_REQUIRED | DUPLICATE | WEAK_EVIDENCE | PII | NOT_FOUND | BAD_REQUEST | INTERNAL
+            message:
+              type: string
+        meta:
+          type: object
+          properties:
+            ts: { type: string }
+
+x-notes:
+  ssot: status/design/memory_gate/SSOT.md
+  pii_patterns: status/resources/memory/pii/patterns_v1.json
+  audit_dir: status/evidence/memory/gate/audit/
+  queues:
+    pending: status/evidence/memory/gate/pending/
+    approved: status/evidence/memory/gate/approved/
+    rejected: status/evidence/memory/gate/rejected/

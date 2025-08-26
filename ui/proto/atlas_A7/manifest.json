@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "path": "gumgang_meeting/status/evidence/business/ideas/20250821_busapp_easteregg.md",
+      "title": "Business Idea Card — Bus Arrival App (Onboarding + Easter Egg Ads)",
+      "date": "2025-08-21",
+      "status": "IDEA",
+      "bullets": [
+        "온보딩 3단계(출발지→도착지→시간대)로 즉시 개인화",
+        "심플 뷰: '다음 버스까지 N분' 한 줄 + 보조 패널",
+        "LLM 보조와 이스터에그형 광고(옵션, 끄기 가능)"
+      ]
+    }
+  ]
+}

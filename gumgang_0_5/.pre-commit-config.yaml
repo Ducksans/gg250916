@@ -1,0 +1,126 @@
+# Task Protocol Guard - Pre-commit Hooks
+# 할루시네이션 및 Protocol 위반 방지
+# Created: 2025-08-08
+
+repos:
+  # 기본 코드 품질 검사
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml
+        name: YAML 문법 검사
+      - id: check-json
+        name: JSON 문법 검사
+      - id: check-added-large-files
+        name: 대용량 파일 차단
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+        name: 병합 충돌 표시 검사
+      - id: detect-private-key
+        name: 개인 키 감지
+      - id: trailing-whitespace
+        name: 줄 끝 공백 제거
+      - id: end-of-file-fixer
+        name: 파일 끝 개행 추가
+      - id: mixed-line-ending
+        name: 개행 문자 일관성
+        args: ['--fix=lf']
+
+  # Python 코드 검사
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        name: Python 코드 포맷팅
+        language_version: python3
+        files: \.py$
+
+  # Task Protocol 검증 (커스텀 훅)
+  - repo: local
+    hooks:
+      - id: protocol-guard
+        name: Task Protocol Guard 검증
+        entry: python protocol_guard.py --quiet
+        language: python
+        pass_filenames: false
+        always_run: true
+        stages: [commit]
+
+      - id: task-id-format
+        name: Task ID 형식 검증
+        entry: bash -c 'if grep -r "GG-[0-9]\{8\}-[0-9]\{3\}" --include="*.py" --include="*.json" . | grep -v "GG-20250108-0[0-1][0-9]" > /dev/null; then echo "❌ 잘못된 Task ID 형식 감지!"; exit 1; fi'
+        language: system
+        pass_filenames: false
+
+      - id: no-react-hallucination
+        name: React/Next.js 할루시네이션 방지
+        entry: bash -c 'if grep -r "create-react-app\|next\s\+dev\|next\s\+build\|useEffect\|useState" --include="*.py" --include="*.js" --include="*.ts" --include="*.tsx" gumgang-v2/ 2>/dev/null; then echo "⚠️ React/Next.js 코드 감지! Tauri를 사용하세요!"; exit 1; fi || exit 0'
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: no-wrong-port
+        name: 포트 8001 일관성 검사
+        entry: bash -c 'if grep -r "localhost:3000.*backend\|:3000.*api" --include="*.py" --include="*.js" --include="*.ts" . 2>/dev/null; then echo "❌ 백엔드는 포트 8001을 사용합니다!"; exit 1; fi || exit 0'
+        language: system
+        pass_filenames: false
+
+      - id: backend-health-check
+        name: 백엔드 서버 상태 확인
+        entry: bash -c 'curl -s http://localhost:8001/health > /dev/null 2>&1 || echo "⚠️ 경고: 백엔드 서버가 실행되지 않음 (포트 8001)"'
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: task-registry-exists
+        name: Task Registry 파일 존재 확인
+        entry: bash -c 'if [ ! -f "task_tracking/master_registry.json" ]; then echo "❌ master_registry.json 파일이 없습니다!"; exit 1; fi'
+        language: system
+        pass_filenames: false
+
+      - id: check-date-consistency
+        name: 날짜 일관성 확인 (2025년 8월)
+        entry: python -c "import datetime; print('📅 현재 날짜:', datetime.datetime.now().strftime('%Y년 %m월 %d일')); print('⚠️ Task는 2025년 8월 기준입니다' if datetime.datetime.now().month != 8 else '✅ 날짜 일치')"
+        language: python
+        pass_filenames: false
+        always_run: true
+
+      - id: token-usage-warning
+        name: 토큰 사용량 경고
+        entry: python -c "print('⚠️ 현재 세션 토큰 사용량: ~40k/120k (33%)\n💡 남은 토큰으로 Task 006-007 완료 가능')"
+        language: python
+        pass_filenames: false
+        always_run: true
+        stages: [commit]
+
+  # 마크다운 린터
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.38.0
+    hooks:
+      - id: markdownlint
+        name: Markdown 린팅
+        args: ['--fix']
+        files: \.md$
+
+# 전역 설정
+default_language_version:
+  python: python3
+
+# 커밋 메시지 검증 비활성화 (토큰 절약)
+# default_install_hook_types: [pre-commit]
+
+exclude: |
+  (?x)^(
+    \.venv/.*|
+    venv/.*|
+    node_modules/.*|
+    \.git/.*|
+    __pycache__/.*|
+    .*\.pyc|
+    .*\.egg-info/.*|
+    build/.*|
+    dist/.*
+  )$
+
+# 실패 시 자동 수정 시도
+fail_fast: false

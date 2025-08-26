@@ -1,0 +1,233 @@
+/*
+  Gumgang UI Overlay — labs/default.css
+  Purpose:
+    - Safe, minimal visual refinements loaded at runtime (no rebuild).
+    - Can be replaced by ui/overlays/active.css to iterate UI quickly.
+
+  Scope:
+    - Overrides only; avoids breaking base layout or behavior.
+    - Uses CSS variables and light specificity; respects body.lowfx.
+
+  Notes:
+    - Load order: snapshot CSS → this overlay (via auto-injection hook).
+    - Remove or swap this file to revert changes instantly.
+*/
+
+/* 1) Theme polish via variables (non-destructive) */
+:root {
+    /* Slightly brighter accent and clearer borders */
+    --accent: #30d27d;
+    --border: #223047;
+    --shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+    /* Keep container; tweak just a hair for breathing room */
+    --container: clamp(1100px, 90vw, 1800px);
+}
+
+/* 2) Header glass effect (opt-in; disabled in lowfx or when data-noblur=1) */
+@supports (
+    (backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px))
+) {
+    body:not(.lowfx)[data-noblur="0"] header,
+    body:not(.lowfx):not([data-noblur="1"]) header {
+        background: rgba(15, 23, 42, 0.55) !important;
+        -webkit-backdrop-filter: saturate(1.1) blur(10px);
+        backdrop-filter: saturate(1.1) blur(10px);
+        box-shadow: 0 6px 28px rgba(0, 0, 0, 0.25);
+    }
+}
+
+/* 3) Buttons — clarity, accessibility, and sticky state */
+.btn {
+    border: 1px solid var(--border) !important;
+    background: linear-gradient(
+        180deg,
+        rgba(24, 31, 50, 0.9),
+        rgba(17, 24, 39, 0.9)
+    ) !important;
+    color: var(--fg) !important;
+    box-shadow:
+        0 2px 0 rgba(255, 255, 255, 0.04) inset,
+        0 1px 10px rgba(0, 0, 0, 0.25) !important;
+    transition:
+        transform 80ms ease,
+        box-shadow 120ms ease,
+        border-color 120ms ease;
+}
+.btn:hover {
+    border-color: rgba(48, 210, 125, 0.6) !important;
+    box-shadow:
+        0 2px 0 rgba(255, 255, 255, 0.06) inset,
+        0 2px 14px rgba(48, 210, 125, 0.15) !important;
+}
+.btn:active {
+    transform: translateY(1px) scale(0.99);
+}
+.btn:focus-visible {
+    outline: 2px solid rgba(48, 210, 125, 0.9);
+    outline-offset: 2px;
+}
+
+/* Sticky feedback (last pressed) */
+.btn.is-sticky {
+    border-color: rgba(48, 210, 125, 0.8) !important;
+    box-shadow:
+        0 0 0 2px rgba(48, 210, 125, 0.18),
+        0 1px 12px rgba(48, 210, 125, 0.2) !important;
+    position: relative;
+}
+.btn.is-sticky::after {
+    content: "ON";
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 10px;
+    line-height: 1;
+    padding: 3px 5px;
+    color: #0b0c10;
+    background: var(--accent);
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(48, 210, 125, 0.35);
+}
+
+/* 4) Tabs — selected clarity */
+nav.tabs button[aria-selected="true"],
+nav.tabs a[aria-selected="true"] {
+    background: rgba(48, 210, 125, 0.12) !important;
+    border-color: rgba(48, 210, 125, 0.6) !important;
+    color: var(--fg) !important;
+}
+
+/* 5) Panels and warn bars — subtle depth and contrast */
+section.panel {
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.28) !important;
+    border: 1px solid rgba(34, 48, 71, 0.8) !important;
+}
+.warnbar {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 184, 0, 0.12),
+        rgba(255, 149, 0, 0.08)
+    ) !important;
+    border: 1px solid rgba(255, 184, 0, 0.4) !important;
+    color: #ffd27a !important;
+    box-shadow: 0 6px 20px rgba(255, 184, 0, 0.12) !important;
+}
+
+/* 6) A4 shortcuts — alignment and label clarity */
+#a4-shortcuts .label {
+    opacity: 0.9;
+    letter-spacing: 0.2px;
+}
+#a4-shortcuts .btn {
+    min-height: 32px;
+}
+
+/* 7) Small motion cues (avoid in lowfx) */
+body:not(.lowfx) .fade-in {
+    animation: overlay-fade-in 280ms ease-out both;
+}
+@keyframes overlay-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 8) Accessibility helpers */
+:where(button, [role="button"]) {
+    -webkit-tap-highlight-color: rgba(48, 210, 125, 0.25);
+}
+:where([title]) {
+    cursor: help;
+}
+
+/* 9) Safe-mode badge (non-intrusive) */
+body[data-safe="1"] .hdr h1::after {
+    content: "SAFE";
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 10px;
+    letter-spacing: 0.6px;
+    color: #0b0c10;
+    background: #ffd27a;
+    padding: 3px 6px;
+    border-radius: 6px;
+    vertical-align: middle;
+}
+
+/* 10) Low-FX respect — strip glass/shadows if enabled */
+body.lowfx header,
+body.lowfx nav.tabs,
+body.lowfx section.panel,
+body.lowfx footer {
+    box-shadow: none !important;
+}
+body.lowfx * {
+    transition: none !important;
+}
+
+/* 11) Overlay active marker (developer-only hint; easy to remove) */
+html::before {
+    content: "overlay:labs/default.css";
+    position: fixed;
+    z-index: 2147483647;
+    right: 8px;
+    bottom: 6px;
+    font:
+        10px/1.6 ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        Consolas,
+        "Liberation Mono",
+        monospace;
+    color: rgba(229, 231, 235, 0.6);
+    background: rgba(11, 12, 16, 0.5);
+    padding: 2px 6px;
+    border: 1px solid rgba(34, 48, 71, 0.7);
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+/* A4 — Recent Open dropdown: improve contrast and focus */
+#sel-open-recent {
+    color: #e5f2ea !important;
+    background: #0e1625 !important;
+    border-color: rgba(48, 210, 125, 0.55) !important;
+    box-shadow: 0 0 0 2px rgba(48, 210, 125, 0.12);
+    font-size: 13px;
+}
+#sel-open-recent:focus-visible {
+    outline: 2px solid rgba(48, 210, 125, 0.9);
+    outline-offset: 2px;
+}
+#sel-open-recent option {
+    color: #e5e7eb;
+    background: #0b0c10;
+}
+#sel-open-recent option:hover,
+#sel-open-recent option:checked {
+    background: rgba(48, 210, 125, 0.22);
+    color: #0b0c10;
+}
+
+/* Light theme adjustments */
+html[data-theme="light"] #sel-open-recent {
+    color: #0f172a !important;
+    background: #ffffff !important;
+    border-color: rgba(22, 163, 74, 0.55) !important;
+}
+html[data-theme="light"] #sel-open-recent option {
+    color: #0f172a;
+    background: #ffffff;
+}
+html[data-theme="light"] #sel-open-recent option:hover,
+html[data-theme="light"] #sel-open-recent option:checked {
+    background: rgba(22, 163, 74, 0.14);
+    color: #0f172a;
+}
+
+/* End of labs/default.css */

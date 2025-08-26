@@ -1,0 +1,17 @@
+{
+  "type": "natural_description",
+  "name": "금강 프론트 구조 설명",
+  "description": "금강 프론트의 전체 파일과 역할에 대한 자연어 설명",
+  "content": [
+    "금강의 프론트는 React 기반으로 구성되어 있으며, 진입점은 src/main.jsx입니다.",
+    "main.jsx는 App.jsx를 import하여 전체 애플리케이션을 루트 DOM에 마운트합니다.",
+    "App.jsx는 react-router-dom을 사용하여 페이지 라우팅 구조를 설정하며, HomePage.jsx와 RoadmapPage.jsx 페이지를 포함합니다.",
+    "Header.tsx는 상단 상태 바 컴포넌트로, 금강의 버전과 상태 메시지를 표시하고 반사 중일 때는 애니메이션 효과를 보여줍니다.",
+    "GumgangStatusCard.tsx는 금강의 기억 상태나 노드 상태를 카드 형태로 시각화하는 컴포넌트입니다.",
+    "StatusDisplay.tsx는 LangGraph 상태 흐름의 각 단계에서 금강의 반응을 표현하며, 진행 중 상태에서는 animate-pulse와 같은 스타일을 적용합니다.",
+    "ChatWindow.jsx는 사용자 질문과 GPT 응답을 표시하는 주요 대화창입니다.",
+    "types.ts는 프론트 전체에서 사용되는 상태 타입과 인터페이스를 정의합니다.",
+    "roadmap.json은 금강의 기억으로 인게스트될 로드맵 데이터를 담고 있으며, public 폴더에 위치합니다.",
+    "tailwind.config.js는 TailwindCSS 설정 파일로 다크모드(class 기반)와 UI 스타일 커스터마이징을 지원합니다."
+  ]
+}

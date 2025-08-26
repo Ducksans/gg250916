@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+# Gumgang 2.0 — pre-commit guard hook (template)
+# Purpose:
+# - Auto-record staged file changes into logs/guard_audit.log and .session/session_manifest.json
+# - Only when an explicit Task ID is discoverable (env/branch/prepared message)
+# - KST timestamps are generated inside scripts/guard_record.py via backend/utils/time_kr.now_kr_str_minute
+#
+# Installation:
+#   ln -sf "$(git rev-parse --show-toplevel)/scripts/hooks/pre-commit" "$(git rev-parse --git-path hooks)/pre-commit"
+#
+# Notes:
+# - This pre-commit hook runs BEFORE commit message is finalized.
+# - If a Task ID cannot be reliably detected here, it gracefully skips;
+#   the commit-msg hook (installed separately) will still auto-record after the message is written.
+#
+# Task ID detection order:
+#   1) GUARD_TASK environment variable (explicit)
+#   2) Current branch name (e.g., G2-UI-STATUS-HUD, B-STATUS-WS)
+#   3) Prepared message files if present this early (MERGE_MSG, COMMIT_EDITMSG) — best effort
+#
+# Exit behavior:
+# - Never blocks a commit by default. To enforce presence of Task ID here, export GUARD_ENFORCE_TASK_PRE=1.
+
+set -euo pipefail
+
+# Resolve repo root
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+if [[ -z "${REPO_ROOT}" || ! -d "${REPO_ROOT}" ]]; then
+  echo "[pre-commit] WARN: cannot resolve repo root. Skipping guard record." >&2
+  exit 0
+fi
+
+cd "${REPO_ROOT}"
+
+# If nothing staged, skip quickly
+if ! git diff --cached --quiet --; then
+  : # there are staged changes
+else
+  # No staged changes
+  exit 0
+fi
+
+# Pick Python
+PYTHON_BIN=""
+if [[ -x "${REPO_ROOT}/.venv/bin/python" ]]; then
+  PYTHON_BIN="${REPO_ROOT}/.venv/bin/python"
+elif command -v python3 >/dev/null 2>&1; then
+  PYTHON_BIN="python3"
+elif command -v python >/dev/null 2>&1; then
+  PYTHON_BIN="python"
+else
+  echo "[pre-commit] WARN: no python interpreter found. Skipping guard record." >&2
+  exit 0
+fi
+
+REC_SCRIPT="${REPO_ROOT}/scripts/guard_record.py"
+if [[ ! -f "${REC_SCRIPT}" ]]; then
+  echo "[pre-commit] WARN: recorder script not found: ${REC_SCRIPT}" >&2
+  exit 0
+fi
+
+# Detect Task ID
+TASK_ID="${GUARD_TASK:-}"
+
+# 2) From branch name (e.g., feat/G2-UI-STATUS-HUD or G2-UI-STATUS-HUD)
+if [[ -z "${TASK_ID}" ]]; then
+  BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
+  # Extract token like ABC-DEF or ABC.DEF or ABC_DEF (must start with uppercase letter)
+  if [[ -n "${BRANCH}" ]]; then
+    if [[ "${BRANCH}" =~ ([A-Z][A-Z0-9]+([_.-][A-Z0-9]+)+) ]]; then
+      TASK_ID="${BASH_REMATCH[1]}"
+    fi
+  fi
+fi
+
+# 3) From prepared message files if available (rare at pre-commit stage, best-effort)
+if [[ -z "${TASK_ID}" ]]; then
+  try_extract_task_from_file() {
+    local file_path="$1"
+    [[ -f "${file_path}" ]] || return 1
+    # 3-1) "task: <ID>"
+    local t
+    t="$(awk 'BEGIN{IGNORECASE=1}/^task:[[:space:]]*/{sub(/^task:[[:space:]]*/,"");print;exit}' "${file_path}")"
+    if [[ -n "${t}" ]]; then
+      echo "${t}"
+      return 0
+    fi
+    # 3-2) Conventional scope "(<ID>)" on first line
+    t="$(sed -nE '1s/.*\(([A-Z0-9][A-Z0-9_.-]+)\).*/\1/p' "${file_path}")"
+    if [[ -n "${t}" ]]; then
+      echo "${t}"
+      return 0
+    fi
+    # 3-3) Fallback token pattern
+    t="$(sed -nE '1s/.*\b([A-Z][A-Z0-9]+([_.-][A-Z0-9]+)+)\b.*/\1/p' "${file_path}")"
+    if [[ -n "${t}" ]]; then
+      echo "${t}"
+      return 0
+    fi
+    return 1
+  }
+  for mf in ".git/MERGE_MSG" ".git/COMMIT_EDITMSG"; do
+    if t="$(try_extract_task_from_file "${mf}")"; then
+      TASK_ID="${t}"
+      break
+    fi
+  done
+fi
+
+# If still no Task ID → skip (commit-msg hook will handle later)
+# Repo-level enforcement via protocol_config_v3.json (+ env override)
+CONF_FILE="${REPO_ROOT}/protocol_config_v3.json"
+ENFORCE_PRE_CFG="0"
+if [[ -f "${CONF_FILE}" ]]; then
+  export CONF_FILE
+  set +e
+  ENFORCE_PRE_CFG="$("${PYTHON_BIN}" - <<'PY'
+import json, os
+p = os.environ.get("CONF_FILE")
+try:
+    with open(p, "r", encoding="utf-8") as f:
+        cfg = json.load(f)
+    flag = bool(((cfg or {}).get("guard_enforce") or {}).get("pre", False))
+    print("1" if flag else "0")
+except Exception:
+    print("0")
+PY
+  )"
+  set -e
+fi
+ENFORCE_PRE_ENV="${GUARD_ENFORCE_TASK_PRE:-0}"
+if [[ "${ENFORCE_PRE_CFG}" == "1" || "${ENFORCE_PRE_ENV}" == "1" ]]; then
+  ENFORCE_PRE="1"
+else
+  ENFORCE_PRE="0"
+fi
+
+if [[ -z "${TASK_ID}" ]]; then
+  if [[ "${ENFORCE_PRE}" == "1" ]]; then
+    echo "[pre-commit] ERROR: Task ID not found (pre-commit enforcement active). Blocked." >&2
+    echo "  Provide GUARD_TASK env or include task id in branch name, e.g., G2-UI-STATUS-HUD" >&2
+    exit 1
+  fi
+  echo "[pre-commit] INFO: Task ID not found at pre-commit stage. Skipping guard record (commit-msg will handle)." >&2
+  exit 0
+fi
+
+# Validation-only: do not record at pre-commit to avoid orphan records on aborted commits.
+# At this point TASK_ID is present (earlier block exits if absent unless enforcement is off).
+# We only inform and defer actual recording to commit-msg hook.
+echo "[pre-commit] INFO: Task ID detected (${TASK_ID}). Validation-only; recording deferred to commit-msg." >&2
+exit 0

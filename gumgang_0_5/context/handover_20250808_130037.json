@@ -1,0 +1,226 @@
+{
+  "timestamp": "2025-08-08T13:00:37.857354",
+  "session_summary": {
+    "session_id": "SESSION-20250808-120939",
+    "started": "2025-08-08T12:09:40.886390",
+    "duration": "진행중",
+    "token_usage": {
+      "current": 0,
+      "limit": 120000
+    },
+    "files_created": 0,
+    "files_modified": 0
+  },
+  "tasks": {
+    "completed": [
+      {
+        "id": "GG-20250108-001",
+        "name": "세션 매니저 시스템 구축",
+        "progress": 100,
+        "artifacts": []
+      },
+      {
+        "id": "GG-20250108-002",
+        "name": "Task 추적 시스템 구축",
+        "progress": 100,
+        "artifacts": []
+      },
+      {
+        "id": "GG-20250108-003",
+        "name": "프로젝트 구조 정리",
+        "progress": 100,
+        "artifacts": []
+      },
+      {
+        "id": "GG-20250108-004",
+        "name": "인계 시스템 구축",
+        "progress": 100,
+        "artifacts": []
+      }
+    ],
+    "in_progress": [
+      {
+        "id": "GG-20250808-123622-001",
+        "name": "세션 매니저 시스템 구축",
+        "progress": 50,
+        "artifacts": [
+          "session_manager.py",
+          "context/"
+        ]
+      },
+      {
+        "id": "GG-20250108-005",
+        "name": "백엔드 안정화",
+        "progress": 70,
+        "artifacts": [
+          "backend/simple_main.py",
+          "gumgang-v2/hooks/useUnifiedBackend.ts",
+          "gumgang-v2/.env.local"
+        ]
+      }
+    ],
+    "pending": [
+      {
+        "id": "GG-20250808-123622-002",
+        "name": "Task 추적 시스템 구축",
+        "progress": 0,
+        "artifacts": []
+      },
+      {
+        "id": "GG-20250108-006",
+        "name": "Tauri 파일시스템 API",
+        "progress": 0,
+        "artifacts": []
+      },
+      {
+        "id": "GG-20250108-007",
+        "name": "Monaco 에디터 연동",
+        "progress": 0,
+        "artifacts": []
+      },
+      {
+        "id": "GG-20250108-008",
+        "name": "실시간 동기화 시스템",
+        "progress": 0,
+        "artifacts": []
+      },
+      {
+        "id": "GG-20250108-009",
+        "name": "3D 시각화 최적화",
+        "progress": 0,
+        "artifacts": []
+      },
+      {
+        "id": "GG-20250108-010",
+        "name": "테스트 및 문서화",
+        "progress": 0,
+        "artifacts": []
+      }
+    ],
+    "blocked": []
+  },
+  "file_changes": [
+    {
+      "path": "gumgang-v2/package.json",
+      "modified": "2025-08-07T18:59:33.749419",
+      "size": 1183
+    },
+    {
+      "path": "gumgang-v2/app/dashboard/page.tsx",
+      "modified": "2025-08-07T21:28:46.112388",
+      "size": 19841
+    },
+    {
+      "path": "backend/app/api/routes/dashboard.py",
+      "modified": "2025-08-08T10:38:59.419925",
+      "size": 24438
+    },
+    {
+      "path": "backend/main.py",
+      "modified": "2025-08-08T09:18:22.748684",
+      "size": 6494
+    },
+    {
+      "path": "backend/app_new.py",
+      "modified": "2025-08-08T10:48:52.466398",
+      "size": 1176
+    },
+    {
+      "path": "session_manager.py",
+      "modified": "2025-08-08T12:02:31.160639",
+      "size": 21934
+    },
+    {
+      "path": "task_tracker.py",
+      "modified": "2025-08-08T12:05:20.124148",
+      "size": 26009
+    }
+  ],
+  "decisions_made": [
+    "구버전 frontend를 legacy_backup으로 이동",
+    "gumgang-v2를 메인 프론트엔드로 확정",
+    "Task 추적 시스템 구축 완료",
+    "세션 매니저 시스템 구축 완료"
+  ],
+  "next_session_tasks": [
+    "GG-20250808-123622-002: Task 추적 시스템 구축",
+    "GG-20250108-006: Tauri 파일시스템 API",
+    "GG-20250108-007: Monaco 에디터 연동",
+    "GG-20250108-008: 실시간 동기화 시스템",
+    "GG-20250108-009: 3D 시각화 최적화"
+  ],
+  "context_files": [
+    {
+      "name": "memory_ultra_short.json",
+      "path": "/home/duksan/바탕화면/gumgang_0_5/context/memory_ultra_short.json",
+      "size": 283,
+      "modified": "2025-08-08T12:09:40.904913"
+    },
+    {
+      "name": "HANDOVER_20250808_125009.md",
+      "path": "/home/duksan/바탕화면/gumgang_0_5/context/HANDOVER_20250808_125009.md",
+      "size": 1911,
+      "modified": "2025-08-08T12:50:09.332291"
+    },
+    {
+      "name": "task_registry.json",
+      "path": "/home/duksan/바탕화면/gumgang_0_5/context/task_registry.json",
+      "size": 519,
+      "modified": "2025-08-08T12:09:40.904913"
+    },
+    {
+      "name": "handover_20250808_121224.json",
+      "path": "/home/duksan/바탕화면/gumgang_0_5/context/handover_20250808_121224.json",
+      "size": 3261,
+      "modified": "2025-08-08T12:12:24.728385"
+    },
+    {
+      "name": "current_session.yaml",
+      "path": "/home/duksan/바탕화면/gumgang_0_5/context/current_session.yaml",
+      "size": 5327,
+      "modified": "2025-08-08T12:09:40.889913"
+    },
+    {
+      "name": "AI_SESSION_PROMPT.md",
+      "path": "/home/duksan/바탕화면/gumgang_0_5/context/AI_SESSION_PROMPT.md",
+      "size": 2159,
+      "modified": "2025-08-08T13:00:37.856918"
+    },
+    {
+      "name": "HANDOVER_20250808_121224.md",
+      "path": "/home/duksan/바탕화면/gumgang_0_5/context/HANDOVER_20250808_121224.md",
+      "size": 1790,
+      "modified": "2025-08-08T12:12:24.728385"
+    },
+    {
+      "name": "QUICK_REFERENCE.yaml",
+      "path": "/home/duksan/바탕화면/gumgang_0_5/context/QUICK_REFERENCE.yaml",
+      "size": 790,
+      "modified": "2025-08-08T13:00:37.855918"
+    },
+    {
+      "name": "handover_20250808_125009.json",
+      "path": "/home/duksan/바탕화면/gumgang_0_5/context/handover_20250808_125009.json",
+      "size": 4139,
+      "modified": "2025-08-08T12:50:09.332291"
+    },
+    {
+      "name": "session_history.json",
+      "path": "/home/duksan/바탕화면/gumgang_0_5/context/session_history.json",
+      "size": 6673,
+      "modified": "2025-08-08T12:09:40.890913"
+    },
+    {
+      "name": "session.log",
+      "path": "/home/duksan/바탕화면/gumgang_0_5/context/session.log",
+      "size": 2914,
+      "modified": "2025-08-08T13:00:37.856918"
+    }
+  ],
+  "critical_notes": [
+    "⚠️ /frontend 경로는 구버전입니다. 사용하지 마세요!",
+    "✅ /gumgang-v2가 현재 활성 프론트엔드입니다.",
+    "📌 모든 작업에 Task ID를 부여하세요.",
+    "🔍 파일 경로는 항상 verify_file_exists()로 확인하세요."
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": "0.1",
+  "index_id": "VECTOR_INDEX_SNAPSHOT_20250819_1426",
+  "run_id": "72H_20250819_1114Z",
+  "stage": "ST-0501",
+  "created_utc": "2025-08-19T14:26:18Z",
+  "status": "indexed",
+  "stats": {
+    "doc_count": 55,
+    "vector_count": 214,
+    "chunk_count": 214,
+    "avg_chunk_len": 889.63,
+    "byte_total": 171301,
+    "window": 1000,
+    "overlap": 120
+  },
+  "embedding": {
+    "provider": "local",
+    "model": "sha256-token-hash-v0",
+    "env_key": null
+  },
+  "space": { "metric": "cosine", "dimensions": 384 },
+  "hnsw": { "M": 16, "ef_construction": 200, "ef_search": 64 },
+  "artifacts": {
+    "dir": "gumgang_meeting/status/resources/vector_index",
+    "hnsw_bin": "gumgang_meeting/status/resources/vector_index/index_20250819_1452.bin",
+    "hnsw_meta": "gumgang_meeting/status/resources/vector_index/index_20250819_1452.meta"
+  },
+  "items": [],
+  "evidence": [
+    "gumgang_meeting/status/roadmap/72H_TASK_BREAKDOWN.md#L44-50",
+    "gumgang_meeting/ui/logs/fetch_summary_20250819.json#L1-10",
+    "gumgang_meeting/status/resources/vector_index/corpus_sizes_20250819_1439.jsonl#L1-200",
+    "gumgang_meeting/status/resources/vector_index/corpus_chunks_estimate_20250819_1439.jsonl#L1-200",
+    "gumgang_meeting/status/resources/vector_index/chunks_meta_20250819_1448.jsonl#L1-200",
+    "gumgang_meeting/status/resources/vector_index/chunks_text_20250819_1448.jsonl#L1-200",
+    "gumgang_meeting/status/resources/vector_index/embeddings_20250819_1450.jsonl#L1-200"
+  ],
+  "guards": {
+    "write_allow": [
+      "gumgang_meeting/status",
+      "gumgang_meeting/ui",
+      "gumgang_meeting/conversations",
+      "gumgang_meeting/sessions"
+    ],
+    "deny_globs": [
+      "**/.git/**",
+      "**/node_modules/**",
+      "**/.venv/**",
+      "**/.next/**",
+      "**/target/**",
+      "**/__pycache__/**",
+      "**/.cache/**",
+      "**/dist/**",
+      "**/build/**"
+    ]
+  },
+  "notes": "HNSW artifacts created (index_20250819_1452.meta/bin). ST-0501 PASS — indexed 214 vectors (cosine, dims=384)."
+}

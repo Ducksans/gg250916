@@ -1,0 +1,442 @@
+{
+  "version": "0.1",
+  "created_at_kst": "2025-08-09 16:55",
+  "title": "Gumgang 2.0 WebSocket Schema",
+  "description": "Real-time bidirectional communication protocol specification",
+  "namespace": "gumgang",
+  "transport": "socket.io",
+  "events": {
+    "client_to_server": {
+      "subscribe": {
+        "description": "Subscribe to specific event channels",
+        "payload": {
+          "channels": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["metrics", "memory", "notifications", "3d", "terminal", "files"]
+            }
+          }
+        }
+      },
+      "unsubscribe": {
+        "description": "Unsubscribe from event channels",
+        "payload": {
+          "channels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "command:execute": {
+        "description": "Execute terminal command with approval",
+        "payload": {
+          "command": {
+            "type": "string",
+            "description": "Command to execute"
+          },
+          "workDir": {
+            "type": "string",
+            "description": "Working directory"
+          },
+          "requiresApproval": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "file:read": {
+        "description": "Request file content",
+        "payload": {
+          "path": {
+            "type": "string",
+            "description": "File path relative to project root"
+          }
+        }
+      },
+      "file:write": {
+        "description": "Write file content with approval",
+        "payload": {
+          "path": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "requiresApproval": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "3d:interact": {
+        "description": "3D visualization interaction",
+        "payload": {
+          "action": {
+            "type": "string",
+            "enum": ["select", "hover", "drag", "zoom", "rotate"]
+          },
+          "nodeId": {
+            "type": "string"
+          },
+          "position": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        }
+      },
+      "memory:query": {
+        "description": "Query memory system",
+        "payload": {
+          "level": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "query": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "default": 10
+          }
+        }
+      }
+    },
+    "server_to_client": {
+      "metrics": {
+        "description": "System metrics update",
+        "interval": "1000ms",
+        "payload": {
+          "timestamp_kst": {
+            "type": "string",
+            "format": "YYYY-MM-DD HH:mm"
+          },
+          "cpu": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "CPU usage percentage"
+          },
+          "memory": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Memory usage percentage"
+          },
+          "trust_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Protocol Guard trust score"
+          },
+          "active_tasks": {
+            "type": "integer",
+            "description": "Number of active tasks"
+          },
+          "errors_per_minute": {
+            "type": "integer",
+            "description": "Error rate"
+          }
+        }
+      },
+      "memory:update": {
+        "description": "Memory system state change",
+        "payload": {
+          "timestamp_kst": {
+            "type": "string",
+            "format": "YYYY-MM-DD HH:mm"
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Memory level (1=ultra-short, 5=meta)"
+          },
+          "action": {
+            "type": "string",
+            "enum": ["add", "remove", "consolidate", "promote"]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "importance": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              }
+            }
+          },
+          "summary": {
+            "type": "object",
+            "properties": {
+              "total_items": {
+                "type": "integer"
+              },
+              "capacity_used": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            }
+          }
+        }
+      },
+      "notification": {
+        "description": "System notification",
+        "payload": {
+          "timestamp_kst": {
+            "type": "string",
+            "format": "YYYY-MM-DD HH:mm"
+          },
+          "id": {
+            "type": "string",
+            "description": "Unique notification ID"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["info", "success", "warning", "error", "critical"]
+          },
+          "title": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string",
+            "description": "Component that generated the notification"
+          },
+          "action": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "command": {
+                "type": "string"
+              }
+            },
+            "required": false
+          }
+        }
+      },
+      "3d:selection": {
+        "description": "3D node selection event",
+        "payload": {
+          "timestamp_kst": {
+            "type": "string",
+            "format": "YYYY-MM-DD HH:mm"
+          },
+          "nodeId": {
+            "type": "string",
+            "description": "Selected node identifier"
+          },
+          "nodeType": {
+            "type": "string",
+            "enum": ["file", "function", "class", "variable", "import", "export", "module"]
+          },
+          "position": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "[x, y, z] coordinates"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "complexity": {
+                "type": "number"
+              },
+              "size": {
+                "type": "integer"
+              },
+              "connections": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "terminal:output": {
+        "description": "Terminal command output",
+        "payload": {
+          "timestamp_kst": {
+            "type": "string",
+            "format": "YYYY-MM-DD HH:mm"
+          },
+          "commandId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["stdout", "stderr", "exit"]
+          },
+          "data": {
+            "type": "string"
+          },
+          "exitCode": {
+            "type": "integer",
+            "required": false
+          }
+        }
+      },
+      "file:changed": {
+        "description": "File system change notification",
+        "payload": {
+          "timestamp_kst": {
+            "type": "string",
+            "format": "YYYY-MM-DD HH:mm"
+          },
+          "action": {
+            "type": "string",
+            "enum": ["created", "modified", "deleted", "renamed"]
+          },
+          "path": {
+            "type": "string"
+          },
+          "oldPath": {
+            "type": "string",
+            "required": false,
+            "description": "Previous path (for rename)"
+          }
+        }
+      },
+      "approval:request": {
+        "description": "Action requires user approval",
+        "payload": {
+          "timestamp_kst": {
+            "type": "string",
+            "format": "YYYY-MM-DD HH:mm"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["command", "file_write", "file_delete", "system_change"]
+          },
+          "description": {
+            "type": "string"
+          },
+          "riskLevel": {
+            "type": "string",
+            "enum": ["safe", "caution", "dangerous"]
+          },
+          "details": {
+            "type": "object"
+          },
+          "timeout": {
+            "type": "integer",
+            "default": 30000,
+            "description": "Timeout in milliseconds"
+          }
+        }
+      }
+    },
+    "bidirectional": {
+      "ping": {
+        "description": "Heartbeat ping",
+        "interval": "5000ms",
+        "payload": {
+          "timestamp": {
+            "type": "integer",
+            "description": "Unix timestamp"
+          }
+        }
+      },
+      "pong": {
+        "description": "Heartbeat response",
+        "payload": {
+          "timestamp": {
+            "type": "integer"
+          },
+          "latency": {
+            "type": "integer",
+            "description": "Round-trip time in ms"
+          }
+        }
+      },
+      "error": {
+        "description": "Error message",
+        "payload": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "object",
+            "required": false
+          }
+        }
+      }
+    }
+  },
+  "connection": {
+    "url": "ws://localhost:8002",
+    "path": "/socket.io",
+    "transports": ["websocket", "polling"],
+    "reconnection": true,
+    "reconnectionDelay": 1000,
+    "reconnectionDelayMax": 5000,
+    "reconnectionAttempts": 5,
+    "timeout": 20000,
+    "auth": {
+      "required": false,
+      "method": "token",
+      "header": "X-Auth-Token"
+    }
+  },
+  "rate_limits": {
+    "global": {
+      "requests_per_second": 100,
+      "burst": 200
+    },
+    "per_event": {
+      "command:execute": {
+        "requests_per_minute": 10
+      },
+      "file:write": {
+        "requests_per_minute": 30
+      },
+      "memory:query": {
+        "requests_per_second": 10
+      }
+    }
+  },
+  "error_codes": {
+    "WS001": "Invalid event format",
+    "WS002": "Unauthorized",
+    "WS003": "Rate limit exceeded",
+    "WS004": "Event not found",
+    "WS005": "Payload validation failed",
+    "WS006": "Internal server error",
+    "WS007": "Connection timeout",
+    "WS008": "Approval timeout",
+    "WS009": "Permission denied",
+    "WS010": "Resource not found"
+  }
+}

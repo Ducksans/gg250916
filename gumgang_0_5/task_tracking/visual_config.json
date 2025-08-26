@@ -1,0 +1,34 @@
+{
+  "indicators": {
+    "status_colors": {
+      "pending": "#6B7280",
+      "in_progress": "#3B82F6",
+      "completed": "#10B981",
+      "failed": "#EF4444",
+      "blocked": "#F59E0B",
+      "cancelled": "#9CA3AF"
+    },
+    "priority_icons": {
+      "critical": "🔴",
+      "high": "🟠",
+      "medium": "🟡",
+      "low": "🟢"
+    },
+    "progress_style": "circular",
+    "update_interval": 1000,
+    "animation_duration": 300
+  },
+  "dashboard": {
+    "layout": "kanban",
+    "refresh_rate": 500,
+    "show_dependencies": true,
+    "show_timeline": true,
+    "max_visible_tasks": 50
+  },
+  "gantt_chart": {
+    "enabled": true,
+    "time_scale": "hours",
+    "show_critical_path": true,
+    "show_milestones": true
+  }
+}

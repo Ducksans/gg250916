@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+  title: Gumgang Semantic Search API (Draft)
+  version: 0.1.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /search:
+    post:
+      summary: Vector semantic search
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+      responses:
+        "200":
+          description: Top-K results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    SearchRequest:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+          description: Natural language query
+        top_k:
+          type: integer
+          default: 5
+          minimum: 1
+          maximum: 50
+        ef_search:
+          type: integer
+          default: 64
+          minimum: 1
+    SearchResult:
+      type: object
+      required: [score, path, line_start, line_end, snippet]
+      properties:
+        score:
+          type: number
+          format: float
+        path:
+          type: string
+          description: project-relative path
+        line_start:
+          type: integer
+          minimum: 1
+        line_end:
+          type: integer
+          minimum: 1
+        snippet:
+          type: string
+    SearchResponse:
+      type: object
+      properties:
+        query:
+          type: string
+        top_k:
+          type: integer
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/SearchResult"
+    ErrorResponse:
+      type: object
+      required: [error, message]
+      properties:
+        error:
+          type: string
+          example: BadRequest
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true

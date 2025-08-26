@@ -1,0 +1,81 @@
+{
+  "ts": "2025-08-25T02:12:34.011492Z",
+  "window_days": 7,
+  "start_day": "20250819",
+  "end_day": "20250825",
+  "pass_threshold": 0.1,
+  "queries": [
+    "ST-1205 신선도",
+    "Self-RAG 루브릭",
+    "ST-1205 테스트"
+  ],
+  "per_query": [
+    {
+      "query": "ST-1205 신선도",
+      "days": 1,
+      "fresh_avg": 0.1708,
+      "fresh_min": 0.1708,
+      "fresh_max": 0.1708,
+      "fresh_first": 0.1708,
+      "fresh_last": 0.1708,
+      "fresh_trend_delta": 0.0,
+      "pass_rate": 1.0,
+      "rerank_avg_abs": 0.0016,
+      "points": [
+        {
+          "day": "20250825",
+          "fresh_lift": 0.1708,
+          "rerank_lift": -0.0016
+        }
+      ]
+    },
+    {
+      "query": "Self-RAG 루브릭",
+      "days": 1,
+      "fresh_avg": 0.2269,
+      "fresh_min": 0.2269,
+      "fresh_max": 0.2269,
+      "fresh_first": 0.2269,
+      "fresh_last": 0.2269,
+      "fresh_trend_delta": 0.0,
+      "pass_rate": 1.0,
+      "rerank_avg_abs": 0.0,
+      "points": [
+        {
+          "day": "20250825",
+          "fresh_lift": 0.2269,
+          "rerank_lift": 0.0
+        }
+      ]
+    },
+    {
+      "query": "ST-1205 테스트",
+      "days": 1,
+      "fresh_avg": 0.1708,
+      "fresh_min": 0.1708,
+      "fresh_max": 0.1708,
+      "fresh_first": 0.1708,
+      "fresh_last": 0.1708,
+      "fresh_trend_delta": 0.0,
+      "pass_rate": 1.0,
+      "rerank_avg_abs": 0.0016,
+      "points": [
+        {
+          "day": "20250825",
+          "fresh_lift": 0.1708,
+          "rerank_lift": -0.0016
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "queries": 3,
+    "days_covered": 1,
+    "avg_fresh_lift_overall": 0.1895,
+    "avg_abs_rerank_overall": 0.001067,
+    "pass_rate_overall": 1.0
+  },
+  "sources": [
+    "status/evidence/memory/set_eval/20250825/set_eval_20250825.json"
+  ]
+}

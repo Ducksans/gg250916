@@ -1,0 +1,1390 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Chat View A1 — Minimal Prototype (A1-T1/A1-T2)</title>
+        <style>
+            :root {
+                --bg: #ffffff;
+                --text: #111827;
+                --panel-bg: #ffffff;
+                --border: #e5e7eb;
+                --user-bg: #0a5ea8;
+                --user-fg: #ffffff;
+                --assistant-bg: #f3f4f6;
+                --assistant-fg: #111827;
+                --shadow:
+                    0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+            [data-theme="dark"] {
+                --bg: #0b1220;
+                --text: #e5e7eb;
+                --panel-bg: #111827;
+                --border: #1f2937;
+                --user-bg: #0b4d8a;
+                --user-fg: #ffffff;
+                --assistant-bg: #1f2937;
+                --assistant-fg: #e5e7eb;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                height: 100%;
+            }
+            body {
+                margin: 0;
+                font-family:
+                    ui-sans-serif,
+                    -apple-system,
+                    "Segoe UI",
+                    Roboto,
+                    Helvetica,
+                    Arial,
+                    "Apple Color Emoji",
+                    "Segoe UI Emoji";
+                color: var(--text);
+                background: var(--bg);
+            }
+
+            .chat {
+                height: 100vh;
+                max-width: 820px;
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .topbar {
+                padding: 12px 16px;
+                border-bottom: 1px solid var(--border);
+                background: var(--panel-bg);
+                position: sticky;
+                top: 0;
+                z-index: 5;
+            }
+            .topbar h1 {
+                font-size: 16px;
+                font-weight: 700;
+                letter-spacing: 0.01em;
+                margin: 0;
+            }
+            .hints {
+                margin-top: 6px;
+                font-size: 12px;
+                color: #6b7280;
+            }
+            .hints code {
+                font-family:
+                    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+                    "Liberation Mono", "Courier New", monospace;
+                background: #f9fafb;
+                padding: 1px 4px;
+                border-radius: 4px;
+                border: 1px solid #e5e7eb;
+            }
+            .badge {
+                display: inline-block;
+                padding: 2px 6px;
+                border-radius: 6px;
+                font-size: 11px;
+                border: 1px solid var(--border);
+                background: #fafafa;
+                color: #374151;
+                margin-left: 8px;
+            }
+
+            .messages {
+                flex: 1;
+                padding: 16px;
+                overflow-y: auto;
+                background: var(--bg);
+            }
+
+            .chat-bubble {
+                display: inline-flex;
+                flex-direction: column;
+                gap: 6px;
+                max-width: min(85%, 640px);
+                border-radius: 12px;
+                padding: 10px 12px;
+                margin: 6px 0;
+                box-shadow: var(--shadow);
+            }
+            .chat-bubble .meta {
+                display: flex;
+                gap: 8px;
+                align-items: baseline;
+                font-size: 12px;
+                opacity: 0.9;
+            }
+            .chat-bubble .meta .role {
+                font-weight: 600;
+                letter-spacing: 0.02em;
+            }
+            .chat-bubble .meta .timestamp {
+                font-variant-numeric: tabular-nums;
+            }
+            .chat-bubble .content {
+                white-space: pre-wrap;
+                word-break: break-word;
+                font-size: 14px;
+                line-height: 1.45;
+            }
+
+            /* Keep each bubble a direct child of .messages for :last-child selectors */
+            .chat-bubble.user {
+                margin-left: auto; /* right align */
+                background: var(--user-bg);
+                color: var(--user-fg);
+                border: 1px solid rgba(255, 255, 255, 0.14);
+            }
+            .chat-bubble.user .meta .role {
+                color: #e0f2fe;
+            }
+            .chat-bubble.user .meta .timestamp {
+                color: #e2e8f0;
+            }
+
+            .chat-bubble.assistant {
+                margin-right: auto; /* left align */
+                background: var(--assistant-bg);
+                color: var(--assistant-fg);
+                border: 1px solid var(--border);
+            }
+            .chat-bubble.assistant .meta .role {
+                color: #374151;
+            }
+            .chat-bubble.assistant .meta .timestamp {
+                color: #6b7280;
+            }
+
+            .composer {
+                display: flex;
+                gap: 8px;
+                padding: 10px;
+                border-top: 1px solid var(--border);
+                background: var(--panel-bg);
+                position: sticky;
+                bottom: 0;
+            }
+            .composer input[type="text"] {
+                flex: 1;
+                padding: 10px 12px;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                font-size: 14px;
+                outline: none;
+            }
+            .composer input[type="text"]:focus {
+                border-color: #60a5fa;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            }
+            .composer button {
+                padding: 10px 14px;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                background: #111827;
+                color: #ffffff;
+                font-size: 14px;
+                cursor: pointer;
+            }
+            .composer button:active {
+                transform: translateY(1px);
+            }
+
+            .visually-hidden {
+                position: absolute !important;
+                height: 1px;
+                width: 1px;
+                overflow: hidden;
+                clip: rect(1px, 1px, 1px, 1px);
+                white-space: nowrap;
+            }
+            /* A1-T4 Copy button */
+            .chat-bubble {
+                position: relative;
+            }
+            .copy-btn {
+                position: absolute;
+                top: 6px;
+                right: 6px;
+                border: 1px solid var(--border);
+                background: rgba(255, 255, 255, 0.7);
+                color: #111827;
+                padding: 2px 8px;
+                font-size: 11px;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+            [data-theme="dark"] .copy-btn {
+                background: rgba(31, 41, 55, 0.7);
+                color: var(--text);
+                border-color: var(--border);
+            }
+            .copy-btn.copied {
+                outline: 2px solid #60a5fa;
+                outline-offset: 1px;
+            }
+        </style>
+    </head>
+    <body>
+        <main class="chat" aria-label="Chat View A1 Prototype">
+            <header class="topbar">
+                <h1>Chat View A1 — Prototype (A1-T1/A1-T2)</h1>
+                <div class="hints">
+                    Save screenshots to:
+                    <code id="shotDir"
+                        >gumgang_meeting/ui/logs/ui_mvp_gate_YYYYMMDD/screenshots/</code
+                    >
+                    <span
+                        class="badge"
+                        id="runInfo"
+                        aria-label="Run info"
+                    ></span>
+                    <span
+                        class="badge"
+                        id="convBadge"
+                        aria-label="Conversation ID"
+                    ></span>
+                    <span
+                        class="badge"
+                        id="threadTitle"
+                        aria-label="Thread Title"
+                    ></span>
+                    <div
+                        class="badge"
+                        id="threadTags"
+                        aria-label="Thread Tags"
+                        style="
+                            display: inline-block;
+                            max-width: 50%;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        "
+                    ></div>
+                    <label class="badge" for="recentThreads"
+                        >Recent
+                        <select id="recentThreads" style="margin-left: 6px">
+                            <option value="">—</option>
+                        </select>
+                    </label>
+                    <button
+                        id="themeToggle"
+                        type="button"
+                        class="badge"
+                        aria-label="Toggle theme"
+                    >
+                        Toggle Theme
+                    </button>
+                    <label class="badge" for="replyDelay"
+                        >Delay(ms)
+                        <input
+                            id="replyDelay"
+                            type="number"
+                            min="0"
+                            max="5000"
+                            step="100"
+                            value="1200"
+                            style="width: 6em; margin-left: 6px"
+                        />
+                    </label>
+                </div>
+            </header>
+
+            <section
+                id="messages"
+                class="messages"
+                role="log"
+                aria-live="polite"
+                aria-relevant="additions"
+                aria-label="Messages"
+                data-test-id="messages"
+            >
+                <!-- Bubbles are appended here as direct children -->
+            </section>
+
+            <section class="composer" aria-label="Composer">
+                <label class="visually-hidden" for="chatInput"
+                    >메시지 입력</label
+                >
+                <input
+                    id="chatInput"
+                    type="text"
+                    inputmode="text"
+                    autocomplete="off"
+                    placeholder='Type "ping" and press Enter'
+                    data-test-id="input"
+                />
+                <button
+                    id="sendBtn"
+                    type="button"
+                    aria-label="Send message"
+                    data-test-id="send"
+                >
+                    Send
+                </button>
+            </section>
+        </main>
+
+        <script>
+            (function () {
+                const $messages = document.getElementById("messages");
+                const $input = document.getElementById("chatInput");
+                const $send = document.getElementById("sendBtn");
+                const $shotDir = document.getElementById("shotDir");
+                const $runInfo = document.getElementById("runInfo");
+                const $replyDelay = document.getElementById("replyDelay");
+                const DELAY_KEY = "gg_reply_delay_ms";
+                const defaultReplyDelay = 1200;
+                (function initDelay() {
+                    const v = parseInt(localStorage.getItem(DELAY_KEY), 10);
+                    const init = Number.isFinite(v)
+                        ? Math.max(0, Math.min(5000, v))
+                        : defaultReplyDelay;
+                    if ($replyDelay) {
+                        $replyDelay.value = init;
+                        $replyDelay.addEventListener("change", function () {
+                            const nv = Math.max(
+                                0,
+                                Math.min(
+                                    5000,
+                                    parseInt($replyDelay.value, 10) || 0,
+                                ),
+                            );
+                            $replyDelay.value = nv;
+                            localStorage.setItem(DELAY_KEY, String(nv));
+                        });
+                    }
+                })();
+                const $toggle = document.getElementById("themeToggle");
+                const THEME_KEY = "gg_theme";
+                const initialTheme = localStorage.getItem(THEME_KEY) || "dark";
+                document.documentElement.setAttribute(
+                    "data-theme",
+                    initialTheme,
+                );
+                if ($toggle) {
+                    $toggle.textContent =
+                        initialTheme === "dark" ? "Dark" : "Light";
+                    $toggle.addEventListener("click", function () {
+                        const next =
+                            document.documentElement.getAttribute(
+                                "data-theme",
+                            ) === "dark"
+                                ? "light"
+                                : "dark";
+                        document.documentElement.setAttribute(
+                            "data-theme",
+                            next,
+                        );
+                        localStorage.setItem(THEME_KEY, next);
+                        $toggle.textContent =
+                            next === "dark" ? "Dark" : "Light";
+                    });
+                }
+
+                // Evidence/log object to assist manual recording
+                window.__a1Log = {
+                    startedAt: new Date().toISOString(),
+                    a1t1: {
+                        startedAt: null,
+                        userLatencyMs: null,
+                        messageText: null,
+                        inputCleared: null,
+                        autoScrolled: null,
+                        timestamp: null,
+                    },
+                    a1t2: {
+                        startedAt: null,
+                        appendedAt: null,
+                        orderPreserved: null,
+                        roleLabelsPresent: null,
+                        contrast: {
+                            userTextVsBg: null,
+                            assistantTextVsBg: null,
+                            bubbleBgVsBg: null,
+                        },
+                    },
+                };
+
+                // Helpers
+                // ST-1205 Trend opener + Backend helper (inject button + open latest trend evidence)
+                function __gg_backend() {
+                    return (
+                        localStorage.getItem("gg_backend") ||
+                        "http://localhost:8000"
+                    );
+                }
+                function openTrend() {
+                    const w = window.open("about:blank", "_blank");
+                    if (!w) {
+                        alert("Popup blocked — allow popups for this page.");
+                        return;
+                    }
+                    w.document.write("<p>Loading trend...</p>");
+                    const url =
+                        "http://localhost:3037/api/fs/read?rootId=status&path=" +
+                        encodeURIComponent(
+                            "evidence/memory/set_eval/trends/trend_latest.json",
+                        );
+                    (async () => {
+                        try {
+                            const r = await fetch(url);
+                            if (r.ok) {
+                                const obj = await r.json();
+                                const raw = obj && obj.content;
+                                let data = null;
+                                try {
+                                    data = raw ? JSON.parse(raw) : null;
+                                } catch (e) {}
+                                w.document.title = "ST-1205 Trend (latest)";
+                                if (data) {
+                                    w.document.body.innerHTML =
+                                        "<h1>ST-1205 Trend (latest)</h1>" +
+                                        "<p>Source: " +
+                                        url +
+                                        "</p>" +
+                                        "<pre style='white-space:pre-wrap;word-break:break-word;'>" +
+                                        JSON.stringify(data, null, 2) +
+                                        "</pre>";
+                                } else {
+                                    w.document.body.innerHTML =
+                                        "<h1>ST-1205 Trend (latest)</h1>" +
+                                        "<p>Failed to parse JSON. Raw content:</p>" +
+                                        "<pre style='white-space:pre-wrap;word-break:break-word;'>" +
+                                        (raw || "") +
+                                        "</pre>";
+                                }
+                                return;
+                            }
+                        } catch (e) {}
+                        // Fallback: navigate the tab to JSON response
+                        w.location.href = url;
+                    })();
+                }
+                (function injectTrendBtn() {
+                    const $hints = document.querySelector(".hints");
+                    if (!$hints) return;
+                    if (document.getElementById("openTrend")) return;
+                    const btn = document.createElement("button");
+                    btn.id = "openTrend";
+                    btn.type = "button";
+                    btn.className = "badge";
+                    btn.setAttribute("aria-label", "Open ST-1205 Trend");
+                    btn.textContent = "Open Trend";
+                    btn.addEventListener("click", openTrend);
+                    $hints.appendChild(btn);
+                })();
+
+                // ==== Thread helpers (ST-1206) ====
+                const GG_CONV_KEY = "gg_conv_id";
+                const GG_THREADS_INDEX = "gg_threads_index";
+                const GG_THREAD_META_PREFIX = "gg_thread_meta::";
+
+                function __gg_tz() {
+                    try {
+                        return (
+                            Intl.DateTimeFormat().resolvedOptions().timeZone ||
+                            null
+                        );
+                    } catch (e) {
+                        return null;
+                    }
+                }
+                function ggBackend() {
+                    return __gg_backend();
+                }
+                async function ggApiPost(path, body) {
+                    try {
+                        const r = await fetch(ggBackend() + path, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(body || {}),
+                        });
+                        return await r.json();
+                    } catch (e) {
+                        return null;
+                    }
+                }
+                function ymdNow() {
+                    const d = new Date();
+                    const y = d.getFullYear();
+                    const m = pad2(d.getMonth() + 1);
+                    const day = pad2(d.getDate());
+                    return "" + y + m + day;
+                }
+                function genConvId() {
+                    return (
+                        "gg_" +
+                        ymdNow() +
+                        "_" +
+                        Math.random().toString(36).slice(2, 10)
+                    );
+                }
+                function currentConvId() {
+                    let c = localStorage.getItem(GG_CONV_KEY);
+                    if (!c) {
+                        c = genConvId();
+                        localStorage.setItem(GG_CONV_KEY, c);
+                    }
+                    return c;
+                }
+                function setConvId(id) {
+                    if (!id) return;
+                    localStorage.setItem(GG_CONV_KEY, id);
+                }
+                function _idxRead() {
+                    try {
+                        return JSON.parse(
+                            localStorage.getItem(GG_THREADS_INDEX) || "{}",
+                        );
+                    } catch {
+                        return {};
+                    }
+                }
+                function _idxWrite(idx) {
+                    localStorage.setItem(GG_THREADS_INDEX, JSON.stringify(idx));
+                }
+                function _metaKey(cid) {
+                    return GG_THREAD_META_PREFIX + cid;
+                }
+                function readMeta(cid) {
+                    try {
+                        return JSON.parse(
+                            localStorage.getItem(_metaKey(cid)) || "{}",
+                        );
+                    } catch {
+                        return {};
+                    }
+                }
+                function writeMeta(cid, meta) {
+                    localStorage.setItem(
+                        _metaKey(cid),
+                        JSON.stringify(meta || {}),
+                    );
+                }
+                function jaccard(a, b) {
+                    const A = new Set(a || []);
+                    const B = new Set(b || []);
+                    const inter = [...A].filter((x) => B.has(x)).length;
+                    const uni = new Set([...A, ...B]).size || 1;
+                    return inter / uni;
+                }
+                function summarizeDraftTitle(text) {
+                    const t = (text || "").trim();
+                    if (!t) return "새 대화";
+                    const m = t.split(/(?<=[.?!])\s+/)[0] || t;
+                    const s = m.slice(0, 40);
+                    return s;
+                }
+                function extractTagsFromText(text, prev) {
+                    const stop = new Set([
+                        "그리고",
+                        "그러나",
+                        "하지만",
+                        "또는",
+                        "the",
+                        "a",
+                        "an",
+                        "and",
+                        "or",
+                        "of",
+                        "to",
+                        "in",
+                        "for",
+                        "on",
+                        "at",
+                        "is",
+                        "are",
+                        "be",
+                        "was",
+                        "were",
+                    ]);
+                    const tok = (text || "")
+                        .toLowerCase()
+                        .replace(/https?:\/\/\S+/g, " ")
+                        .replace(/[^0-9a-zA-Z가-힣_ ]/g, " ")
+                        .split(/\s+/)
+                        .filter(
+                            (w) =>
+                                w.length >= 2 &&
+                                !/^\d+$/.test(w) &&
+                                !stop.has(w),
+                        );
+                    const freq = {};
+                    tok.forEach((w) => (freq[w] = (freq[w] || 0) + 1));
+                    const sorted = Object.keys(freq).sort(
+                        (a, b) => freq[b] - freq[a] || a.length - b.length,
+                    );
+                    const cand = sorted.slice(0, 12);
+                    const prevTags = prev || [];
+                    const tags = [];
+                    for (const w of cand) {
+                        if (!tags.includes(w)) tags.push(w);
+                        if (tags.length >= 8) break;
+                    }
+                    if (jaccard(prevTags, tags) >= 0.7) return prevTags;
+                    return tags;
+                }
+                function updateHeaderFromMeta(cid) {
+                    const meta = readMeta(cid);
+                    const $badge = document.getElementById("convBadge");
+                    const $title = document.getElementById("threadTitle");
+                    const $tags = document.getElementById("threadTags");
+                    if ($badge) $badge.textContent = "convId: " + cid;
+                    if ($title)
+                        $title.textContent =
+                            (meta.title || "(제목 없음)") +
+                            (meta.title_locked ? " 🔒" : "");
+                    if ($tags)
+                        $tags.textContent =
+                            meta.tags && meta.tags.length
+                                ? "#" + meta.tags.slice(0, 8).join(" #")
+                                : "";
+                }
+                function addRecent(cid, ts) {
+                    const idx = _idxRead();
+                    idx[cid] = idx[cid] || {};
+                    idx[cid].last_ts = ts || new Date().toISOString();
+                    idx[cid].day = (idx[cid].last_ts || "")
+                        .slice(0, 10)
+                        .replace(/-/g, "");
+                    _idxWrite(idx);
+                    const $recent = document.getElementById("recentThreads");
+                    if ($recent) {
+                        // rebuild
+                        const arr = Object.entries(idx).map(([k, v]) => ({
+                            convId: k,
+                            last_ts: v.last_ts || "",
+                        }));
+                        arr.sort((a, b) =>
+                            String(b.last_ts).localeCompare(String(a.last_ts)),
+                        );
+                        // keep first option
+                        Array.from(
+                            $recent.querySelectorAll(
+                                "option:not(:first-child)",
+                            ),
+                        ).forEach((o) => o.remove());
+                        arr.slice(0, 20).forEach((it) => {
+                            const opt = document.createElement("option");
+                            opt.value = it.convId;
+                            const tmeta = readMeta(it.convId) || {};
+                            const title = tmeta.title || "(제목 없음)";
+                            const tags = Array.isArray(tmeta.tags)
+                                ? tmeta.tags.slice(0, 3)
+                                : [];
+                            const chips = tags.length
+                                ? " · " + tags.map((t) => "#" + t).join(" ")
+                                : "";
+                            opt.textContent =
+                                title +
+                                " · " +
+                                it.convId +
+                                (it.last_ts ? " · " + it.last_ts : "") +
+                                chips;
+                            $recent.appendChild(opt);
+                        });
+                    }
+                }
+                async function appendThreadTurn(role, text, refs, metaPatch) {
+                    const cid = currentConvId();
+                    const meta = Object.assign(
+                        {
+                            title: null,
+                            title_locked: false,
+                            tags: [],
+                            turns: 0,
+                        },
+                        readMeta(cid),
+                    );
+                    meta.turns = (meta.turns || 0) + 1;
+                    const mergedMeta = Object.assign({}, meta, metaPatch || {});
+                    mergedMeta.tz_client = __gg_tz();
+                    writeMeta(cid, mergedMeta);
+                    updateHeaderFromMeta(cid);
+                    const res = await ggApiPost("/api/threads/append", {
+                        convId: cid,
+                        turn: mergedMeta.turns,
+                        role,
+                        text,
+                        refs: Array.isArray(refs) ? refs : [],
+                        meta: {
+                            title: mergedMeta.title || null,
+                            title_locked: !!mergedMeta.title_locked,
+                            tags: mergedMeta.tags || [],
+                            sgm_blocked: !!mergedMeta.sgm_blocked,
+                            hint: mergedMeta.hint || null,
+                            evidence_path: mergedMeta.evidence_path || null,
+                            tz_client: mergedMeta.tz_client || null,
+                        },
+                    });
+                    const ts =
+                        res && res.meta && res.meta.ts
+                            ? res.meta.ts
+                            : new Date().toISOString();
+                    // persist locally (turns)
+                    const arr = readTurns(cid);
+                    arr.push({
+                        role,
+                        text,
+                        ts,
+                        refs: Array.isArray(refs) ? refs : [],
+                    });
+                    writeTurns(cid, arr);
+                    addRecent(cid, ts);
+                    return res;
+                }
+                // ==== /Thread helpers (ST-1206) ====
+                function turnsKey(cid) {
+                    return "gg_thread::" + cid;
+                }
+                function readTurns(cid) {
+                    try {
+                        return JSON.parse(
+                            localStorage.getItem(turnsKey(cid)) || "[]",
+                        );
+                    } catch {
+                        return [];
+                    }
+                }
+                function writeTurns(cid, arr) {
+                    localStorage.setItem(
+                        turnsKey(cid),
+                        JSON.stringify(arr || []),
+                    );
+                }
+                function renderThreadLocal(cid) {
+                    $messages.innerHTML = "";
+                    const arr = readTurns(cid);
+                    arr.forEach((t) => appendBubble(t.role, t.text, t.ts));
+                    scrollToBottom();
+                    return arr.length;
+                }
+                async function mergeFromServer(cid) {
+                    try {
+                        const r = await fetch(
+                            ggBackend() +
+                                "/api/threads/read?convId=" +
+                                encodeURIComponent(cid),
+                        );
+                        const obj = await r.json();
+                        if (
+                            !obj ||
+                            !obj.ok ||
+                            !obj.data ||
+                            !Array.isArray(obj.data.turns)
+                        )
+                            return;
+                        const local = readTurns(cid);
+                        const localLen = local.length;
+                        const incoming = obj.data.turns;
+                        const merged = local.slice();
+                        for (let i = localLen; i < incoming.length; i++) {
+                            const it = incoming[i];
+                            merged.push({
+                                role: it.role,
+                                text: it.text,
+                                ts: it.ts,
+                                refs: it.refs || [],
+                            });
+                        }
+                        if (merged.length !== local.length) {
+                            writeTurns(cid, merged);
+                            renderThreadLocal(cid);
+                        }
+                    } catch (e) {
+                        /* ignore */
+                    }
+                }
+                async function loadAndRenderThread(cid) {
+                    renderThreadLocal(cid); // local first
+                    mergeFromServer(cid); // server merge (best-effort)
+                }
+                function pad2(n) {
+                    return (n < 10 ? "0" : "") + n;
+                }
+                function hhmm(d = new Date()) {
+                    return pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+                }
+                function scrollToBottom() {
+                    const before = $messages.scrollTop;
+                    $messages.scrollTop = $messages.scrollHeight;
+                    const after = $messages.scrollTop;
+                    return after > before;
+                }
+
+                // WCAG contrast helpers
+                function hexToRgb(hex) {
+                    const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
+                        hex,
+                    );
+                    return m
+                        ? {
+                              r: parseInt(m[1], 16),
+                              g: parseInt(m[2], 16),
+                              b: parseInt(m[3], 16),
+                          }
+                        : null;
+                }
+                function relLum(rgb) {
+                    function channel(c) {
+                        c /= 255;
+                        return c <= 0.03928
+                            ? c / 12.92
+                            : Math.pow((c + 0.055) / 1.055, 2.4);
+                    }
+                    const R = channel(rgb.r),
+                        G = channel(rgb.g),
+                        B = channel(rgb.b);
+                    return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+                }
+                function contrastRatio(hex1, hex2) {
+                    const rgb1 = hexToRgb(hex1);
+                    const rgb2 = hexToRgb(hex2);
+                    if (!rgb1 || !rgb2) return null;
+                    const a = relLum(rgb1);
+                    const b = relLum(rgb2);
+                    const L1 = Math.max(a, b);
+                    const L2 = Math.min(a, b);
+                    return (L1 + 0.05) / (L2 + 0.05);
+                }
+
+                // Append a chat bubble as a direct child (ensures :last-child works)
+                function appendBubble(role, text) {
+                    const bubble = document.createElement("div");
+                    bubble.className = "chat-bubble " + role;
+                    bubble.setAttribute("data-role", role);
+                    bubble.setAttribute("data-test-id", role + "-bubble");
+
+                    const meta = document.createElement("div");
+                    meta.className = "meta";
+
+                    const roleSpan = document.createElement("span");
+                    roleSpan.className = "role";
+                    roleSpan.textContent =
+                        role === "user" ? "User" : "Assistant";
+
+                    const tsSpan = document.createElement("span");
+                    tsSpan.className = "timestamp";
+                    tsSpan.textContent = hhmm();
+
+                    meta.appendChild(roleSpan);
+                    meta.appendChild(tsSpan);
+
+                    const content = document.createElement("div");
+                    content.className = "content";
+                    content.textContent = text;
+
+                    bubble.appendChild(meta);
+                    bubble.appendChild(content);
+                    const copyBtn = document.createElement("button");
+                    copyBtn.type = "button";
+                    copyBtn.className = "copy-btn";
+                    copyBtn.setAttribute("aria-label", "Copy message");
+                    copyBtn.textContent = "Copy";
+                    copyBtn.addEventListener("click", async function () {
+                        const toCopy = content.textContent || "";
+                        let ok = false;
+                        try {
+                            if (
+                                navigator.clipboard &&
+                                navigator.clipboard.writeText
+                            ) {
+                                await navigator.clipboard.writeText(toCopy);
+                                ok = true;
+                            }
+                        } catch (e) {}
+                        if (!ok) {
+                            const ta = document.createElement("textarea");
+                            ta.value = toCopy;
+                            ta.setAttribute("readonly", "");
+                            ta.style.position = "absolute";
+                            ta.style.left = "-9999px";
+                            document.body.appendChild(ta);
+                            ta.select();
+                            try {
+                                ok = document.execCommand("copy");
+                            } catch (e) {
+                                ok = false;
+                            }
+                            document.body.removeChild(ta);
+                        }
+                        copyBtn.classList.add("copied");
+                        const prev = copyBtn.textContent;
+                        copyBtn.textContent = ok ? "Copied!" : "Copy";
+                        setTimeout(() => {
+                            copyBtn.classList.remove("copied");
+                            copyBtn.textContent = prev;
+                        }, 1200);
+                    });
+                    bubble.appendChild(copyBtn);
+
+                    $messages.appendChild(bubble);
+                    const scrolled = scrollToBottom();
+
+                    return {
+                        el: bubble,
+                        timestamp: tsSpan.textContent,
+                        autoScrolled: scrolled,
+                    };
+                }
+
+                // Insert assistant bubble immediately after a given user bubble
+                function appendAssistantAfter(anchorEl, text) {
+                    const created = appendBubble("assistant", text);
+                    if (!anchorEl || !anchorEl.parentNode) return created;
+                    const parent = anchorEl.parentNode;
+                    if (anchorEl.nextSibling) {
+                        parent.insertBefore(created.el, anchorEl.nextSibling);
+                    } else {
+                        parent.appendChild(created.el);
+                    }
+                    scrollToBottom();
+                    return created;
+                }
+
+                function sendMessage() {
+                    const raw = $input.value;
+                    const text = raw.trim();
+                    if (!text) return;
+
+                    // A1-T1 start
+                    const t0 = performance.now();
+                    window.__a1Log.a1t1.startedAt = new Date().toISOString();
+
+                    const {
+                        el: userEl,
+                        timestamp,
+                        autoScrolled,
+                    } = appendBubble("user", text);
+                    const t1 = performance.now();
+
+                    // Evidence for A1-T1
+                    window.__a1Log.a1t1.userLatencyMs = Math.round(t1 - t0);
+                    window.__a1Log.a1t1.messageText = text;
+                    window.__a1Log.a1t1.inputCleared = true; // verify below
+                    window.__a1Log.a1t1.autoScrolled = autoScrolled;
+                    window.__a1Log.a1t1.timestamp = timestamp;
+
+                    // Clear and refocus input (A1-T1 criterion)
+                    $input.value = "";
+                    $input.focus();
+                    window.__a1Log.a1t1.inputCleared = $input.value === "";
+
+                    // ST-1206 — ensure convId/meta, draft title, and append user turn
+                    const cid = currentConvId();
+                    let meta = readMeta(cid);
+                    if (!meta || !meta.title) {
+                        meta = Object.assign(
+                            {
+                                title: null,
+                                title_locked: false,
+                                tags: [],
+                                turns: 0,
+                            },
+                            meta || {},
+                        );
+                        meta.title = summarizeDraftTitle(text);
+                        meta.title_locked = false;
+                        writeMeta(cid, meta);
+                    }
+                    updateHeaderFromMeta(cid);
+                    appendThreadTurn("user", text, [], {
+                        /* draft only */
+                    });
+
+                    // A1-T2 start (assistant reply) with ST-1205 recall + session save + evidence cites
+                    window.__a1Log.a1t2.startedAt = new Date().toISOString();
+                    const delay = Math.max(
+                        0,
+                        Math.min(
+                            5000,
+                            parseInt(
+                                ($replyDelay && $replyDelay.value) ||
+                                    defaultReplyDelay,
+                                10,
+                            ) || defaultReplyDelay,
+                        ),
+                    );
+                    window.setTimeout(async function () {
+                        const backend =
+                            localStorage.getItem("gg_backend") ||
+                            "http://localhost:8000";
+                        const sessKey = "gg_sess_id";
+                        function sessId() {
+                            let s = localStorage.getItem(sessKey);
+                            if (!s) {
+                                s = "A1-" + Date.now().toString(36);
+                                localStorage.setItem(sessKey, s);
+                            }
+                            return s;
+                        }
+                        async function apiGet(path, params) {
+                            const u = new URL(backend + path);
+                            Object.entries(params || {}).forEach(([k, v]) =>
+                                u.searchParams.set(k, String(v)),
+                            );
+                            const r = await fetch(u.toString(), {
+                                method: "GET",
+                            });
+                            return r.json();
+                        }
+                        async function apiPost(path, body) {
+                            const r = await fetch(backend + path, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(body || {}),
+                            });
+                            return r.json();
+                        }
+
+                        // Save user turn
+                        try {
+                            await apiPost("/api/memory/store", {
+                                tier: "ultra_short",
+                                text: text,
+                                refs: [],
+                                mode: "SAFE",
+                                sessionId: sessId(),
+                            });
+                        } catch (e) {
+                            // ignore store errors
+                        }
+
+                        // Recall with freshness + Self-RAG (Phase 1: unified first, fallback to memory_search)
+                        let reply = "";
+                        let refs = [];
+                        let evPath = null;
+                        try {
+                            // Phase 1: Try unified API first
+                            let items = [];
+                            try {
+                                const ur = await apiGet("/api/search/unified", {
+                                    q: text,
+                                    k: 5,
+                                    self_rag: 1,
+                                    strict: 1,
+                                });
+                                if (ur && ur.ok && ur.data) {
+                                    items = Array.isArray(ur.data.post)
+                                        ? ur.data.post
+                                        : [];
+                                    evPath = ur.data.evidence_path || null;
+                                } else {
+                                    throw new Error("UNIFIED_EMPTY");
+                                }
+                            } catch (_uerr) {
+                                // Fallback to memory_search
+                                const sr = await apiGet("/api/memory/search", {
+                                    q: text,
+                                    k: 5,
+                                    need_fresh: 1,
+                                    self_rag: 1,
+                                });
+                                items =
+                                    sr &&
+                                    sr.data &&
+                                    Array.isArray(sr.data.items)
+                                        ? sr.data.items
+                                        : [];
+                                evPath =
+                                    sr && sr.data
+                                        ? sr.data.evidence_path
+                                        : null;
+                            }
+                            const top = items.slice(0, 3);
+                            if (top.length > 0) {
+                                refs = top.map(
+                                    (h) =>
+                                        `${h.path}#L${h.line_from || 0}-${h.line_to || 0}`,
+                                );
+                                const bullets = top
+                                    .map(
+                                        (h, i) =>
+                                            `${i + 1}. ${h.text} (${h.path}#L${h.line_from}-${h.line_to})`,
+                                    )
+                                    .join("\n");
+                                reply =
+                                    `질문: ${text}\n\n` +
+                                    `관련 메모 상위 ${top.length}건:\n${bullets}\n\n` +
+                                    `근거 인용: ${refs.join(", ")}` +
+                                    (evPath ? `\n검색 로그: ${evPath}` : "");
+                            } else {
+                                reply =
+                                    text.toLowerCase() === "ping"
+                                        ? "pong"
+                                        : "echo: " + text;
+                            }
+                        } catch (e) {
+                            reply =
+                                text.toLowerCase() === "ping"
+                                    ? "pong"
+                                    : "[offline] echo: " + text;
+                        }
+
+                        // SGM Gate — if no refs and not a ping, block the answer with template
+                        let sgmBlocked = false;
+                        if (
+                            (refs || []).length === 0 &&
+                            text.toLowerCase() !== "ping"
+                        ) {
+                            sgmBlocked = true;
+                            reply = "[SGM: 근거 부족 – 답변 보류]";
+                        }
+
+                        const result = appendAssistantAfter(userEl, reply);
+                        window.__a1Log.a1t2.appendedAt =
+                            new Date().toISOString();
+
+                        // Save assistant turn with refs
+                        try {
+                            await apiPost("/api/memory/store", {
+                                tier: "ultra_short",
+                                text: reply,
+                                refs: refs,
+                                mode: "SAFE",
+                                sessionId: sessId(),
+                            });
+                        } catch (e) {
+                            // ignore store errors
+                        }
+
+                        // ST-1206 — title upgrade once, tags update, and append assistant turn to threads
+                        const curCid = currentConvId();
+                        let curMeta = readMeta(curCid) || {
+                            title: null,
+                            title_locked: false,
+                            tags: [],
+                            turns: 0,
+                        };
+                        // Title upgrade triggers: refs>=1 OR reply length>=200 OR turns>=3
+                        const upgrade =
+                            !curMeta.title_locked &&
+                            ((refs && refs.length > 0) ||
+                                (reply && reply.length >= 200) ||
+                                (curMeta.turns || 0) >= 2);
+                        if (upgrade) {
+                            // naive upgrade: keep draft or compress first sentence of reply
+                            const up = summarizeDraftTitle(reply);
+                            curMeta.title = up || curMeta.title || "대화";
+                            curMeta.title_locked = true;
+                        }
+                        // Tags update (debounce-lite: every 3 turns)
+                        const shouldTag = ((curMeta.turns || 0) + 1) % 3 === 0;
+                        if (shouldTag) {
+                            const combined = [text, reply].join(" ");
+                            const nextTags = extractTagsFromText(
+                                combined,
+                                curMeta.tags || [],
+                            );
+                            curMeta.tags = nextTags;
+                        }
+                        // Build hint for SGM block
+                        const hint = sgmBlocked
+                            ? {
+                                  reason: "zero_refs",
+                                  suggest: [
+                                      "upload files",
+                                      "re-run unified search",
+                                      "narrow query ...",
+                                  ],
+                              }
+                            : null;
+                        // Persist/meta update + POST append
+                        writeMeta(curCid, curMeta);
+                        updateHeaderFromMeta(curCid);
+                        appendThreadTurn("assistant", reply, refs, {
+                            title: curMeta.title,
+                            title_locked: !!curMeta.title_locked,
+                            tags: curMeta.tags || [],
+                            evidence_path: evPath || null,
+                            sgm_blocked: sgmBlocked,
+                            hint: hint,
+                        });
+
+                        // Order preserved relative to paired user bubble?
+                        window.__a1Log.a1t2.orderPreserved =
+                            userEl.nextElementSibling === result.el;
+
+                        // Role labels present?
+                        const roleText =
+                            result.el.querySelector(".meta .role")
+                                ?.textContent || "";
+                        window.__a1Log.a1t2.roleLabelsPresent =
+                            roleText === "Assistant";
+
+                        // Contrast checks (text vs its bubble background, and bubble backgrounds vs each other)
+                        const cs = getComputedStyle(document.documentElement);
+                        const userBg = (
+                            cs.getPropertyValue("--user-bg") || "#0a5ea8"
+                        ).trim();
+                        const userFg = (
+                            cs.getPropertyValue("--user-fg") || "#ffffff"
+                        ).trim();
+                        const asBg = (
+                            cs.getPropertyValue("--assistant-bg") || "#f3f4f6"
+                        ).trim();
+                        const asFg = (
+                            cs.getPropertyValue("--assistant-fg") || "#111827"
+                        ).trim();
+
+                        window.__a1Log.a1t2.contrast.userTextVsBg = +(
+                            contrastRatio(userFg, userBg) || 0
+                        ).toFixed(2);
+                        window.__a1Log.a1t2.contrast.assistantTextVsBg = +(
+                            contrastRatio(asFg, asBg) || 0
+                        ).toFixed(2);
+                        window.__a1Log.a1t2.contrast.bubbleBgVsBg = +(
+                            contrastRatio(userBg, asBg) || 0
+                        ).toFixed(2);
+
+                        // Console evidence
+                        console.info("[A1-T2] assistant bubble appended", {
+                            orderPreserved: window.__a1Log.a1t2.orderPreserved,
+                            roleLabelsPresent:
+                                window.__a1Log.a1t2.roleLabelsPresent,
+                            contrast: window.__a1Log.a1t2.contrast,
+                        });
+                    }, delay);
+
+                    // Console evidence for A1-T1
+                    console.info(
+                        "[A1-T1] user bubble created",
+                        window.__a1Log.a1t1,
+                    );
+                }
+
+                // Bindings
+                $send.addEventListener("click", sendMessage);
+                $input.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+
+                // Initialize: badge + focus and helpful first assistant message
+                const $topbar = document.querySelector(".topbar");
+                if ($topbar && !document.querySelector(".badge")) {
+                    const b = document.createElement("span");
+                    b.className = "badge";
+                    b.textContent = "SGM ON · sources: memory+files";
+                    $topbar.appendChild(b);
+                }
+                $input.focus();
+                // ST-1206 — initialize thread header and recent list
+                (function initThreadsUI() {
+                    const cid = currentConvId();
+                    // initial meta ensure
+                    let meta = readMeta(cid) || {};
+                    if (!meta.title) {
+                        meta.title = "(제목 없음)";
+                        meta.title_locked = false;
+                        meta.tags = [];
+                        meta.turns = 0;
+                        writeMeta(cid, meta);
+                    }
+                    updateHeaderFromMeta(cid);
+                    addRecent(cid, new Date().toISOString());
+                    // render local then merge from server
+                    loadAndRenderThread(cid);
+                    const $recent = document.getElementById("recentThreads");
+                    // Server-backed recent fetch to update dropdown with server titles and timestamps
+                    try {
+                        fetch(ggBackend() + "/api/threads/recent?limit=20")
+                            .then((r) => r.json())
+                            .then((obj) => {
+                                if (
+                                    !obj ||
+                                    !obj.ok ||
+                                    !obj.data ||
+                                    !Array.isArray(obj.data.items)
+                                )
+                                    return;
+                                if (!$recent) return;
+                                // keep first option and rebuild
+                                Array.from(
+                                    $recent.querySelectorAll(
+                                        "option:not(:first-child)",
+                                    ),
+                                ).forEach((o) => o.remove());
+                                obj.data.items.forEach((it) => {
+                                    const opt =
+                                        document.createElement("option");
+                                    opt.value = it.convId;
+                                    const title = it.title || "(제목 없음)";
+                                    const last = it.last_ts
+                                        ? " · " + it.last_ts
+                                        : "";
+                                    const chips =
+                                        Array.isArray(it.top_tags) &&
+                                        it.top_tags.length
+                                            ? " · " +
+                                              it.top_tags
+                                                  .slice(0, 3)
+                                                  .map((t) => "#" + t)
+                                                  .join(" ")
+                                            : "";
+                                    opt.textContent =
+                                        title +
+                                        " · " +
+                                        it.convId +
+                                        last +
+                                        chips;
+                                    $recent.appendChild(opt);
+                                });
+                            })
+                            .catch(() => {});
+                    } catch (e) {}
+                    if ($recent) {
+                        $recent.addEventListener("change", () => {
+                            const sel = $recent.value;
+                            if (sel) {
+                                setConvId(sel);
+                                updateHeaderFromMeta(sel);
+                                loadAndRenderThread(sel);
+                            }
+                        });
+                    }
+                })();
+                // Welcome helper bubble (only if empty UI state)
+                if (!$messages.children.length) {
+                    appendBubble(
+                        "assistant",
+                        'Type "ping" and press Enter to test A1-T1 (input) and A1-T2 (assistant output).',
+                    );
+                }
+
+                // Fill screenshot directory hint dynamically (YYYYMMDD)
+                (function updateHints() {
+                    const d = new Date();
+                    const y = d.getFullYear();
+                    const m = pad2(d.getMonth() + 1);
+                    const day = pad2(d.getDate());
+                    const ymd = "" + y + m + day;
+                    $shotDir.textContent =
+                        "gumgang_meeting/ui/logs/ui_mvp_gate_" +
+                        ymd +
+                        "/screenshots/";
+                    $runInfo.textContent =
+                        "Local " +
+                        y +
+                        "-" +
+                        m +
+                        "-" +
+                        day +
+                        " " +
+                        pad2(d.getHours()) +
+                        ":" +
+                        pad2(d.getMinutes());
+                })();
+            })();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+[
+  {
+    "path": "/home/duksan/바탕화면/gumgang_0_5/backend/memory/structure_fixes_backup/20250728_102848/backend/memory/gumgang_memory",
+    "num_documents": 37,
+    "metadata_keys": [
+      "source"
+    ],
+    "examples": [
+      "[프론트 구조: frontend_0.7_structure]\nfrontend_README.md\nfrontend_tree.txt\nindex.html\npackage-lock.json\npackage.json\npublic/r",
+      "금강의 프론트는 React 기반으로 구성되어 있으며, 진입점은 src/main.jsx입니다.\nmain.jsx는 App.jsx를 import하여 전체 애플리케이션을 루트 DOM에 마운트합니다.\nApp.jsx는 reac",
+      "ChatWindow.jsx는 사용자 질문과 GPT 응답을 표시하는 주요 대화창입니다.\ntypes.ts는 프론트 전체에서 사용되는 상태 타입과 인터페이스를 정의합니다.\nroadmap.json은 금강의 기억으로 인게스트"
+    ],
+    "doc_hashes": [
+      "664e10b2d1ffbd4aa434c9886b546b4c028524d8694a3be4fc3c99712cff7e31",
+      "b66464e8f7f45e07412a3221c1864546911c6df078b1957081c85c2544bd1c13",
+      "6a8b6a1db8e5bbbba53a21274598f1305d5a1762e3a4e21e9eee20aeff2c96b6",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "d8f3f5e6660dad354492df5cf87f8fc535101a6b21ed3dc408a91e81be6d34d9",
+      "fd5d1feaefdc1dd6611b79e815522517fe98e5914f6b6b0e0c1d709fcea2a604",
+      "85d6b520e70de965fb21237682962ef459bffca25d1c1a982d92800d5921b0a2",
+      "0a71351fd7b287e2658a1a66ff7b4662cb881454705bddfd93ef1c3703722437",
+      "3772a27c244b23c37c902d2943ed15e13b924ec5f5bebd418cb3144278a627c6",
+      "05b305f6bc6dae5b58b9743b9b742e1f0504b47eb30af0cf5d88bc6e95d3250c"
+    ]
+  },
+  {
+    "path": "/home/duksan/바탕화면/gumgang_0_5/backend/memory/gumgang_memory",
+    "num_documents": 37,
+    "metadata_keys": [
+      "source"
+    ],
+    "examples": [
+      "[프론트 구조: frontend_0.7_structure]\nfrontend_README.md\nfrontend_tree.txt\nindex.html\npackage-lock.json\npackage.json\npublic/r",
+      "금강의 프론트는 React 기반으로 구성되어 있으며, 진입점은 src/main.jsx입니다.\nmain.jsx는 App.jsx를 import하여 전체 애플리케이션을 루트 DOM에 마운트합니다.\nApp.jsx는 reac",
+      "ChatWindow.jsx는 사용자 질문과 GPT 응답을 표시하는 주요 대화창입니다.\ntypes.ts는 프론트 전체에서 사용되는 상태 타입과 인터페이스를 정의합니다.\nroadmap.json은 금강의 기억으로 인게스트"
+    ],
+    "doc_hashes": [
+      "664e10b2d1ffbd4aa434c9886b546b4c028524d8694a3be4fc3c99712cff7e31",
+      "b66464e8f7f45e07412a3221c1864546911c6df078b1957081c85c2544bd1c13",
+      "6a8b6a1db8e5bbbba53a21274598f1305d5a1762e3a4e21e9eee20aeff2c96b6",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "d8f3f5e6660dad354492df5cf87f8fc535101a6b21ed3dc408a91e81be6d34d9",
+      "fd5d1feaefdc1dd6611b79e815522517fe98e5914f6b6b0e0c1d709fcea2a604",
+      "85d6b520e70de965fb21237682962ef459bffca25d1c1a982d92800d5921b0a2",
+      "0a71351fd7b287e2658a1a66ff7b4662cb881454705bddfd93ef1c3703722437",
+      "3772a27c244b23c37c902d2943ed15e13b924ec5f5bebd418cb3144278a627c6",
+      "05b305f6bc6dae5b58b9743b9b742e1f0504b47eb30af0cf5d88bc6e95d3250c"
+    ]
+  }
+]

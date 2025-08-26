@@ -1,0 +1,48 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "gumgang-v2",
+  "version": "0.1.0",
+  "identifier": "com.tauri.dev",
+  "build": {
+    "frontendDist": "../out",
+    "devUrl": "http://localhost:3000",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "금강 2.0",
+        "width": 1400,
+        "height": 900,
+        "resizable": true,
+        "fullscreen": false,
+        "center": true,
+        "url": "http://localhost:3037/ui"
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "plugins": {
+    "fs": {
+      "scope": {
+        "allow": ["$HOME/**", "$RESOURCE/**", "$APP/**", "$DESKTOP/**"],
+        "deny": []
+      }
+    },
+    "dialog": {},
+    "shell": {
+      "scope": {
+        "allow": [
+          {
+            "name": "open",
+            "cmd": "open",
+            "args": true
+          }
+        ]
+      }
+    }
+  }
+}

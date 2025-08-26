@@ -1,0 +1,91 @@
+{
+  "summary": {
+    "total_tests": 8,
+    "passed": 7,
+    "failed": 1,
+    "success_rate": 87.5,
+    "duration_seconds": 0.001086
+  },
+  "detailed_results": [
+    {
+      "test": "메모리 저장",
+      "success": true,
+      "timestamp": "2025-08-07T11:33:53.748944",
+      "details": "4개 메모리 저장 완료"
+    },
+    {
+      "test": "메모리 검색",
+      "success": true,
+      "timestamp": "2025-08-07T11:33:53.749212",
+      "details": "총 16개 검색 결과"
+    },
+    {
+      "test": "계층별 기능",
+      "success": true,
+      "timestamp": "2025-08-07T11:33:53.749239",
+      "details": "초단기 및 단기 메모리 정상 작동"
+    },
+    {
+      "test": "자동 클러스터링",
+      "success": true,
+      "timestamp": "2025-08-07T11:33:53.749376",
+      "details": "9개 클러스터 생성됨"
+    },
+    {
+      "test": "컨텍스트 강화",
+      "success": true,
+      "timestamp": "2025-08-07T11:33:53.749712",
+      "details": "평균 3.0개 컨텍스트 제공"
+    },
+    {
+      "test": "사용자 프로필",
+      "success": false,
+      "timestamp": "2025-08-07T11:33:53.749740",
+      "details": "프로필 데이터 없음"
+    },
+    {
+      "test": "메모리 통합",
+      "success": true,
+      "timestamp": "2025-08-07T11:33:53.749773",
+      "details": "통합 프로세스 정상 실행"
+    },
+    {
+      "test": "영구 저장",
+      "success": true,
+      "timestamp": "2025-08-07T11:33:53.749898",
+      "details": "데이터 파일 생성됨: memory/long_term/long_term_memory.json"
+    }
+  ],
+  "final_memory_stats": {
+    "layers": {
+      "ultra_short": {
+        "capacity": 7,
+        "current_size": 7,
+        "current_focus": "bbed0ce1-6c88-4d9a-aa9b-0ffae4aa5de4"
+      },
+      "short_term": {
+        "capacity": 50,
+        "current_size": 13,
+        "clusters": 13
+      },
+      "medium_term": {
+        "capacity": 200,
+        "current_size": 0,
+        "concepts": 0
+      },
+      "long_term": {
+        "core_knowledge": 0,
+        "schemas": 0,
+        "user_profiles": 0
+      }
+    },
+    "statistics": {
+      "total_memories": 13,
+      "successful_retrievals": 7,
+      "failed_retrievals": 0,
+      "consolidations_performed": 1
+    },
+    "patterns": {},
+    "activity_patterns": {}
+  }
+}

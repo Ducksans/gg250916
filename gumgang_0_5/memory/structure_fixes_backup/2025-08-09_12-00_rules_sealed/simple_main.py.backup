@@ -1,0 +1,462 @@
+import os
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse, StreamingResponse
+from pydantic import BaseModel
+from typing import Optional, Dict, Any, AsyncGenerator
+import datetime
+import sys
+import json
+import asyncio
+import re
+from pathlib import Path
+from dotenv import load_dotenv
+from openai import OpenAI
+from fastapi import Request
+from utils.time_kr import now_kr_str_minute, validate_kr_timestamp
+
+# Load environment variables
+env_path = Path(__file__).parent / ".env"
+load_dotenv(env_path)
+
+# Initialize OpenAI client
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+openai_client = None
+if OPENAI_API_KEY:
+    try:
+        openai_client = OpenAI(api_key=OPENAI_API_KEY)
+        print("✅ OpenAI API initialized successfully")
+    except Exception as e:
+        print(f"⚠️ Failed to initialize OpenAI: {e}")
+else:
+    print("⚠️ No OpenAI API key found in .env")
+
+# Protocol 엔드포인트 import
+try:
+    from protocol_endpoints import router as protocol_router
+    PROTOCOL_ENABLED = True
+except ImportError:
+    PROTOCOL_ENABLED = False
+    print("⚠️ Protocol endpoints not available (protocol_endpoints.py not found)")
+
+# ✅ FastAPI 앱 초기화
+app = FastAPI(title="금강 2.0 백엔드 - 간단 테스트 서버")
+
+# ✅ CORS 설정 (프론트엔드 연결용)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://localhost:3001", "*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ✅ Timestamp Middleware - 모든 응답에 KST 타임스탬프 추가
+@app.middleware("http")
+async def timestamp_guard(request: Request, call_next):
+    """모든 HTTP 응답에 KST 타임스탬프 헤더 추가 및 형식 검증"""
+    response = await call_next(request)
+
+    # 현재 KST 시간 가져오기
+    ts = now_kr_str_minute()
+
+    # 응답 헤더에 타임스탬프 추가
+    response.headers["X-Gumgang-Timestamp"] = ts
+    response.headers["X-Gumgang-TZ"] = "Asia/Seoul"
+
+    # 타임스탬프 형식 검증
+    if not validate_kr_timestamp(ts):
+        raise HTTPException(
+            status_code=422,
+            detail=f"Invalid timestamp format: {ts}. Expected YYYY-MM-DD HH:mm"
+        )
+
+    return response
+
+# ✅ Protocol 라우터 통합
+if PROTOCOL_ENABLED:
+    app.include_router(protocol_router)
+    print("✅ Protocol endpoints integrated successfully")
+
+# ✅ 테스트용 데이터 모델
+class TestMessage(BaseModel):
+    message: str
+    timestamp: Optional[str] = None
+
+class TaskRequest(BaseModel):
+    task_id: str
+    task_name: str
+    status: str = "pending"
+    progress: int = 0
+
+class AskRequest(BaseModel):
+    query: str
+    session_id: Optional[str] = None
+    code: Optional[str] = None
+    language: Optional[str] = None
+    file: Optional[str] = None
+
+# ✅ 헬스 체크 엔드포인트
+@app.get("/health")
+async def health_check():
+    """헬스 체크 엔드포인트"""
+    return {
+        "status": "healthy",
+        "timestamp": now_kr_str_minute(),
+        "service": "gumgang-backend",
+        "version": "2.0-test"
+    }
+
+# ✅ 루트 엔드포인트
+@app.get("/")
+async def root():
+    return {
+        "message": "금강 2.0 백엔드 테스트 서버",
+        "status": "running",
+        "endpoints": [
+            "/health",
+            "/ask",
+            "/api/test",
+            "/api/echo",
+            "/api/tasks",
+            "/api/dashboard/stats"
+        ]
+    }
+
+# ✅ /ask 엔드포인트 - AI 어시스턴트용
+@app.post("/ask")
+async def ask_question(request: AskRequest):
+    """AI 코딩 어시스턴트 엔드포인트 - OpenAI GPT 연동"""
+    import uuid
+
+    # 세션 ID 생성 또는 재사용
+    session_id = request.session_id or str(uuid.uuid4())
+
+    # OpenAI API 사용 가능 여부 확인
+    if not openai_client:
+        # Fallback to dummy response if no API key
+        return {
+            "response": f"[테스트 모드] '{request.query}'에 대한 답변입니다. OpenAI API 키가 설정되지 않았습니다.",
+            "source": "test-backend",
+            "session_id": session_id,
+            "context_info": {
+                "session_id": session_id,
+                "recent_interactions": 0,
+                "context_type": "test"
+            },
+            "suggest_ingest": False
+        }
+
+    try:
+        # 시스템 프롬프트 구성
+        system_prompt = """You are 금강 2.0, an advanced AI coding assistant powered by GPT-5 with a 5-layer memory system.
+You have dramatically improved reasoning capabilities, near-human cognitive abilities, and persistent memory.
+You are helpful, precise, and capable of understanding both Korean and English at an expert level.
+When providing code, always use proper markdown formatting with exceptional accuracy.
+You have PhD-level knowledge of programming, software architecture, and best practices."""
+
+        # 사용자 메시지 구성
+        messages = [
+            {"role": "system", "content": system_prompt}
+        ]
+
+        # 코드가 포함된 경우 컨텍스트 추가
+        if request.code:
+            code_context = f"\n\n다음 코드와 관련된 질문입니다:\n```{request.language or 'python'}\n{request.code}\n```"
+            messages.append({"role": "user", "content": request.query + code_context})
+        else:
+            messages.append({"role": "user", "content": request.query})
+
+        # OpenAI API 호출
+        print(f"🤖 Calling OpenAI API for query: {request.query[:50]}...")
+
+        response = openai_client.chat.completions.create(
+            model="gpt-5",  # GPT-5 정식 모델 (2025년 8월 7일 출시)
+            messages=messages,
+            max_completion_tokens=2000,  # GPT-5는 max_completion_tokens 사용
+            stream=False  # 스트리밍은 나중에 구현
+        )
+
+        # 응답 추출
+        response_text = response.choices[0].message.content
+
+        print(f"✅ OpenAI response received: {len(response_text)} chars")
+
+        return {
+            "response": response_text,
+            "source": "openai-gpt-5-official",
+            "session_id": session_id,
+            "context_info": {
+                "session_id": session_id,
+                "recent_interactions": 0,
+                "context_type": "openai",
+                "model": "GPT-5",
+                "tokens_used": response.usage.total_tokens if response.usage else None,
+                "capabilities": "Advanced reasoning, persistent memory, near-AGI performance"
+            },
+            "suggest_ingest": False
+        }
+
+    except Exception as e:
+        print(f"❌ OpenAI API error: {e}")
+        # 에러 발생시 폴백 응답
+        return {
+            "response": f"죄송합니다. AI 처리 중 오류가 발생했습니다. 다시 시도해주세요.\n\n오류: {str(e)}",
+            "source": "error-fallback",
+            "session_id": session_id,
+            "context_info": {
+                "session_id": session_id,
+                "recent_interactions": 0,
+                "context_type": "error",
+                "error": str(e)
+            },
+            "suggest_ingest": False
+        }
+
+# ✅ 스트리밍 응답 엔드포인트 - Server-Sent Events (SSE)
+@app.post("/ask/stream")
+async def ask_question_stream(request: AskRequest):
+    """AI 코딩 어시스턴트 스트리밍 엔드포인트 - OpenAI GPT 스트리밍"""
+    import uuid
+
+    # 세션 ID 생성 또는 재사용
+    session_id = request.session_id or str(uuid.uuid4())
+
+    async def generate_stream() -> AsyncGenerator[str, None]:
+        """SSE 형식으로 스트리밍 응답 생성"""
+
+        # OpenAI API 사용 가능 여부 확인
+        if not openai_client:
+            # 테스트 모드 스트리밍
+            test_response = f"[테스트 모드] '{request.query}'에 대한 스트리밍 응답입니다."
+            for char in test_response:
+                yield f"data: {json.dumps({'content': char, 'type': 'content'})}\n\n"
+                await asyncio.sleep(0.01)  # 스트리밍 효과
+            yield f"data: {json.dumps({'type': 'done', 'session_id': session_id})}\n\n"
+            return
+
+        try:
+            # 시스템 프롬프트 구성
+            system_prompt = """You are 금강 2.0, an advanced AI coding assistant powered by GPT-5 with a 5-layer memory system.
+You have dramatically improved reasoning capabilities, near-human cognitive abilities, and persistent memory.
+You are helpful, precise, and capable of understanding both Korean and English at an expert level.
+When providing code, always use proper markdown formatting with exceptional accuracy.
+You have PhD-level knowledge of programming, software architecture, and best practices."""
+
+            # 사용자 메시지 구성
+            messages = [
+                {"role": "system", "content": system_prompt}
+            ]
+
+            # 코드가 포함된 경우 컨텍스트 추가
+            if request.code:
+                code_context = f"\n\n다음 코드와 관련된 질문입니다:\n```{request.language or 'python'}\n{request.code}\n```"
+                messages.append({"role": "user", "content": request.query + code_context})
+            else:
+                messages.append({"role": "user", "content": request.query})
+
+            # 시작 이벤트 전송
+            yield f"data: {json.dumps({'type': 'start', 'session_id': session_id})}\n\n"
+
+            # OpenAI API 스트리밍 호출
+            print(f"🤖 Starting streaming response for: {request.query[:50]}...")
+
+            stream = openai_client.chat.completions.create(
+                model="gpt-5",  # GPT-5 정식 모델 (2025년 8월 7일 출시)
+                messages=messages,
+                max_completion_tokens=2000,  # GPT-5는 max_completion_tokens 사용
+                stream=True  # 스트리밍 활성화
+            )
+
+            # 스트리밍 응답 전송
+            full_response = ""
+            for chunk in stream:
+                if chunk.choices[0].delta.content is not None:
+                    content = chunk.choices[0].delta.content
+                    full_response += content
+                    # 각 청크를 SSE 형식으로 전송
+                    yield f"data: {json.dumps({'content': content, 'type': 'content'})}\n\n"
+
+            # 완료 이벤트 전송
+            yield f"data: {json.dumps({'type': 'done', 'session_id': session_id, 'full_response': full_response})}\n\n"
+            print(f"✅ Streaming completed: {len(full_response)} chars")
+
+        except Exception as e:
+            print(f"❌ Streaming error: {e}")
+            # 에러 이벤트 전송
+            yield f"data: {json.dumps({'type': 'error', 'error': str(e), 'session_id': session_id})}\n\n"
+
+    # StreamingResponse로 SSE 응답 반환
+    return StreamingResponse(
+        generate_stream(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",  # Nginx 버퍼링 비활성화
+        }
+    )
+
+# ✅ 기존 테스트 엔드포인트들
+@app.post("/api/echo")
+async def echo_message(message: TestMessage):
+    return {
+        "echo": message.message,
+        "timestamp": message.timestamp or datetime.datetime.now().isoformat(),
+        "processed": True
+    }
+
+# ✅ 테스트 엔드포인트
+@app.get("/api/test")
+async def test_endpoint():
+    return {
+        "status": "success",
+        "message": "백엔드 연결 성공!",
+        "timestamp": datetime.datetime.now().isoformat()
+    }
+
+# ✅ Echo 엔드포인트 (POST 테스트용)
+@app.post("/api/echo")
+async def echo_message(msg: TestMessage):
+    return {
+        "status": "success",
+        "echo": msg.message,
+        "received_at": datetime.datetime.now().isoformat(),
+        "original_timestamp": msg.timestamp
+    }
+
+# ✅ Task 관련 엔드포인트
+@app.get("/api/tasks")
+async def get_tasks():
+    # 더미 태스크 데이터
+    return {
+        "status": "success",
+        "tasks": [
+            {
+                "task_id": "GG-20250108-001",
+                "task_name": "세션 매니저 구축",
+                "status": "completed",
+                "progress": 100
+            },
+            {
+                "task_id": "GG-20250108-002",
+                "task_name": "Task 추적 시스템",
+                "status": "completed",
+                "progress": 100
+            },
+            {
+                "task_id": "GG-20250108-003",
+                "task_name": "프론트엔드 연동",
+                "status": "completed",
+                "progress": 100
+            },
+            {
+                "task_id": "GG-20250108-005",
+                "task_name": "백엔드 안정화",
+                "status": "in_progress",
+                "progress": 50
+            }
+        ],
+        "total": 4,
+        "completed": 3,
+        "in_progress": 1
+    }
+
+@app.post("/api/tasks")
+async def create_task(task: TaskRequest):
+    return {
+        "status": "success",
+        "message": f"Task {task.task_id} created",
+        "task": task.dict()
+    }
+
+# ✅ 대시보드 통계 엔드포인트
+@app.get("/api/dashboard/stats")
+async def dashboard_stats():
+    return {
+        "status": "success",
+        "stats": {
+            "total_files": 1247,
+            "total_lines": 45892,
+            "active_sessions": 1,
+            "memory_usage": {
+                "sensory": 15,
+                "working": 8,
+                "episodic": 42,
+                "semantic": 156
+            },
+            "system_health": "optimal",
+            "last_update": datetime.datetime.now().isoformat()
+        }
+    }
+
+# ✅ 파일 구조 엔드포인트
+@app.get("/api/structure")
+async def get_structure():
+    return {
+        "status": "success",
+        "structure": {
+            "frontend": {
+                "path": "/gumgang-v2",
+                "framework": "Next.js 15",
+                "status": "active"
+            },
+            "backend": {
+                "path": "/backend",
+                "framework": "FastAPI",
+                "status": "running"
+            },
+            "memory": {
+                "path": "/memory",
+                "type": "4-layer temporal system",
+                "status": "initialized"
+            }
+        }
+    }
+
+# ✅ 메모리 상태 엔드포인트 (더미)
+@app.get("/api/memory/status")
+async def memory_status():
+    return {
+        "status": "success",
+        "memory": {
+            "layers": {
+                "sensory": {"capacity": 100, "used": 15},
+                "working": {"capacity": 50, "used": 8},
+                "episodic": {"capacity": 500, "used": 42},
+                "semantic": {"capacity": 1000, "used": 156}
+            },
+            "total_memories": 221,
+            "last_cleanup": now_kr_str_minute()
+        }
+    }
+
+# ✅ 에러 핸들러
+@app.exception_handler(404)
+async def not_found_handler(request, exc):
+    return JSONResponse(
+        status_code=404,
+        content={
+            "status": "error",
+            "message": "Endpoint not found",
+            "path": str(request.url.path)
+        }
+    )
+
+@app.exception_handler(500)
+async def internal_error_handler(request, exc):
+    return JSONResponse(
+        status_code=500,
+        content={
+            "status": "error",
+            "message": "Internal server error",
+            "detail": str(exc)
+        }
+    )
+
+if __name__ == "__main__":
+    import uvicorn
+    print("🚀 금강 2.0 간단 테스트 서버 시작...")
+    print("📍 http://localhost:8000")
+    print("📊 대시보드: http://localhost:3000")
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=False)

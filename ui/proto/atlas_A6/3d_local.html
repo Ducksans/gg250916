@@ -1,0 +1,1393 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>A6 — 3D 뷰어(로컬 스파이크)</title>
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "https://esm.sh/three@0.161.0",
+                    "three/examples/jsm/": "https://esm.sh/three@0.161.0/examples/jsm/",
+                    "3d-force-graph": "https://esm.sh/3d-force-graph@1.73.4",
+                    "d3-force-3d": "https://esm.sh/d3-force-3d@3"
+                }
+            }
+        </script>
+        <style>
+            :root {
+                --bg: #0b1020;
+                --panel: #121933;
+                --panel2: #0d152c;
+                --fg: #e6eefb;
+                --muted: #9aa8c4;
+                --border: #24304f;
+                --ok: #14b8a6;
+                --warn: #f59e0b;
+                --err: #ef4444;
+                --accent: #60a5fa;
+                --code: #0f1830;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                height: 100%;
+            }
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: var(--fg);
+                font:
+                    14px/1.5 system-ui,
+                    -apple-system,
+                    Segoe UI,
+                    Roboto,
+                    Noto Sans,
+                    Apple SD Gothic Neo,
+                    Malgun Gothic,
+                    sans-serif;
+            }
+            #app {
+                display: grid;
+                grid-template-rows: auto 1fr auto;
+                min-height: 100%;
+            }
+            header,
+            footer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.6rem;
+                padding: 0.6rem 0.9rem;
+                background: var(--panel);
+                border-bottom: 1px solid var(--border);
+            }
+            footer {
+                border-top: 1px solid var(--border);
+                border-bottom: none;
+                background: var(--panel2);
+            }
+            .row {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+            button,
+            select {
+                background: var(--panel2);
+                color: var(--fg);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 0.38rem 0.55rem;
+                cursor: pointer;
+            }
+            button:hover {
+                border-color: #3a518a;
+            }
+            main {
+                display: grid;
+                grid-template-columns: 1.25fr 0.75fr;
+                min-height: 0;
+            }
+            section,
+            aside {
+                display: flex;
+                flex-direction: column;
+                min-height: 0;
+            }
+            .title {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.55rem 0.9rem;
+                background: var(--panel2);
+                border-bottom: 1px solid var(--border);
+                color: var(--muted);
+                font-weight: 600;
+            }
+            .body {
+                flex: 1;
+                overflow: auto;
+            }
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                padding: 0.18rem 0.5rem;
+                border-radius: 999px;
+                border: 1px solid var(--border);
+                color: var(--muted);
+            }
+            .badge.ok {
+                background: rgba(20, 184, 166, 0.12);
+                color: var(--ok);
+                border-color: rgba(20, 184, 166, 0.35);
+            }
+            .badge.warn {
+                background: rgba(245, 158, 11, 0.12);
+                color: var(--warn);
+                border-color: rgba(245, 158, 11, 0.35);
+            }
+            .badge.err {
+                background: rgba(239, 68, 68, 0.12);
+                color: var(--err);
+                border-color: rgba(239, 68, 68, 0.35);
+            }
+            .pill {
+                padding: 0.05rem 0.45rem;
+                border: 1px solid var(--border);
+                border-radius: 999px;
+                background: #0e1730;
+            }
+            .errbox {
+                display: none;
+                margin: 0.6rem 0.9rem;
+                padding: 0.6rem 0.8rem;
+                border-radius: 8px;
+                background: rgba(239, 68, 68, 0.08);
+                border: 1px solid rgba(239, 68, 68, 0.35);
+                color: #fecaca;
+            }
+            .errbox.show {
+                display: block;
+            }
+            .kv {
+                display: grid;
+                grid-template-columns: 140px 1fr;
+                gap: 0.4rem 0.8rem;
+                padding: 0.8rem 0.9rem;
+            }
+            .k {
+                color: var(--muted);
+            }
+            .panel3d {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 420px;
+                margin: 0.8rem;
+                border: 1px dashed var(--border);
+                border-radius: 12px;
+                background: linear-gradient(180deg, #0f1830 0%, #0e142a 100%);
+            }
+            .panel3d .msg {
+                max-width: 720px;
+                color: #c9d6f2;
+                text-align: center;
+                padding: 0.6rem;
+            }
+            .overlay-hint {
+                position: absolute;
+                top: 8px;
+                left: 8px;
+                font-size: 12px;
+                color: var(--muted);
+                background: rgba(0, 0, 0, 0.25);
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                padding: 2px 6px;
+            }
+            code {
+                background: var(--code);
+                border: 1px solid var(--border);
+                padding: 0.05rem 0.3rem;
+                border-radius: 4px;
+            }
+            canvas.webgl {
+                display: block;
+                width: 100%;
+                height: 100%;
+                outline: none;
+                border-radius: 12px;
+            }
+        </style>
+    </head>
+    <body>
+        <div
+            id="app"
+            role="application"
+            aria-label="A6 — 3D Viewer (local spike)"
+        >
+            <header>
+                <div class="row" style="gap: 0.8rem">
+                    <strong>A6 — 3D 뷰어(로컬 스파이크)</strong>
+                    <label for="lens" class="k">렌즈</label>
+                    <select id="lens" aria-label="렌즈">
+                        <option value="Core">Core</option>
+                        <option value="Hub">Hub</option>
+                        <option value="API">API</option>
+                        <option value="Memory">Memory</option>
+                        <option value="Runtime">Runtime</option>
+                    </select>
+                    <button
+                        id="btnLoad"
+                        title="최신 SiteGraph 스냅샷 메타 로드"
+                    >
+                        메타 로드
+                    </button>
+                    <button
+                        id="btnToggleMode"
+                        title="SAFE↔NORMAL 모드 전환(쿼리 safe=0/1)"
+                    >
+                        강제 새로고침
+                    </button>
+                </div>
+                <span
+                    id="statusBadge"
+                    class="badge warn"
+                    title="SAFE: 3D 렌더 비활성 — NORMAL에서 활성"
+                    >SAFE</span
+                >
+            </header>
+
+            <div id="err" class="errbox" role="alert" aria-live="polite"></div>
+
+            <main>
+                <section aria-labelledby="title3d">
+                    <div class="title">
+                        <span id="title3d">3D 프리뷰</span>
+                        <span id="hint3d" class="k">SAFE 모드: 3D 비활성</span>
+                    </div>
+                    <div class="body">
+                        <div
+                            id="panel3d"
+                            class="panel3d"
+                            aria-label="3D preview panel"
+                        >
+                            <div id="safeMsg" class="msg" role="note">
+                                <div
+                                    style="
+                                        font-weight: 600;
+                                        margin-bottom: 0.35rem;
+                                    "
+                                >
+                                    3D 렌더는 NORMAL 모드에서 활성화됩니다.
+                                </div>
+                                <div style="color: #9aa8c4">
+                                    지금은 로컬 스파이크 단계로, 데이터 메타만
+                                    로드하고 3D는 비활성 상태입니다.<br />
+                                    좌측 탭에서 Atlas(A6) 하위의
+                                    Checkpoints/SSV를 참고하시고,<br />
+                                    NORMAL 모드 전환 후 3D
+                                    레이어/LOD/포커스/앵커 점프를 체험할 수
+                                    있습니다.
+                                </div>
+                                <div style="margin-top: 0.6rem">
+                                    역할 사전:
+                                    <span
+                                        class="pill"
+                                        title="코어 — 운영 판단의 중심·결정 근거 (Core/SSOT)"
+                                        aria-label="C — 코어 — 운영 판단의 중심·결정 근거 (Core/SSOT)"
+                                        >C</span
+                                    >
+                                    <span
+                                        class="pill"
+                                        title="허브 — 요약·인덱스·길잡이 (Hub/Index)"
+                                        aria-label="H — 허브 — 요약·인덱스·길잡이 (Hub/Index)"
+                                        >H</span
+                                    >
+                                    <span
+                                        class="pill"
+                                        title="정적 문서 — 스펙·규칙 등 변경 빈도 낮음 (Static docs/specs)"
+                                        aria-label="S — 정적 문서 — 스펙·규칙 등 변경 빈도 낮음 (Static docs/specs)"
+                                        >S</span
+                                    >
+                                    <span
+                                        class="pill"
+                                        title="동적 증거 — 스냅샷·로그·측정치 등 시계열 (Dynamic evidence/data)"
+                                        aria-label="D — 동적 증거 — 스냅샷·로그·측정치 등 시계열 (Dynamic evidence/data)"
+                                        >D</span
+                                    >
+                                    <span
+                                        class="pill"
+                                        title="API/코드 표면 — 외부/내부 호출 인터페이스 (API/Code surface)"
+                                        aria-label="A — API/코드 표면 — 외부/내부 호출 인터페이스 (API/Code surface)"
+                                        >A</span
+                                    >
+                                    <span
+                                        class="pill"
+                                        title="프런트/UI — 화면·스타일·자산 (Frontend/UI assets)"
+                                        aria-label="UI — 프런트/UI — 화면·스타일·자산 (Frontend/UI assets)"
+                                        >UI</span
+                                    >
+                                    <span
+                                        class="pill"
+                                        title="런타임 — 실행 환경·설정·로그 (Runtime/Logs/Env)"
+                                        aria-label="R — 런타임 — 실행 환경·설정·로그 (Runtime/Logs/Env)"
+                                        >R</span
+                                    >
+                                    <span
+                                        class="pill"
+                                        title="격리 — 민감/대용량 등 격리 보관 (Quarantine/Isolated)"
+                                        aria-label="Q — 격리 — 민감/대용량 등 격리 보관 (Quarantine/Isolated)"
+                                        >Q</span
+                                    >
+                                    <span
+                                        class="pill"
+                                        title="메모리 계층 — 저장→검색→회상 루프 (Memory-tier)"
+                                        aria-label="M — 메모리 계층 — 저장→검색→회상 루프 (Memory-tier)"
+                                        >M</span
+                                    >
+                                    <span
+                                        class="pill"
+                                        title="레거시/외부 — 과거 유산·외부 연계 (Legacy/External)"
+                                        aria-label="X — 레거시/외부 — 과거 유산·외부 연계 (Legacy/External)"
+                                        >X</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <aside aria-labelledby="metaTitle">
+                    <div class="title">
+                        <span id="metaTitle">스냅샷 메타</span>
+                        <span id="ts" class="pill">—</span>
+                    </div>
+                    <div class="body">
+                        <div class="kv">
+                            <div class="k">API_BASE</div>
+                            <div id="apiBase" class="mono">—</div>
+                            <div class="k">path</div>
+                            <div id="snapPath" class="mono">—</div>
+                            <div class="k">snapshot_id</div>
+                            <div id="snapshotId" class="mono">—</div>
+                            <div class="k">created_at</div>
+                            <div id="createdAt" class="mono">—</div>
+                            <div class="k">lens</div>
+                            <div id="lensVal" class="mono">—</div>
+                            <div class="k">counts</div>
+                            <div id="counts" class="mono">—</div>
+                        </div>
+                        <div class="row" style="padding: 0.4rem 0.9rem">
+                            <button id="btnCopyMeta" title="메타 요약 복사">
+                                메타 복사
+                            </button>
+                        </div>
+                        <div class="row" style="padding: 0.4rem 0.9rem">
+                            상태 배지:
+                            <span
+                                id="badgeChain"
+                                class="badge"
+                                title="체크포인트 체인 상태"
+                                >체인: —</span
+                            >
+                        </div>
+                    </div>
+                </aside>
+            </main>
+
+            <footer>
+                <div class="k" id="modeNote">
+                    SAFE: 무거운 3D 기능 비활성(증거 로깅은 NORMAL과 동일)
+                </div>
+                <div class="mono" id="footTs"></div>
+            </footer>
+        </div>
+
+        <script>
+            (function () {
+                "use strict";
+                const $ = (id) => document.getElementById(id);
+                const qs = new URLSearchParams(location.search);
+                const DEFAULT_BASE = "http://127.0.0.1:8000";
+                const API_BASE = (
+                    localStorage.getItem("gg_backend_url") || DEFAULT_BASE
+                ).replace(/\/+$/, "");
+                const statusBadge = $("statusBadge");
+                const lensSel = $("lens");
+                const tsEl = $("ts");
+                const footTs = $("footTs");
+                const errBox = $("err");
+                const snapPath = $("snapPath");
+                const snapshotId = $("snapshotId");
+                const createdAt = $("createdAt");
+                const lensVal = $("lensVal");
+                const counts = $("counts");
+                const badgeChain = $("badgeChain");
+                const panel3d = $("panel3d");
+                const safeMsg = $("safeMsg");
+                const hint3d = $("hint3d");
+                const modeNote = $("modeNote");
+                const apiBaseEl = $("apiBase");
+                apiBaseEl.textContent = API_BASE;
+
+                let rafId = null;
+                let cleanupScene = null;
+
+                let lastSnap = null;
+                let controlsInjected = false;
+                const KIND_KEYS = [
+                    "file",
+                    "dir",
+                    "api",
+                    "doc",
+                    "evidence",
+                    "resource",
+                ];
+                let selectedKinds = new Set(KIND_KEYS);
+                let lodMode = "Auto";
+                let centerMode = "centroid";
+                function nowISO() {
+                    const s = new Date().toISOString();
+                    tsEl.textContent = s;
+                    footTs.textContent = s;
+                }
+                function modeIsSafe() {
+                    return !(qs.get("safe") === "0");
+                }
+                function setTopBadge() {
+                    const safe = modeIsSafe();
+                    statusBadge.classList.remove("ok", "warn", "err");
+                    if (safe) {
+                        statusBadge.classList.add("warn");
+                        statusBadge.textContent = "SAFE";
+                    } else {
+                        statusBadge.classList.add("ok");
+                        statusBadge.textContent = "NORMAL";
+                    }
+                    hint3d.textContent = safe
+                        ? "SAFE 모드: 3D 비활성"
+                        : "NORMAL 모드: 3D 엔진 활성";
+                    modeNote.textContent = safe
+                        ? "SAFE: 무거운 3D 기능 비활성(증거 로깅은 NORMAL과 동일)"
+                        : "NORMAL: 3D 기능 활성(성능 가이드: LOD/인스턴싱/프레임 타겟)";
+                }
+                function showError(msg) {
+                    errBox.classList.add("show");
+                    errBox.textContent = String(msg || "");
+                }
+                function clearError() {
+                    errBox.classList.remove("show");
+                    errBox.textContent = "";
+                }
+                async function jget(url, timeoutMs = 7000, retries = 1) {
+                    for (let a = 0; a <= retries; a++) {
+                        const ac = new AbortController();
+                        const t = setTimeout(
+                            () => ac.abort("timeout"),
+                            Math.max(500, timeoutMs * Math.pow(1.5, a)),
+                        );
+                        try {
+                            const r = await fetch(url, {
+                                headers: { Accept: "application/json" },
+                                signal: ac.signal,
+                                cache: "no-store",
+                            });
+                            clearTimeout(t);
+                            if (!r.ok)
+                                throw new Error(r.status + " " + r.statusText);
+                            return await r.json();
+                        } catch (e) {
+                            clearTimeout(t);
+                            if (a >= retries) throw e;
+                            await new Promise((res) =>
+                                setTimeout(res, 400 * Math.pow(2, a)),
+                            );
+                        }
+                    }
+                }
+                function copy(text) {
+                    if (!navigator.clipboard) throw new Error("no clipboard");
+                    return navigator.clipboard.writeText(String(text || ""));
+                }
+                function setChainBadge(ok) {
+                    badgeChain.classList.remove("ok", "err");
+                    if (ok === true) {
+                        badgeChain.classList.add("ok");
+                        badgeChain.textContent = "체인: OK";
+                    } else if (ok === false) {
+                        badgeChain.classList.add("err");
+                        badgeChain.textContent = "체인: FAIL";
+                    } else {
+                        badgeChain.textContent = "체인: —";
+                    }
+                }
+
+                function ensureControlsInjected() {
+                    if (controlsInjected) return;
+                    const row = document.querySelector("header .row");
+                    if (!row) return;
+                    const holder = document.createElement("span");
+                    holder.id = "layerControls";
+                    holder.className = "row";
+                    // Layer toggles
+                    const labLayer = document.createElement("span");
+                    labLayer.className = "k";
+                    labLayer.textContent = "레이어";
+                    holder.appendChild(labLayer);
+                    KIND_KEYS.forEach((k) => {
+                        const id = "kind_" + k;
+                        const cb = document.createElement("input");
+                        cb.type = "checkbox";
+                        cb.id = id;
+                        cb.checked = selectedKinds.has(k);
+                        cb.style.marginLeft = "4px";
+                        const lb = document.createElement("label");
+                        lb.setAttribute("for", id);
+                        lb.style.marginRight = "6px";
+                        lb.textContent = k;
+                        cb.addEventListener("change", () => {
+                            if (cb.checked) selectedKinds.add(k);
+                            else selectedKinds.delete(k);
+                            if (!modeIsSafe()) boot3D();
+                        });
+                        holder.appendChild(cb);
+                        holder.appendChild(lb);
+                    });
+                    // LOD select
+                    const lodLab = document.createElement("span");
+                    lodLab.className = "k";
+                    lodLab.style.marginLeft = "8px";
+                    lodLab.textContent = "LOD";
+                    const sel = document.createElement("select");
+                    ["Auto", "Lite", "Full"].forEach((o) => {
+                        const opt = document.createElement("option");
+                        opt.value = o;
+                        opt.textContent = o;
+                        if (o === lodMode) opt.selected = true;
+                        sel.appendChild(opt);
+                    });
+                    sel.addEventListener("change", () => {
+                        lodMode = sel.value;
+                        if (!modeIsSafe()) boot3D();
+                    });
+                    holder.appendChild(lodLab);
+                    holder.appendChild(sel);
+                    // Center links select
+                    const centerLab = document.createElement("span");
+                    centerLab.className = "k";
+                    centerLab.style.marginLeft = "8px";
+                    centerLab.textContent = "Center";
+                    const centerSel = document.createElement("select");
+                    ["Off", "centroid", "pinned"].forEach((o) => {
+                        const opt = document.createElement("option");
+                        opt.value = o;
+                        opt.textContent = o;
+                        if (o === centerMode) opt.selected = true;
+                        centerSel.appendChild(opt);
+                    });
+                    centerSel.addEventListener("change", () => {
+                        centerMode = centerSel.value;
+                        if (!modeIsSafe()) boot3D();
+                    });
+                    holder.appendChild(centerLab);
+                    holder.appendChild(centerSel);
+                    row.appendChild(holder);
+                    controlsInjected = true;
+                }
+
+                function hash32(str) {
+                    let h = 2166136261 >>> 0;
+                    for (let i = 0; i < str.length; i++) {
+                        h ^= str.charCodeAt(i);
+                        h = Math.imul(h, 16777619) >>> 0;
+                    }
+                    return h >>> 0;
+                }
+
+                async function loadMeta() {
+                    clearError();
+                    nowISO();
+                    try {
+                        const lensQ = encodeURIComponent(
+                            lensSel.value || "Core",
+                        );
+                        const data = await jget(
+                            API_BASE + "/api/sitegraph/latest?lens=" + lensQ,
+                            7000,
+                            1,
+                        );
+                        const snap = (data && data.data) || {};
+                        const meta = snap.meta || {};
+                        const nodes = snap.nodes || [];
+                        const edges = snap.edges || [];
+                        snapPath.textContent = data.path || "—";
+                        snapshotId.textContent = meta.snapshot_id || "—";
+                        createdAt.textContent = meta.created_at || "—";
+                        lensVal.textContent = meta.lens || "—";
+                        counts.textContent =
+                            "nodes:" +
+                            (nodes.length || 0) +
+                            ", edges:" +
+                            (edges.length || 0);
+                        try {
+                            const tail = await jget(
+                                API_BASE + "/api/checkpoints/tail?n=1",
+                                3000,
+                                0,
+                            );
+                            setChainBadge(tail && tail.chain_status === "OK");
+                        } catch (_) {
+                            setChainBadge(undefined);
+                        }
+
+                        lastSnap = snap;
+                        ensureControlsInjected();
+                        if (!modeIsSafe()) {
+                            await boot3D();
+                        }
+                    } catch (e) {
+                        showError(
+                            "메타 로드 실패: " +
+                                (e && e.message ? e.message : e),
+                        );
+                        setChainBadge(undefined);
+                    }
+                }
+
+                function destroyScene() {
+                    if (cleanupScene) {
+                        try {
+                            cleanupScene();
+                        } catch (_) {}
+                        cleanupScene = null;
+                    }
+                    if (rafId) {
+                        cancelAnimationFrame(rafId);
+                        rafId = null;
+                    }
+                    const oldCanvas = panel3d.querySelector("canvas.webgl");
+                    if (oldCanvas && oldCanvas.parentElement === panel3d)
+                        panel3d.removeChild(oldCanvas);
+                }
+
+                async function boot3D() {
+                    destroyScene();
+                    safeMsg.style.display = "none";
+
+                    // Create canvas
+                    const canvas = document.createElement("canvas");
+                    canvas.className = "webgl";
+                    canvas.setAttribute("aria-label", "3D scene canvas");
+                    panel3d.appendChild(canvas);
+
+                    // WebGL preflight (avoid boot on unsupported envs)
+                    try {
+                        const test = document.createElement("canvas");
+                        const gl =
+                            test.getContext("webgl2", {
+                                failIfMajorPerformanceCaveat: true,
+                            }) ||
+                            test.getContext("webgl", {
+                                failIfMajorPerformanceCaveat: true,
+                            });
+                        if (!gl) {
+                            throw new Error("WebGL not available");
+                        }
+                    } catch (e) {
+                        showError("이 환경에서는 WebGL을 사용할 수 없습니다");
+                        safeMsg.style.display = "block";
+                        panel3d.removeChild(canvas);
+                        return;
+                    }
+
+                    // Import Map
+                    let THREE, OrbitControls, ForceGraph3D, d3;
+                    try {
+                        THREE = await import("three");
+                        ({ OrbitControls } = await import(
+                            "three/examples/jsm/controls/OrbitControls.js"
+                        ));
+                        try {
+                            ({ default: ForceGraph3D } = await import(
+                                "3d-force-graph"
+                            ));
+                            d3 = await import("d3-force-3d");
+                        } catch (_) {
+                            // ForceGraph is optional; fallback to custom renderer
+                        }
+                    } catch (e) {
+                        showError(
+                            "3D 엔진 로드 실패: " +
+                                (e && e.message ? e.message : e),
+                        );
+                        safeMsg.style.display = "block";
+                        panel3d.removeChild(canvas);
+                        return;
+                    }
+
+                    const renderer = new THREE.WebGLRenderer({
+                        canvas,
+                        antialias: true,
+                        alpha: true,
+                    });
+                    renderer.setPixelRatio(
+                        Math.min(window.devicePixelRatio || 1, 2),
+                    );
+
+                    const scene = new THREE.Scene();
+                    const camera = new THREE.PerspectiveCamera(
+                        60,
+                        1,
+                        0.1,
+                        1000,
+                    );
+                    camera.position.set(2.2, 1.6, 2.2);
+
+                    const ambient = new THREE.AmbientLight(0x88aaff, 0.8);
+                    scene.add(ambient);
+                    const dir = new THREE.DirectionalLight(0xffffff, 0.8);
+                    dir.position.set(3, 5, 2);
+                    scene.add(dir);
+
+                    const controls = new OrbitControls(
+                        camera,
+                        renderer.domElement,
+                    );
+                    controls.enableDamping = true;
+                    controls.dampingFactor = 0.08;
+                    controls.minDistance = 1;
+                    controls.maxDistance = 100;
+
+                    const overlay = document.createElement("div");
+                    overlay.className = "overlay-hint";
+                    panel3d.appendChild(overlay);
+
+                    // Snapshot & filtering
+                    const snap = lastSnap || {};
+                    const nodes = Array.isArray(snap.nodes) ? snap.nodes : [];
+                    const filtered = nodes.filter((n) =>
+                        selectedKinds.has(String(n.kind || "unknown")),
+                    );
+                    const N = filtered.length;
+                    // Try ForceGraph3D radial layout path (fallback to custom renderer below)
+                    if (
+                        typeof ForceGraph3D !== "undefined" &&
+                        ForceGraph3D &&
+                        typeof d3 !== "undefined" &&
+                        d3
+                    ) {
+                        // Helpers
+                        const prefRoles = [
+                            "C",
+                            "M",
+                            "H",
+                            "A",
+                            "R",
+                            "UI",
+                            "S",
+                            "D",
+                            "Q",
+                            "X",
+                            "TK",
+                            "PJ",
+                            "BZ",
+                            "HW",
+                            "NW",
+                        ];
+                        const clamp01 = (x) => Math.max(0, Math.min(1, x));
+                        const norm01 = (x, lo, hi) =>
+                            clamp01(
+                                ((x ?? 0) - (lo ?? 0)) /
+                                    Math.max(1e-9, (hi ?? 1) - (lo ?? 0)),
+                            );
+                        const kind2role = {
+                            file: "A",
+                            dir: "H",
+                            api: "A",
+                            doc: "S",
+                            evidence: "D",
+                            resource: "R",
+                        };
+                        const primaryRole = (n) => {
+                            const arr = Array.isArray(n.roles)
+                                ? n.roles.map(String)
+                                : [];
+                            const single = n.role ? [String(n.role)] : [];
+                            const roles = arr.length ? arr : single;
+                            for (const p of prefRoles)
+                                if (roles.includes(p)) return p;
+                            if (roles[0]) return roles[0];
+                            const k = String(n.kind || "").toLowerCase();
+                            return kind2role[k] || "R";
+                        };
+                        const ringRadiusFor = (n, K) => {
+                            const base = Number((K && K.level0) ?? 8);
+                            const step = Number((K && K.level1) ?? 20);
+                            const R = (lvl) => base + step * lvl;
+                            switch (primaryRole(n)) {
+                                case "C":
+                                    return R(0);
+                                case "M":
+                                    return R(0.3);
+                                case "H":
+                                    return R(1);
+                                case "A":
+                                    return R(1.5);
+                                case "R":
+                                    return R(2);
+                                case "UI":
+                                    return R(2.3);
+                                case "S":
+                                    return R(2.6);
+                                case "D":
+                                    return R(3);
+                                case "Q":
+                                    return R(3.4);
+                                case "X":
+                                    return R(3.8);
+                                case "TK":
+                                    return R(1.2);
+                                case "PJ":
+                                    return R(1.6);
+                                case "BZ":
+                                    return R(1.6);
+                                case "HW":
+                                    return R(2.2);
+                                case "NW":
+                                    return R(2.2);
+                                default:
+                                    return R(2);
+                            }
+                        };
+                        const recencyOpacity = (n, meta) => {
+                            const hlDays = Number(
+                                ((meta && meta.thresholds) || {})
+                                    .halflife_days ?? 7,
+                            );
+                            const hlMs = Math.max(1, hlDays) * 86400000;
+                            const mt = Date.parse(n.mtime || "");
+                            const ct = Date.parse(
+                                (meta && meta.created_at) || "",
+                            );
+                            if (!Number.isFinite(mt) || !Number.isFinite(ct))
+                                return 0.85;
+                            const age = Math.max(0, ct - mt);
+                            return clamp01(Math.exp(-age / hlMs));
+                        };
+
+                        try {
+                            // Dispose our canvas renderer; FG will manage its own canvas
+                            try {
+                                renderer.dispose();
+                            } catch (_) {}
+                            try {
+                                panel3d.removeChild(canvas);
+                            } catch (_) {}
+                            const container = document.createElement("div");
+                            container.style.cssText =
+                                "position:absolute;inset:0;";
+                            panel3d.appendChild(container);
+
+                            const idSet = new Set(
+                                filtered.map((n) => String(n.id)),
+                            );
+                            const linksFG = Array.isArray(snap.edges)
+                                ? snap.edges.filter(
+                                      (e) =>
+                                          idSet.has(String(e.src)) &&
+                                          idSet.has(String(e.dst)),
+                                  )
+                                : [];
+                            const hasEdges = linksFG.length > 0;
+
+                            const Graph = ForceGraph3D({
+                                controlType: "orbit",
+                            })(container)
+                                .backgroundColor("rgba(0,0,0,0)")
+                                .nodeId("id")
+                                .nodeLabel((n) =>
+                                    n.label ? String(n.label) : String(n.id),
+                                )
+                                .nodeColor((n) => {
+                                    const COLOR = {
+                                        file: "#60a5fa",
+                                        dir: "#93c5fd",
+                                        api: "#34d399",
+                                        doc: "#fbbf24",
+                                        evidence: "#f87171",
+                                        resource: "#a78bfa",
+                                    };
+                                    return COLOR[String(n.kind)] || "#9aa8c4";
+                                })
+                                .graphData({ nodes: filtered, links: linksFG });
+
+                            // Visual signals
+                            const cVals = filtered.map((n) =>
+                                Number(
+                                    (n.scores && n.scores.centrality) ??
+                                        n.centrality ??
+                                        0,
+                                ),
+                            );
+                            const cMin = Math.min(...cVals, 0);
+                            const cMax = Math.max(...cVals, 1);
+                            Graph.nodeVal(
+                                (n) =>
+                                    2 +
+                                    8 *
+                                        norm01(
+                                            Number(
+                                                (n.scores &&
+                                                    n.scores.centrality) ??
+                                                    n.centrality ??
+                                                    0,
+                                            ),
+                                            cMin,
+                                            cMax,
+                                        ),
+                            );
+                            Graph.nodeOpacity((n) =>
+                                Math.max(0.25, recencyOpacity(n, snap.meta)),
+                            );
+
+                            // Forces: center + charge + collision + radial(role/memory)
+                            const Kmeta = (snap.meta && snap.meta.K) || {};
+                            Graph.d3Force("center", d3.forceCenter(0, 0, 0));
+                            Graph.d3Force(
+                                "charge",
+                                d3.forceManyBody().strength(-15),
+                            );
+                            Graph.d3Force(
+                                "collision",
+                                d3
+                                    .forceCollide()
+                                    .radius(
+                                        (n) =>
+                                            Math.cbrt(Graph.nodeVal()(n)) * 2 +
+                                            1,
+                                    ),
+                            );
+                            Graph.d3Force(
+                                "radial",
+                                d3
+                                    .forceRadial(
+                                        (n) => ringRadiusFor(n, Kmeta),
+                                        0,
+                                        0,
+                                        0,
+                                    )
+                                    .strength(0.9),
+                            );
+                            Graph.linkOpacity(
+                                centerMode !== "Off"
+                                    ? hasEdges
+                                        ? 0.18
+                                        : 0.0
+                                    : 0.0,
+                            );
+                            if (typeof Graph.warmupTicks === "function")
+                                Graph.warmupTicks(120);
+                            if (typeof Graph.cooldownTicks === "function")
+                                Graph.cooldownTicks(600);
+                            if (typeof Graph.onEngineStop === "function") {
+                                Graph.onEngineStop(() => Graph.zoomToFit(400));
+                            }
+                            window.__ggFG = Graph;
+
+                            overlay.textContent = `NORMAL: FG radial — nodes ${filtered.length}, edges ${linksFG.length}`;
+                            cleanupScene = function () {
+                                try {
+                                    panel3d.removeChild(container);
+                                } catch (_) {}
+                                try {
+                                    window.__ggFG = undefined;
+                                } catch (_) {}
+                            };
+                            return;
+                        } catch (_) {
+                            // If FG path fails, continue with custom renderer below
+                        }
+                    }
+
+                    // Helpers local to renderer
+                    const COLOR = {
+                        file: 0x60a5fa,
+                        dir: 0x93c5fd,
+                        api: 0x34d399,
+                        doc: 0xfbbf24,
+                        evidence: 0xf87171,
+                        resource: 0xa78bfa,
+                        unknown: 0x9aa8c4,
+                    };
+                    const root = new THREE.Group();
+                    scene.add(root);
+                    function hexToRGB1(h) {
+                        return {
+                            r: ((h >> 16) & 255) / 255,
+                            g: ((h >> 8) & 255) / 255,
+                            b: (h & 255) / 255,
+                        };
+                    }
+                    function posFor(i, id, total) {
+                        const h = hash32(String(id || i));
+                        const a =
+                            (i / Math.max(1, total)) * Math.PI * 2 +
+                            ((h % 360) * Math.PI) / 180;
+                        const r = 1 + Math.sqrt(total) * 0.03;
+                        const z = ((h >>> 1) % 200) / 1000 - 0.1;
+                        return {
+                            x: Math.cos(a) * r,
+                            y: Math.sin(a) * r * 0.6,
+                            z,
+                        };
+                    }
+                    function pickLod(n) {
+                        if (lodMode === "Lite") return "points";
+                        if (lodMode === "Full")
+                            return n > 1200 ? "instanced" : "mesh";
+                        if (n > 1200) return "points";
+                        if (n > 300) return "instanced";
+                        return "mesh";
+                    }
+                    function fitToPositions(positions, pad = 1.6) {
+                        const box = new THREE.Box3();
+                        const v = new THREE.Vector3();
+                        for (let i = 0; i < positions.length; i += 3) {
+                            v.set(
+                                positions[i],
+                                positions[i + 1],
+                                positions[i + 2],
+                            );
+                            box.expandByPoint(v);
+                        }
+                        const size = new THREE.Vector3();
+                        const center = new THREE.Vector3();
+                        box.getSize(size);
+                        box.getCenter(center);
+                        const maxSize = Math.max(size.x, size.y, size.z) || 1;
+                        const fov = THREE.MathUtils.degToRad(camera.fov);
+                        const dist = (maxSize / 2 / Math.tan(fov / 2)) * pad;
+                        const dirv = new THREE.Vector3(1, 0.6, 1).normalize();
+                        camera.position.copy(
+                            center.clone().add(dirv.multiplyScalar(dist)),
+                        );
+                        camera.near = Math.max(0.1, dist / 100);
+                        camera.far = dist * 100;
+                        camera.updateProjectionMatrix();
+                        camera.lookAt(center);
+                        controls.target.copy(center);
+                        controls.update();
+                    }
+
+                    // Build geometry according to LOD
+                    let disposers = [];
+                    if (N === 0) {
+                        // Fallback cube
+                        const geo = new THREE.BoxGeometry(1, 1, 1);
+                        const mat = new THREE.MeshStandardMaterial({
+                            color: 0x60a5fa,
+                            roughness: 0.35,
+                            metalness: 0.2,
+                        });
+                        const cube = new THREE.Mesh(geo, mat);
+                        root.add(cube);
+                        overlay.textContent =
+                            "NORMAL: 데이터 없음 — 기본 큐브 표시";
+                        disposers.push(() => {
+                            geo.dispose();
+                            mat.dispose();
+                        });
+                        (function fitCube() {
+                            const b = new THREE.Box3().setFromObject(cube);
+                            const s = new THREE.Vector3();
+                            const c = new THREE.Vector3();
+                            b.getSize(s);
+                            b.getCenter(c);
+                            const maxS = Math.max(s.x, s.y, s.z) || 1;
+                            const fov = THREE.MathUtils.degToRad(camera.fov);
+                            const dist = (maxS / 2 / Math.tan(fov / 2)) * 1.6;
+                            const dirv = new THREE.Vector3(
+                                1,
+                                0.6,
+                                1,
+                            ).normalize();
+                            camera.position.copy(
+                                c.clone().add(dirv.multiplyScalar(dist)),
+                            );
+                            camera.near = Math.max(0.1, dist / 100);
+                            camera.far = dist * 100;
+                            camera.updateProjectionMatrix();
+                            camera.lookAt(c);
+                            controls.target.copy(c);
+                            controls.update();
+                        })();
+                    } else {
+                        const positions = new Float32Array(N * 3);
+                        const colors = new Float32Array(N * 3);
+                        for (let i = 0; i < N; i++) {
+                            const n = filtered[i];
+                            const p = posFor(i, n.id, N);
+                            const col =
+                                COLOR[String(n.kind) || "unknown"] ||
+                                COLOR.unknown;
+                            const rgb = hexToRGB1(col);
+                            positions[3 * i + 0] = p.x;
+                            positions[3 * i + 1] = p.y;
+                            positions[3 * i + 2] = p.z;
+                            colors[3 * i + 0] = rgb.r;
+                            colors[3 * i + 1] = rgb.g;
+                            colors[3 * i + 2] = rgb.b;
+                        }
+
+                        const lod = pickLod(N);
+                        overlay.textContent =
+                            `NORMAL: nodes ${N}, LOD: ${lod}, layers: ` +
+                            Array.from(selectedKinds).join(",");
+                        // Preferred fit positions (pinned anchors if present)
+                        let fitPositions = positions;
+                        const pinSet = new Set(
+                            (snap.anchors || {}).pinned || [],
+                        );
+                        const pinnedIdx = [];
+                        for (let i = 0; i < N; i++) {
+                            if (pinSet.has(String(filtered[i].id)))
+                                pinnedIdx.push(i);
+                        }
+                        if (pinnedIdx.length > 0) {
+                            const fp = new Float32Array(pinnedIdx.length * 3);
+                            let k = 0;
+                            for (const i of pinnedIdx) {
+                                fp[k++] = positions[3 * i + 0];
+                                fp[k++] = positions[3 * i + 1];
+                                fp[k++] = positions[3 * i + 2];
+                            }
+                            fitPositions = fp;
+                        }
+                        // Center links (centroid or pinned centroid)
+                        if (centerMode !== "Off" && N > 0) {
+                            let cx = 0,
+                                cy = 0,
+                                cz = 0,
+                                cnt = 0;
+                            if (
+                                centerMode === "pinned" &&
+                                pinnedIdx.length > 0
+                            ) {
+                                for (const i of pinnedIdx) {
+                                    cx += positions[3 * i + 0];
+                                    cy += positions[3 * i + 1];
+                                    cz += positions[3 * i + 2];
+                                    cnt++;
+                                }
+                            } else {
+                                for (let i = 0; i < N; i++) {
+                                    cx += positions[3 * i + 0];
+                                    cy += positions[3 * i + 1];
+                                    cz += positions[3 * i + 2];
+                                    cnt++;
+                                }
+                            }
+                            if (cnt > 0) {
+                                cx /= cnt;
+                                cy /= cnt;
+                                cz /= cnt;
+                                const linePos = new Float32Array(N * 6);
+                                for (let i = 0; i < N; i++) {
+                                    const j = i * 6;
+                                    const x = positions[3 * i + 0];
+                                    const y = positions[3 * i + 1];
+                                    const z = positions[3 * i + 2];
+                                    linePos[j + 0] = x;
+                                    linePos[j + 1] = y;
+                                    linePos[j + 2] = z;
+                                    linePos[j + 3] = cx;
+                                    linePos[j + 4] = cy;
+                                    linePos[j + 5] = cz;
+                                }
+                                const lg = new THREE.BufferGeometry();
+                                lg.setAttribute(
+                                    "position",
+                                    new THREE.BufferAttribute(linePos, 3),
+                                );
+                                const lm = new THREE.LineBasicMaterial({
+                                    color: 0x5eead4,
+                                    transparent: true,
+                                    opacity: 0.25,
+                                });
+                                const lines = new THREE.LineSegments(lg, lm);
+                                root.add(lines);
+                                disposers.push(() => {
+                                    lg.dispose();
+                                    lm.dispose();
+                                });
+                            }
+                        }
+
+                        if (lod === "points") {
+                            const g = new THREE.BufferGeometry();
+                            g.setAttribute(
+                                "position",
+                                new THREE.BufferAttribute(positions, 3),
+                            );
+                            g.setAttribute(
+                                "color",
+                                new THREE.BufferAttribute(colors, 3),
+                            );
+                            const m = new THREE.PointsMaterial({
+                                size:
+                                    Math.max(0.5, 4 - Math.log10(N + 10)) *
+                                    0.01,
+                                vertexColors: true,
+                                sizeAttenuation: true,
+                            });
+                            const pts = new THREE.Points(g, m);
+                            root.add(pts);
+                            disposers.push(() => {
+                                g.dispose();
+                                m.dispose();
+                            });
+                            fitToPositions(fitPositions);
+                        } else if (lod === "instanced") {
+                            const radius =
+                                Math.max(
+                                    0.008,
+                                    0.04 - Math.log10(N + 10) * 0.01,
+                                ) || 0.015;
+                            const baseG = new THREE.SphereGeometry(
+                                radius,
+                                8,
+                                8,
+                            );
+                            const m = new THREE.MeshStandardMaterial({
+                                color: 0xffffff,
+                            });
+                            const mesh = new THREE.InstancedMesh(baseG, m, N);
+                            const dummy = new THREE.Object3D();
+                            const colorObj = new THREE.Color();
+                            for (let i = 0; i < N; i++) {
+                                const x = positions[3 * i + 0];
+                                const y = positions[3 * i + 1];
+                                const z = positions[3 * i + 2];
+                                dummy.position.set(x, y, z);
+                                dummy.updateMatrix();
+                                mesh.setMatrixAt(i, dummy.matrix);
+                                colorObj.setRGB(
+                                    colors[3 * i + 0],
+                                    colors[3 * i + 1],
+                                    colors[3 * i + 2],
+                                );
+                                mesh.setColorAt(i, colorObj);
+                            }
+                            mesh.instanceMatrix.needsUpdate = true;
+                            if (mesh.instanceColor)
+                                mesh.instanceColor.needsUpdate = true;
+                            root.add(mesh);
+                            disposers.push(() => {
+                                baseG.dispose();
+                                m.dispose();
+                                mesh.dispose();
+                            });
+                            fitToPositions(fitPositions);
+                        } else {
+                            // mesh
+                            const group = new THREE.Group();
+                            const radius =
+                                Math.max(
+                                    0.01,
+                                    0.05 - Math.log10(N + 10) * 0.01,
+                                ) || 0.02;
+                            for (let i = 0; i < N; i++) {
+                                const baseG = new THREE.SphereGeometry(
+                                    radius,
+                                    12,
+                                    12,
+                                );
+                                const c = new THREE.Color(
+                                    colors[3 * i + 0],
+                                    colors[3 * i + 1],
+                                    colors[3 * i + 2],
+                                );
+                                const m = new THREE.MeshStandardMaterial({
+                                    color: c,
+                                });
+                                const mesh = new THREE.Mesh(baseG, m);
+                                mesh.position.set(
+                                    positions[3 * i + 0],
+                                    positions[3 * i + 1],
+                                    positions[3 * i + 2],
+                                );
+                                group.add(mesh);
+                                disposers.push(() => {
+                                    baseG.dispose();
+                                    m.dispose();
+                                });
+                            }
+                            root.add(group);
+                            fitToPositions(fitPositions);
+                        }
+                    }
+
+                    function resize() {
+                        const rect = panel3d.getBoundingClientRect();
+                        const w = Math.max(1, Math.floor(rect.width));
+                        const h = Math.max(1, Math.floor(rect.height));
+                        camera.aspect = w / h;
+                        camera.updateProjectionMatrix();
+                        renderer.setPixelRatio(
+                            Math.min(window.devicePixelRatio || 1, 2),
+                        );
+                        renderer.setSize(w, h, false);
+                        controls.update();
+                    }
+                    resize();
+                    const onResize = () => resize();
+                    window.addEventListener("resize", onResize);
+
+                    let lastT = 0;
+                    function tick(t) {
+                        const dt = (t - lastT) * 0.001;
+                        lastT = t;
+                        // gentle rotation
+                        if (scene && scene.children.length) {
+                            const rootObj = scene.children.find(
+                                (ch) => ch instanceof THREE.Group,
+                            );
+                            if (rootObj) {
+                                rootObj.rotation.y += dt * 0.15;
+                            }
+                        }
+                        controls.update();
+                        renderer.render(scene, camera);
+                        rafId = requestAnimationFrame(tick);
+                    }
+                    rafId = requestAnimationFrame(tick);
+
+                    cleanupScene = function () {
+                        window.removeEventListener("resize", onResize);
+                        try {
+                            panel3d.removeChild(overlay);
+                        } catch (_) {}
+                        for (const d of disposers) {
+                            try {
+                                d();
+                            } catch (_) {}
+                        }
+                        renderer.dispose();
+                    };
+                }
+
+                $("btnLoad").onclick = loadMeta;
+                $("btnToggleMode").onclick = () => {
+                    const nextSafe = modeIsSafe() ? "0" : "1";
+                    const url = new URL(location.href);
+                    url.searchParams.set("safe", nextSafe);
+                    location.href = url.toString();
+                };
+                $("btnCopyMeta").onclick = () => {
+                    const lines = [
+                        "API_BASE=" + API_BASE,
+                        "path=" + (snapPath.textContent || ""),
+                        "snapshot_id=" + (snapshotId.textContent || ""),
+                        "created_at=" + (createdAt.textContent || ""),
+                        "lens=" + (lensVal.textContent || ""),
+                        "counts=" + (counts.textContent || ""),
+                    ];
+                    copy(lines.join("\n")).catch(() => showError("복사 실패"));
+                };
+
+                setTopBadge();
+                nowISO();
+                loadMeta();
+
+                window.addEventListener("beforeunload", destroyScene);
+            })();
+        </script>
+    </body>
+</html>
