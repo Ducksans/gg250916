@@ -2136,3 +2136,72 @@
     window.addEventListener("load", enforceInputNoScroll, { once: true });
   }
 })();
+(function () {
+  function gg_enforce_st1206() {
+    if (!document.body.classList.contains("simple")) return;
+    const wrap = document.getElementById("a1-wrap");
+    if (!wrap) return;
+
+    // global scroll off
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    // grid rows clamp
+    wrap.style.display = "grid";
+    wrap.style.gridTemplateRows = "auto minmax(0, 1fr) auto";
+    wrap.style.height = "calc(100dvh - var(--gg-strip-h,46px))";
+    wrap.style.overflow = "hidden";
+
+    // keep 3 direct children (toolbar, #chat-msgs, #composer-wrap)
+    const msgs = document.getElementById("chat-msgs");
+    const keep = new Set(["chat-msgs", "composer-wrap"]);
+    Array.from(wrap.children).forEach((el, i) => {
+      if (i === 0) return;
+      if (keep.has(el.id)) return;
+      msgs && msgs.prepend(el);
+    });
+    while (wrap.children.length > 3 && msgs)
+      msgs.prepend(wrap.lastElementChild);
+
+    // input: never a scroller
+    const root = document.getElementById("chat-input");
+    const kill = (el) => {
+      if (el) {
+        el.style.setProperty("overflow", "hidden", "important");
+        el.style.setProperty("overflow-y", "hidden", "important");
+      }
+    };
+    kill(root);
+    kill(root?.querySelector("textarea"));
+    const ce = root?.querySelector(
+      '[contenteditable],[contenteditable="true"]',
+    );
+    kill(ce);
+
+    // composer-actions mark
+    if (root && !wrap.querySelector('[data-gg="composer-actions"]')) {
+      root.parentElement?.setAttribute("data-gg", "composer-actions");
+    }
+
+    // thinking badge inside timeline
+    (function () {
+      if (!msgs) return;
+      let b = document.getElementById("gg-thinking");
+      if (!b) {
+        b = document.createElement("div");
+        b.id = "gg-thinking";
+        b.style.display = "none";
+      }
+      if (b.parentElement !== msgs) msgs.insertAdjacentElement("afterbegin", b);
+    })();
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", gg_enforce_st1206, {
+      once: true,
+    });
+    window.addEventListener("load", gg_enforce_st1206, { once: true });
+  } else {
+    gg_enforce_st1206();
+    window.addEventListener("load", gg_enforce_st1206, { once: true });
+  }
+})();
