@@ -6,7 +6,7 @@
   "scripts": {
     "guard:ui": "node scripts/check_ui_guardrails.cjs",
     "fmt": "prettier -w 'gumgang_meeting/**/*.{html,css,js,json,md}'",
-    "lint:html": "html-validate 'gumgang_meeting/**/*.html'"
+    "lint:html": "bash -lc \"find ui -name \"*.html\" -not -path \"*/snapshots/*\" -print0 | xargs -0 html-validate\""
   },
   "devDependencies": {
     "html-validate": "^9.1.0",
