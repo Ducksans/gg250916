@@ -947,3 +947,12 @@ body.simple #chat-input {
   overflow-y: visible !important;
   max-height: none;
 }
+/* === ST-1206 Simple Input — prevent input from being counted as scroller === */
+body.simple #chat-input,
+body.simple #chat-input textarea,
+body.simple #chat-input [contenteditable="true"],
+body.simple textarea#chat-input {
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+  overscroll-behavior: contain;
+}

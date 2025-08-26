@@ -2103,3 +2103,36 @@
     window.addEventListener("load", enforceInputAndRows, { once: true });
   }
 })();
+(function () {
+  function enforceInputNoScroll() {
+    if (!document.body.classList.contains("simple")) return;
+    var root = document.getElementById("chat-input");
+    if (!root) return;
+
+    function killScroll(el) {
+      try {
+        el.style.setProperty("overflow", "hidden", "important");
+        el.style.setProperty("overflow-y", "hidden", "important");
+      } catch (_) {}
+    }
+    killScroll(root);
+
+    var ta = root.matches("TEXTAREA") ? root : root.querySelector("textarea");
+    if (ta) killScroll(ta);
+
+    var ce = root.querySelector(
+      '[contenteditable=""],[contenteditable="true"]',
+    );
+    if (ce) killScroll(ce);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", enforceInputNoScroll, {
+      once: true,
+    });
+    window.addEventListener("load", enforceInputNoScroll, { once: true });
+  } else {
+    enforceInputNoScroll();
+    window.addEventListener("load", enforceInputNoScroll, { once: true });
+  }
+})();
