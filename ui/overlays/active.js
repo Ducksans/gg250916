@@ -2048,3 +2048,58 @@
     }
   })();
 })();
+(function () {
+  function enforceInputAndRows() {
+    if (!document.body.classList.contains("simple")) return;
+    var wrap = document.getElementById("a1-wrap");
+    if (!wrap) return;
+
+    // 직계 자식 3개 유지(4번째 이상은 타임라인으로 이동)
+    var msgs = document.getElementById("chat-msgs");
+    if (msgs && wrap.children.length > 3) {
+      Array.prototype.slice.call(wrap.children, 3).forEach(function (el) {
+        msgs.prepend(el);
+      });
+    }
+
+    // Input: 스크롤 생성 금지(important로 확정)
+    var input = document.getElementById("chat-input");
+    if (input) {
+      input.style.setProperty("overflow", "visible", "important");
+      input.style.setProperty("overflow-y", "visible", "important");
+    }
+
+    // Thinking 배지는 반드시 #chat-msgs 내부 첫 자식
+    (function ensureThinkingHost() {
+      var host = document.getElementById("chat-msgs");
+      if (!host) return;
+      var badge = document.getElementById("gg-thinking");
+      if (!badge) {
+        badge = document.createElement("div");
+        badge.id = "gg-thinking";
+        badge.style.cssText = [
+          "position:sticky",
+          "top:4px",
+          "z-index:5",
+          "margin:0 auto 6px",
+          "padding:6px 8px",
+          "border-radius:8px",
+          "font:12px system-ui",
+          "display:none",
+        ].join(";");
+        host.insertAdjacentElement("afterbegin", badge);
+      } else if (badge.parentElement !== host) {
+        host.insertAdjacentElement("afterbegin", badge);
+      }
+    })();
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", enforceInputAndRows, {
+      once: true,
+    });
+    window.addEventListener("load", enforceInputAndRows, { once: true });
+  } else {
+    enforceInputAndRows();
+    window.addEventListener("load", enforceInputAndRows, { once: true });
+  }
+})();

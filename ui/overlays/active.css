@@ -941,3 +941,9 @@ body.simple #chat-msgs {
 }
 
 /* ===== /ST-1206 T3 ===== */
+/* === ST-1206 Simple Input — hard override to avoid extra scroller === */
+body.simple #chat-input {
+  overflow: visible !important;
+  overflow-y: visible !important;
+  max-height: none;
+}
