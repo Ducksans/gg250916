@@ -235,8 +235,11 @@ Backend API quick tips
 - Tools
    curl -s http://127.0.0.1:8000/api/tools/definitions | jq .
    curl -s -X POST http://127.0.0.1:8000/api/tools/invoke -H "Content-Type: application/json" -d '{"tool":"now","args":{}}' | jq .
-   curl -s -X POST http://127.0.0.1:8000/api/tools/invoke -H "Content-Type: application/json" -d '{"tool":"fs.read","args":{"path":"gumgang_meeting/README.md"}}' | jq .
+   # fs.read는 이제 프로젝트 루트 상대 경로를 받습니다(예: README.md, status/restore/UI_RESTORE_SSOT.md)
+   curl -s -X POST http://127.0.0.1:8000/api/tools/invoke -H "Content-Type: application/json" -d '{"tool":"fs.read","args":{"path":"README.md"}}' | jq .
+   curl -s -X POST http://127.0.0.1:8000/api/tools/invoke -H "Content-Type: application/json" -d '{"tool":"fs.read","args":{"path":"status/restore/UI_RESTORE_SSOT.md"}}' | jq .
 - Tool-call 대화(OpenAI)
+   # OpenAI 함수 호출 제약에 맞게 툴 이름이 자동으로 안전화됩니다(fs.read → fs_read 등).
    curl -s -X POST http://127.0.0.1:8000/api/chat/toolcall -H "Content-Type: application/json" -d '{"model":"gpt-4o","messages":[{"role":"user","content":"오늘 날짜와 시간(now)을 알려줘"}]}' | jq .
 - Capture (JSON)
    curl -sS -X POST http://127.0.0.1:8000/api/meetings/capture \

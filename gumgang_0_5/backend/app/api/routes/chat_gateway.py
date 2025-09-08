@@ -119,14 +119,21 @@ TOOL_DEFS: List[Dict[str, Any]] = [
 ]
 
 
+def _safe_func_name(name: str) -> str:
+    # OpenAI function name rules: [a-zA-Z0-9_-]{1,64}
+    base = "".join(ch if (ch.isalnum() or ch in ("_", "-")) else "_" for ch in (name or "tool"))
+    return (base or "tool")[:64]
+
 def _openai_tools_from_defs(defs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     out: List[Dict[str, Any]] = []
     for d in defs:
+        internal = d.get("name") or d.get("id") or "tool"
+        safe = _safe_func_name(internal)
         out.append(
             {
                 "type": "function",
                 "function": {
-                    "name": d.get("name") or d.get("id") or "tool",
+                    "name": safe,
                     "description": d.get("description") or "",
                     "parameters": d.get("params") or {"type": "object"},
                 },
@@ -136,19 +143,29 @@ def _openai_tools_from_defs(defs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 
 def _safe_read_text(rel_path: str, limit_bytes: int = 64_000) -> str:
-    # Only allow repo-relative paths under gumgang_meeting/**
-    if not isinstance(rel_path, str) or not rel_path or not rel_path.startswith("gumgang_meeting/"):
-        raise ValueError("Path must start with 'gumgang_meeting/'")
-    # Deny common large/sensitive dirs
-    deny = (".git/", "node_modules/", "__pycache__/", "dist/", "build/")
-    if any(seg in rel_path for seg in deny):
+    # Accept root-relative paths, normalize safely, and deny traversal outside project root.
+    if not isinstance(rel_path, str) or not rel_path:
+        raise ValueError("Invalid path")
+    abs_path = os.path.abspath(os.path.join(PROJECT_ROOT, rel_path))
+    # Must remain under project root
+    if not abs_path.startswith(PROJECT_ROOT + os.sep):
+        raise ValueError("Access outside project root is denied")
+    # Deny sensitive/large directories
+    deny_dirs = (
+        os.sep + ".git" + os.sep,
+        os.sep + "node_modules" + os.sep,
+        os.sep + "__pycache__" + os.sep,
+        os.sep + "dist" + os.sep,
+        os.sep + "build" + os.sep,
+    )
+    if any(seg in abs_path for seg in deny_dirs):
         raise ValueError("Access to this path is denied")
-    if not os.path.exists(rel_path) or not os.path.isfile(rel_path):
+    if not os.path.exists(abs_path) or not os.path.isfile(abs_path):
         raise FileNotFoundError("File not found")
-    size = os.path.getsize(rel_path)
+    size = os.path.getsize(abs_path)
     if size > limit_bytes:
         raise ValueError(f"File too large: {size} bytes (limit {limit_bytes})")
-    with open(rel_path, "r", encoding="utf-8", errors="replace") as f:
+    with open(abs_path, "r", encoding="utf-8", errors="replace") as f:
         return f.read()
 
 
@@ -159,7 +176,7 @@ async def _tool_run(tool: str, args: Optional[Dict[str, Any]]) -> Any:
         # Return UTC ISO8601
         return {"now": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
 
-    if tool in ("fs.read",):
+    if tool in ("fs.read", "fs_read"):
         path = args.get("path")
         if not path or not isinstance(path, str):
             raise ValueError("fs.read requires string 'path'")
@@ -169,7 +186,7 @@ async def _tool_run(tool: str, args: Optional[Dict[str, Any]]) -> Any:
             text = text[:60_000] + "\n…(truncated)"
         return {"path": path, "content": text}
 
-    if tool in ("web.search",):
+    if tool in ("web.search", "web_search"):
         query = (args.get("query") or "").strip()
         if not query:
             raise ValueError("web.search requires 'query'")
@@ -230,6 +247,11 @@ async def call_openai_with_tools(req: "ChatRequest") -> str:
         raise RuntimeError("OPENAI_API_KEY missing")
 
     tools_defs = req.tools if (req.tools and isinstance(req.tools, list)) else TOOL_DEFS
+    # Map safe(OpenAI) function name → internal tool id/name
+    name_map: Dict[str, str] = {}
+    for d in tools_defs:
+        internal = d.get("name") or d.get("id") or "tool"
+        name_map[_safe_func_name(internal)] = internal
     tools_schema = _openai_tools_from_defs(tools_defs)
 
     msgs = [m.model_dump() for m in req.messages]
@@ -336,6 +358,8 @@ load_dotenv()
 OPENAI_KEY = os.getenv("OPENAI_API_KEY")
 ANTHROPIC_KEY = os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_KEY")
 GEMINI_KEY = os.getenv("GEMINI_API_KEY")
+# Absolute project root (safe base for fs.read). Override with GUMGANG_PROJECT_ROOT if needed.
+PROJECT_ROOT = os.path.abspath(os.environ.get("GUMGANG_PROJECT_ROOT", os.getcwd()))
 
 DEFAULT_TIMEOUT = 30.0  # seconds
 HTTPX_CLIENT_KW = dict(timeout=DEFAULT_TIMEOUT, follow_redirects=True)
