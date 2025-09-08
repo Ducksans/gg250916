@@ -6,3 +6,5 @@ build/
 ui/.obsidian/
 *.log
 *.env
+LibreChat/
+.venv_backend/
