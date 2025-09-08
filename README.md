@@ -11,6 +11,7 @@
   1) `cd ui/dev_a1_vite`
   2) `npm install`
   3) `npm run dev` → 브라우저에서 http://localhost:5173/ui-dev/ 접속
+  - 포트 충돌 시: `npm run dev -- --port 5174` (접속: http://localhost:5174/ui-dev/)
 - 가드레일(ST-1206) 체크: `npm run guard:ui`
   - Simple 모드에서 전역 스크롤 숨김
   - #a1에는 정확히 2개의 스크롤러만 허용: `#gg-threads`, `#chat-msgs`
@@ -69,12 +70,13 @@
   RELOAD=1 ./scripts/dev_all.sh tmux
   
 - 백그라운드 모드:
-  ./scripts/dev_all.sh start
+  ./scripts/dev_all.sh stop
   ./scripts/dev_all.sh status
   ./scripts/dev_all.sh stop
 - 헬스 체크:
   curl -s http://127.0.0.1:8000/api/health | jq .
   curl -s http://127.0.0.1:3037/api/health | jq .
+  - jq 미설치 시: `curl -s http://127.0.0.1:8000/api/health` (또는 3037)
 - 로그/요약(백그라운드/ tmux 모두 기록):
   status/evidence/ops/dev_all/<UTC>/{backend.log, bridge.log, summary.json}
 
@@ -114,7 +116,8 @@
 
 
   아예 tmux 안 쓰고 개별 터미널로 실행하려면:
-      - 백엔드: RELOAD=1 HOST=127.0.0.1 PORT=8000 ./scripts/dev_backend.sh run
+      - 백엔드(권장, 리로드/감시 경로 제한 포함):
+        RELOAD=1 RELOAD_DIRS="app, gumgang_0_5/backend/app" RELOAD_EXCLUDE=".git/*,node_modules/*,__pycache__/*,dist/*,build/*" HOST=127.0.0.1 PORT=8000 VENV_DIR=/home/duksan/바탕화면/gumgang_meeting/.venv_backend ./scripts/dev_backend.sh run
       - 브릿지: PORT=3037 node bridge/server.js
       - (선택) 타우리: (프로젝트 폴더 진입 후) npm run tauri:dev
 
@@ -132,13 +135,21 @@ Ports & Entrypoints (fixed by rules v3.0)
 - Bridge (UI + file ops): http://localhost:3037 (node bridge/server.js)
   - Static UI at /ui/ (default: /ui/snapshots/unified_A1-A4_v0/index.html)
   - APIs: /api/save, /api/open, /api/fs/*, /api/health
-- Backend (meeting features): http://127.0.0.1:8000 (uvicorn app.api:app)
+- Backend (meeting + chat gateway): http://127.0.0.1:8000 (uvicorn app.api:app)
   - Health: GET /api/health
-  - Capture: POST /api/meetings/capture
-  - Capture(upload): POST /api/meetings/capture/upload
-  - Annotate: POST /api/meetings/annotate
-  - Record start/stop: POST /api/meetings/record/start, /record/stop
-  - Events read: GET /api/meetings/{meetingId}/events
+  - Chat (FastAPI gateway): 
+    - POST /api/chat — 단건 응답(모델 라우팅: OpenAI/Anthropic/Gemini)
+    - POST /api/chat/stream — SSE 스트리밍(Bridge는 JSON만)
+    - POST /api/chat/toolcall — MCP‑Lite(OpenAI function calling 루프, 최대 3스텝)
+  - Tools (MCP‑Lite):
+    - GET /api/tools/definitions — 서버 기본 툴 목록(now, fs.read, web.search)
+    - POST /api/tools/invoke — 단일 툴 실행 { tool, args }
+  - Meeting features:
+    - Capture: POST /api/meetings/capture
+    - Capture(upload): POST /api/meetings/capture/upload
+    - Annotate: POST /api/meetings/annotate
+    - Record start/stop: POST /api/meetings/record/start, /record/stop
+    - Events read: GET /api/meetings/{meetingId}/events
 
 Authoritative env file
 - gumgang_meeting/.env (rules v3.0)
@@ -172,8 +183,10 @@ Quick start (recommended)
 
 2) Backend venv setup and run
    chmod +x scripts/dev_backend.sh
-   ./scripts/dev_backend.sh init
-   ./scripts/dev_backend.sh run
+   # 1회(venv 생성 + 최소 의존성 설치)
+   VENV_DIR=/home/duksan/바탕화면/gumgang_meeting/.venv_backend ./scripts/dev_backend.sh init
+   # 실행(리로드 + 안전 감시 경로 설정)
+   RELOAD=1 RELOAD_DIRS="app, gumgang_0_5/backend/app" RELOAD_EXCLUDE=".git/*,node_modules/*,__pycache__/*,dist/*,build/*" HOST=127.0.0.1 PORT=8000 VENV_DIR=/home/duksan/바탕화면/gumgang_meeting/.venv_backend ./scripts/dev_backend.sh run
    # Health:
    ./scripts/dev_backend.sh health
 
@@ -215,6 +228,16 @@ Bridge API quick tips
 Backend API quick tips
 - Health
    curl -s http://127.0.0.1:8000/api/health
+- Chat gateway (단건)
+   curl -s -X POST http://127.0.0.1:8000/api/chat -H "Content-Type: application/json" -d '{"model":"gpt-4o","messages":[{"role":"user","content":"모델 이름을 말해줘"}]}'
+- Chat gateway (스트리밍, SSE는 브라우저/프론트에서 권장)
+   curl -Nv -X POST http://127.0.0.1:8000/api/chat/stream -H "Content-Type: application/json" -d '{"model":"gpt-4o","messages":[{"role":"user","content":"한 문장으로 인사해줘"}]}'
+- Tools
+   curl -s http://127.0.0.1:8000/api/tools/definitions | jq .
+   curl -s -X POST http://127.0.0.1:8000/api/tools/invoke -H "Content-Type: application/json" -d '{"tool":"now","args":{}}' | jq .
+   curl -s -X POST http://127.0.0.1:8000/api/tools/invoke -H "Content-Type: application/json" -d '{"tool":"fs.read","args":{"path":"gumgang_meeting/README.md"}}' | jq .
+- Tool-call 대화(OpenAI)
+   curl -s -X POST http://127.0.0.1:8000/api/chat/toolcall -H "Content-Type: application/json" -d '{"model":"gpt-4o","messages":[{"role":"user","content":"오늘 날짜와 시간(now)을 알려줘"}]}' | jq .
 - Capture (JSON)
    curl -sS -X POST http://127.0.0.1:8000/api/meetings/capture \
      -H "Content-Type: application/json" \
