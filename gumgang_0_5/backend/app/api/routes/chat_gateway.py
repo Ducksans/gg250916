@@ -44,6 +44,12 @@ from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="/api", tags=["chat-gateway"])
 
+# Early response model to avoid NameError in decorators below
+class ChatResponse(BaseModel):
+    ok: bool
+    data: Optional[Dict[str, Any]] = None
+    error: Optional[str] = None
+
 # ============== MCP‑Lite (Tools) — definitions & invoke ==============
 class ToolDefModel(BaseModel):
     id: str
