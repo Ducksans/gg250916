@@ -50,6 +50,25 @@ class ChatResponse(BaseModel):
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
 
+# ---- Data models (moved up to avoid forward-ref issues in decorators) ----
+Role = Literal["system", "user", "assistant"]
+
+
+class Msg(BaseModel):
+    role: Role
+    content: str
+
+
+class ChatRequest(BaseModel):
+    model: Optional[str] = Field(
+        default=None, description='Model ID (e.g., "gpt-4o", "claude-3-5-sonnet", "gemini-1.5-pro")'
+    )
+    messages: List[Msg]
+    temperature: Optional[float] = Field(default=0.7, ge=0.0, le=2.0)
+    tools: Optional[List[Dict[str, Any]]] = Field(
+        default=None, description="Reserved for MCP/tool calls (logged only)"
+    )
+
 # ============== MCP‑Lite (Tools) — definitions & invoke ==============
 class ToolDefModel(BaseModel):
     id: str
@@ -321,27 +340,7 @@ GEMINI_KEY = os.getenv("GEMINI_API_KEY")
 DEFAULT_TIMEOUT = 30.0  # seconds
 HTTPX_CLIENT_KW = dict(timeout=DEFAULT_TIMEOUT, follow_redirects=True)
 
-# ------------------------------------------------------------------------------
-# Data models
-# ------------------------------------------------------------------------------
-
-Role = Literal["system", "user", "assistant"]
-
-
-class Msg(BaseModel):
-    role: Role
-    content: str
-
-
-class ChatRequest(BaseModel):
-    model: Optional[str] = Field(
-        default=None, description='Model ID (e.g., "gpt-4o", "claude-3-5-sonnet", "gemini-1.5-pro")'
-    )
-    messages: List[Msg]
-    temperature: Optional[float] = Field(default=0.7, ge=0.0, le=2.0)
-    tools: Optional[List[Dict[str, Any]]] = Field(
-        default=None, description="Reserved for MCP/tool calls (logged only)"
-    )
+# Data models are defined earlier to avoid forward-ref issues in decorators.
 
 
 class ChatResponse(BaseModel):
