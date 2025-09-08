@@ -89,10 +89,18 @@ app = FastAPI(
 )
 
 # CORS 설정
+# FRONTEND_PORT 환경변수 안전 파싱 (os 미임포트 상황에서도 동작)
+try:
+    import os as _os
+    _frontend_port_env = _os.getenv("FRONTEND_PORT", "3000")
+except Exception:
+    _frontend_port_env = "3000"
+frontend_port = int(_frontend_port_env) if str(_frontend_port_env).isdigit() else 3000
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",  # React 개발 서버
+        f"http://localhost:{frontend_port}",
+        "http://localhost:3000",  # Next.js 개발 서버
         "http://localhost:5173",  # Vite 개발 서버
         "http://localhost:8080",  # Vue 개발 서버
         "http://localhost:4200",  # Angular 개발 서버
@@ -212,9 +220,19 @@ async def health_check():
         }
 
 
+@app.get("/api/health")
+async def health_check_alias():
+    """
+    Alias for Vite Dev UI compatibility. Mirrors /api/v1/health.
+    """
+    return await health_check()
+
 # 라우터 등록 (별도 파일에서 import) — 의존성 가드
 try:
-    from app.api.routes import chat, dashboard
+    from app.api.routes import chat, dashboard, chat_gateway
+    # New chat gateway provides /api/chat and /api/chat/stream
+    app.include_router(chat_gateway.router)
+    # Legacy/other routes
     app.include_router(chat.router, prefix="/api/v1/chat", tags=["chat"])
     app.include_router(dashboard.router, prefix="/api/v1", tags=["dashboard"])
 except Exception as e:

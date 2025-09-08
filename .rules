@@ -1,16 +1,18 @@
 [RULES — Gumgang Root | Slim Core]
-Last-Updated: 2025-08-25
+Last-Updated: 2025-09-08
 Applies-To: gumgang_meeting/* (project root; overrides v2.0)
 
 SCOPE
 - WRITE_ALLOW: gumgang_meeting/**
 - DENY_GLOBS: .git/** node_modules/** __pycache__/** dist/** build/**
 - CHECKPOINT_FILE: status/checkpoints/CKPT_72H_RUN.jsonl (append-only API)
+- SSOT_RESTORE: status/restore/UI_RESTORE_SSOT.md
 
 TURN & EVIDENCE
 - Rhythm: Echo → Delta → Execute
 - Every action-affecting claim must cite ≥1 Evidence path
 - CHECKPOINT: 6 lines (RUN_ID, UTC_TS, SCOPE, DECISION, NEXT STEP, EVIDENCE)
+- RESTORE FLOW: 변경 시 SSOT(status/restore/UI_RESTORE_SSOT.md) 우선 갱신 → 증거 경로 첨부 → 체크리스트 업데이트 → 필요 시 CKPT append
 
 UI GUARDRAILS — ST-1206 (Simple mode only, NON-NEGOTIABLE)
 MUST
@@ -20,6 +22,7 @@ MUST
   4) #a1-wrap height = calc(100dvh - var(--gg-strip-h))
   5) Timeline & composer share --gg-chat-width (clamp 720–902px)
   6) Composer actions marked: [data-gg="composer-actions"], grid col 2 (row 3)
+  7) Dev UI base: /ui-dev/ (5173). 루트(/)가 아닌 /ui-dev/로 접속
 
 MUST-NOT
   - No inline display:flex on #a1-wrap
@@ -31,12 +34,26 @@ ACCEPTANCE
 - getComputedStyle(#a1-wrap).display === "grid"
 - Composer visible on mobile rotation/keyboard
 - Console/runtime warnings = 0
+- Bridge proxy OK: /bridge/api/* → 3037/api/* rewrite 적용(Vite dev)
 
 ENFORCEMENT
 - Static: `npm run guard:ui` (blocks on fail)
 - Runtime (dev only): assertUIPitstop in ui/overlays/active.js
 - Authoring: Always attach rules/ai/ST-1206.ui.rules.md for layout edits
+- Restore Discipline: 모든 복원 작업은 SSOT(status/restore/UI_RESTORE_SSOT.md) → CKPT 순으로 기록
 
 REFERENCES
 - Full ops rules: rules/ai/RULES_full.md
 - UI guardrails detail: rules/ai/ST-1206.ui.rules.md
+- Restore SSOT: status/restore/UI_RESTORE_SSOT.md
+
+CHAT BACKEND — ST-CHAT-FASTAPI
+MUST
+- CHAT_BACKEND=fastapi (default). 프론트는 기본적으로 /api/chat 사용.
+- Backend endpoints: POST /api/chat, POST /api/chat/stream (FastAPI — app.api.routes.chat_gateway)
+- Keys(.env → os.getenv): OPENAI_API_KEY, ANTHROPIC_API_KEY(or ANTHROPIC_KEY), GEMINI_API_KEY (로그/응답에 키 노출 금지)
+- Dev UI(5173): http://localhost:5173/ui-dev/ (base=/ui-dev/). Vite proxy: /api → 127.0.0.1:8000, /bridge → 127.0.0.1:3037 (rewrite ^/bridge → "")
+- Acceptance(add): /api/health OK, 채팅 입력 시 “…” 자리표시자 → 실제 답변으로 교체 확인
+
+OPTIONAL
+- Bridge 스위치(localStorage/ENV)로 /bridge/api/chat 사용 가능(기본 아님)

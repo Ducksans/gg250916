@@ -37,6 +37,12 @@ HOST="${HOST:-127.0.0.1}"
 PORT="${PORT:-8000}"
 RELOAD="${RELOAD:-0}"
 RELOAD_FLAG=$([ "${RELOAD}" = "1" ] && echo "--reload" || echo "")
+# Reload pattern controls (comma-separated globs). Defaults exclude heavy/permissioned dirs.
+RELOAD_INCLUDE="${RELOAD_INCLUDE:-}"
+RELOAD_EXCLUDE="${RELOAD_EXCLUDE:-LibreChat/data-node/*,.git/*,node_modules/*,__pycache__/*,dist/*,build/*}"
+# Limit watch roots to safe subtrees (comma-separated, repo-relative). Example:
+# RELOAD_DIRS="app, gumgang_0_5/backend/app"
+RELOAD_DIRS="${RELOAD_DIRS:-}"
 HEALTH_URL="http://${HOST}:${PORT}/api/health"
 
 # ---------- Deps ----------
@@ -115,7 +121,39 @@ cmd_run() {
   info "Running backend on ${HOST}:${PORT} (reload=${RELOAD})"
   info "App dir: ${APP_DIR}"
   info "Env file: ${ENV_FILE} (app reads directly; no export required)"
-  exec "${VENV_BIN}/python" -m uvicorn app.api:app --app-dir "${APP_DIR}" --host "${HOST}" --port "${PORT}" ${RELOAD_FLAG}
+  # Build reload include/exclude flags to avoid watch PermissionError
+  local EXTRA=()
+  if [ "${RELOAD}" = "1" ]; then
+    # If RELOAD_DIRS is provided, only watch those subtrees; else watch the whole app dir.
+    if [ -n "${RELOAD_DIRS}" ]; then
+      info "Reload dirs: ${RELOAD_DIRS}"
+      IFS=',' read -r -a _dirs <<< "${RELOAD_DIRS}"
+      for d in "${_dirs[@]}"; do
+        d="$(echo "$d" | xargs)"  # trim spaces
+        [ -n "${d}" ] && EXTRA+=("--reload-dir" "${ROOT_DIR}/${d}")
+      done
+    else
+      EXTRA+=("--reload-dir" "${APP_DIR}")
+    fi
+
+    if [ -n "${RELOAD_INCLUDE}" ]; then
+      IFS=',' read -r -a _inc <<< "${RELOAD_INCLUDE}"
+      for pat in "${_inc[@]}"; do
+        pat="$(echo "$pat" | xargs)"
+        [ -n "${pat}" ] && EXTRA+=("--reload-include" "${pat}")
+      done
+    fi
+    if [ -n "${RELOAD_EXCLUDE}" ]; then
+      info "Reload exclude: ${RELOAD_EXCLUDE}"
+      IFS=',' read -r -a _exc <<< "${RELOAD_EXCLUDE}"
+      for pat in "${_exc[@]}"; do
+        pat="$(echo "$pat" | xargs)"
+        [ -n "${pat}" ] && EXTRA+=("--reload-exclude" "${pat}")
+      done
+    fi
+  fi
+
+  exec "${VENV_BIN}/python" -m uvicorn app.api:app --app-dir "${APP_DIR}" --host "${HOST}" --port "${PORT}" ${RELOAD_FLAG} "${EXTRA[@]}"
 }
 
 cmd_health() {

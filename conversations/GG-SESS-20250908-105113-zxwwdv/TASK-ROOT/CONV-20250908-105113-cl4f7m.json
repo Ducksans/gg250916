@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-20250908-105113-zxwwdv",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250908-105113-cl4f7m",
+    "model": "gpt-4o",
+    "created_at": "2025-09-08T01:51:14.618Z",
+    "updated_at": "2025-09-08T01:51:14.618Z",
+    "type": "chat",
+    "version": 1,
+    "provider": "openai",
+    "upstream_model": "gpt-4o-2024-08-06",
+    "last_request_id": "req_16e0267db2824d09a7280f1bdb4ad84b"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "지금의 응담은 openai 엔진을 호출해서 답변 하는 것 입니까?",
+      "ts": "2025-09-08T01:51:13.206Z"
+    },
+    {
+      "role": "assistant",
+      "content": "네, 저는 OpenAI의 엔진을 기반으로 응답을 생성하고 있습니다.",
+      "ts": "2025-09-08T01:51:14.618Z",
+      "usage": {
+        "prompt_tokens": 2311,
+        "completion_tokens": 18,
+        "total_tokens": 2329,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-4o-2024-08-06",
+      "request_id": "req_16e0267db2824d09a7280f1bdb4ad84b"
+    }
+  ]
+}

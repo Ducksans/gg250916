@@ -219,6 +219,9 @@ app = FastAPI(
     openapi_url="/api/openapi.json",
     redoc_url=None,
 )
+# Mount chat gateway router (FastAPI /api/chat and /api/chat/stream)
+from gumgang_0_5.backend.app.api.routes import chat_gateway as _gg_chat
+app.include_router(_gg_chat.router)
 
 # ---------- Checkpoints (BT-14 ST-1402) ----------
 

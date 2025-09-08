@@ -214,16 +214,17 @@ async def get_project_status():
         }
 
         # 프론트엔드 상태 (프로세스 체크)
+        frontend_port = int(os.getenv("FRONTEND_PORT", "3000"))
         frontend_status = {
             "status": "unknown",
             "dev_server": False,
-            "port": 5173
+            "port": frontend_port
         }
 
         # 프론트엔드 개발 서버 체크
         try:
             result = subprocess.run(
-                ["lsof", "-i", ":5173"],
+                ["lsof", "-i", f":{frontend_port}"],
                 capture_output=True,
                 text=True,
                 timeout=2

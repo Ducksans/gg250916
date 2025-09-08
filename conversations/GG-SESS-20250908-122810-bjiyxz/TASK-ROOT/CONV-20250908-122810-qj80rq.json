@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-20250908-122810-bjiyxz",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250908-122810-qj80rq",
+    "model": "gpt-4o",
+    "created_at": "2025-09-08T03:28:11.706Z",
+    "updated_at": "2025-09-08T03:28:11.706Z",
+    "type": "chat",
+    "version": 1,
+    "provider": "openai",
+    "upstream_model": "gpt-4o-2024-08-06",
+    "last_request_id": "req_eb1d8ce42bf5498d9b724d85e5e0151d"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "브릿지 모드에서 호출 합니다.",
+      "ts": "2025-09-08T03:28:10.634Z"
+    },
+    {
+      "role": "assistant",
+      "content": "브릿지 모드에서 호출하셨습니다. 무엇을 도와드릴까요?",
+      "ts": "2025-09-08T03:28:11.705Z",
+      "usage": {
+        "prompt_tokens": 2063,
+        "completion_tokens": 19,
+        "total_tokens": 2082,
+        "prompt_tokens_details": {
+          "cached_tokens": 2048,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-4o-2024-08-06",
+      "request_id": "req_eb1d8ce42bf5498d9b724d85e5e0151d"
+    }
+  ]
+}

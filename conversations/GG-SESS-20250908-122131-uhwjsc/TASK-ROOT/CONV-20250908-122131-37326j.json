@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-20250908-122131-uhwjsc",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250908-122131-37326j",
+    "model": "gpt-4o",
+    "created_at": "2025-09-08T03:21:33.160Z",
+    "updated_at": "2025-09-08T03:21:33.160Z",
+    "type": "chat",
+    "version": 1,
+    "provider": "openai",
+    "upstream_model": "gpt-4o-2024-08-06",
+    "last_request_id": "req_4628d058c71548d486749b83cd18738a"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "브릿지를 통한 호출 입니다.",
+      "ts": "2025-09-08T03:21:31.552Z"
+    },
+    {
+      "role": "assistant",
+      "content": "네, 브릿지를 통한 호출 확인했습니다. 추가로 필요한 작업이 있으면 말씀해 주세요.",
+      "ts": "2025-09-08T03:21:33.160Z",
+      "usage": {
+        "prompt_tokens": 2133,
+        "completion_tokens": 21,
+        "total_tokens": 2154,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-4o-2024-08-06",
+      "request_id": "req_4628d058c71548d486749b83cd18738a"
+    }
+  ]
+}

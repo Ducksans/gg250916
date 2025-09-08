@@ -1,5 +1,29 @@
 # Gumgang Meeting — Root README
 
+## A1 Vite Dev (UI 5173) — React + Vite 개발용 미니 앱
+- 목적: 3037/ui#a1에서 보던 스냅샷 기반 UI(`ui/snapshots/unified_A1-A4_v0/index.html`)의 과도한 단일 파일 의존을 줄이고, A1만 분리하여 빠르게 개발/검증하기 위함입니다.
+- 경로: `ui/dev_a1_vite`
+- Dev URL: http://localhost:5173/ui-dev/ (Vite dev 서버, base: `/ui-dev/`)
+- 프록시:
+  - `/api` → http://127.0.0.1:8000 (FastAPI)
+  - `/bridge` → http://127.0.0.1:3037 (Bridge: 정적 UI/파일 오퍼레이션)
+- 실행:
+  1) `cd ui/dev_a1_vite`
+  2) `npm install`
+  3) `npm run dev` → 브라우저에서 http://localhost:5173/ui-dev/ 접속
+- 가드레일(ST-1206) 체크: `npm run guard:ui`
+  - Simple 모드에서 전역 스크롤 숨김
+  - #a1에는 정확히 2개의 스크롤러만 허용: `#gg-threads`, `#chat-msgs`
+  - `#a1-wrap`은 grid이며 rows는 `auto minmax(0,1fr) auto`
+  - `#a1-wrap` 높이 = `calc(100dvh - var(--gg-strip-h))`
+- 빌드/미리보기:
+  - `npm run build` → `dist` 산출물 (base: `/ui-dev/`)
+  - `npm run preview` → http://localhost:5173 (build 미리보기)
+- 참고:
+  - 기존 메인 스냅샷 UI는 여전히 Bridge가 제공합니다: http://localhost:3037/ui/snapshots/unified_A1-A4_v0/index.html
+  - monolithic 접근(3037/ui#a1)을 대체/보완하는 개발용 경량 앱입니다.
+
+
 ## ST-1205 — Daily eval & 7-day trend (operator quick guide)
 
 - What this does

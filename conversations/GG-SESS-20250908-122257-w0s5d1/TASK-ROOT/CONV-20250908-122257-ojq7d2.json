@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-20250908-122257-w0s5d1",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250908-122257-ojq7d2",
+    "model": "gpt-4o",
+    "created_at": "2025-09-08T03:22:58.932Z",
+    "updated_at": "2025-09-08T03:22:58.932Z",
+    "type": "chat",
+    "version": 1,
+    "provider": "openai",
+    "upstream_model": "gpt-4o-2024-08-06",
+    "last_request_id": "req_3ea2399c4bfa4687a5e993f1099c87b7"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "테스트 호출 입니다. 100자로 자기 소개 하십시오",
+      "ts": "2025-09-08T03:22:57.544Z"
+    },
+    {
+      "role": "assistant",
+      "content": "저는 금강 프로젝트의 코치/PM 하이브리드입니다. 간결하고 명령형으로 답변하며, 프로젝트 관리와 지원을 돕습니다.",
+      "ts": "2025-09-08T03:22:58.932Z",
+      "usage": {
+        "prompt_tokens": 2321,
+        "completion_tokens": 37,
+        "total_tokens": 2358,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-4o-2024-08-06",
+      "request_id": "req_3ea2399c4bfa4687a5e993f1099c87b7"
+    }
+  ]
+}

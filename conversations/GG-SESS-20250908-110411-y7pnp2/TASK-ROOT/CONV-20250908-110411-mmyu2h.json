@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-20250908-110411-y7pnp2",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250908-110411-mmyu2h",
+    "model": "claude-3.5-sonnet",
+    "created_at": "2025-09-08T02:04:11.677Z",
+    "updated_at": "2025-09-08T02:04:11.677Z",
+    "type": "chat",
+    "version": 1
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "테스트 호출 입니다",
+      "ts": "2025-09-08T02:04:11.187Z"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "ts": "2025-09-08T02:04:11.677Z",
+      "error": "The model `claude-3.5-sonnet` does not exist or you do not have access to it."
+    }
+  ]
+}

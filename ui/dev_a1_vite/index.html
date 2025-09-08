@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gumgang UI — A1 Dev (Vite + React)</title>
+    <meta
+      name="description"
+      content="A1 전용 Vite React 개발 엔트리. /ui-dev/ 경로에서 동작합니다."
+    />
+    <!-- Keep base aligned with Vite config base -->
+    <base href="/ui-dev/" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0c10;
+        --fg: #e5e7eb;
+      }
+      html,
+      body,
+      #root {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          "Noto Sans KR",
+          Arial,
+          sans-serif;
+      }
+      /* Minimal safe defaults; A1 layout rules are enforced in app code and guard:ui */
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>이 애플리케이션을 사용하려면 JavaScript가 필요합니다.</noscript>
+    <!-- Vite dev: http://localhost:5173/ui-dev/ -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

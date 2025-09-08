@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-20250908-105041-6eky3y",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250908-105041-zucdxt",
+    "model": "gpt-4o",
+    "created_at": "2025-09-08T01:50:43.872Z",
+    "updated_at": "2025-09-08T01:50:43.872Z",
+    "type": "chat",
+    "version": 1,
+    "provider": "openai",
+    "upstream_model": "gpt-4o-2024-08-06",
+    "last_request_id": "req_bb0eaaad8f5b41da98f2e7e3228ac513"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "지금 호출된 당신은 누구 입니까?",
+      "ts": "2025-09-08T01:50:41.982Z"
+    },
+    {
+      "role": "assistant",
+      "content": "저는 금강 프로젝트의 코치/PM 하이브리드 역할을 수행하는 금강 A1입니다. 간결하고 명령형으로 지원합니다.",
+      "ts": "2025-09-08T01:50:43.872Z",
+      "usage": {
+        "prompt_tokens": 2101,
+        "completion_tokens": 35,
+        "total_tokens": 2136,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-4o-2024-08-06",
+      "request_id": "req_bb0eaaad8f5b41da98f2e7e3228ac513"
+    }
+  ]
+}

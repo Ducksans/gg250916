@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-20250908-105026-q3wmf7",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250908-105026-ussac9",
+    "model": "gpt-4o",
+    "created_at": "2025-09-08T01:50:28.058Z",
+    "updated_at": "2025-09-08T01:50:28.058Z",
+    "type": "chat",
+    "version": 1,
+    "provider": "openai",
+    "upstream_model": "gpt-4o-2024-08-06",
+    "last_request_id": "req_8d4ba626085c4e87adf4cec77d8d5ac7"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "테스트 호출 입니다",
+      "ts": "2025-09-08T01:50:26.815Z"
+    },
+    {
+      "role": "assistant",
+      "content": "확인 완료. 다음 단계 진행하세요.",
+      "ts": "2025-09-08T01:50:28.057Z",
+      "usage": {
+        "prompt_tokens": 2137,
+        "completion_tokens": 9,
+        "total_tokens": 2146,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-4o-2024-08-06",
+      "request_id": "req_8d4ba626085c4e87adf4cec77d8d5ac7"
+    }
+  ]
+}
