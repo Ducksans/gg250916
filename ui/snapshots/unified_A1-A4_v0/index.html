@@ -884,7 +884,7 @@
                         placeholder="메시지를 입력하고 Ctrl+Enter로 보내기"
                         style="width: 100%; min-height: 88px"
                     ></textarea>
-                    <div class="row" style="gap: 8px; align-items: center">
+                    <div class="row" style="gap: 8px; align-items: center" data-gg="composer-actions">
                         <button id="btn-send" class="btn" type="button">
                             보내기
                         </button>
@@ -1264,11 +1264,11 @@
                         try {
                             var base = (localStorage.getItem("gg_backend_url") || "http://127.0.0.1:8000").replace(/\/+$/, "");
                             var cp = document.getElementById("a6-checkpoints");
-                            if (cp) cp.src = "/ui/proto/atlas_A6/checkpoints.html?base=" + encodeURIComponent(base);
+                            if (cp) cp.src = "../../proto/atlas_A6/checkpoints.html?base=" + encodeURIComponent(base);
                             var ssv = document.getElementById("a6-ssv-summary");
-                            if (ssv) ssv.src = "/ui/proto/atlas_A6/ssv_summary.html?base=" + encodeURIComponent(base);
+                            if (ssv) ssv.src = "../../proto/atlas_A6/ssv_summary.html?base=" + encodeURIComponent(base);
                             var v3d = document.getElementById("a6-3d-viewer");
-                            if (v3d) v3d.src = "/ui/proto/atlas_A6/3d_local.html?mode=local";
+                            if (v3d) v3d.src = "../../proto/atlas_A6/3d_local.html?mode=local";
                             var biz = document.getElementById("a7-business");
                             if (biz) biz.src = "/ui/proto/atlas_A7/business.html?base=" + encodeURIComponent(base);
                         } catch (_) {}

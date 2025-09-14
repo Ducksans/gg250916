@@ -1,0 +1,3 @@
+{"type": "meta", "title": "캐시 삭제 완료", "thread_id": "687b9701-c03c-8003-b8ed-4439db57c01d", "created_at": 1752930049999.363, "updated_at": 1752930053070.946}
+{"type": "turn", "turn": 1, "role": "user", "text": "캐시 삭제", "ts": 1752930050006.386, "meta": {}}
+{"type": "turn", "turn": 2, "role": "assistant", "text": "금강의 캐시를 모두 삭제했어요. 깨끗한 상태로 다시 시작할 준비가 되었어요.  \n원하는 작업을 바로 알려줘요, 덕산.", "ts": 1752930050275.345, "meta": {}}

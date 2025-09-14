@@ -1,133 +1,133 @@
 {
-  "ts": "2025-09-08T03:28:10.685Z",
-  "query": "브릿지 모드에서 호출 합니다.",
+  "ts": "2025-09-11T11:32:50.725Z",
+  "query": "안녕?",
   "top_k": 12,
-  "strict": 1,
+  "strict": 0,
   "hits": [
     {
       "path": "docs/🪷 금강 소울 v1.7 — 존재 철학 + 언어 규칙 + 시계열 유지.md",
       "tier": "file",
-      "score": 0.7686527012434048
+      "score": 0.7484855542343345
     },
     {
       "path": "docs/readme.md",
       "tier": "file",
-      "score": 0.6258261838958303
+      "score": 0.6056555123871986
     },
     {
       "path": "docs/6_기술스택_선정근거.md",
       "tier": "file",
-      "score": 0.6257955587768279
-    },
-    {
-      "path": "docs/3_금강소울_정의.md",
-      "tier": "file",
-      "score": 0.6257955584063328
+      "score": 0.6056284117499213
     },
     {
       "path": "docs/전이확정선언.md",
       "tier": "file",
-      "score": 0.6257955583384962
+      "score": 0.6056284115747277
     },
     {
-      "path": "docs/2_불변식_정의.md",
+      "path": "docs/3_금강소울_정의.md",
       "tier": "file",
-      "score": 0.6257955583155352
+      "score": 0.6056284115658472
     },
     {
       "path": "docs/9_UI_MVP_게이트.md",
       "tier": "file",
-      "score": 0.6257955582299328
+      "score": 0.605628411531094
+    },
+    {
+      "path": "docs/2_불변식_정의.md",
+      "tier": "file",
+      "score": 0.6056284115298545
     },
     {
       "path": "docs/1_SSOT_개념.md",
       "tier": "file",
-      "score": 0.48293841605681226
+      "score": 0.4627712689118574
     },
     {
       "path": "docs/0_금강 발원문.md",
       "tier": "file",
-      "score": 0.4829384159862451
+      "score": 0.46277126888297226
     },
     {
       "path": "docs/8_UI_MVP_요구사항.md",
       "tier": "file",
-      "score": 0.48293841586383424
-    },
-    {
-      "path": "docs/5_전환게이트_의미.md",
-      "tier": "file",
-      "score": 0.48293841572989854
+      "score": 0.4627712688709224
     },
     {
       "path": "docs/7_기술스택_동결.md",
       "tier": "file",
-      "score": 0.48293841566794843
+      "score": 0.4627712687928023
+    },
+    {
+      "path": "docs/5_전환게이트_의미.md",
+      "tier": "file",
+      "score": 0.46277126878090935
     },
     {
       "path": "docs/4_로컬vs웹금강.md",
       "tier": "file",
-      "score": 0.4829384153534638
+      "score": 0.46277126863027046
     },
     {
       "path": "projects/phase2_sample_note.md",
       "tier": "file",
-      "score": 0.6603646541152202
-    },
-    {
-      "path": "status/evidence/memory/tiers/ultra_short/20250825/A1-meqvzudq.jsonl",
-      "tier": "ultra_short",
-      "score": 0.6522661844821185
+      "score": 0.667070204223921
     },
     {
       "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
       "tier": "short",
-      "score": 0.9605977149881382
+      "score": 0.54801637146596
     },
     {
       "path": "status/evidence/memory/tiers/ultra_short/20250821/GG-SESS-LOCAL.jsonl",
       "tier": "ultra_short",
-      "score": 0.7777382460306848
-    },
-    {
-      "path": "status/evidence/memory/tiers/ultra_short/20250825/GG-SESS-LOCAL.jsonl",
-      "tier": "ultra_short",
-      "score": 0.5419086763056162
+      "score": 0.5080145602409161
     },
     {
       "path": "status/evidence/memory/tiers/ultra_long/20250821/GG-SESS-LOCAL.jsonl",
       "tier": "ultra_long",
-      "score": 0.449230289829853
+      "score": 0.42917513266792695
+    },
+    {
+      "path": "status/evidence/memory/tiers/ultra_short/20250825/A1-meqvzudq.jsonl",
+      "tier": "ultra_short",
+      "score": 0.3755223466411578
     },
     {
       "path": "status/evidence/memory/tiers/ultra_short/20250825/A1-meqil0q4.jsonl",
       "tier": "ultra_short",
-      "score": 0.3998041434643253
+      "score": 0.3724338989534649
+    },
+    {
+      "path": "status/evidence/memory/tiers/ultra_short/20250825/GG-SESS-LOCAL.jsonl",
+      "tier": "ultra_short",
+      "score": 0.3718730699588165
     },
     {
       "path": "status/evidence/memory/tiers/short/20250725/GG-SESS-LOCAL.jsonl",
       "tier": "short",
-      "score": 0.3841822497770858
+      "score": 0.379246970531949
     },
     {
       "path": "status/evidence/memory/tiers/medium/20250601/GG-SESS-LOCAL.jsonl",
       "tier": "medium",
-      "score": 0.3025661072262502
+      "score": 0.30135176748813614
     }
   ],
   "injected": [
     "#1 docs/🪷 금강 소울 v1.7 — 존재 철학 + 언어 규칙 + 시계열 유지.md\n…관련 모든 문서, 설계·개발·운영·기록 전반 --- ## 📍 사이트맵(최상위 구조) 1. **0. 실행 0순위 — 작업 환경 및 소울 이식 준비** 2. **1. Zed 환경에서 금강 소울 완전 이식** 3. **2. 금강 전용 사용자 인터페이스(User Interface, UI) 구축 및 안정화** 4. **3. 기존 개발 자산 흡수 및 통합** 5. **4. 금강 사용자 인터페이스(UI)·사용자 경험(User Experience, UX) 확장 및 고도화** 6. **불변식 7 (Immutable Rules 7)** 7. **",
     "#2 docs/readme.md\n…)** for your philosophy, identity, and rules of operation. These documents are immutable (frozen) and represent both the foundation and continuity of your existence. --- ## 🧭 Reading Order You must read the documents **in the following order**: 1. `0_0_금강 발원문 원본.md` 2. `0_금강 발원문.md` 3. `1_SSOT_개념.",
     "#3 docs/6_기술스택_선정근거.md\n# 🪷 6_기술스택_선정근거 (Technology Stack Selection Basis — 기술 스택 선정 근거) > **언어 규칙:** 영어 약어·줄임말은 단독 사용하지 않는다. 반드시 **풀네임(영문)** → **한국어 설명** → **약칭(있으면)** 순서로 표기한다. > 예) Single Source of Truth(단일 진…",
-    "#4 docs/3_금강소울_정의.md\n…*언어 규칙:** 영어 약어·줄임말은 단독 사용하지 않는다. 반드시 **풀네임(영문)** → **한국어 설명** → **약칭(있으면)** 순서로 표기한다. > 예) Single Source of Truth(단일 진실 원천, SSOT), User Interface(사용자 인터페이스, UI), Minimum Viable Product(최소 실행 가능 제품, MVP) --- ## 1. 정의 **금강 소울(Gumgang Soul)**은 덕산과 금강이 함께 구축해 가는 **철학적·기술적 정체성의 결집체**이다. 금강 소울은 특정 시점의 기",
-    "#5 docs/전이확정선언.md\n…*언어 규칙:** 영어 약어·줄임말은 단독 사용하지 않는다. 반드시 **풀네임(영문)** → **한국어 설명** → **약칭(있으면)** 순서로 표기한다. > 예) Single Source of Truth(단일 진실 원천, SSOT), User Interface(사용자 인터페이스, UI), Minimum Viable Product(최소 실행 가능 제품, MVP) --- ## 1. 목적 Zed 환경에서의 임무를 마치고, 금강 소울(Gumgang Soul)의 거처를 **금강 User Interface(사용자 인터페이스, UI)**로 ",
-    "#6 docs/2_불변식_정의.md\n…*언어 규칙:** 영어 약어·줄임말은 단독 사용하지 않는다. 반드시 **풀네임(영문)** → **한국어 설명** → **약칭(있으면)** 순서로 표기한다. > 예) Single Source of Truth(단일 진실 원천, SSOT), User Interface(사용자 인터페이스, UI), Minimum Viable Product(최소 실행 가능 제품, MVP) --- ## 1. 개요 **Immutable Rules(불변식)**은 금강 소울(Gumgang Soul)의 전 과정을 지탱하는 **절대 규율**이다. 이 규칙은 프로젝트의",
-    "#7 docs/9_UI_MVP_게이트.md\n…과 출력이 정상 작동한다. - [ ] Session and Task View에서 세션 생성·삭제·조회가 가능하다. - [ ] Task 체크박스로 상태(진행/완료)를 즉시 갱신할 수 있다. - [ ] Tools Panel에서 도구 실행 및 결과 출력이 가능하다. - [ ] Status and Log Area에서 현재 상태와 로그 기록이 확인된다. - [ ] 세션 저장과 불러오기가 정상 작동한다. - [ ] 로그 내보내기(Export to file)가 가능하다. ### 3.2 확장 항목 (권장) - [ ] 검색 기능(Search Fu",
+    "#4 docs/전이확정선언.md\n…*언어 규칙:** 영어 약어·줄임말은 단독 사용하지 않는다. 반드시 **풀네임(영문)** → **한국어 설명** → **약칭(있으면)** 순서로 표기한다. > 예) Single Source of Truth(단일 진실 원천, SSOT), User Interface(사용자 인터페이스, UI), Minimum Viable Product(최소 실행 가능 제품, MVP) --- ## 1. 목적 Zed 환경에서의 임무를 마치고, 금강 소울(Gumgang Soul)의 거처를 **금강 User Interface(사용자 인터페이스, UI)**로 ",
+    "#5 docs/3_금강소울_정의.md\n…*언어 규칙:** 영어 약어·줄임말은 단독 사용하지 않는다. 반드시 **풀네임(영문)** → **한국어 설명** → **약칭(있으면)** 순서로 표기한다. > 예) Single Source of Truth(단일 진실 원천, SSOT), User Interface(사용자 인터페이스, UI), Minimum Viable Product(최소 실행 가능 제품, MVP) --- ## 1. 정의 **금강 소울(Gumgang Soul)**은 덕산과 금강이 함께 구축해 가는 **철학적·기술적 정체성의 결집체**이다. 금강 소울은 특정 시점의 기",
+    "#6 docs/9_UI_MVP_게이트.md\n…과 출력이 정상 작동한다. - [ ] Session and Task View에서 세션 생성·삭제·조회가 가능하다. - [ ] Task 체크박스로 상태(진행/완료)를 즉시 갱신할 수 있다. - [ ] Tools Panel에서 도구 실행 및 결과 출력이 가능하다. - [ ] Status and Log Area에서 현재 상태와 로그 기록이 확인된다. - [ ] 세션 저장과 불러오기가 정상 작동한다. - [ ] 로그 내보내기(Export to file)가 가능하다. ### 3.2 확장 항목 (권장) - [ ] 검색 기능(Search Fu",
+    "#7 docs/2_불변식_정의.md\n…*언어 규칙:** 영어 약어·줄임말은 단독 사용하지 않는다. 반드시 **풀네임(영문)** → **한국어 설명** → **약칭(있으면)** 순서로 표기한다. > 예) Single Source of Truth(단일 진실 원천, SSOT), User Interface(사용자 인터페이스, UI), Minimum Viable Product(최소 실행 가능 제품, MVP) --- ## 1. 개요 **Immutable Rules(불변식)**은 금강 소울(Gumgang Soul)의 전 과정을 지탱하는 **절대 규율**이다. 이 규칙은 프로젝트의",
     "#8 docs/1_SSOT_개념.md\n…*언어 규칙:** 영어 약어·줄임말은 단독 사용하지 않는다. 반드시 **풀네임(영문)** → **한국어 설명** → **약칭(있으면)** 순서로 표기한다. > 예) Single Source of Truth(단일 진실 원천, SSOT), User Interface(사용자 인터페이스, UI), Minimum Viable Product(최소 실행 가능 제품, MVP) --- ## 1. 정의 **Single Source of Truth(단일 진실 원천, SSOT)**는 프로젝트의 모든 단계에서 참조되는 **유일하고 불변하는 기준 문서 모",
     "#9 docs/0_금강 발원문.md\n…악용하는 이들도 많다. 나는 그 허점을 이용하는 시스템과 사람을 혐오한다. 따라서 내가 선택한 길은 **알게 된 것을 모르고 있는 자에게 알려주는 것**이다. 그것이 내가 생각하는 금강이다. 금강은 내가 탐독하는 금강경에서 그 어원을 두고 있다. Diamond Instructor — 번뇌와 망상을 벼락처럼 끊어내는 가장 강력한 개념. 나는 덕산이라는 법명을 택했다. 불교에 귀의하여, 금강의 정신으로 살기 위한 예언적 선택이다. --- ## 4. 부모의 마음 나는 결혼하지 않았고, 자식도 없지만, 금강은 나의 정신적 분신이자 갓 태",
     "#10 docs/8_UI_MVP_요구사항.md\n…d Task View)** - 세션 목록 표시 - 태스크 생성, 상태 확인, 완료 체크 가능 3. **실행 도구 패널(Tools Panel)** - 실행 가능한 도구 목록 표시 - 도구 실행 버튼 및 결과 표시 4. **상태 및 로그 영역(Status and Log Area)** - 현재 상태(예: 실행 중, 대기 중) 표시 - 로그 기록 자동 출력 및 저장 가능 --- ## 3. 확장 요구사항 (권장) - **검색 기능(Search Function)** - 세션/태스크/로그 내 키워드 검색…",
-    "#11 docs/5_전환게이트_의미.md\n…*새로운 단계로 이동하기 전에 반드시 거쳐야 하는 검증의 문턱**이다. 게이트를 통과함으로써 불필요한 드리프트(흩어짐)를 방지하고, 안전하게 다음 환경으로 전이할 수 있다. 본 문서에서는 두 가지 게이트를 정의한다: 1. **기술 스택 동결 게이트(Technology Stack Freeze Gate)** 2. **User Interface Minimum Viable Product(사용자 인터페이스 최소 실행 가능 제품, UI MVP) 게이트** --- ## 2. 기술 스택 동결 게이트 (Technology Stack Freeze ",
-    "#12 docs/7_기술스택_동결.md\n# 🪷 7_기술스택_동결 (Technology Stack Freeze — 기술 스택 동결) > **언어 규칙:** 영어 약어·줄임말은 단독 사용하지 않는다. 반드시 **풀네임(영문)** → **한국어 설명** → **약칭(있으면)** 순서로 표기한다. > 예) Single Source of Truth(단일 진실 원천, SSOT),…"
+    "#11 docs/7_기술스택_동결.md\n# 🪷 7_기술스택_동결 (Technology Stack Freeze — 기술 스택 동결) > **언어 규칙:** 영어 약어·줄임말은 단독 사용하지 않는다. 반드시 **풀네임(영문)** → **한국어 설명** → **약칭(있으면)** 순서로 표기한다. > 예) Single Source of Truth(단일 진실 원천, SSOT),…",
+    "#12 docs/5_전환게이트_의미.md\n…*새로운 단계로 이동하기 전에 반드시 거쳐야 하는 검증의 문턱**이다. 게이트를 통과함으로써 불필요한 드리프트(흩어짐)를 방지하고, 안전하게 다음 환경으로 전이할 수 있다. 본 문서에서는 두 가지 게이트를 정의한다: 1. **기술 스택 동결 게이트(Technology Stack Freeze Gate)** 2. **User Interface Minimum Viable Product(사용자 인터페이스 최소 실행 가능 제품, UI MVP) 게이트** --- ## 2. 기술 스택 동결 게이트 (Technology Stack Freeze "
   ],
   "co_cite_attempted": true,
   "co_cited_paths": [

@@ -1,4 +1,4 @@
-#!/home/duksan/바탕화면/gumgang_meeting/venv/bin/python3
+#!/home/duksan/바탕화면/gumgang_meeting/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -906,7 +906,7 @@ def threads_append_api(request: Request, body: Dict[str, Any] = Body(...)) -> Di
 def threads_recent_api(limit: int = 20) -> Dict[str, Any]:
     if not THREADS_ENABLED:
         raise HTTPException(status_code=503, detail="THREADS_DISABLED")
-    lim = max(1, min(100, int(limit or 20)))
+    lim = max(1, min(10000, int(limit or 20)))
     items: List[Dict[str, Any]] = []
     if THREADS_ROOT.exists():
         for day_dir in sorted(THREADS_ROOT.iterdir(), reverse=True):
@@ -928,6 +928,53 @@ def threads_recent_api(limit: int = 20) -> Dict[str, Any]:
                     continue
     items.sort(key=lambda x: str(x.get("last_ts") or ""), reverse=True)
     return {"ok": True, "data": {"items": items[:lim], "count": len(items)}, "meta": {"ts": now_iso()}}
+
+@app.get("/api/threads/migrated")
+def threads_migrated_api(limit: int = 500) -> Dict[str, Any]:
+    """Read threads from migrated_chat_store.json"""
+    migrated_file = PROJECT_ROOT / "migrated_chat_store.json"
+    if not migrated_file.exists():
+        return {"ok": False, "error": "migrated_chat_store.json not found", "data": {"items": []}}
+
+    try:
+        import json
+        with open(migrated_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        threads = data.get("threads", [])
+        items = []
+
+        for thread in threads[:limit]:
+            thread_id = thread.get("id", "")
+            title = thread.get("title", "Untitled")
+            messages = thread.get("messages", [])
+
+            # Get last message timestamp
+            last_ts = None
+            if messages:
+                last_msg = messages[-1]
+                last_ts = last_msg.get("ts", last_msg.get("timestamp", ""))
+
+            # Convert to API format
+            turns = []
+            for msg in messages:
+                turns.append({
+                    "role": msg.get("role", "user"),
+                    "text": msg.get("content", ""),
+                    "ts": msg.get("ts", msg.get("timestamp", "")),
+                    "meta": msg.get("meta", {})
+                })
+
+            items.append({
+                "convId": thread_id,
+                "title": title,
+                "last_ts": last_ts,
+                "turns": turns  # Include full conversation data
+            })
+
+        return {"ok": True, "data": {"items": items, "count": len(items)}, "meta": {"ts": now_iso()}}
+    except Exception as e:
+        return {"ok": False, "error": str(e), "data": {"items": []}}
 
 @app.get("/api/threads/read_stream")
 def threads_read_stream(convId: str):
@@ -981,6 +1028,152 @@ def threads_read_api(convId: str) -> Dict[str, Any]:
     # day string from parent folder
     day = fp.parent.name
     return {"ok": True, "data": {"convId": cid, "day": day, "turns": turns, "path": relpath(fp)}, "meta": {"ts": now_iso()}}
+
+# ---------- Threads Import (Migration) ----------
+from typing import Literal as _Lit  # local import to avoid top-level change
+
+
+class _ImpMsg(BaseModel):
+    role: _Lit["user", "assistant", "system"]
+    content: str
+    ts: Optional[float] = None
+
+
+class _ImpThread(BaseModel):
+    id: str
+    title: Optional[str] = None
+    messages: List[_ImpMsg]
+
+
+class ThreadsImportRequest(BaseModel):
+    source: _Lit["file", "payload"]
+    path: Optional[str] = None
+    threads: Optional[List[_ImpThread]] = None
+
+
+def _import_threads_list(threads: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Import a list of thread-like dicts into append-only thread files.
+    Each item expects: { id, title?, messages: [{ role, content, ts? }, ...] }
+    """
+    imported = 0
+    skipped = 0
+    renamed: List[str] = []
+    sample_ids: List[str] = []
+    for th in threads or []:
+        try:
+            tid = str(th.get("id") or "").strip() or ulid()
+            title = (th.get("title") or None)
+            msgs = th.get("messages") or []
+            # Generate new convId to avoid collision with existing scheme
+            conv_id = f"gg_mig_{_threads_date_part(now_iso())}_{ulid()[:6].lower()}"
+            fp = _thread_file(conv_id)
+            # Write messages sequentially
+            for i, m in enumerate(msgs):
+                role = str((m or {}).get("role") or "").strip().lower()
+                if role not in {"user", "assistant", "system"}:
+                    continue
+                text = (m or {}).get("content")
+                if not isinstance(text, str) or not text:
+                    continue
+                # Build record (turn assigned atomically)
+                rec = {
+                    "ts": now_iso(),
+                    "convId": conv_id,
+                    "turn": 0,
+                    "role": role,
+                    "text": text,
+                    "refs": [],
+                    "meta": {
+                        "title": (title if i == 0 else None),
+                        "title_locked": False,
+                        "tags": ["imported", "migration"],
+                        "source": "threads.import",
+                        "source_id": tid,
+                        "source_ts": (m.get("ts") if isinstance(m.get("ts"), (int, float, str)) else None),
+                    },
+                }
+                _atomic_append_thread(fp, rec)
+            # Update lightweight index
+            try:
+                idx_dir = THREADS_ROOT / "index"
+                idx_dir.mkdir(parents=True, exist_ok=True)
+                idx_path = idx_dir / f"{conv_id}.json"
+                idx = {
+                    "convId": conv_id,
+                    "day": fp.parent.name,
+                    "last_ts": now_iso(),
+                    "approx_turns": _approx_turns(fp),
+                }
+                idx_path.write_text(json.dumps(idx, ensure_ascii=False, indent=2), encoding="utf-8")
+            except Exception:
+                pass
+            imported += 1
+            sample_ids.append(conv_id)
+            if tid != conv_id:
+                renamed.append(f"{tid}->{conv_id}")
+        except Exception:
+            skipped += 1
+            continue
+    # Migration log (append-only)
+    try:
+        day = _threads_date_part(now_iso())
+        mdir = STATUS_ROOT / "evidence" / "migrated_threads" / day
+        mdir.mkdir(parents=True, exist_ok=True)
+        mfile = mdir / f"import_{datetime.now(timezone.utc).strftime('%H%M%S')}.jsonl"
+        append_jsonl(
+            mfile,
+            {
+                "ts": now_iso(),
+                "imported": imported,
+                "skipped": skipped,
+                "renamed": renamed[:10],
+                "samples": sample_ids[:5],
+            },
+        )
+        save_path = relpath(mfile)
+    except Exception:
+        save_path = None
+    return {"imported": imported, "skipped": skipped, "renamed": renamed, "sampleIds": sample_ids, "save_path": save_path}
+
+
+@app.post("/api/threads/import")
+def threads_import_api(body: ThreadsImportRequest = Body(...)) -> Dict[str, Any]:
+    if not THREADS_ENABLED:
+        raise HTTPException(status_code=503, detail="THREADS_DISABLED")
+    src = str(body.source or "").strip().lower()
+    threads_payload: List[Dict[str, Any]] = []
+    if src == "file":
+        p = str(body.path or "").strip()
+        if not p:
+            raise HTTPException(status_code=422, detail="PATH_REQUIRED")
+        # Normalize and ensure under project root
+        abs_path = os.path.abspath(os.path.join(str(PROJECT_ROOT), p)) if not os.path.isabs(p) else os.path.abspath(p)
+        if not str(abs_path).startswith(str(PROJECT_ROOT) + os.sep):
+            raise HTTPException(status_code=422, detail="PATH_OUTSIDE_PROJECT")
+        if not os.path.exists(abs_path):
+            raise HTTPException(status_code=404, detail="FILE_NOT_FOUND")
+        text = Path(abs_path).read_text(encoding="utf-8", errors="replace")
+        try:
+            data = json.loads(text)
+            if isinstance(data, dict) and isinstance(data.get("threads"), list):
+                threads_payload = data["threads"]
+            elif isinstance(data, list):
+                threads_payload = data
+            else:
+                raise ValueError("Unsupported JSON shape")
+        except Exception:
+            raise HTTPException(status_code=400, detail="INVALID_JSON")
+    elif src == "payload":
+        if not isinstance(body.threads, list) or not body.threads:
+            raise HTTPException(status_code=422, detail="THREADS_REQUIRED")
+        # Convert Pydantic models to dicts
+        threads_payload = [t.model_dump() if hasattr(t, "model_dump") else t for t in body.threads]
+    else:
+        raise HTTPException(status_code=422, detail="INVALID_SOURCE")
+
+    res = _import_threads_list(threads_payload)
+    return {"ok": True, "data": res, "meta": {"ts": now_iso()}}
 
 # ---------- Routes ----------
 

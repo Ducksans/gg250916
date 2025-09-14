@@ -1,0 +1,242 @@
+{
+  "query": "이 스래드 요약 할 수 있니 ?",
+  "params": {
+    "k": 5,
+    "need_fresh": 1,
+    "half_life_days": 7.0,
+    "fresh_weight": 0.6,
+    "self_rag": 1,
+    "tiers": [
+      "long",
+      "medium",
+      "short",
+      "ultra_long",
+      "ultra_short"
+    ],
+    "rerank_blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "rerank_policy": {
+      "apply_if": "recency<0.2 AND refs<0.2",
+      "bonus": {
+        "refs_ge_1_add": 0.05,
+        "normalized_threshold": 0.2
+      },
+      "cap": {
+        "kw_ge": 0.9,
+        "max_uplift": 0.02
+      }
+    }
+  },
+  "pre_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999998323393325,
+      "ts": "2025-09-11T16:44:19.655Z",
+      "scope_id": null,
+      "text": "이 스래드 요약 할 수 있니 ?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/68785bd6-915c-8003-86a8-a5805edd3024.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999997205655543,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.7905385030238523,
+      "ts": "2025-09-11T14:02:49.832Z",
+      "scope_id": null,
+      "text": "이 스래드 인식하고 요약 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_dz4jv7iz_mffe0g73.jsonl",
+      "line_from": 10,
+      "line_to": 10,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9842308383730871,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.6281162180736126,
+      "ts": "2025-09-11T15:15:54.844Z",
+      "scope_id": null,
+      "text": "이 스래드 요약 할 수 있나?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+      "line_from": 7,
+      "line_to": 7,
+      "reasons": {
+        "kw": 0.8333333333333334,
+        "recency": 0.9913048079004655,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.6236573036566557,
+      "ts": "2025-09-11T13:59:06.517Z",
+      "scope_id": null,
+      "text": "안녕 너는 이 스래드를 요약 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhy.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.8333333333333334,
+        "recency": 0.983873283872204,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.4637579082484102,
+      "ts": "2025-09-11T15:55:13.512Z",
+      "scope_id": null,
+      "text": "이 스래드의 저장 위치를 특정 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/687ed6b9-85c0-8329-99a6-ec6c84b6de42.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.6666666666666666,
+        "recency": 0.9951520693029063,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    }
+  ],
+  "post_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999998323393325,
+      "ts": "2025-09-11T16:44:19.655Z",
+      "scope_id": null,
+      "text": "이 스래드 요약 할 수 있니 ?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/68785bd6-915c-8003-86a8-a5805edd3024.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999997205655543,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7999998323393325,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.7905385030238523,
+      "ts": "2025-09-11T14:02:49.832Z",
+      "scope_id": null,
+      "text": "이 스래드 인식하고 요약 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_dz4jv7iz_mffe0g73.jsonl",
+      "line_from": 10,
+      "line_to": 10,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9842308383730871,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7905385030238523,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.6281162180736126,
+      "ts": "2025-09-11T15:15:54.844Z",
+      "scope_id": null,
+      "text": "이 스래드 요약 할 수 있나?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+      "line_from": 7,
+      "line_to": 7,
+      "reasons": {
+        "kw": 0.8333333333333334,
+        "recency": 0.9913048079004655,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.6281162180736126,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.6236573036566557,
+      "ts": "2025-09-11T13:59:06.517Z",
+      "scope_id": null,
+      "text": "안녕 너는 이 스래드를 요약 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhy.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.8333333333333334,
+        "recency": 0.983873283872204,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.6236573036566557,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.4637579082484102,
+      "ts": "2025-09-11T15:55:13.512Z",
+      "scope_id": null,
+      "text": "이 스래드의 저장 위치를 특정 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/687ed6b9-85c0-8329-99a6-ec6c84b6de42.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.6666666666666666,
+        "recency": 0.9951520693029063,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.4637579082484102,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "ts": "2025-09-11T16:44:19.854Z"
+}

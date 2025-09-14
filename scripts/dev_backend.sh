@@ -51,6 +51,8 @@ DEPS=(
   "fastapi>=0.110"
   "uvicorn[standard]>=0.23"
   "python-multipart>=0.0.9"
+  "httpx>=0.27"
+  "python-dotenv>=1.0.0"
 )
 
 # ---------- UX helpers ----------

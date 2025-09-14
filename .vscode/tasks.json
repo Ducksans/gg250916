@@ -1,0 +1,20 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "web:dev",  "type": "shell", "command": "npm run dev" },
+    { "label": "web:test", "type": "shell", "command": "npm test -- --watch=false" },
+    { "label": "lint:fix", "type": "shell", "command": "npm run lint && npm run format" },
+    { "label": "py:test",  "type": "shell", "command": "pytest -q" },
+    { "label": "guard:ui",  "type": "shell", "command": "npm run guard:ui" },
+    { "label": "context:snapshot:latest",  "type": "shell", "command": "bash scripts/context_snapshot.sh --latest ${input:paths}" },
+    { "label": "context:snapshot:archive", "type": "shell", "command": "bash scripts/context_snapshot.sh --archive ${input:paths}" },
+    { "label": "context:snapshot:both",    "type": "shell", "command": "bash scripts/context_snapshot.sh --both ${input:paths}" },
+    { "label": "context:prune",            "type": "shell", "command": "bash scripts/context_prune.sh status/context/snapshots ${input:retainDays} ${input:retainMax}" }
+  ]
+  ,
+  "inputs": [
+    { "id": "paths",      "type": "promptString", "description": "space-separated paths", "default": ".rules AGENTS.md status/reports/PROJECT_REBUILD_PROTOCOL.md" },
+    { "id": "retainDays", "type": "promptString", "description": "retain days", "default": "30" },
+    { "id": "retainMax",  "type": "promptString", "description": "retain max count", "default": "60" }
+  ]
+}

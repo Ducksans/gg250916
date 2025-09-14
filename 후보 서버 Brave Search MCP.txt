@@ -1,0 +1,4 @@
+**후보 서버:**
+  - **Brave Search MCP Server:** Brave 검색 엔진 API를 사용하여 웹 검색 기능을 제공합니다.
+  - **Puppeteer MCP Server:** Puppeteer를 사용하여 실제 브라우저를 제어하고, 복잡한 웹 스크래핑 및 자동화 작업을 수행할 수 있습니다.
+- **다음 행동:** `View Server Extensions` 목록이나 공식 문서를 참고하여, 위 서버들 중 하나를 `filesystem` 서버와 동일한 방식으로 추가 등록하는 것을 다음 목표로 삼습니다.

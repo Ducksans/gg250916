@@ -1,0 +1,609 @@
+/**
+ * [금강 AI 주석 v1.1]
+ * ---------------------------------------------------------------------------
+ * @파일경로: ui/dev_a1_vite/src/styles/a1.css
+ * @분석일자: 2025-09-10T16:18Z (UTC) / 2025-09-11 01:18 (KST)
+ * @작성자: Gemini (금강 AI)
+ * ---------------------------------------------------------------------------
+ * @파일목적
+ *  - A1Dev 컴포넌트와 그 하위 요소들의 모든 시각적 스타일과 레이아웃을 정의하는 중앙 CSS 스타일시트입니다.
+ *
+ * @핵심역할
+ *  - 1. (테마/변수) CSS 변수를 사용하여 앱의 전체적인 디자인 토큰을 정의합니다.
+ *  - 2. (핵심 레이아웃) `#a1-wrap`을 통해 `.rules`에 명시된 3행 그리드 레이아웃을 구현합니다.
+ *  - 3. (가드레일 준수) `#gg-threads`와 `#chat-msgs`에만 스크롤을 허용하여 ST-1206 규칙을 준수합니다.
+ *  - 4. (반응형 디자인) `@media` 쿼리를 사용하여 다양한 화면 크기에 대응합니다.
+ *
+ * @주요관계
+ *  - (임포트) ← `@/components/A1Dev.jsx`
+ *  - (구현) → `.rules` 파일의 `3. UI 가드레일 (ST-1206)`
+ *
+ * @참고사항
+ *  - [리팩토링 후보] 코드 길이가 500줄을 초과하고, 여러 컴포넌트의 스타일을 모두 포함하여 '1파일 1책임' 원칙에 위배됩니다.
+ *  - 향후 CSS-in-JS 또는 컴포넌트별 CSS 파일로 분리하는 리팩토링이 강력하게 권장됩니다.
+ * ---------------------------------------------------------------------------
+ */
+/* A1 Dev UI — Extracted stylesheet (a1.css)
+ * Purpose: Follow 1-file-1-purpose by moving layout/styling out of main.jsx
+ * Guardrails (ST-1206) respected:
+ *  - Global scroll hidden in Simple mode
+ *  - Exactly 2 scrollers inside #a1: #gg-threads (left), #chat-msgs (right)
+ *  - #a1-wrap is CSS grid with rows: auto minmax(0,1fr) auto
+ *  - Composer actions marked with [data-gg="composer-actions"]
+ */
+
+/* Theme tokens */
+:root {
+  --gg-bg: #0b0c10;
+  --gg-fg: #e5e7eb;
+  --gg-muted: #9aa4b2;
+  --gg-accent: #22c55e;
+  --gg-border: #1f2937;
+  --gg-panel: #0f172a;
+  --gg-side-bg: #0a1220;
+  --gg-strip-h: 54px;
+  --gg-chat-width: clamp(760px, 78vw, 904px);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  background: var(--gg-bg);
+  color: var(--gg-fg);
+}
+
+/* Simple-only global scroll hidden */
+body.simple {
+  overflow: hidden;
+}
+
+/* A1 WRAP: 3-row grid (header, main, composer) */
+#a1-wrap {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  /* Slimmer left column similar to LibreChat; tokenized for future tuning */
+  grid-template-columns: var(--gg-left-col, clamp(220px, 18vw, 280px)) 1fr;
+  gap: 0;
+  /* Ensure the wrapper consumes the full dynamic viewport height so the composer can sit flush at the bottom */
+  min-height: 100dvh;
+  height: 100dvh;
+  width: 100%;
+  max-width: 100vw;
+  margin: 0 auto;
+}
+
+/* Non-chat mode: remove composer track and hide footer */
+#a1-wrap.no-composer {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+#a1-wrap.no-composer footer.gg-composer {
+  display: none !important;
+}
+
+/* Top toolbar (strip) */
+header.gg-strip {
+  grid-column: 1 / -1;
+  height: var(--gg-strip-h);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--gg-border);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+header.gg-strip h1 {
+  font-size: 14px;
+  margin: 0;
+  letter-spacing: 0.2px;
+  font-weight: 600;
+}
+header.gg-strip .actions {
+  display: inline-flex;
+  gap: 6px;
+}
+header.gg-strip .btn {
+  appearance: none;
+  border: 1px solid var(--gg-border);
+  background: var(--gg-panel);
+  color: var(--gg-fg);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+header.gg-strip .status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  display: inline-block;
+}
+.ok {
+  background: #22c55e;
+}
+.bad {
+  background: #ef4444;
+}
+.warn {
+  background: #f59e0b;
+}
+
+/* MAIN (#a1): 2 scrollers only — threads + chat */
+#a1 {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  display: contents; /* place children directly on #a1-wrap grid */
+}
+#gg-threads {
+  grid-row: 2 / -1; /* span full available height (main area through composer) */
+  grid-column: 1 / 2;
+  overflow-y: auto; /* allowed scroller #1 - vertical only */
+  overflow-x: hidden; /* prevent horizontal scrollbar */
+  border-right: 1px solid var(--gg-border);
+  background: var(--gg-side-bg);
+  min-height: 0;
+  height: 100%;
+  margin: 0; /* ensure no extra margins reduce visible height */
+  /* Keep the left pane above the center-column pseudo stripe */
+  position: relative;
+  z-index: 1;
+  /* Reserve bottom space using measured composer height so last items are not obscured */
+  padding-bottom: calc(
+    var(--gg-composer-h, 80px) + env(safe-area-inset-bottom, 0px)
+  );
+}
+#chat-msgs {
+  grid-row: 2;
+  grid-column: 2 / 3;
+  overflow-y: auto; /* allowed scroller #2 - vertical only */
+  overflow-x: hidden; /* prevent horizontal scrollbar */
+  min-height: 0;
+  position: relative; /* containing block for absolute children; sticky works within this scroller */
+  contain: layout paint; /* stabilize sticky/fixed descendants within the scroller */
+  isolation: isolate; /* create a stable stacking context for cue bubble */
+  /* Reserve bottom space equal to measured composer height (published by useComposerSpace) + safe area */
+  padding-bottom: calc(
+    var(--gg-composer-h, 120px) + env(safe-area-inset-bottom, 0px)
+  );
+  /* Make scrollIntoView/bottom cue math consistent with reserved composer space */
+  scroll-padding-bottom: calc(
+    var(--gg-composer-h, 120px) + env(safe-area-inset-bottom, 0px)
+  );
+  overscroll-behavior: contain; /* avoid browser overscroll effects interfering with sticky */
+}
+
+
+
+/* toned-down scrollbars for side and center scrollers */
+#gg-threads,
+#chat-msgs {
+  scrollbar-color: rgba(148, 163, 184, 0.25) transparent; /* Firefox */
+  scrollbar-width: thin;
+}
+#gg-threads::-webkit-scrollbar,
+#chat-msgs::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+#gg-threads::-webkit-scrollbar-thumb,
+#chat-msgs::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+#gg-threads::-webkit-scrollbar-track,
+#chat-msgs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Left sidebar collapse helpers (chat-only guardrails stay intact) */
+#a1-wrap.left-collapsed {
+  --gg-left-col: 0;
+}
+#a1-wrap.left-collapsed #gg-threads {
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  border-right: none;
+}
+
+/* Threads (left pane) */
+.threads-list {
+  padding: 8px 8px 0 8px; /* avoid double bottom space; bottom is reserved by #gg-threads */
+  display: grid;
+  gap: 6px;
+}
+.thread-item {
+  padding: 10px;
+  border: 1px solid var(--gg-border);
+  border-radius: 8px;
+  background: var(--gg-panel);
+  cursor: pointer;
+  font-size: 14px;
+}
+.thread-item.active {
+  outline: 1px solid rgba(34, 197, 94, 0.35);
+}
+.thread-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 6px;
+}
+.thread-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.thread-actions {
+  display: inline-flex;
+  gap: 4px;
+}
+.thread-actions .mini {
+  appearance: none;
+  border: 1px solid var(--gg-border);
+  background: transparent;
+  color: var(--gg-muted);
+  border-radius: 6px;
+  padding: 1px 5px;
+  min-width: 22px;
+  height: 22px;
+  font-size: 11px;
+  line-height: 1;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+}
+.thread-actions .mini:hover {
+  color: var(--gg-fg);
+  border-color: var(--gg-accent);
+}
+
+/* Chat timeline (right) */
+.chat-panel {
+  max-width: var(--gg-chat-width);
+  /* Keep centered within visible area; right padding may be increased when drawer is open */
+  margin: 0 auto;
+  padding: 14px calc(14px + var(--gg-right-pad, 0px)) 18px 14px;
+  display: grid;
+  gap: 14px;
+}
+
+/* Non-chat modes render wide: when #chat-msgs is not in 'chat' mode,
+   allow full-width (no clamp) for any chat-panel usage within it. */
+#chat-msgs[data-mode]:not([data-mode="chat"]) .chat-panel {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+.msg {
+  /* Block-style message (no bubble) */
+  padding: 0 0 18px 0;
+  margin: 0 0 22px 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  font-size: 15px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: hidden;
+  box-shadow: none;
+}
+.msg.user {
+  background: transparent;
+}
+.msg.assistant {
+  background: transparent;
+}
+/* Emphasize first line (speaker/heading) */
+.msg strong {
+  display: block;
+  margin: 0 0 6px 0;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+/* MCP logs (simple viewer) */
+.mcp-logs {
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid var(--gg-border);
+  border-radius: 10px;
+  background: #0b1222;
+}
+.mcp-logs-title {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 8px;
+}
+.mcp-logs-list {
+  display: grid;
+  gap: 8px;
+}
+.mcp-log-row {
+  border: 1px dashed var(--gg-border);
+  border-radius: 8px;
+  padding: 8px;
+}
+.mcp-log-head {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+.mcp-log-tool {
+  font-weight: 600;
+}
+.mcp-log-status {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--gg-border);
+}
+.mcp-log-status.ok {
+  color: #22c55e;
+  border-color: rgba(34, 197, 94, 0.35);
+}
+.mcp-log-status.bad {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.35);
+}
+.mcp-log-status.warn {
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.35);
+}
+.mcp-log-args,
+.mcp-log-result {
+  margin: 0;
+  background: #0e1527;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+/* Composer: row 3, column 2; actions marked data-gg="composer-actions" */
+footer.gg-composer {
+  grid-row: 3;
+  grid-column: 2;
+  /* border-top: 1px solid var(--gg-border); */
+  /* Unify with timeline background to remove unnecessary boundary */
+  background: var(--gg-bg);
+  /* Keep the composer flush to the very bottom of the viewport */
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+footer.gg-composer::before {
+  /* Reintroduce a controlled stripe only under the left column to make backgrounds look continuous
+     without overlapping the threads content area. This sits behind the threads by using a low z-index
+     and is confined to the left pane width. */
+  content: "";
+  position: fixed;
+  z-index: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(env(safe-area-inset-bottom, 0px) + 1px); /* minimal guard to ensure flush visual join */
+  background: var(--gg-bg);
+  pointer-events: none;
+}
+.composer-wrap {
+  max-width: var(--gg-chat-width);
+  margin: 0 auto;
+  padding: 10px calc(14px + var(--gg-right-pad, 0px)) 10px 14px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: end;
+}
+.composer-wrap textarea {
+  width: 100%;
+  min-height: 48px;
+  max-height: 240px;
+  resize: vertical;
+  background: #0e1527;
+  color: var(--gg-fg);
+  border: 1px solid var(--gg-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.45;
+  outline: none;
+}
+[data-gg="composer-actions"] {
+  display: grid;
+  gap: 8px;
+}
+
+/* BottomDock (composer actions) */
+[data-gg="composer-actions"] .gg-bottom-dock-wrap {
+  margin-left: 8px; /* spacing from action buttons */
+  display: grid;
+  justify-content: end;
+  align-items: end;
+}
+[data-gg="composer-actions"] .gg-bottom-dock {
+  pointer-events: auto;
+}
+
+.composer-actions .btn {
+  appearance: none;
+  border: 1px solid var(--gg-border);
+  background: var(--gg-panel);
+  color: var(--gg-fg);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Tools panel (floating, outside #a1; does not add scroller under #a1) */
+.tools-panel {
+  position: absolute;
+  right: 12px;
+  top: calc(var(--gg-strip-h) + 8px);
+  z-index: 20;
+  background: var(--gg-panel);
+  border: 1px solid var(--gg-border);
+  border-radius: 10px;
+  padding: 10px;
+  min-width: 240px;
+  color: var(--gg-fg);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+.tools-panel h4 {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+}
+.tools-list {
+  display: grid;
+  gap: 6px;
+  max-height: 240px;
+  overflow: auto;
+}
+.tools-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+}
+
+/* Command Center drawer (fixed overlay; outside #a1) */
+.cc-drawer {
+  position: fixed;
+  top: var(--gg-strip-h);
+  right: 0;
+  bottom: 0;
+  width: min(420px, 86vw);
+  background: var(--gg-side-bg);
+  border-left: 1px solid var(--gg-border);
+  z-index: 40;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+.cc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--gg-border);
+}
+.cc-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.cc-tab {
+  font-size: 12px;
+  padding: 6px 10px;
+  border: 1px solid var(--gg-border);
+  border-radius: 8px;
+  background: #0e1527;
+  color: var(--gg-fg);
+  cursor: pointer;
+}
+.cc-tab.active {
+  outline: 1px solid rgba(34, 197, 94, 0.35);
+}
+.cc-body {
+  padding: 12px;
+}
+.cc-skel {
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+.cc-close {
+  appearance: none;
+  border: 1px solid var(--gg-border);
+  background: "rgba(15, 23, 42, 0.55)",
+  color: var(--gg-fg);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Pinned message highlight (non-intrusive) */
+.msg.pinned,
+.msg[data-pinned="true"] {
+  outline: 1px solid rgba(34, 197, 94, 0.35);
+  box-shadow:
+    0 0 0 2px rgba(34, 197, 94, 0.12) inset,
+    0 2px 10px rgba(0, 0, 0, 0.28);
+}
+
+/* Message actions — responsive placement (desktop/tablet/mobile) */
+/* Base: dock to top-right inside each .msg; keep hidden by default (tablet hover policy) */
+.msg .msg-actions,
+.msg [aria-label="Message actions"] {
+  position: absolute;
+  top: 8px;
+  right: -6px; /* nudge outward to align with intended red zone */
+  display: none; /* tablet default → show on hover/focus */
+  gap: 8px;
+  z-index: 2;
+  align-items: center;
+}
+
+/* Hover/focus fallback (tablet behavior) */
+.msg:hover .msg-actions,
+.msg:focus-within .msg-actions,
+.msg:hover [aria-label="Message actions"],
+.msg:focus-within [aria-label="Message actions"] {
+  display: inline-flex;
+}
+
+/* Desktop (≥1024px): always show inline action icons; hide kebab */
+@media (min-width: 1024px) {
+  .msg [aria-label="Message actions"] {
+    display: inline-flex !important;
+  }
+  .msg .msg-actions-inline {
+    display: inline-flex !important; /* show icon row */
+  }
+  .msg .msg-actions-kebab {
+    display: none !important; /* no kebab on desktop */
+  }
+}
+
+/* Tablet (768–1023px): hover/focus to show; kebab hidden */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .msg .msg-actions-inline {
+    display: inline-flex; /* shown when container is visible via hover/focus */
+  }
+  .msg .msg-actions-kebab {
+    display: none !important; /* no kebab on tablet */
+  }
+}
+
+/* Mobile (≤767px): always show kebab; hide inline icons */
+@media (max-width: 767px) {
+  .msg [aria-label="Message actions"] {
+    display: inline-flex !important; /* ensure container visible (override inline style) */
+  }
+  .msg .msg-actions-inline {
+    display: none !important; /* hide full icon row on small screens */
+  }
+  .msg .msg-actions-kebab {
+    display: inline-flex !important; /* show kebab menu trigger */
+  }
+}

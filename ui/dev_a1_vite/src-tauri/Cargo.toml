@@ -1,0 +1,21 @@
+[package]
+name = "app"
+version = "0.1.0"
+edition = "2021"
+
+# (원하면 여기 메타데이터 추가 가능)
+# description = "Gumgang UI (Tauri v2)"
+# authors = ["duksan"]
+# license = ""
+# repository = ""
+
+[build-dependencies]
+tauri-build = { version = "2.4.1", features = [] }
+
+[dependencies]
+tauri = { version = "2.8.5", features = [] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[features]
+default = []

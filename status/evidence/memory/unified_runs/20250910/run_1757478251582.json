@@ -1,0 +1,42 @@
+{
+  "query": "이보시게",
+  "params": {
+    "k": 12,
+    "half_life_days": null,
+    "fresh_weight": 0.3025200407204075,
+    "self_rag": 1,
+    "strict": 0,
+    "need_fresh": 0,
+    "file_enabled": true
+  },
+  "source_mix": {
+    "memory": 6,
+    "file": 0
+  },
+  "pre_count": 6,
+  "post_count": 6,
+  "grounded": true,
+  "evidence_path_from_memory_search": "status/evidence/memory/search_runs/20250910/run_1757478251572.json",
+  "rerank_policy": {
+    "apply_if": "recency<0.2 AND refs<0.2",
+    "blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "bonus": {
+      "refs_ge_1_add": 0.05,
+      "normalized_threshold": 0.2
+    },
+    "cap": {
+      "kw_ge": 0.9,
+      "max_uplift": 0.02
+    }
+  },
+  "rerank_applied": 0,
+  "ts": "2025-09-10T04:24:11.583Z"
+}

@@ -1,0 +1,16 @@
+[보관 대상 알림 / ARCHIVE CANDIDATE NOTICE]
+
+- 작성자: Gemini
+- 작성일시: 2025-09-10 22:13 (Asia/Seoul)
+
+이 `obsidian_vault` 디렉토리는 'gumgang_meeting' 프로젝트의 핵심 기능과 직접적인 관련이 없는 독립적인 문서 저장소입니다.
+
+프로젝트 작업 공간을 정화하기 위한 'Phase 0: 성소 구축' 프로토콜의 일환으로, 이 디렉토리는 가까운 시일 내에 `_archive` 폴더로 이동될 예정입니다.
+
+따라서, 이 디렉토리의 내용에 새로운 의존성을 추가하거나 참조하는 코드를 작성하지 마십시오.
+
+This directory, `obsidian_vault`, is an independent document vault not directly related to the core functionality of the 'gumgang_meeting' project.
+
+As part of the 'Phase 0: Sanctuary Construction' protocol to clean up the project workspace, this directory is scheduled to be moved to an `_archive` folder in the near future.
+
+Therefore, please do not add new dependencies or create code that references the contents of this directory.

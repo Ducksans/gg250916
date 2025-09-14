@@ -1,0 +1,242 @@
+{
+  "query": "이 스래드의 저장 위치를 특정 할 수 있니?",
+  "params": {
+    "k": 5,
+    "need_fresh": 1,
+    "half_life_days": 7.0,
+    "fresh_weight": 0.6,
+    "self_rag": 1,
+    "tiers": [
+      "long",
+      "medium",
+      "short",
+      "ultra_long",
+      "ultra_short"
+    ],
+    "rerank_blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "rerank_policy": {
+      "apply_if": "recency<0.2 AND refs<0.2",
+      "bonus": {
+        "refs_ge_1_add": 0.05,
+        "normalized_threshold": 0.2
+      },
+      "cap": {
+        "kw_ge": 0.9,
+        "max_uplift": 0.02
+      }
+    }
+  },
+  "pre_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999235992161,
+      "ts": "2025-09-11T15:55:13.512Z",
+      "scope_id": null,
+      "text": "이 스래드의 저장 위치를 특정 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/687ed6b9-85c0-8329-99a6-ec6c84b6de42.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999998726653601,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.400859239137221,
+      "ts": "2025-09-11T11:51:55.659Z",
+      "scope_id": null,
+      "text": "체크포인트 원장 파일은 프로젝트 내 특정 경로에 위치하며, append-only 규칙을 따릅니다. 이 규칙은 데이터가 파일에 추가될 수만 있고 기존 데이터를 수정하거나 삭제할 수 없다는 것을 의미합니다. 경로 인용은 다음과 같습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.375,
+        "recency": 0.9764320652287016,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2941616845568176,
+      "ts": "2025-09-11T14:16:10.740Z",
+      "scope_id": null,
+      "text": "너는 이 스래드를 인식 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9902694742613627,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2933835409800107,
+      "ts": "2025-09-11T14:02:49.832Z",
+      "scope_id": null,
+      "text": "이 스래드 인식하고 요약 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_dz4jv7iz_mffe0g73.jsonl",
+      "line_from": 10,
+      "line_to": 10,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9889725683000182,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2931669365703977,
+      "ts": "2025-09-11T13:59:06.517Z",
+      "scope_id": null,
+      "text": "안녕 너는 이 스래드를 요약 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhy.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.988611560950663,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    }
+  ],
+  "post_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999235992161,
+      "ts": "2025-09-11T15:55:13.512Z",
+      "scope_id": null,
+      "text": "이 스래드의 저장 위치를 특정 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/687ed6b9-85c0-8329-99a6-ec6c84b6de42.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999998726653601,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7999999235992161,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.400859239137221,
+      "ts": "2025-09-11T11:51:55.659Z",
+      "scope_id": null,
+      "text": "체크포인트 원장 파일은 프로젝트 내 특정 경로에 위치하며, append-only 규칙을 따릅니다. 이 규칙은 데이터가 파일에 추가될 수만 있고 기존 데이터를 수정하거나 삭제할 수 없다는 것을 의미합니다. 경로 인용은 다음과 같습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.375,
+        "recency": 0.9764320652287016,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.400859239137221,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2941616845568176,
+      "ts": "2025-09-11T14:16:10.740Z",
+      "scope_id": null,
+      "text": "너는 이 스래드를 인식 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9902694742613627,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2941616845568176,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2933835409800107,
+      "ts": "2025-09-11T14:02:49.832Z",
+      "scope_id": null,
+      "text": "이 스래드 인식하고 요약 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_dz4jv7iz_mffe0g73.jsonl",
+      "line_from": 10,
+      "line_to": 10,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9889725683000182,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2933835409800107,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2931669365703977,
+      "ts": "2025-09-11T13:59:06.517Z",
+      "scope_id": null,
+      "text": "안녕 너는 이 스래드를 요약 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhy.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.988611560950663,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2931669365703977,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "ts": "2025-09-11T15:55:13.608Z"
+}

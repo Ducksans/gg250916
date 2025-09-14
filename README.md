@@ -1,5 +1,16 @@
 # Gumgang Meeting — Root README
 
+- 요약(새 스레드 인계)
+  금강 UI Dev(A1, Vite)는 “1파일 1역할” 원칙으로 주요 컴포넌트를 분리했습니다. ChatTimeline는 MessagesView/Message로 세분화했고, Composer는 Send/InsertLastToolResult 버튼을 별도 컴포넌트로 분리했습니다. TopToolbar는 AgentSelector 추출로 단순화했고, Tools는 ToolsManager(컨테이너)와 ToolsPanel(표시 전용)로 역할을 분리했습니다. useHealth/useGuardrails/usePrefs 훅과 a1.css 스타일 분리로 구조/상태/스타일 경계를 명확히 했습니다. ST‑1206 가드레일(2 스크롤러, grid rows, composer actions 마커)은 유지되며, FastAPI/Bridge 헬스 OK입니다. 다음 스레드에서 Panels(Planner/Insights/Executor) 탭을 카드 컴포넌트로 고도화하고, 메시지 Hover 액션(복사/삭제/핀/재실행)과 ThreadList 키보드 네비를 확정합니다. 레이아웃 비율/색상은 최종 단계에서 토큰(--gg-chat-width, 컬럼 minmax 등)만 손대는 방식으로 조정합니다.
+
+- 새 스레드 트리거
+  ST‑UI‑REFLOW‑NEXT‑C2 — “A1 Dev UI 컴포넌트 분리를 마무리하고 Panels(Planner/Insights/Executor) 탭을 카드 컴포넌트로 고도화합니다. 메시지 Hover 액션과 스레드 키보드 네비를 확정하고, 레이아웃/색상 튜닝은 마지막 단계에서 토큰만 조정합니다. Anthropic 400은 임시 PASS, OpenAI 경로 우선 운용을 유지합니다.”
+
+- 최근 반영(로그)
+  - Panels(Planner/Insights/Executor) 탭 카드 컴포넌트 도입
+  - 메시지 Hover 액션(복사/삭제/핀/재실행) 추가
+  - ThreadList 키보드 네비게이션(↑/↓/Enter/F2/Delete)
+
 ## A1 Vite Dev (UI 5173) — React + Vite 개발용 미니 앱
 - 목적: 3037/ui#a1에서 보던 스냅샷 기반 UI(`ui/snapshots/unified_A1-A4_v0/index.html`)의 과도한 단일 파일 의존을 줄이고, A1만 분리하여 빠르게 개발/검증하기 위함입니다.
 - 경로: `ui/dev_a1_vite`
@@ -23,6 +34,27 @@
 - 참고:
   - 기존 메인 스냅샷 UI는 여전히 Bridge가 제공합니다: http://localhost:3037/ui/snapshots/unified_A1-A4_v0/index.html
   - monolithic 접근(3037/ui#a1)을 대체/보완하는 개발용 경량 앱입니다.
+
+- 2025-09-08 업데이트 — A1 Dev UI 컴포넌트화/상태 패치
+  - 컴포넌트 분리
+    - ChatTimeline → MessagesView/Message 분리
+    - Composer → SendButton, InsertLastToolResultButton 분리
+    - TopToolbar, ThreadList, ToolsPanel, CommandCenterDrawer 정리
+    - ToolsManager(컨테이너) 신설: 도구 정의/선택/파라미터/실행 상태 소유, 패널 렌더만 위임
+  - 훅 추출
+    - useHealth (/api/health, /bridge/api/health 핑)
+    - useGuardrails (ST‑1206 런타임 점검)
+    - usePrefs (backend/tool mode/선택 도구/드로어 상태/탭 로컬스토리지)
+  - 스타일 분리
+    - 대형 인라인 CSS → src/styles/a1.css로 이동(레이아웃 토큰 관리)
+  - Tooling
+    - Provider‑aware Tool Mode(Claude/Gemini 시 비활성/경고)
+    - Composer: “Insert Last Tool Result” 유지, Tools 패널에서 수동 실행/로그 반영
+  - Vite 별칭(@) 안정화
+    - vite.config.ts에서 파일 URL → 파일경로 변환 유틸로 교체(비ASCII 경로 대응)
+  - 수용 기준(요약)
+    - ST‑1206 가드레일 통과(두 스크롤러: #gg‑threads, #chat‑msgs / #a1‑wrap grid rows = auto minmax(0,1fr) auto)
+    - Dev URL(base=/ui-dev/) 정상, FastAPI/Bridge 헬스 OK
 
 
 ## ST-1205 — Daily eval & 7-day trend (operator quick guide)
@@ -60,7 +92,47 @@
   - Evidence is append-only; all results/aggregates land under status/evidence/** for auditability.
 
 
-## 3총사 부팅(Backend/Bridge/Tauri) — 한 번에 실행 & 헬스 체크
+## 반자동 시작 워크플로우 (권장)
+
+매일 아침, 단 두 번의 명령어로 전체 개발 환경을 실행하고 확인할 수 있습니다.
+
+1.  **서버 시작 (최초 1회 권한 부여: `chmod +x *.sh`)**
+    ```bash
+    ./start_servers.sh
+    ```
+    - 이 명령어는 백그라운드에서 `tmux`를 사용하여 3개의 서버(백엔드, 브릿지, 프론트엔드)를 모두 실행합니다. 터미널을 닫아도 서버는 계속 실행됩니다.
+
+2.  **상태 확인**
+    ```bash
+    ./check_servers.sh
+    ```
+    - 3개 서버가 모두 정상적으로 응답하는지 확인합니다.
+
+3.  **서버 로그 확인 (필요 시)**
+    ```bash
+    tmux attach -t gumgang
+    ```
+    - 백그라운드에서 실행 중인 서버들의 실시간 로그를 확인합니다. (빠져나오기: `Ctrl+b` 누른 후 `d`)
+
+4.  **서버 종료**
+    ```bash
+    tmux kill-session -t gumgang
+    ```
+
+---
+### (선택) 시작 프로그램에 등록하여 완전 자동화하기
+
+`start_servers.sh` 스크립트를 컴퓨터 부팅 시 자동으로 실행하도록 등록할 수 있습니다.
+
+1.  '시작 응용 프로그램(Startup Applications)'을 엽니다.
+2.  '추가(Add)' 버튼을 누릅니다.
+3.  **명령(Command)** 필드에 다음을 입력합니다: `/home/duksan/바탕화면/gumgang_meeting/start_servers.sh`
+    - *(주의: `~` 대신 전체 절대 경로를 사용해야 합니다.)*
+4.  저장합니다. 다음 부팅부터 서버가 자동으로 실행됩니다.
+
+---
+
+## (구버전) 3총사 부팅(Backend/Bridge/Tauri) — 한 번에 실행 & 헬스 체크
 - 최초 1회 권한 부여:
   chmod +x scripts/dev_all.sh scripts/dev_backend.sh scripts/preflight.sh
 - tmux 모드(권장, 한 화면 2~3패널 동시 모니터링):
@@ -140,8 +212,8 @@ Ports & Entrypoints (fixed by rules v3.0)
   - Chat (FastAPI gateway): 
     - POST /api/chat — 단건 응답(모델 라우팅: OpenAI/Anthropic/Gemini)
     - POST /api/chat/stream — SSE 스트리밍(Bridge는 JSON만)
-    - POST /api/chat/toolcall — MCP‑Lite(OpenAI function calling 루프, 최대 3스텝)
-  - Tools (MCP‑Lite):
+    - POST /api/chat/toolcall — MCP‑Lite(OpenAI function calling & Anthropic tool_use 루프, 최대 3스텝)
+  - Tools (MCP‑Lite, Dev UI Tools Manager: 툴 선택/파라미터 폼/수동 호출/로그 뷰 포함):
     - GET /api/tools/definitions — 서버 기본 툴 목록(now, fs.read, web.search)
     - POST /api/tools/invoke — 단일 툴 실행 { tool, args }
   - Meeting features:
@@ -238,7 +310,7 @@ Backend API quick tips
    # fs.read는 이제 프로젝트 루트 상대 경로를 받습니다(예: README.md, status/restore/UI_RESTORE_SSOT.md)
    curl -s -X POST http://127.0.0.1:8000/api/tools/invoke -H "Content-Type: application/json" -d '{"tool":"fs.read","args":{"path":"README.md"}}' | jq .
    curl -s -X POST http://127.0.0.1:8000/api/tools/invoke -H "Content-Type: application/json" -d '{"tool":"fs.read","args":{"path":"status/restore/UI_RESTORE_SSOT.md"}}' | jq .
-- Tool-call 대화(OpenAI)
+- Tool-call 대화(OpenAI/Anthropic)
    # OpenAI 함수 호출 제약에 맞게 툴 이름이 자동으로 안전화됩니다(fs.read → fs_read 등).
    curl -s -X POST http://127.0.0.1:8000/api/chat/toolcall -H "Content-Type: application/json" -d '{"model":"gpt-4o","messages":[{"role":"user","content":"오늘 날짜와 시간(now)을 알려줘"}]}' | jq .
 - Capture (JSON)
@@ -294,5 +366,50 @@ BT-10 addendum — Meeting quickstart and SAFE notes
 - 녹화 상태 배지/버튼: 즉시 반영 후 150ms 뒤 GET /api/meetings/{id}/record/status로 재동기화
 - 이벤트 뷰어: A5 리스트에서 최근 50건 조회, (첨부) 링크/최근 첨부 열기 버튼으로 파일 오픈
 - 참고 Evidence: status/evidence/packaging/safe_normal_parity_20250820.md
+
+운영 가이드(현재 권장)
+- 툴 호출(now, fs.read, web.search 등)은 OpenAI 계열을 우선 사용하세요. Tool Mode ON + GPT 에이전트에서 /api/chat/toolcall 경로가 안정적입니다.
+- Claude 계열(예: 코드 리뷰/리팩터링 등)은 일반 대화(/api/chat) 위주로 사용하세요. UI에서 Claude + Tool Mode ON으로 400이 나오면 Tool Mode를 OFF로 전환하거나, Tools 패널의 “수동 호출(Run)” 결과를 붙여넣어 이어가세요.
+- 문제 지속 시:
+  - 모델은 latest 별칭(claude-3-5-sonnet-latest / claude-3-5-haiku-latest)로 우선 검증
+  - Anthropic 요청 포맷은 메시지 content를 [{type:"text", text:"…"}] 블록 배열로, 첫 메시지는 user, system은 비어있으면 키 자체 생략
+  - 베타 헤더(anthropic-beta)는 필요할 때만 .env로 제어하고, 일반 대화에는 붙이지 않음
+
+UI 상태 업데이트 — 2025-09-08
+- FastAPI 게이트웨이 안정: /api/chat(단건/스트림), /api/tools/*, /api/chat/toolcall(OpenAI) 운영 OK.
+- Anthropic(Claude) 경로: plain 대화는 curl 기준 OK, UI에선 일부 400 발생(임시 PASS로 표기, 추후 디버깅).
+- Dev UI(A1 Vite): 
+  - Panels(우측 드로어) 추가 — Planner/Insights/Executor/Agents/Prompts/Files/Bookmarks 스켈레톤.
+  - Provider-aware Tool Mode — Claude/Gemini 선택 시 Tool Mode 자동 무력화 + 경고 배지.
+  - Tools 수동 실행 → “Insert Last Tool Result”로 입력창에 즉시 삽입 가능.
+- 리팩터링(1파일 1기능) 진행:
+  - 분리 완료: CommandCenterDrawer.jsx, ThreadList.jsx
+  - 진행 예정: ChatTimeline.jsx, Composer.jsx, TopToolbar.jsx, ToolsPanel.jsx
+- 가드레일(ST‑1206) 유지: #a1 내부 스크롤러 2개(#gg-threads, #chat-msgs) 유지, #a1-wrap grid rows=auto minmax(0,1fr) auto.
+
+현재 한계/이슈
+- Claude(UI) 400: 일부 조합에서 일반 대화도 400 발생(모델/포맷/헤더 환경 차로 추정). 임시 PASS.
+- Tool Mode(Claude/Gemini): 의도적으로 무력화(경고 배지 노출). GPT 계열에서 Tool Mode 사용 권장.
+- 키보드 이동(스레드): ThreadList 컴포넌트에 초안 반영, 현재 페이지에서 동작 검증 보류(차기 스레드에 확정).
+
+다음 단계(새 스레드 진입 시 바로 수행)
+1) 컴포넌트 분리 마무리
+   - ChatTimeline.jsx(메시지 렌더), Composer.jsx(입력창), TopToolbar.jsx(상단 툴바), ToolsPanel.jsx(툴 선택/파라미터/수동 호출)
+2) 우측 패널 고도화
+   - Planner: 테이블 컬럼/검색/정렬 스켈레톤 + status/ 내 1개 JSON/CSV 연결
+   - Insights: KPI 3~4개(더미→실데이터 1개), 테이블 1개
+   - Executor: 작업 리스트(상태/진행률/ETA) 스켈레톤 + 더미 진행률 애니메이션
+3) UX/품질
+   - 스레드 키보드 네비게이션(↑/↓/Enter/F2/Delete) 완성, 드로어 상태/탭 localStorage 유지
+   - 에이전트 모델 배지/디버그 칩(현재 model 표기)
+4) Anthropic 추후 디버깅(보류)
+   - UI에서 400 재현 조건 수집 → plain 포맷/헤더 점검 → 필요 시 beta 헤더 .env 스위치화
+   - 도구 호출은 OpenAI 우선 유지
+
+인계 문단(Handover)
+금강 UI Dev(A1, Vite)에서 Panels(우측 드로어)와 Provider-aware Tool Mode를 도입했고, Tools 수동 실행→입력창 삽입 플로우를 갖췄습니다. 백엔드는 FastAPI 게이트웨이(/api/chat, /api/chat/stream, /api/tools/*, /api/chat/toolcall[OpenAI])가 안정입니다. Anthropic는 curl 기준 plain OK이나 UI 일부 조합에서 400이 관측되어 임시 PASS로 기록했습니다. 리팩터링은 main.jsx에서 CommandCenterDrawer.jsx와 ThreadList.jsx 분리까지 완료했습니다. 다음 스레드에서 ChatTimeline/Composer/TopToolbar/ToolsPanel 분리, Planner/Insights/Executor 스켈레톤 고도화, 스레드 키보드 네비게이션 완성, 드로어 상태 유지 등을 진행합니다.
+
+트리거 문장(새 스레드 시작용)
+ST‑UI‑REFLOW‑NEXT — “A1 Dev UI 컴포넌트 분리를 마무리하고(타임라인/컴포저/툴바/툴스 패널), Panels(Planner/Insights/Executor) 스켈레톤에 실제 데이터 1건씩 연결합니다. Claude 400은 임시 PASS로 유지하고 OpenAI 경로 우선 운용을 확정합니다.”
 
 Happy building!

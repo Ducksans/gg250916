@@ -45,6 +45,7 @@ function resolveProjectPath() {
 }
 
 const CSS_PATH = resolveProjectPath("ui", "overlays", "active.css");
+const CSS_FALLBACK = resolveProjectPath("ui", "overlays", "active.css.off");
 const HTML_PATH = resolveProjectPath(
   "ui",
   "snapshots",
@@ -137,7 +138,23 @@ function normalizeSelector(sel) {
 function main() {
   info("ST-1206 UI Guardrails 정적 검사 시작");
 
-  const css = readText(CSS_PATH);
+  let cssPath = CSS_PATH;
+  try {
+    if (!fs.existsSync(cssPath) && fs.existsSync(CSS_FALLBACK)) {
+      cssPath = CSS_FALLBACK;
+      info(`active.css 미발견 → fallback 사용: ${path.relative(ROOT, cssPath)}`);
+    }
+  } catch (_) {}
+  if (!fs.existsSync(cssPath)) {
+    fail(
+      `CSS 파일을 찾을 수 없습니다: ${path.relative(
+        ROOT,
+        CSS_PATH,
+      )} 또는 ${path.relative(ROOT, CSS_FALLBACK)}`,
+    );
+  }
+
+  const css = readText(cssPath);
   const html = readText(HTML_PATH);
 
   const blocks = findCssBlocks(css);

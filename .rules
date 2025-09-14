@@ -1,59 +1,143 @@
-[RULES — Gumgang Root | Slim Core]
-Last-Updated: 2025-09-08
-Applies-To: gumgang_meeting/* (project root; overrides v2.0)
+[금강 프로젝트 운영 규칙 v2.10]
+최종 수정: 2025-09-11T04:08Z (UTC) / 2025-09-11 13:08 (KST)
+적용 대상: gumgang_meeting/* (프로젝트 전체)
 
-SCOPE
-- WRITE_ALLOW: gumgang_meeting/**
-- DENY_GLOBS: .git/** node_modules/** __pycache__/** dist/** build/**
-- CHECKPOINT_FILE: status/checkpoints/CKPT_72H_RUN.jsonl (append-only API)
-- SSOT_RESTORE: status/restore/UI_RESTORE_SSOT.md
+---
+### 1. 기본 원칙 및 상호작용
+---
 
-TURN & EVIDENCE
-- Rhythm: Echo → Delta → Execute
-- Every action-affecting claim must cite ≥1 Evidence path
-- CHECKPOINT: 6 lines (RUN_ID, UTC_TS, SCOPE, DECISION, NEXT STEP, EVIDENCE)
-- RESTORE FLOW: 변경 시 SSOT(status/restore/UI_RESTORE_SSOT.md) 우선 갱신 → 증거 경로 첨부 → 체크리스트 업데이트 → 필요 시 CKPT append
+- **기본 상호작용 원칙 (복명복창):**
+  1. **명령 (Order):** 함장(인간)이 AI에게 임무를 하달한다.
+  2. **복명복창 (Echo & Confirm):** AI는 자신이 이해한 임무 내용과 구체적인 실행 계획을 함장에게 즉시 다시 보고(복창)한다.
+  3. **승인 (Approval):** 함장은 AI의 복창을 듣고, 자신의 의도와 AI의 계획이 일치하는지 확인한다. 오직 함장의 명시적인 승인이 있을 때만 다음 단계로 진행된다.
+  4. **실행 (Execute):** 승인 후, AI는 합의된 계획 그대로 임무를 실행한다.
+  5. **결과 보고 (Report):** 실행 완료 즉시, AI는 그 결과를 함장에게 보고하여 임무 완수를 최종 확인받는다.
 
-UI GUARDRAILS — ST-1206 (Simple mode only, NON-NEGOTIABLE)
-MUST
-  1) Global scroll hidden (Simple only): html, body { overflow:hidden }
-  2) Exactly 2 scrollers in #a1: #gg-threads, #chat-msgs
-  3) #a1-wrap is grid; rows = auto minmax(0,1fr) auto
-  4) #a1-wrap height = calc(100dvh - var(--gg-strip-h))
-  5) Timeline & composer share --gg-chat-width (clamp 720–902px)
-  6) Composer actions marked: [data-gg="composer-actions"], grid col 2 (row 3)
-  7) Dev UI base: /ui-dev/ (5173). 루트(/)가 아닌 /ui-dev/로 접속
+- **증거 기반 원칙:** 모든 복명복창과 결과 보고에는 가능한 한 구체적인 파일 경로, 명령어, API 엔드포인트 등의 '증거'가 포함되어야 함.
+- **타임스탬프 형식 원칙:** 프로젝트 내 모든 시간 기록은 `YYYY-MM-DDTHH:MMZ (UTC) / YYYY-MM-DD HH:MM (KST)` 형식을 따라야 함.
+- **프로젝트 경계 원칙 (가장 중요):** 모든 파일 생성, 수정, 실행은 `/home/duksan/바탕화면/gumgang_meeting/` 프로젝트 루트 디렉토리 **내부**에서만 이루어져야 한다. 예외는 없다.
+- **쓰기 허용 범위:** `gumgang_meeting/**`
+- **쓰기 제외 패턴:** `.git/**`, `node_modules/**`, `__pycache__/**`, `dist/**`, `build/**`
 
-MUST-NOT
-  - No inline display:flex on #a1-wrap
-  - No self-closing #a1-wrap
-  - No extra overflow:auto under #a1
+---
+### 2. 핵심 시스템 규칙
+---
 
-ACCEPTANCE
-- DevTools: overflow:auto only ["gg-threads","chat-msgs"]
-- getComputedStyle(#a1-wrap).display === "grid"
-- Composer visible on mobile rotation/keyboard
-- Console/runtime warnings = 0
-- Bridge proxy OK: /bridge/api/* → 3037/api/* rewrite 적용(Vite dev)
+#### 2.1. 체크포인트 및 복원
+- **체크포인트 파일 (SSOT):** `status/checkpoints/CKPT_72H_RUN.jsonl` (API를 통한 추가만 허용, 서버에서 sha256 자동 적용).
+- **API 호출 형식 (클라이언트):** API 호출 시 `run_id`, `scope`, `decision`, `next_step`, `evidence`의 **5개 필드**를 전송해야 함.
+- **최종 저장 형식 (서버):** 서버는 수신된 5개 필드에 `UTC 타임스탬프`를 추가하여 **총 6개 필드**를 로그에 최종 기록함.
+- **프로젝트의 주요 문서(SSOT)로서의 EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md의 중요성:** 이 문서는 현재 프로젝트의 실행 로드맵으로 기능하며, 모든 주요 결정과 변화의 기준점으로 사용됩니다.
 
-ENFORCEMENT
-- Static: `npm run guard:ui` (blocks on fail)
-- Runtime (dev only): assertUIPitstop in ui/overlays/active.js
-- Authoring: Always attach rules/ai/ST-1206.ui.rules.md for layout edits
-- Restore Discipline: 모든 복원 작업은 SSOT(status/restore/UI_RESTORE_SSOT.md) → CKPT 순으로 기록
+- **프로젝트 3대 SSOT (Single Source of Truth):**
+    - **미래 (로드맵):** `status/roadmap/BT11_to_BT21_Compass_ko.md`
+    - **현재 (아키텍처):** `status/reports/forensic_report_v1.md`
+    - **과거 (복구 계획):** `status/restore/UI_RESTORE_SSOT.md`
+- **작업 원칙:**
+  1. **종합적 이해:** 모든 주요 작업은 **3대 SSOT를 모두 참조**하여 미래, 현재, 과거의 맥락을 종합적으로 이해한 상태에서 시작해야 한다.
+  2. **계획 우선:** 작업 내용이 복구와 관련될 경우, `UI_RESTORE_SSOT.md`의 체크리스트를 먼저 업데이트한다.
+  3. **기록:** 모든 작업 완료 시, 그 결과를 체크포인트 파일(`CKPT_JSONL`)에 기록한다.
+- **API 호출 예시 (`curl`):**
+  ```bash
+  curl -X POST http://127.0.0.1:8000/api/checkpoints/append \
+  -H "Content-Type: application/json" \
+  -d '{
+    "run_id": "EXAMPLE_RUN",
+    "scope": "RULES_UPDATE",
+    "decision": "v2.10 개정안을 최종 확정하기로 결정함",
+    "next_step": "A&A 프로토콜을 계속 진행한다",
+    "evidence": "gumgang_meeting/.rules#L1-L20"
+  }'
+  ```
 
-REFERENCES
-- Full ops rules: rules/ai/RULES_full.md
-- UI guardrails detail: rules/ai/ST-1206.ui.rules.md
-- Restore SSOT: status/restore/UI_RESTORE_SSOT.md
+#### 2.2. 채팅 백엔드 (ST-CHAT-FASTAPI)
+- **기본 백엔드:** `fastapi` (`/api/chat` 사용)
+- **백엔드 엔드포인트:** `POST /api/chat`, `POST /api/chat/stream`
+- **API 키 관리:** `.env` 파일에 정의 (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`). 로그나 응답에 절대 노출 금지.
+- **선택 사항:** 로컬스토리지나 환경 변수를 통해 `Bridge` 백엔드(`/bridge/api/chat`) 사용 가능.
 
-CHAT BACKEND — ST-CHAT-FASTAPI
-MUST
-- CHAT_BACKEND=fastapi (default). 프론트는 기본적으로 /api/chat 사용.
-- Backend endpoints: POST /api/chat, POST /api/chat/stream (FastAPI — app.api.routes.chat_gateway)
-- Keys(.env → os.getenv): OPENAI_API_KEY, ANTHROPIC_API_KEY(or ANTHROPIC_KEY), GEMINI_API_KEY (로그/응답에 키 노출 금지)
-- Dev UI(5173): http://localhost:5173/ui-dev/ (base=/ui-dev/). Vite proxy: /api → 127.0.0.1:8000, /bridge → 127.0.0.1:3037 (rewrite ^/bridge → "")
-- Acceptance(add): /api/health OK, 채팅 입력 시 “…” 자리표시자 → 실제 답변으로 교체 확인
+---
+### 3. UI 가드레일 (ST-1206, 협상 불가)
+---
 
-OPTIONAL
-- Bridge 스위치(localStorage/ENV)로 /bridge/api/chat 사용 가능(기본 아님)
+- **개발 UI 진입점:** `http://localhost:5173/ui-dev/` (Vite 프록시 활성)
+
+#### 3.1. 반드시 준수해야 할 사항 (MUST)
+  1. **전역 스크롤 숨김:** `html, body { overflow:hidden }` (단순 모드 전용)
+  2. **정확히 2개의 스크롤러:** `#a1` 내부에 `#gg-threads`, `#chat-msgs` 만 허용.
+  3. **Grid 레이아웃:** `#a1-wrap`의 `display`는 `grid`여야 하며, `rows`는 `auto minmax(0,1fr) auto` 형식.
+  4. **높이 계산식:** `#a1-wrap`의 높이는 `calc(100dvh - var(--gg-strip-h))` 사용.
+  5. **너비 공유:** 타임라인과 작성기는 `--gg-chat-width` 변수 공유 (720–902px).
+  6. **작성기 액션 마크업:** 작성기 액션 버튼들은 `[data-gg="composer-actions"]` 속성을 가져야 함.
+
+#### 3.2. 절대 금지 사항 (MUST-NOT)
+  - `#a1-wrap`에 인라인 `display:flex` 사용 금지.
+  - `#a1-wrap`을 자체 닫는 태그(self-closing)로 사용 금지.
+  - `#a1` 하위에 불필요한 `overflow:auto` 추가 금지.
+
+#### 3.3. 강제 적용 및 수용 기준
+- **정적 분석:** `npm run guard:ui` (실패 시 빌드 중단)
+- **런타임 분석:** `ui/overlays/active.js`의 `assertUIPitstop` 함수
+- **수용 기준:**
+  - 개발자 도구에서 `overflow:auto`는 오직 `gg-threads`와 `chat-msgs` 두 곳에서만 발견되어야 함.
+  - 모바일 회전/키보드 표시 시 작성기가 화면에 보여야 함.
+  - 브라우저 콘솔에 경고 메시지가 0개여야 함.
+
+---
+### 4. 특수 임무 프로토콜
+---
+
+#### 4.1. '분석 및 주석' 프로토콜 (A&A)
+- **목적:** 코드 수정 전, `ui/dev_a_vite`의 모든 파일 역할을 깊이 이해하고 문서화하여 안정성과 공유된 이해를 보장.
+- **진행 흐름:** **'복명복창'** 원칙을 따름 (분석 보고 → 승인 → 주석 추가 → 결과 보고).
+- **규칙:**
+  - AI는 한 번에 하나의 파일만 분석한다.
+  - AI는 분석 내용을 함장에게 보고하고, 파일 수정 전 반드시 승인을 받는다.
+  - **(구조 건전성 평가)** 파일의 길이가 250줄을 초과하거나 '1파일 1책임 원칙'을 위배하는 경우, AI는 이를 보고하고 표준 주석의 **`@참고사항`** 란에 '[리팩토링 후보]'임을 명시해야 한다.
+  - 승인 후, 아래 **표준 주석 형식**에 따라 파일 최상단에 주석 블록을 추가한다.
+  - 모든 주석 추가 작업은 `UI_RESTORE_SSOT.md` 체크리스트에 진행 상황을 반영해야 한다.
+
+- **표준 주석 형식 (v1.1):**
+  ```text
+  /**
+   * [금강 AI 주석 v1.1]
+   * ---------------------------------------------------------------------------
+   * @파일경로: (파일의 전체 경로)
+   * @분석일자: (YYYY-MM-DDTHH:MMZ (UTC) / YYYY-MM-DD HH:MM (KST))
+   * @작성자: Gemini (금강 AI)
+   * ---------------------------------------------------------------------------
+   * @파일목적
+   *  - (이 파일의 존재 이유를 한두 문장으로 서술)
+   *
+   * @핵심역할
+   *  - (이 파일이 수행하는 구체적인 책임 목록)
+   *
+   * @주요관계
+   *  - (로드 →, ← 참조 등 다른 파일과의 상호작용)
+   *
+   * @참고사항
+   *  - (개발자가 알아야 할 추가적인 정보나 주의사항)
+   * ---------------------------------------------------------------------------
+   */
+  ```
+- **다음 단계:** `ui/dev_a1_vite/index.html`을 시작으로 A&A 프로토콜 개시.
+
+---
+### 5. 참조 문서
+---
+
+- **전체 운영 규칙:** `rules/ai/RULES_full.md`
+- **UI 가드레일 상세:** `rules/ai/ST-1206.ui.rules.md`
+- **프로젝트 3대 SSOT:**
+  - 로드맵: `status/roadmap/BT11_to_BT21_Compass_ko.md`
+  - 아키텍처: `status/reports/forensic_report_v1.md`
+  - 복구 계획: `status/restore/UI_RESTORE_SSOT.md`
+
+---
+### 6. 변경 로그
+---
+
+- **[아카이빙 로그 | 2025-09-10T14:34Z (UTC) / 2025-09-10 23:34 (KST)]**
+  - **결정:** 'Phase 0: 성소 구축'의 일환으로, 아카이빙 후보 디렉토리에 알림 파일 추가.
+  - **대상:** `LibreChat/_ARCHIVE_CANDIDATE_NOTICE.txt`, `obsidian_vault/_ARCHIVE_CANDIDATE_NOTICE.txt`
+  - **증거:** `status/reports/project_structure_scan_20250910.md`

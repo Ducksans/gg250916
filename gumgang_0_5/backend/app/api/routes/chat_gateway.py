@@ -142,6 +142,21 @@ def _openai_tools_from_defs(defs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return out
 
 
+def _anthropic_tools_from_defs(defs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    out: List[Dict[str, Any]] = []
+    for d in defs:
+        internal = d.get("name") or d.get("id") or "tool"
+        safe = _safe_func_name(internal)
+        out.append(
+            {
+                "name": safe,
+                "description": d.get("description") or "",
+                "input_schema": d.get("params") or {"type": "object"},
+            }
+        )
+    return out
+
+
 def _safe_read_text(rel_path: str, limit_bytes: int = 64_000) -> str:
     # Accept root-relative paths, normalize safely, and deny traversal outside project root.
     if not isinstance(rel_path, str) or not rel_path:
@@ -301,7 +316,8 @@ async def call_openai_with_tools(req: "ChatRequest") -> str:
                 except Exception:
                     args_obj = {}
                 try:
-                    result = await _tool_run(name, args_obj)
+                    internal_name = name_map.get(name, name)
+                    result = await _tool_run(internal_name, args_obj)
                     messages.append(
                         {
                             "role": "tool",
@@ -330,6 +346,123 @@ async def call_openai_with_tools(req: "ChatRequest") -> str:
     return await call_openai(req)
 
 
+# ============== Anthropic tool_use loop ==============
+async def call_anthropic_with_tools(req: "ChatRequest") -> str:
+    """
+    Tool-use loop for Anthropic Messages API.
+    - Uses either req.tools (UI-defined) or default TOOL_DEFS.
+    - Up to 3 iterations of tool_use → tool_result → assistant follow-up.
+    """
+    if not ANTHROPIC_KEY:
+        raise RuntimeError("ANTHROPIC_API_KEY missing")
+
+    tools_defs = req.tools if (req.tools and isinstance(req.tools, list)) else TOOL_DEFS
+    # Map safe(Anthropic) tool name → internal tool id/name
+    name_map: Dict[str, str] = {}
+    for d in tools_defs:
+        internal = d.get("name") or d.get("id") or "tool"
+        name_map[_safe_func_name(internal)] = internal
+    tools_schema = _anthropic_tools_from_defs(tools_defs)
+
+    system, rest = _first_system_and_rest(req.messages)
+    # Initial messages with text blocks — ensure Anthropic constraint: first message must be "user"
+    messages: List[Dict[str, Any]] = []
+    for m in rest:
+        role = "user" if m["role"] == "user" else "assistant"
+        messages.append(
+            {
+                "role": role,
+                "content": [{"type": "text", "text": m["content"]}],
+            }
+        )
+    if not messages or messages[0].get("role") != "user":
+        # Prepend an empty user turn if the conversation would otherwise start with assistant
+        messages.insert(0, {"role": "user", "content": [{"type": "text", "text": ""}]})
+
+    async def _once(msgs: List[Dict[str, Any]]) -> Dict[str, Any]:
+        url = "https://api.anthropic.com/v1/messages"
+        headers = {
+            "x-api-key": ANTHROPIC_KEY,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json",
+            "anthropic-beta": "tools-2024-10-22",
+        }
+        payload = {
+            "model": req.model or (ANTHROPIC_MODEL or "claude-3-5-sonnet-20241022"),
+            "max_tokens": 1024,
+            "temperature": req.temperature or 0.7,
+            "system": system or None,
+            "messages": msgs,
+            "tools": tools_schema,
+            "tool_choice": "auto",
+        }
+        async with httpx.AsyncClient(**HTTPX_CLIENT_KW) as client:
+            r = await client.post(url, headers=headers, json=payload)
+            r.raise_for_status()
+            return r.json()
+
+    MAX_STEPS = 3
+    for _ in range(MAX_STEPS):
+        try:
+            j = await _once(messages)
+        except httpx.HTTPStatusError as e:
+            # Graceful fallback: if tools are not accepted (400), run plain call
+            if getattr(e, "response", None) is not None and e.response.status_code == 400:
+                return await call_anthropic(req)
+            raise
+        content = j.get("content")
+        # Collect tool_use blocks and plain text
+        tool_uses: List[Dict[str, Any]] = []
+        text_accum = ""
+        if isinstance(content, list):
+            for blk in content:
+                t = blk.get("type")
+                if t == "tool_use":
+                    tool_uses.append(blk)
+                elif t == "text":
+                    text_accum += blk.get("text") or ""
+        else:
+            text_accum = j.get("output_text") or ""
+
+        if tool_uses:
+            # Append assistant tool_use blocks message
+            messages.append({"role": "assistant", "content": content})
+            # Execute tools and append user tool_result blocks
+            results_blocks: List[Dict[str, Any]] = []
+            for tu in tool_uses:
+                name_safe = tu.get("name") or ""
+                internal = name_map.get(name_safe, name_safe)
+                args_obj = tu.get("input") or {}
+                try:
+                    result = await _tool_run(internal, args_obj)
+                    results_blocks.append(
+                        {
+                            "type": "tool_result",
+                            "tool_use_id": tu.get("id") or "",
+                            "content": [
+                                {"type": "text", "text": json.dumps({"ok": True, "data": result}, ensure_ascii=False)}
+                            ],
+                        }
+                    )
+                except Exception as e:
+                    results_blocks.append(
+                        {
+                            "type": "tool_result",
+                            "tool_use_id": tu.get("id") or "",
+                            "content": [
+                                {"type": "text", "text": json.dumps({"ok": False, "error": str(e)}, ensure_ascii=False)}
+                            ],
+                        }
+                    )
+            messages.append({"role": "user", "content": results_blocks})
+            continue
+
+        if text_accum:
+            return text_accum
+
+    # Fallback if loop didn't yield final text
+    return await call_anthropic(req)
+
 @router.post("/chat/toolcall", response_model=ChatResponse)
 async def chat_toolcall(req: "ChatRequest") -> ChatResponse:
     """
@@ -342,8 +475,9 @@ async def chat_toolcall(req: "ChatRequest") -> ChatResponse:
         provider = _pick_provider(req.model)
         if provider == "openai":
             reply = await call_openai_with_tools(req)
+        elif provider == "anthropic":
+            reply = await call_anthropic_with_tools(req)
         else:
-            # Non-OpenAI providers fallback to regular call (or future tool_use)
             reply = await route_to_provider(req)
         elapsed = int((time.time() - started) * 1000)
         return ChatResponse(ok=True, data={"message": {"role": "assistant", "content": reply}, "elapsed_ms": elapsed})
@@ -358,6 +492,7 @@ load_dotenv()
 OPENAI_KEY = os.getenv("OPENAI_API_KEY")
 ANTHROPIC_KEY = os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_KEY")
 GEMINI_KEY = os.getenv("GEMINI_API_KEY")
+ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL")
 # Absolute project root (safe base for fs.read). Override with GUMGANG_PROJECT_ROOT if needed.
 PROJECT_ROOT = os.path.abspath(os.environ.get("GUMGANG_PROJECT_ROOT", os.getcwd()))
 
@@ -367,10 +502,7 @@ HTTPX_CLIENT_KW = dict(timeout=DEFAULT_TIMEOUT, follow_redirects=True)
 # Data models are defined earlier to avoid forward-ref issues in decorators.
 
 
-class ChatResponse(BaseModel):
-    ok: bool
-    data: Optional[Dict[str, Any]] = None
-    error: Optional[str] = None
+# Duplicate ChatResponse definition removed (kept the earlier declaration)
 
 
 # ------------------------------------------------------------------------------
@@ -483,16 +615,23 @@ async def call_anthropic(req: ChatRequest) -> str:
     }
 
     system, rest = _first_system_and_rest(req.messages)
+    # Ensure first message is 'user' (Anthropic requirement)
+    if not rest or (rest[0].get("role") != "user"):
+        rest = [{"role": "user", "content": ""}] + rest
     payload = {
-        "model": req.model or "claude-3-5-sonnet-20241022",
+        "model": req.model or (ANTHROPIC_MODEL or "claude-3-5-sonnet-20241022"),
         "max_tokens": 1024,
         "temperature": req.temperature or 0.7,
-        "system": system or None,
         "messages": [
-            {"role": "user" if m["role"] == "user" else "assistant", "content": m["content"]}
+            {
+                "role": "user" if m["role"] == "user" else "assistant",
+                "content": [{"type": "text", "text": m["content"]}],
+            }
             for m in rest
         ],
     }
+    if system:
+        payload["system"] = system
 
     async with httpx.AsyncClient(**HTTPX_CLIENT_KW) as client:
         r = await client.post(url, headers=headers, json=payload)
@@ -526,17 +665,24 @@ async def call_anthropic_stream(req: ChatRequest) -> AsyncGenerator[str, None]:
     }
 
     system, rest = _first_system_and_rest(req.messages)
+    # Ensure first message is 'user' (Anthropic requirement)
+    if not rest or (rest[0].get("role") != "user"):
+        rest = [{"role": "user", "content": ""}] + rest
     payload = {
         "model": req.model or "claude-3-5-sonnet-20241022",
         "max_tokens": 1024,
         "temperature": req.temperature or 0.7,
-        "system": system or None,
         "messages": [
-            {"role": "user" if m["role"] == "user" else "assistant", "content": m["content"]}
+            {
+                "role": "user" if m["role"] == "user" else "assistant",
+                "content": [{"type": "text", "text": m["content"]}],
+            }
             for m in rest
         ],
         "stream": True,
     }
+    if system:
+        payload["system"] = system
 
     async with httpx.AsyncClient(**HTTPX_CLIENT_KW) as client:
         async with client.stream("POST", url, headers=headers, json=payload) as r:
