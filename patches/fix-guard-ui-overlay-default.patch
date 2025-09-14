@@ -1,0 +1,15 @@
+diff --git a/ui/overlays/active.css.off b/ui/overlays/active.css.off
+new file mode 100644
+index 0000000..0b6d1fe
+--- /dev/null
++++ b/ui/overlays/active.css.off
+@@ -0,0 +9 @@
++/* Gumgang UI overlays: disabled by default for CI.
++ *
++ * This placeholder ensures `npm run guard:ui` finds at least one of:
++ *   - ui/overlays/active.css
++ *   - ui/overlays/active.css.off (this file)
++ *
++ * To enable overlays locally, create `ui/overlays/active.css`
++ * and keep this `.off` file committed for CI stability.
++ */
