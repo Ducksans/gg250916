@@ -56,3 +56,4 @@ status/backups/
 *.mp4
 *.onnx
 *.pth
+memory_backup/
