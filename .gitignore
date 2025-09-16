@@ -1,10 +1,47 @@
+## Python virtual environments & artifacts
 venv/
+.venv/
+.venv_backend/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.sqlite
+
+## Node / JS dependencies & build outputs
 node_modules/
 dist/
 build/
-.DS_Store
-ui/.obsidian/
+.parcel-cache/
+.next/
+.nuxt/
+out/
+coverage/
+
+## Logs & temp files
 *.log
-*.env
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+## IDE / editor metadata (share intentionally if needed)
+.idea/
+.vscode/
+.obsidian/
+ui/.obsidian/
+
+## Project specific backups
 LibreChat/
-.venv_backend/
+QUARANTINE/exports_backup_*/
+exports/gumgang_meeting_core*/
+
+## Secrets / local overrides
+.env
+.env.*
+.envrc

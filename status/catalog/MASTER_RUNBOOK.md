@@ -24,6 +24,20 @@ phase: present
   - Anthropic tool_use 에러(400) → ST0201에서 추적 예정
   - CI Runner 템플릿 미작성 → T5 선행 필요
 
+## 1-1. 금강 마스터 레이어
+> 발원문과 다섯 핵심 운영 문서가 모든 부산물의 기준입니다. 이 여섯 문서만 읽어도 전체 프로젝트 방향을 복구할 수 있습니다.
+
+| 계층 | 문서 | 역할 |
+| --- | --- | --- |
+| 발원 | [[docs/0_0_금강 발원문 원본.md]] | 금강 프로젝트 설립 선언문, 에이전트의 목적과 윤리, "금강"의 본질 규정 |
+| 설계 허브 | [[AGENTS.md]] | 상호작용 규칙, PLAN→PATCH→PROVE 루프, Obsidian 가드 |
+| 설계 확장 | [[AGENTS_expand.md]] | 프로젝트 설계서 → 작업 계획서 → 작업 지시서 구조 및 번호 체계 |
+| 설계 로그 | [[AGENTS_log.md]] | 문서 관리 게이트, Dataview 규칙, 메타데이터 가이드 |
+| 실행 계획 | [[status/reports/EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md]] | Dev UI 복구/채팅 로직 실행 로드맵 |
+| 미래 로드맵 | [[status/roadmap/BT11_to_BT21_Compass_ko.md]] | BT11~BT21 중장기 계획, 다음 단계의 나침반 |
+
+> 다른 문서가 업데이트되더라도 반드시 위 여섯 문서에 근거가 있어야 하며, 변화가 생기면 여기에서 링크/요약을 갱신합니다.
+
 ## 2. 현재 진행 중 문서 (phase: present)
 ```dataview
 TABLE file.link AS Doc, summary
@@ -40,6 +54,12 @@ WHERE contains(tags, "#tasks") OR startswith(ST, "ST1")
 SORT file.name ASC
 ```
 > 새 작업은 `BT11~BT21` 번호 체계를 사용. 필요 시 `status/tasks/`에 세부 지시서 작성.
+
+### CI Runner 타임라인
+1. **ST0102** — [[status/tasks/ST0102_dev_ui_ci_checklist.md]] 실행. Runner로 Dev UI 빌드/검증, 5175 프리뷰 제공.
+2. **사용자 검수** — 5175 포트 확인 후 승인/반려 결정. 승인 시 5173 배포를 지시.
+3. **BT-06 ST-0603~0609** — 계획 문서 작성(로드맵, API 계약, 브리지 계약, UI 통합, 테스트 계획, 리스크) → 각각 `status/design/` 산출물로 연결.
+4. **체크포인트 기록** — 각 단계 완료 후 `CKPT_72H_RUN.jsonl` Append + MASTER_RUNBOOK 요약 갱신.
 
 ## 4. 의사결정 대기 / 차단 이슈
 - [ ] Anthropic tool_use 400 해결 전략 승인 필요 (문서: [[status/reports/2025-09-12_chating_thread_system_compare_report_between_GG&libre.md]])

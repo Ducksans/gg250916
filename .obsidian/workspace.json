@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "status/catalog/MASTER_RUNBOOK.md",
-                "mode": "preview",
+                "file": "2025-09-16.md",
+                "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "MASTER_RUNBOOK"
+              "title": "2025-09-16"
             }
           }
         ]
@@ -54,7 +54,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#raku",
+                "query": "tag:#6B7280",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -75,7 +75,8 @@
               "title": "북마크"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -169,6 +170,9 @@
   },
   "active": "af18aa9c5d5ef015",
   "lastOpenFiles": [
+    "status/design/sitegraph/STYLE_GUIDE.md",
+    "status/tasks/EXPORT_SYNC_PLAN.md",
+    "status/catalog/MASTER_RUNBOOK.md",
     "status/tasks/ST0102_dev_ui_ci_checklist.md",
     "status/evidence/memory/search/results_20250916.json",
     "status/evidence/memory/search_runs/20250916/run_1758009646894.json",
@@ -178,7 +182,6 @@
     "status/evidence/memory/tiers/ultra_short/20250916/thread_dcqftnjv_mfkmexp8.jsonl",
     "status/evidence/memory/tiers/ultra_short/20250916",
     "status/reports/forensic_report_v1.md",
-    "status/catalog/MASTER_RUNBOOK.md",
     "status/reports/EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md",
     "status/reports/GG_CONTENT_PIPELINE_V1.md",
     "status/reports/project_structure_scan_20250910.md",
@@ -201,8 +204,6 @@
     "status/reports/GG_DAILY_OPS_V1.md",
     "status/reports/GG_DB_SPEC_V1.md",
     "AGENTS_log.md",
-    "AGENTS_expand.md",
-    "AGENTS.md",
-    "node_modules/qs/CHANGELOG.md"
+    "AGENTS_expand.md"
   ]
 }
