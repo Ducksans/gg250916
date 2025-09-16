@@ -45,3 +45,4 @@ exports/gumgang_meeting_core*/
 .env
 .env.*
 .envrc
+.git-credentials
