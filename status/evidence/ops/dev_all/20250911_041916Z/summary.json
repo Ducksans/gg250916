@@ -1,7 +1,0 @@
-{
-  "utc_ts": "2025-09-11T04:19:16Z",
-  "host": "127.0.0.1",
-  "backend": { "port": 8000, "log": "status/evidence/ops/dev_all/20250911_041916Z/backend.log" },
-  "bridge":  { "port": 3037,  "log": "status/evidence/ops/dev_all/20250911_041916Z/bridge.log" },
-  "mode": "tmux"
-}

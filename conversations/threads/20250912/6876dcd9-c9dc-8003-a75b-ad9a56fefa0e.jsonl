@@ -1,3 +1,0 @@
-{"type": "meta", "title": "New chat", "thread_id": "6876dcd9-c9dc-8003-a75b-ad9a56fefa0e", "created_at": 1752620249943.456, "updated_at": 1752620252910.259}
-{"type": "turn", "turn": 1, "role": "user", "text": "r굿 모닝", "ts": 1752620249032, "meta": {}}
-{"type": "turn", "turn": 2, "role": "assistant", "text": "굿 모닝입니다! 오늘도 힘차게 시작해보세요. 어떤 계획이 있으신가요?", "ts": 1752620251448.395, "meta": {}}
