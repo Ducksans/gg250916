@@ -413,3 +413,4 @@ UI 상태 업데이트 — 2025-09-08
 ST‑UI‑REFLOW‑NEXT — “A1 Dev UI 컴포넌트 분리를 마무리하고(타임라인/컴포저/툴바/툴스 패널), Panels(Planner/Insights/Executor) 스켈레톤에 실제 데이터 1건씩 연결합니다. Claude 400은 임시 PASS로 유지하고 OpenAI 경로 우선 운용을 확정합니다.”
 
 Happy building!
+# gumgang_meeting_250916
