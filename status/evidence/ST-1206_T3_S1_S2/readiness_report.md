@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1206 T3 S1/S2 Readiness Report
 
 ## 작업 완료 상태

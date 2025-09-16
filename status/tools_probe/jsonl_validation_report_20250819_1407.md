@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # JSONL Validation Report — ST-0302
 Date: 2025-08-19T14:07:44Z
 Subject: Append-only conversation/task log validation

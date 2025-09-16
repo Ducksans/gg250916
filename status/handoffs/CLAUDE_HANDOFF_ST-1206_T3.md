@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1206 T3 — UI Pitstop(Simple) 인계(Claude)
 
 ## 현황 요약

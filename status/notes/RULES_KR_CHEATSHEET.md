@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # RULES_KR_CHEATSHEET — 72시간 표류 탈출 한눈에 보기
 
 목적

@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # UI Runtime Logging — SAFE_MODE Evidence
 
 Scope

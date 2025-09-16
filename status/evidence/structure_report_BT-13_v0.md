@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # BT-13 Self‑Structure Report v0 (read‑only)
 
 Scope

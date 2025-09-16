@@ -8,83 +8,17 @@
         "type": "tabs",
         "children": [
           {
-            "id": "df909070d554c8bb",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "그래프 뷰"
-            }
-          },
-          {
-            "id": "672b09b780add5e2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "컨텐츠 자동화 파이프 라인/1.만든다.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "1.만든다"
-            }
-          },
-          {
-            "id": "83e271c620288241",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "금강UI 제드로 마무리 짓기 위한 SSOT 팩/“Zed를 메인으로 유지 + SSOT 문서팩 강화 + MCP 정교화 + Agent Panel 적극 활용”.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "“Zed를 메인으로 유지 + SSOT 문서팩 강화 + MCP 정교화 + Agent Panel 적극 활용”"
-            }
-          },
-          {
-            "id": "c249ef7ea4b701db",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "무제.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "무제"
-            }
-          },
-          {
             "id": "d67ea4530d63cdad",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "금강 부동산 거래 플랫폼 과금 구조 설계 (직거래 + 중개업자).md",
-                "mode": "source",
+                "file": "컨텐츠 자동화 파이프 라인/0. index 컨텐츠 자동화 파이프 라인 SSOT Pack.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "금강 부동산 거래 플랫폼 과금 구조 설계 (직거래 + 중개업자)"
-            }
-          },
-          {
-            "id": "e1995b44ed856c72",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "0.금강 컨텐츠 자동화 파이프 라인 계획 원본 문서.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "0.금강 컨텐츠 자동화 파이프 라인 계획 원본 문서"
+              "title": "0. index 컨텐츠 자동화 파이프 라인 SSOT Pack"
             }
           },
           {
@@ -93,16 +27,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "컨텐츠 자동화 파이프 라인/1.만든다.md",
+                "file": "컨텐츠 자동화 파이프 라인/0. index 컨텐츠 자동화 파이프 라인 SSOT Pack.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "1.만든다"
+              "title": "0. index 컨텐츠 자동화 파이프 라인 SSOT Pack"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -252,15 +185,19 @@
   },
   "active": "d67ea4530d63cdad",
   "lastOpenFiles": [
-    "무제.md",
-    "금강 부동산 거래 플랫폼 과금 구조 설계 (직거래 + 중개업자).md",
-    "금강UI 제드로 마무리 짓기 위한 SSOT 팩/“Zed를 메인으로 유지 + SSOT 문서팩 강화 + MCP 정교화 + Agent Panel 적극 활용”.md",
-    "제미나이소감문.md",
     "컨텐츠 자동화 파이프 라인/1.만든다.md",
-    "금강UI 제드로 마무리 짓기 위한 SSOT 팩",
     "컨텐츠 자동화 파이프 라인/0. index 컨텐츠 자동화 파이프 라인 SSOT Pack.md",
+    "금강 부동산 거래 플랫폼 과금 구조 설계 (직거래 + 중개업자).md",
+    "컨텐츠 자동화 파이프 라인/0.금강 컨텐츠 자동화 파이프 라인 계획 원본 문서.md",
+    "금강UI 제드로 마무리 짓기 위한 SSOT 팩/“Zed를 메인으로 유지 + SSOT 문서팩 강화 + MCP 정교화 + Agent Panel 적극 활용”.md",
     "금강ui/금강ui index.md",
-    "0.금강 컨텐츠 자동화 파이프 라인 계획 원본 문서.md",
+    "컨텐츠 자동화 파이프 라인/5.더 좋게 만든다.md",
+    "컨텐츠 자동화 파이프 라인/4.관리한다.md",
+    "컨텐츠 자동화 파이프 라인/3.관찰한다.md",
+    "컨텐츠 자동화 파이프 라인/2.올린다.md",
+    "무제.md",
+    "제미나이소감문.md",
+    "금강UI 제드로 마무리 짓기 위한 SSOT 팩",
     "금강UI 컨텐츠 자동화 파이프라인 SSOT v1.0 index.md",
     "환영합니다!.md",
     "금강ui",

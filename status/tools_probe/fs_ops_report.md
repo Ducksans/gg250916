@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # FS Ops Probe Report — ST-0202 (GATE_FS)
 
 Meta

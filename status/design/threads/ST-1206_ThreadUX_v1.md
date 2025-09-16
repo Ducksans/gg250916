@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1206 — Thread UX v1 설계서(v1 Final)
 Status: Approved (최종) · Owner: Zed @ 금강 · Scope: BT-12/ST-1206
 Intent: A1 채팅에 스레드 UX v1을 완성(append-only 영속화, convId/제목/태그 메타, 복구/최근목록), SGM(Strict Grounded Mode: refs=0 차단) 유지.

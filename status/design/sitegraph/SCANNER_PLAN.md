@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # SiteGraph Scanner Plan (v1)
 
 Purpose

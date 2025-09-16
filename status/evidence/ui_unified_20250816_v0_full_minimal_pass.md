@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # UI Unified v0 — Full Minimal PASS (A1–A4, Tabs + Shortcuts + Theme + Session Meta)
 
 This evidence rollup certifies that the Full Minimal build of the Unified UI (A1–A4) passes functional validation on local environment with head/title/style boundaries strictly preserved.

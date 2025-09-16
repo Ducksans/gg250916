@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Safe Fetch Snapshot — tauri.app
 
 - Source URL: https://tauri.app

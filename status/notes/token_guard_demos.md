@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Token Guard Demo Outputs — BT-03/ST-0301
 
 This file demonstrates compliant sample replies for ALERT70, ALERT85, ALERT95, and STOP NOW, each with Next Step and Evidence.

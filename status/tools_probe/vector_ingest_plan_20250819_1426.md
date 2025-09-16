@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-0501 Vector Ingest Probe & Plan — 2025-08-19 14:26Z
 
 Scope & Goal

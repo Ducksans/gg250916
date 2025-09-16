@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # UI Unified v0 — Render Stability PASS (A1–A4, Dark 4 + Light 1)
 
 Evidence rollup confirming stable render of the Unified UI v0 minimal snapshots (tabs-only, no APIs).  

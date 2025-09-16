@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # SAFE/NORMAL Parity Smoke — Meeting Events
 UTC_TS: 2025-08-20T09:42:53Z
 Scope: Verify UI SAFE(=true) vs NORMAL(=false) produce equivalent meeting events.

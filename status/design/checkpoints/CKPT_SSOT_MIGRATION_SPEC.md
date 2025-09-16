@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1401 — Checkpoint SSOT Migration Spec (JSONL Hash Chain, UTC Monotonic, Sharding, Concurrency, Hooks, APIs)
 
 Purpose

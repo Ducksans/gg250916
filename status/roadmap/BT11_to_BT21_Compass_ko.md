@@ -1,3 +1,7 @@
+---
+phase: future
+---
+
 # BT-11 → BT-21 로드맵 컴퍼스(한글 안내판)
 Last-Updated: 2025-08-22
 Scope: 작업 중간 빠른 참고용(요약판). 상세 증거는 SSOT와 각각의 Evidence 파일을 확인.

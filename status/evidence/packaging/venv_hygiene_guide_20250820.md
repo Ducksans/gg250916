@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Venv Hygiene & Packaging Guide (BT-10)
 UTC_TS: 2025-08-20T08:09:00Z
 Scope: Backend runtime reproducibility and environment hygiene

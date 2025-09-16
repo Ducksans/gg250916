@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # BT-11 — House Hardening Checklist and PASS Criteria
 Status: active
 Owner: Gumgang (AI)

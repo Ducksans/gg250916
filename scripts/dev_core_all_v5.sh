@@ -66,14 +66,31 @@ if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then tmux kill-session -t "$
 export -f backend_cmd bridge_cmd vite_cmd
 export CORE_ROOT PROJECT_ROOT LOG_DIR HOST PORT_BACKEND PORT_BRIDGE DOTENV
 
+# Optional: CI last-green watcher (preview on port 5175)
+green_cmd() {
+  set -e
+  cd "$PROJECT_ROOT"
+  PORT_GREEN="${PORT_GREEN:-5175}"
+  # Always force a clean preview worktree to avoid orphaned/stale state
+  bash scripts/watch_last_green.sh --core "$CORE_ROOT" --port "$PORT_GREEN" --force-recreate
+}
+export -f green_cmd
+
 TMUX_S="$SESSION_NAME"
 TMUX_BACK_CMD="backend_cmd 2>&1 | tee -a '$LOG_DIR/backend.log'; echo '[backend pane exited]'; bash"
 TMUX_BRIDGE_CMD="bridge_cmd 2>&1 | tee -a '$LOG_DIR/bridge.log'; echo '[bridge pane exited]'; bash"
 TMUX_VITE_CMD="vite_cmd 2>&1 | tee -a '$LOG_DIR/vite.log'; echo '[vite pane exited]'; bash"
+TMUX_GREEN_CMD="green_cmd 2>&1 | tee -a '$LOG_DIR/green.log'; echo '[green pane exited]'; bash"
 
 tmux new-session -d -s "$TMUX_S" -n "gg-core" "bash -lc \"$TMUX_BACK_CMD\""
-tmux split-window -v -t "$TMUX_S:0.0" "bash -lc \"$TMUX_BRIDGE_CMD\""
-tmux split-window -h -t "$TMUX_S:0.1" "bash -lc \"$TMUX_VITE_CMD\""
+# 0: backend, split horizontally for bridge
+tmux split-window -h -t "$TMUX_S:0.0" "bash -lc \"$TMUX_BRIDGE_CMD\""
+# split vertically under backend for vite (5173)
+tmux split-window -v -t "$TMUX_S:0.0" "bash -lc \"$TMUX_VITE_CMD\""
+# split vertically under bridge for green watcher (5175)
+tmux split-window -v -t "$TMUX_S:0.1" "bash -lc \"$TMUX_GREEN_CMD\""
+# tidy to 2x2
+tmux select-layout -t "$TMUX_S:0" tiled
 
 tmux set-option -t "$TMUX_S" remain-on-exit on
 

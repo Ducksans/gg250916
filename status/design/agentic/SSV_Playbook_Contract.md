@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # SSV ↔ Playbook Contract — v0 Scaffold (자리표시자)
 
 Status: Draft scaffold (빈 골격). 이 문서는 로드맵 AC(수용 기준) 링크를 만족하기 위한 최소 자리표시자입니다. 세부 규격·예시는 후속 커밋에서 채움.

@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Business Idea Card — Bus Arrival App (Onboarding + Easter Egg Ads)
 Date: 2025-08-21
 Author: 덕산

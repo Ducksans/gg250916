@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # TAURI ST-0705 APPLY — gg_save + config (gumgang_v2)
 
 목표

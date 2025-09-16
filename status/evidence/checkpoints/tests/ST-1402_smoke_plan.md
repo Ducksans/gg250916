@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1402 — Checkpoints API Smoke Test Plan (Round-trip + Integrity)
 
 Purpose

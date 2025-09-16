@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 GENERATED — DO NOT EDIT (자동 생성 — 편집 금지)
 이 파일은 열람용 스텁입니다. 정본(SSOT)은 JSONL 해시체인 파일입니다:
 - Source JSONL: gumgang_meeting/status/checkpoints/CKPT_72H_RUN.jsonl

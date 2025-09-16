@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # SiteGraph v0 (Core Lens) — Validation Report
 Date: 2025-08-21 (UTC)
 Run Dir: gumgang_meeting/status/evidence/sitemap/graph_runs/20250821

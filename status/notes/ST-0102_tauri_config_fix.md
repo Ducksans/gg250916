@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-0102 — Tauri config fix and minimal execution checklist
 
 Purpose

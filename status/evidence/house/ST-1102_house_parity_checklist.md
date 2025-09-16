@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # BT-11 ST-1102 — House Parity Checklist (헬스/배지/에러 패널)
 
 Purpose

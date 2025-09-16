@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Checkpoint — 2025-08-19 Bundle A: Roots Dropdown + Per-Tab State + Compact Default
 
 RUN_ID: CKPT_2025-08-19_bundleA_roots_tabstate_compact

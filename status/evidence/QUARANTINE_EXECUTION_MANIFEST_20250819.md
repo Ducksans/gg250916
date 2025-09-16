@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # QUARANTINE Execution Manifest — ST-0203
 
 RUN_ID: 72H_20250819_1114Z

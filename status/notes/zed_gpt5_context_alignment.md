@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Zed × GPT‑5 컨텍스트 정렬(Alignment) 노트
 - Doc: status/notes/zed_gpt5_context_alignment.md
 - 목적: Zed에서 GPT‑5 엔진을 사용할 때 컨텍스트 윈도우 집계/경고가 정확히 동작하도록 설정·검증하는 절차와, 금강 UI의 토크나이저 보드가 이를 어떻게 매핑하는지 기록

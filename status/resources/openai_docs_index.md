@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # OpenAI Docs — Curated Index for Gumgang (Live + Ongoing)
 
 Purpose

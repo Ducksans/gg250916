@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # USER DIRECTIVE — Full Author Mode (v3.0) vs Current Rules (v2.0)
 
 Context

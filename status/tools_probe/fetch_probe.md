@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # 🪷 Fetch Probe Report — Basic Metrics and Notes (v0.1)
 
 Purpose

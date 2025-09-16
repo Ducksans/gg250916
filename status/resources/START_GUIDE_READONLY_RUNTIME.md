@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Start Guide — Read‑Only Runtime (RO)
 
 목표

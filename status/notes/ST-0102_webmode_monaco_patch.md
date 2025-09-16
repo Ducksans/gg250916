@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-0102 — Web-mode Monaco rendering patch (MultiTabEditor) + Quick Access limitation
 
 Context

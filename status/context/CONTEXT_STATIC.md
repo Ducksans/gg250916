@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Context Static Anchors
 
 - Rules: `.rules`

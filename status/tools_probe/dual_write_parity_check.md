@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Dual-Write Parity Check (Bridge-only stub)
 Purpose
 - Verify that writing Evidence via both paths produces identical bytes:

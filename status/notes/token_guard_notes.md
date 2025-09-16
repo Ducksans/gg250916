@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Token Guard Notes — BT-03/ST-0301
 
 Purpose

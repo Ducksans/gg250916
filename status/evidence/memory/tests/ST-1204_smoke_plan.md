@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1204 — Memory Gate Smoke Plan (v1)
 
 Author: Zed Gumgang  

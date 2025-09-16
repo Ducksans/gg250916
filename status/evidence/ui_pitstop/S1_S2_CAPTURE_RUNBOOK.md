@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # S1/S2 Capture Runbook — UI Pitstop(Simple)
 
 Purpose

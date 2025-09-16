@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Checkpoint — v0 Pending UX + Compact + Cumulative Tokens (append-only)
 
 RUN_ID: CKPT_2025-08-18_v0_pendingUX_compact_tokens

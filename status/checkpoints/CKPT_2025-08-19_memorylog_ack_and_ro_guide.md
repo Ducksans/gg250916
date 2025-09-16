@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Checkpoint — Memory Log Acknowledgement + RO Guide
 
 RUN_ID: CKPT_2025-08-19_memorylog_ack_and_ro_guide

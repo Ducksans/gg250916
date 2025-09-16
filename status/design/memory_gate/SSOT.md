@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1204 — Memory Gate SSOT (Single Source of Truth)
 
 문서 버전: v1.0  

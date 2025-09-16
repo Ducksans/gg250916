@@ -2,129 +2,28 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "web:dev",
+      "label": "ui:green:check",
       "type": "shell",
-      "command": "npm run dev"
+      "command": "bash scripts/check_green_health.sh",
+      "problemMatcher": []
     },
     {
-      "label": "web:test",
+      "label": "ui:green:status",
       "type": "shell",
-      "command": "npm test -- --watch=false"
+      "command": "bash scripts/check_green_health.sh --json",
+      "problemMatcher": []
     },
     {
-      "label": "lint:fix",
+      "label": "ingest:run",
       "type": "shell",
-      "command": "npm run lint && npm run format"
+      "command": "python scripts/ingest/ingest_v1.py --root . --out status/evidence/pipelines/ingest_plan.jsonl",
+      "problemMatcher": []
     },
     {
-      "label": "py:test",
+      "label": "ingest:report",
       "type": "shell",
-      "command": "pytest -q"
-    },
-    {
-      "label": "guard:ui",
-      "type": "shell",
-      "command": "npm run guard:ui"
-    },
-    {
-      "label": "context:snapshot:latest",
-      "type": "shell",
-      "command": "bash scripts/context_snapshot.sh --latest ${input:paths}"
-    },
-    {
-      "label": "context:snapshot:archive",
-      "type": "shell",
-      "command": "bash scripts/context_snapshot.sh --archive ${input:paths}"
-    },
-    {
-      "label": "context:snapshot:both",
-      "type": "shell",
-      "command": "bash scripts/context_snapshot.sh --both ${input:paths}"
-    },
-    {
-      "label": "context:prune",
-      "type": "shell",
-      "command": "bash scripts/context_prune.sh status/context/snapshots ${input:retainDays} ${input:retainMax}"
-    },
-    {
-      "label": "dev:core-all",
-      "type": "shell",
-      "command": "bash",
-      "args": [
-        "scripts/dev_core_all.sh",
-        "tmux",
-        "${workspaceFolder}/exports/gumgang_meeting_core"
-      ],
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      }
-    },
-    {
-      "label": "dev:core-all-v2",
-      "type": "shell",
-      "command": "bash",
-      "args": [
-        "scripts/dev_core_all_v2.sh",
-        "tmux",
-        "${workspaceFolder}/exports/gumgang_meeting_core"
-      ],
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      }
-    },
-    {
-      "label": "dev:core-all-v4",
-      "type": "shell",
-      "command": "bash",
-      "args": [
-        "scripts/dev_core_all_v4.sh",
-        "tmux",
-        "${workspaceFolder}/exports/gumgang_meeting_core"
-      ],
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      }
-    },
-    {
-      "label": "dev:core-all-v5",
-      "type": "shell",
-      "command": "bash",
-      "args": [
-        "scripts/dev_core_all_v5.sh",
-        "tmux",
-        "${workspaceFolder}/exports/gumgang_meeting_core"
-      ],
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      }
-    }
-  ],
-  "inputs": [
-    {
-      "id": "paths",
-      "type": "promptString",
-      "description": "space-separated paths",
-      "default": ".rules AGENTS.md status/reports/PROJECT_REBUILD_PROTOCOL.md"
-    },
-    {
-      "id": "retainDays",
-      "type": "promptString",
-      "description": "retain days",
-      "default": "30"
-    },
-    {
-      "id": "retainMax",
-      "type": "promptString",
-      "description": "retain max count",
-      "default": "60"
+      "command": "tail -n 20 status/evidence/pipelines/ingest_plan.jsonl || true",
+      "problemMatcher": []
     }
   ]
 }

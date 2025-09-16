@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Root Inventory — Semantic Map (BT‑13 v1, read‑only)
 
 Purpose

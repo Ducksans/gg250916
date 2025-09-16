@@ -1,3 +1,7 @@
+---
+phase: present
+---
+
 # 실행 계획 보고서 — Dev UI 마이그레이션 및 채팅 로직 복원 (EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE)
 
 - 문서 버전: v1.0

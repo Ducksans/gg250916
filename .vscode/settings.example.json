@@ -1,0 +1,18 @@
+{
+  // VS Code MCP servers for Continue extension (copy to .vscode/settings.json after reviewing)
+  "continue.mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/duksan/바탕화면/gumgang_meeting"]
+    },
+    "gg-memory": {
+      "command": "node",
+      "args": ["scripts/mcp/gg-memory-server.js", "--db", "status/data/gumgang.sqlite3", "--ckpt", "status/checkpoints/CKPT_72H_RUN.jsonl"]
+    },
+    "web-fetch": {
+      "command": "node",
+      "args": ["scripts/mcp/web-fetch-server.js", "--allow", "wikipedia.org,developer.mozilla.org,modelcontextprotocol.org", "--max-bytes", "1048576", "--timeout-ms", "8000"]
+    }
+  }
+}
+

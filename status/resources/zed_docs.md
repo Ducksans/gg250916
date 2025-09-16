@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Zed Docs — Quick Link Index
 > 목적: 자주 쓰는 Zed 공식 문서 페이지를 한 곳에서 빠르게 열람하기 위한 링크 모음  
 > 루트: https://zed.dev/docs/

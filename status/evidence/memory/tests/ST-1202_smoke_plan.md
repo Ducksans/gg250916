@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1202 — Memory Search Tuning Smoke Test Plan
 Status: draft
 Owner: Gumgang (AI)

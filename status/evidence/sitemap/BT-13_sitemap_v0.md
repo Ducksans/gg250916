@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # BT-13 Sitemap v0 (read-only) — Static vs Dynamic Evidence Map
 
 Scope

@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Test Plan (Draft)
 
 목적: BT-07~BT-10에 대한 검증 시나리오와 수용 기준 정의.

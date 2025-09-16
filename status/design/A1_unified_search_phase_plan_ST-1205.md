@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # A1 Unified Search — Phase 1~3 구현 계획(설계·검증) — ST-1205
 
 문서버전: v0.1 (draft)  

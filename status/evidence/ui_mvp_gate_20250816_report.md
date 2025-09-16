@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # 🪷 UI MVP Gate — Chat View A1 Report (A1-T1/A1-T2)
 > 목적: Chat View A1 핵심 항목(A1-T1 입력, A1-T2 출력)의 PASS 기준을 한눈에 판별하고, 실행 증거(Screenshots/Run Log) 링크를 집계한다.  
 > 준거: `gumgang_meeting/docs/8_UI_MVP_요구사항.md`, `gumgang_meeting/docs/9_UI_MVP_게이트.md`, `gumgang_meeting/task/ui_mvp_gate_checklist.md`  

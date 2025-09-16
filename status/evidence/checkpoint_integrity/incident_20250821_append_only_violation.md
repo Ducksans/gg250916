@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Incident Report — Checkpoint Append-Only Violation
 File: gumgang_meeting/status/checkpoints/CKPT_72H_RUN.md
 Date: 2025-08-21

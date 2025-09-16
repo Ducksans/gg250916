@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # SSOT Path Policy — 72h Escape Protocol
 
 Purpose

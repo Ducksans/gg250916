@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1205 — Phase 1 A/B Test Report (Unified API: memory-only stub)
 
 Scope

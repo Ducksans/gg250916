@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # [SSOT] 금강 프로젝트 재건 보고서 (The Phoenix Protocol)
 
 - **작성자:** Gemini

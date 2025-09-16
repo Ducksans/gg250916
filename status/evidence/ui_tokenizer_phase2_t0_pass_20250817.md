@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # 금강 UI — Phase 2 토크나이저 T0 PASS 증거
 - Doc: ui_tokenizer_phase2_t0_pass_20250817.md
 - Scope: Phase 2 착수(Tokenizer Board, Offline Estimator T0) — A3 패널 연동 및 1차 동작 검증

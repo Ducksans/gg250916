@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-0501 Vector Env Probe — 2025-08-19T14:34Z
 
 Run

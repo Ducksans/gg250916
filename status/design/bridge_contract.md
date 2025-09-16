@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Bridge Contract (Draft)
 
 목표: UI ↔ Bridge(3037) ↔ Backend(8000) 간 메시지 규격 정의. 서버 실행 없이 문서만.

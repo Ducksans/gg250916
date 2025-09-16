@@ -1,318 +1,48 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://gumgang.local/schema/sitegraph.snapshot.v1.json",
-  "title": "Gumgang SiteGraph Snapshot (v1)",
-  "description": "Append-only snapshot of the Semantic Structure Viewer (SSV) graph. Captures meta, nodes, edges, and anchor hints for deterministic visualization.",
+  "title": "SiteGraph v1",
   "type": "object",
-  "additionalProperties": false,
-  "required": ["meta", "nodes", "edges", "anchors"],
   "properties": {
-    "meta": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "snapshot_id",
-        "created_at",
-        "style_version",
-        "signals_version",
-        "layout_seed",
-        "lens",
-        "K",
-        "thresholds",
-        "norm_params"
-      ],
-      "properties": {
-        "snapshot_id": {
-          "type": "string",
-          "description": "Logical id for this snapshot. Prefer ISO-like with Z suffix (e.g., 20250821T090000Z).",
-          "pattern": "^[0-9]{8}T[0-9]{6}Z$"
-        },
-        "created_at": {
-          "type": "string",
-          "description": "Creation timestamp (ISO8601Z).",
-          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z$"
-        },
-        "style_version": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?$" },
-        "signals_version": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?$" },
-        "layout_seed": { "type": "integer" },
-        "lens": {
-          "type": "string",
-          "enum": ["Core", "Hub", "API", "Memory", "Runtime", "Quarantine"]
-        },
-        "K": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["level0", "level1"],
-          "properties": {
-            "level0": { "type": "integer", "minimum": 1, "maximum": 200 },
-            "level1": { "type": "integer", "minimum": 1, "maximum": 500 }
-          }
-        },
-        "thresholds": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["bottleneck_q", "isolation_q", "tau_stale", "halflife_days"],
-          "properties": {
-            "bottleneck_q": { "$ref": "#/$defs/percent01" },
-            "isolation_q": { "$ref": "#/$defs/percent01" },
-            "tau_stale": { "$ref": "#/$defs/percent01" },
-            "halflife_days": { "type": "number", "exclusiveMinimum": 0 }
-          }
-        },
-        "norm_params": {
-          "type": "object",
-          "description": "Per-metric normalization parameters used to map raw values to [0,1].",
-          "additionalProperties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "generated_at": { "type": "string" },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "title": { "type": "string" },
+          "path": { "type": "string" },
+          "meta": { "type": "object" },
+          "scores": {
             "type": "object",
-            "additionalProperties": false,
-            "required": ["min", "max"],
             "properties": {
-              "min": { "type": "number" },
-              "max": { "type": "number" }
+              "centrality": { "type": "number" },
+              "isolation": { "type": "number" },
+              "recency": { "type": "number" },
+              "evidence_count": { "type": "number" }
             }
           }
         }
       }
     },
-
-    "nodes": {
-      "type": "array",
-      "description": "Graph nodes. Each node corresponds to a file/dir/api/doc/evidence, etc.",
-      "items": { "$ref": "#/$defs/node" },
-      "minItems": 1,
-      "uniqueItems": false
-    },
-
     "edges": {
       "type": "array",
-      "description": "Directed edges between nodes.",
-      "items": { "$ref": "#/$defs/edge" },
-      "minItems": 0,
-      "uniqueItems": false
-    },
-
-    "anchors": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["pinned"],
-      "properties": {
-        "pinned": {
-          "type": "array",
-          "description": "Pinned node ids (paths) that must remain 1-hop visible.",
-          "items": { "$ref": "#/$defs/pathString" },
-          "minItems": 1,
-          "uniqueItems": true
-        },
-        "positions": {
-          "type": "object",
-          "description": "Optional fixed positions for selected nodes (for layout stability). Keys are node ids.",
-          "additionalProperties": { "$ref": "#/$defs/position2D" }
+      "items": {
+        "type": "object",
+        "required": ["src", "dst", "type"],
+        "properties": {
+          "src": { "type": "string" },
+          "dst": { "type": "string" },
+          "type": { "type": "string" },
+          "weight": { "type": "number" },
+          "meta": { "type": "object" }
         }
       }
     }
   },
-
-  "$defs": {
-    "percent01": {
-      "type": "number",
-      "minimum": 0,
-      "maximum": 1
-    },
-
-    "pathString": {
-      "type": "string",
-      "description": "Repo-relative path. Prefer POSIX separators.",
-      "pattern": "^[A-Za-z0-9_./\\-]+(?:#[A-Za-z0-9_\\-]+)?$",
-      "minLength": 1
-    },
-
-    "nodeKind": {
-      "type": "string",
-      "enum": ["file", "dir", "api", "doc", "evidence", "resource", "unknown"]
-    },
-
-    "roleTag": {
-      "type": "string",
-      "description": "Role tags used for styling and weighting.",
-      "enum": ["C", "H", "S", "D", "A", "UI", "R", "Q", "X", "M"]
-    },
-
-    "position2D": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["x", "y"],
-      "properties": {
-        "x": { "type": "number", "minimum": -1000000, "maximum": 1000000 },
-        "y": { "type": "number", "minimum": -1000000, "maximum": 1000000 }
-      }
-    },
-
-    "nodeMetricsRaw": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "in_degree": { "type": "number", "minimum": 0 },
-        "out_degree": { "type": "number", "minimum": 0 },
-        "evidence_count": { "type": "number", "minimum": 0 },
-        "pr": { "type": "number", "minimum": 0 },
-        "btw": { "type": "number", "minimum": 0 },
-        "usage_count": { "type": "number", "minimum": 0 }
-      }
-    },
-
-    "nodeMetricsNorm": {
-      "type": "object",
-      "additionalProperties": true,
-      "properties": {
-        "in_degree": { "$ref": "#/$defs/percent01" },
-        "out_degree": { "$ref": "#/$defs/percent01" },
-        "evidence_count": { "$ref": "#/$defs/percent01" },
-        "pr": { "$ref": "#/$defs/percent01" },
-        "btw": { "$ref": "#/$defs/percent01" }
-      }
-    },
-
-    "bottleneckExplainer": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "btw_q": { "$ref": "#/$defs/percent01" },
-        "recency": { "$ref": "#/$defs/percent01" },
-        "owner_present": { "type": "boolean" },
-        "evidence_count": { "type": "number", "minimum": 0 },
-        "in_degree": { "type": "number", "minimum": 0 }
-      }
-    },
-
-    "nodeScores": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["centrality", "isolation"],
-      "properties": {
-        "centrality": { "$ref": "#/$defs/percent01" },
-        "isolation": { "$ref": "#/$defs/percent01" },
-        "bottleneck": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["flag"],
-          "properties": {
-            "flag": { "type": "boolean" },
-            "why": { "$ref": "#/$defs/bottleneckExplainer" }
-          }
-        },
-        "upgrade_score": { "$ref": "#/$defs/percent01" },
-        "deprecate_score": { "$ref": "#/$defs/percent01" }
-      }
-    },
-
-    "node": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["id", "kind", "roles"],
-      "properties": {
-        "id": { "$ref": "#/$defs/pathString" },
-        "kind": { "$ref": "#/$defs/nodeKind" },
-        "roles": {
-          "type": "array",
-          "items": { "$ref": "#/$defs/roleTag" },
-          "minItems": 1,
-          "uniqueItems": true
-        },
-        "owner": { "type": "string" },
-        "last_reviewed": {
-          "type": "string",
-          "description": "Optional review timestamp (ISO8601Z).",
-          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z$"
-        },
-        "mtime": {
-          "type": "string",
-          "description": "Filesystem modified time (ISO8601Z).",
-          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z$"
-        },
-        "size": { "type": "integer", "minimum": 0 },
-        "raw": { "$ref": "#/$defs/nodeMetricsRaw" },
-        "norm": { "$ref": "#/$defs/nodeMetricsNorm" },
-        "scores": { "$ref": "#/$defs/nodeScores" }
-      }
-    },
-
-    "edgeType": {
-      "type": "string",
-      "enum": ["references", "backlink", "evidenceOf"]
-    },
-
-    "edge": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["src", "dst", "type"],
-      "properties": {
-        "src": { "$ref": "#/$defs/pathString" },
-        "dst": { "$ref": "#/$defs/pathString" },
-        "type": { "$ref": "#/$defs/edgeType" },
-        "weight": { "type": "number", "minimum": 0 }
-      }
-    }
-  },
-
-  "examples": [
-    {
-      "meta": {
-        "snapshot_id": "20250821T090000Z",
-        "created_at": "2025-08-21T09:00:00Z",
-        "style_version": "1",
-        "signals_version": "1",
-        "layout_seed": 12345,
-        "lens": "Core",
-        "K": { "level0": 8, "level1": 20 },
-        "thresholds": { "bottleneck_q": 0.9, "isolation_q": 0.9, "tau_stale": 0.25, "halflife_days": 7 },
-        "norm_params": {
-          "in_degree": { "min": 0, "max": 50 },
-          "pr": { "min": 0, "max": 0.01 },
-          "btw": { "min": 0, "max": 0.2 },
-          "evidence_count": { "min": 0, "max": 20 }
-        }
-      },
-      "nodes": [
-        {
-          "id": "gumgang_meeting/app/api.py",
-          "kind": "file",
-          "roles": ["A", "C"],
-          "owner": "local",
-          "mtime": "2025-08-21T08:40:00Z",
-          "size": 64000,
-          "raw": { "in_degree": 42, "out_degree": 7, "evidence_count": 9, "pr": 0.00032, "btw": 0.012, "usage_count": 31 },
-          "norm": { "in_degree": 0.84, "evidence_count": 0.45, "pr": 0.52, "btw": 0.60 },
-          "scores": {
-            "centrality": 0.78,
-            "isolation": 0.05,
-            "bottleneck": { "flag": true, "why": { "btw_q": 0.93, "recency": 0.21, "owner_present": false, "evidence_count": 9, "in_degree": 42 } }
-          }
-        },
-        {
-          "id": "gumgang_meeting/status/checkpoints/CKPT_72H_RUN.md",
-          "kind": "file",
-          "roles": ["C", "S", "D"],
-          "mtime": "2025-08-21T08:46:00Z",
-          "size": 123456,
-          "raw": { "in_degree": 30, "out_degree": 2, "evidence_count": 12, "pr": 0.00028, "btw": 0.010, "usage_count": 50 },
-          "norm": { "in_degree": 0.60, "evidence_count": 0.60, "pr": 0.45, "btw": 0.50 },
-          "scores": { "centrality": 0.66, "isolation": 0.03 }
-        }
-      ],
-      "edges": [
-        { "src": "gumgang_meeting/status/design/memory_gate/SSOT.md", "dst": "gumgang_meeting/app/api.py", "type": "references", "weight": 3 }
-      ],
-      "anchors": {
-        "pinned": [
-          "gumgang_meeting/.rules",
-          "gumgang_meeting/status/checkpoints/CKPT_72H_RUN.md",
-          "gumgang_meeting/app/api.py",
-          "gumgang_meeting/status/design/memory_gate/SSOT.md"
-        ],
-        "positions": {
-          "gumgang_meeting/.rules": { "x": -0.8, "y": 0.6 }
-        }
-      }
-    }
-  ]
+  "required": ["schema_version", "nodes", "edges"]
 }
+

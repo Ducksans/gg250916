@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Conduits README — Locked Policy (BT-11)
 
 Purpose

@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # QUARANTINE Execution — User Notes (BT-02 ST-0203)
 Date: 2025-08-19 (UTC)
 

@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # FS Quarantine Dry-Run Plan (ST-0201)
 
 Scope

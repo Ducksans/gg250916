@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Context Management (VS Code)
 
 ## 목적

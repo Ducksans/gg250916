@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Memory Gate — DECISIONS (ADR Log)
 Version: v1.0
 Scope: BT-12 ST-1204 — ultra_long (L5) Memory Gate

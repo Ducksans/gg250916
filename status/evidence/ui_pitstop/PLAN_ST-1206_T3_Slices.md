@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1206 T3 — UI Pitstop(Simple) Slices Plan
 
 목적

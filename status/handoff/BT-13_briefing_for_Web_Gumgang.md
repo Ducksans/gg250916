@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # BT-13 Briefing for Web Gumgang (read-only)
 
 Purpose

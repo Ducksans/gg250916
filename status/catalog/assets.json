@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "reports": [
+    "status/reports/EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md",
+    "status/reports/GG_DB_SPEC_V1.md",
+    "status/reports/GG_ORCH_SPEC_V1.md",
+    "status/reports/GG_MEMORY_5_LAYER_SPEC.md",
+    "status/reports/GG_CONTENT_PIPELINE_V1.md",
+    "status/reports/GG_SSV_SPEC_V1.md",
+    "status/reports/GG_SCHEDULER_SPEC_V1.md",
+    "status/reports/GG_CONTEXT_REGISTRY_SPEC_V1.md",
+    "status/reports/GG_API_CONTEXT_SUMMARY.md",
+    "status/reports/GG_UI_RUN_CARD_SPEC.md",
+    "status/reports/GG_DAILY_OPS_V1.md",
+    "status/reports/GG_CONTEXT_SENTRY_SPEC_V1.md",
+    "status/reports/GG_DYNAMIC_BLOCKS_SPEC.md",
+    "status/reports/GG_TIME_SPEC_V1.md"
+  ],
+  "schemas": [
+    "status/design/schemas/sitegraph.schema.json"
+  ],
+  "dynamic_blocks_manifest": "status/catalog/dynblocks.manifest.json",
+  "created_at": ""
+}

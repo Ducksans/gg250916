@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Import Dry-run Scan Template (Conduits; BT-11)
 
 Policy

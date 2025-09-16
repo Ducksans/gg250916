@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # SiteGraph Style Guide (v1)
 
 Purpose

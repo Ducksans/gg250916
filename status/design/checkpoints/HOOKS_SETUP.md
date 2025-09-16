@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Hooks Setup — Checkpoint Guards (BT-14 ST-1403)
 
 Purpose

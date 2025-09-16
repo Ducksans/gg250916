@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # SiteGraph Signals (v1)
 
 Purpose

@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1205 — Summary Report (Unified Search + Strict Grounded Mode, SGM_v1)
 
 Version: 1.0 (final)  

@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # UI Integration (Draft)
 
 ## 목적

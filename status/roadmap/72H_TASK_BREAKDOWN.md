@@ -1,3 +1,7 @@
+---
+phase: future
+---
+
 # 72H_TASK_BREAKDOWN — Zed 탈출 → 금강UI 이전(직선형)
 
 Scope

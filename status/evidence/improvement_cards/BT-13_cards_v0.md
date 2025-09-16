@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # BT-13 Improvement Proposal Cards v0 (read‑only; execution deferred)
 
 This file proposes small, actionable improvements discovered during BT‑13 ST‑1301 self‑structure review. Do not execute any change now. All items are documentation/planning only and point to Evidence paths for context.

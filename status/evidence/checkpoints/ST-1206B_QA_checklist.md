@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1206B — S5 QA Checklist (ChatGPT-like Single-Scroll, Simple mode)
 
 Scope/Goal

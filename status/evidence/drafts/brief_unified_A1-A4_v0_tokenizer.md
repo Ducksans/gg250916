@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # [브리프] A1–A4 단일 화면 v0 + 토크나이저 연동 — 서명 준비(Explain-before-execute)
 
 문맥(Context)

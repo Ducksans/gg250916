@@ -1,0 +1,19 @@
+{
+  "showUnsupportedFiles": false,
+  "userIgnoreFilters": [
+    "LibreChat**",
+    "LibreChat/data-node/**",
+    "exports/**",
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    "pycache/**",
+    ".git/**",
+    "venv/**",
+    ".venv_backend/**",
+    "exports/gumgang_meeting_core_last_green*/**",
+    "librechat**",
+    ".LibreChat/**",
+    "gumgang_0_5/**"
+  ]
+}

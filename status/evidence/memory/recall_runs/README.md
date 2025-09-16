@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # recall_runs — Self‑RAG/신선도 회귀 Evidence README
 Last-Updated: 2025-08-25
 Scope: ST-1205(Self‑RAG/신선도 회귀) 증거 기록 포맷과 사용 가이드

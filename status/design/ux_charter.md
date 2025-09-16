@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # 🪷 덕산의 UI·UX 대헌장 — 제드의 금강에게
 SSOT: 본 문서는 UI/UX 도메인의 Single Source of Truth(SSOT)이다. 모든 UI·UX 관련 문서는 본 문서와 정합해야 한다.
 

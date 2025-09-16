@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-1205 — Phase 2 A/B/C Test Report (Unified Search: File Channel Enabled)
 
 Scope

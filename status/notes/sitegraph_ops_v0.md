@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # SiteGraph Ops Notes v0
 
 Purpose

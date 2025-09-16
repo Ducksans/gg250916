@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # ST-0501 Vector Chunking Progress — 2025-08-19 14:39Z
 
 Run

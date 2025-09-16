@@ -1,3 +1,7 @@
+---
+phase: present
+---
+
 # 금강 MCP 서버 구축 — 최종 가이드
 
 - **작성자:** Gemini
@@ -100,3 +104,91 @@ GPT-5가 제안하고 공식 문서에서 검증된, 가장 쉽고 확실한 방
   - **Brave Search MCP Server:** Brave 검색 엔진 API를 사용하여 웹 검색 기능을 제공합니다.
   - **Puppeteer MCP Server:** Puppeteer를 사용하여 실제 브라우저를 제어하고, 복잡한 웹 스크래핑 및 자동화 작업을 수행할 수 있습니다.
 - **다음 행동:** `View Server Extensions` 목록이나 공식 문서를 참고하여, 위 서버들 중 하나를 `filesystem` 서버와 동일한 방식으로 추가 등록하는 것을 다음 목표로 삼습니다.
+
+---
+
+## 8. VS Code(Continue/Cline)에서 MCP 서버 등록 — 최신 구성
+
+아래 설정은 VS Code의 대표적 MCP 클라이언트 확장인 Continue와 Cline에서 검증된 방식입니다. 먼저 템플릿을 저장한 뒤, 필요 시 실제 settings.json으로 복사하세요.
+
+1) 템플릿 파일 위치(예시)
+- `.vscode/settings.example.json` — 본 저장소에 제공되는 샘플(아래 9장에서 생성됨)
+
+2) Continue 확장 설정 스니펫(복사/붙여넣기)
+```jsonc
+{
+  "continue.mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/duksan/바탕화면/gumgang_meeting"
+      ]
+    },
+    "gg-memory": {
+      "command": "node",
+      "args": [
+        "scripts/mcp/gg-memory-server.js",
+        "--db",
+        "status/data/gumgang.sqlite3",
+        "--ckpt",
+        "status/checkpoints/CKPT_72H_RUN.jsonl"
+      ]
+    },
+    "web-fetch": {
+      "command": "node",
+      "args": [
+        "scripts/mcp/web-fetch-server.js",
+        "--allow",
+        "wikipedia.org,developer.mozilla.org,modelcontextprotocol.org",
+        "--max-bytes",
+        "1048576",
+        "--timeout-ms",
+        "8000"
+      ]
+    }
+  }
+}
+```
+
+3) Cline 확장도 유사한 키(`mcpServers`)를 제공하며, 동일 구조로 등록 가능합니다.
+
+보안/운영 가드
+- 루트 경계: filesystem 서버는 반드시 프로젝트 루트만 노출
+- 제외 패턴: `.git/**`, `node_modules/**`, `dist/**`, `build/**`, `__pycache__/**`
+- 웹 서버: 화이트리스트 도메인, 최대 바이트, 타임아웃 필수
+- 비밀키: `.env`로 주입(로그/응답 노출 금지)
+
+---
+
+## 9. 샘플 커스텀 MCP 서버(골격) — memory / web
+
+본 레포에는 다음 골격이 포함됩니다(의존 패키지 설치 후 동작). 설치 전까지는 템플릿/참고용으로만 사용하세요.
+
+- `scripts/mcp/gg-memory-server.js`
+  - 목적: 5계층 메모리·체크포인트(JSONL/SQLite) 읽기/추가/검색 도구 제공
+  - 의존(권장): `@modelcontextprotocol/sdk`, `better-sqlite3`
+  - 도구(예): `memory.search`, `checkpoint.append`, `memory.put`
+
+- `scripts/mcp/web-fetch-server.js`
+  - 목적: 안전한 웹 fetch/scrape 도구 제공(화이트리스트/사이즈/타임아웃 가드)
+  - 의존(권장): `@modelcontextprotocol/sdk`, `node-fetch`, `cheerio`
+  - 도구(예): `web.fetch`, `web.scrape`
+
+설치 예시(루트에서)
+```bash
+npm init -y
+npm install @modelcontextprotocol/sdk better-sqlite3 node-fetch cheerio
+```
+
+---
+
+## 10. 동작 확인 체크리스트
+
+1) Continue/Cline에서 MCP 서버가 녹색(활성) 상태인지 확인
+2) 파일 읽기 테스트: `filesystem.read_text_file`로 `.rules` 10줄 읽기
+3) 체크포인트 기록: `gg-memory.checkpoint.append(...)` → `status/checkpoints/CKPT_72H_RUN.jsonl`에 한 줄 추가
+4) 메모리 검색: `gg-memory.memory.search({ query: "SSV", tier: 2 })` → 최근 기록 요약 반환
+5) 웹 페치: `web.fetch("https://modelcontextprotocol.org/")` → 텍스트 길이/도메인 검증
+6) 실패 가드: 허용되지 않은 도메인/초과 크기/타임아웃 시 안전히 차단되는지 확인

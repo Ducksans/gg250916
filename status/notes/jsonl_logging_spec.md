@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # JSONL Logging Spec — BT-03/ST-0302
 
 Purpose

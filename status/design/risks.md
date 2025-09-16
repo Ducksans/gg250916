@@ -1,3 +1,7 @@
+---
+phase: past
+---
+
 # Risks (Draft)
 
 | ID | Risk | Impact | Mitigation |
