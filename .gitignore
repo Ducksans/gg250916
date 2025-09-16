@@ -46,3 +46,13 @@ exports/gumgang_meeting_core*/
 .env.*
 .envrc
 .git-credentials
+
+# Generated / backups / large binaries
+gumgang_0_5/backend/memory/
+status/backups/
+*.bin
+*.zip
+*.tar.gz
+*.mp4
+*.onnx
+*.pth
