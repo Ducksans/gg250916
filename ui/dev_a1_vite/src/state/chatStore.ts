@@ -367,11 +367,23 @@ class Store {
 
         if (!thread) {
           // 서버에서 로드 시도
-          const base = "/api";
+          // Respect backend/source toggles
+          const base = ((): string => {
+            try {
+              const b = localStorage.getItem("GG_CHAT_BACKEND");
+              return String(b || "fastapi").toLowerCase() === "bridge"
+                ? "/bridge/api"
+                : "/api";
+            } catch { return "/api"; }
+          })();
+          const useV2 = ((): boolean => {
+            try { return (localStorage.getItem("GG_THREAD_SOURCE") || "files").toLowerCase() === "db"; } catch { return false; }
+          })();
           try {
-            const response = await fetch(
-              `${base}/threads/read?convId=${encodeURIComponent(threadId)}`,
-            );
+            const url = useV2
+              ? `${base}/v2/threads/read?id=${encodeURIComponent(threadId)}`
+              : `${base}/threads/read?convId=${encodeURIComponent(threadId)}`;
+            const response = await fetch(url);
             if (response.ok) {
               const data = await response.json();
               const turns = Array.isArray(data?.data?.turns)
@@ -615,7 +627,12 @@ class Store {
     },
 
     /** 어시스턴트 메시지 추가 */
-    addAssistantMessage: (content: string, meta?: Message["meta"]) => {
+    addAssistantMessage: (content: any, meta?: Message["meta"]) => {
+      const normalize = (v: any): string => {
+        if (v == null) return "";
+        if (typeof v === "string") return v;
+        try { return JSON.stringify(v, null, 2); } catch { return String(v); }
+      };
       const t = this.ensureActiveThread();
       // 자리표시자("…")라면 기본적으로 streaming=true, placeholder=true
       const isPlaceholder =
@@ -629,7 +646,7 @@ class Store {
       const msg: Message = {
         id: uid("m"),
         role: "assistant",
-        content,
+        content: normalize(content),
         ts: now(),
         meta: mergedMeta,
       };

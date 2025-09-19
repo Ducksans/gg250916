@@ -1,3 +1,10 @@
+# metadata:
+#   timestamp_utc: 2025-09-16T19:56Z
+#   timestamp_kst: 2025-09-17 04:56
+#   author: Codex (AI Agent)
+#   summary: BT-06 ST-0604 백엔드 시맨틱 검색 API 계약 초안
+#   tags: [design, bt-06, st-0604]
+#   DOCS_TIME_SPEC: GG_TIME_SPEC_V1
 openapi: 3.0.3
 info:
   title: Gumgang Semantic Search API (Draft)
@@ -27,6 +34,55 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/search/unified:
+    get:
+      summary: Unified semantic search (memory + optional file channel)
+      description: |
+        Phase 3 unified search API.
+        - Channels: memory (always on) + file(v0, whitelist, kw+mtime) [flag: FILE_RETRIEVER_ENABLED]
+        - Router applies freshness weighting and conditional Self‑RAG rerank(v0.5)
+        - strict=1 and evidence=0 → 204 with hint (front-end no‑evidence template)
+      parameters:
+        - in: query
+          name: q
+          required: true
+          schema: { type: string }
+          description: Natural language query
+        - in: query
+          name: k
+          schema: { type: integer, default: 5, minimum: 1, maximum: 50 }
+        - in: query
+          name: half_life
+          schema: { type: number, format: float, nullable: true }
+          description: Half-life (days) for recency weighting
+        - in: query
+          name: fresh
+          schema: { type: number, format: float, nullable: true }
+          description: Freshness weight multiplier
+        - in: query
+          name: self_rag
+          schema: { type: integer, enum: [0, 1], default: 1 }
+          description: Enable conditional Self‑RAG rerank
+        - in: query
+          name: strict
+          schema: { type: integer, enum: [0, 1], default: 1 }
+          description: If 1 and no evidence found → 204
+      responses:
+        "200":
+          description: Unified search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnifiedSearchEnvelope"
+        "204":
+          description: No evidence (strict mode)
         "500":
           description: Internal server error
           content:
@@ -93,3 +149,78 @@ components:
         details:
           type: object
           additionalProperties: true
+
+    UnifiedHit:
+      type: object
+      properties:
+        tier:
+          type: string
+          example: memory
+        score:
+          type: number
+          format: float
+        ts:
+          type: string
+          description: ISO8601 or epoch (ms)
+        text:
+          type: string
+        path:
+          type: string
+          nullable: true
+        line_from:
+          type: integer
+          nullable: true
+        line_to:
+          type: integer
+          nullable: true
+        reasons:
+          type: object
+          additionalProperties: true
+
+    UnifiedSearchData:
+      type: object
+      properties:
+        query:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/UnifiedHit"
+        quorum:
+          type: object
+          properties:
+            required: { type: integer }
+            returned: { type: integer }
+        no_hit:
+          type: boolean
+        suggestion:
+          type: object
+          properties:
+            template_id: { type: string }
+            text: { type: string }
+            evidence_path: { type: string }
+        evidence_path:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/UnifiedHit"
+        count:
+          type: integer
+
+    UnifiedSearchEnvelope:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        data:
+          $ref: "#/components/schemas/UnifiedSearchData"
+        meta:
+          type: object
+          properties:
+            ts: { type: string }
+            limits:
+              type: object
+              properties:
+                k: { type: integer }
+                half_life_days: { type: number }

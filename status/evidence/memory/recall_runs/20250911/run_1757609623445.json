@@ -1,0 +1,242 @@
+{
+  "query": "ui-dev/thread/gg_mig_20250911_06ckhx <<< 이 스래드 요약 해봐",
+  "params": {
+    "k": 5,
+    "need_fresh": 1,
+    "half_life_days": 7.0,
+    "fresh_weight": 0.6,
+    "self_rag": 1,
+    "tiers": [
+      "long",
+      "medium",
+      "short",
+      "ultra_long",
+      "ultra_short"
+    ],
+    "rerank_blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "rerank_policy": {
+      "apply_if": "recency<0.2 AND refs<0.2",
+      "bonus": {
+        "refs_ge_1_add": 0.05,
+        "normalized_threshold": 0.2
+      },
+      "cap": {
+        "kw_ge": 0.9,
+        "max_uplift": 0.02
+      }
+    }
+  },
+  "pre_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999974193751866,
+      "ts": "2025-09-11T16:53:40.814Z",
+      "scope_id": null,
+      "text": "ui-dev/thread/gg_mig_20250911_06ckhx <<< 이 스래드 요약 해봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+      "line_from": 8,
+      "line_to": 8,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999956989586446,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.6744852967913706,
+      "ts": "2025-09-11T16:45:04.149Z",
+      "scope_id": null,
+      "text": "이 스래드 요약 해봐 http://localhost:5173/ui-dev/thread/6885bcc0-dfb4-8326-ba92-cb0353ea6b06",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/6885bcc0-dfb4-8326-ba92-cb0353ea6b06.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.875,
+        "recency": 0.9991421613189512,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.4248554135399563,
+      "ts": "2025-09-11T16:51:17.637Z",
+      "scope_id": null,
+      "text": "ui-dev/thread/6846ebc3-fc3c-8003-972b-7f150ddfc903 이 스래드 요약해 봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/6846ebc3-fc3c-8003-972b-7f150ddfc903.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.625,
+        "recency": 0.999759022566594,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.4247820739426162,
+      "ts": "2025-09-11T16:50:03.666Z",
+      "scope_id": null,
+      "text": "http://localhost:5173/ui-dev/thread/68483071-55c8-8003-b33d-bcbd93e0c434 <<< 이  스래드 요약해보 ㅏ",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/68483071-55c8-8003-b33d-bcbd93e0c434.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 0.625,
+        "recency": 0.9996367899043608,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2996597919395605,
+      "ts": "2025-09-11T16:48:00.291Z",
+      "scope_id": null,
+      "text": "이 스래드 요약 해봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/68483692-2588-8003-acd8-8b219f28d744.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9994329865659342,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    }
+  ],
+  "post_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999974193751866,
+      "ts": "2025-09-11T16:53:40.814Z",
+      "scope_id": null,
+      "text": "ui-dev/thread/gg_mig_20250911_06ckhx <<< 이 스래드 요약 해봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+      "line_from": 8,
+      "line_to": 8,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999956989586446,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7999974193751866,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.6744852967913706,
+      "ts": "2025-09-11T16:45:04.149Z",
+      "scope_id": null,
+      "text": "이 스래드 요약 해봐 http://localhost:5173/ui-dev/thread/6885bcc0-dfb4-8326-ba92-cb0353ea6b06",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/6885bcc0-dfb4-8326-ba92-cb0353ea6b06.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.875,
+        "recency": 0.9991421613189512,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.6744852967913706,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.4248554135399563,
+      "ts": "2025-09-11T16:51:17.637Z",
+      "scope_id": null,
+      "text": "ui-dev/thread/6846ebc3-fc3c-8003-972b-7f150ddfc903 이 스래드 요약해 봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/6846ebc3-fc3c-8003-972b-7f150ddfc903.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.625,
+        "recency": 0.999759022566594,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.4248554135399563,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.4247820739426162,
+      "ts": "2025-09-11T16:50:03.666Z",
+      "scope_id": null,
+      "text": "http://localhost:5173/ui-dev/thread/68483071-55c8-8003-b33d-bcbd93e0c434 <<< 이  스래드 요약해보 ㅏ",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/68483071-55c8-8003-b33d-bcbd93e0c434.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 0.625,
+        "recency": 0.9996367899043608,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.4247820739426162,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2996597919395605,
+      "ts": "2025-09-11T16:48:00.291Z",
+      "scope_id": null,
+      "text": "이 스래드 요약 해봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/68483692-2588-8003-acd8-8b219f28d744.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9994329865659342,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2996597919395605,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "ts": "2025-09-11T16:53:43.445Z"
+}

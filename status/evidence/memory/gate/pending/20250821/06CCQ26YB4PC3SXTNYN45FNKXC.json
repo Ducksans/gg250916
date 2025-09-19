@@ -1,0 +1,45 @@
+{
+  "id": "06CCQ26YB4PC3SXTNYN45FNKXC",
+  "created_at": "2025-08-21T07:30:01.433981Z",
+  "state": "pending",
+  "proposer": "zed",
+  "scope_id": null,
+  "session_id": "GG-SESS-LOCAL",
+  "text": "문의는 john.doe@example.com 로",
+  "redacted_text": "문의는 [REDACTED_EMAIL] 로",
+  "refs": [
+    "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl#L1-1",
+    "status/evidence/meetings/GG-SESS-LOCAL/events.jsonl#L1-10",
+    "status/resources/vector_index/search_results_20250819_1455.json#L1-10"
+  ],
+  "rationale": null,
+  "sha256": "e1f27a5f02225672f4ec7dc663e0d412cfd1362d5f9b6df9a7238fe30fa90e8c",
+  "source_roots": [
+    "memory_tiers",
+    "meetings",
+    "vector_index"
+  ],
+  "source_diversity_ok": true,
+  "dup_candidates": [],
+  "pii_flags": [
+    {
+      "kind": "email",
+      "id": "email_basic",
+      "match": "john.doe@example.com",
+      "start": 4,
+      "end": 24
+    }
+  ],
+  "auto_checks": {
+    "ref_count_ok": true,
+    "source_diversity_ok": true,
+    "pii_detected": true,
+    "redaction_suggested": true,
+    "duplicate_sha256": false,
+    "similarity_warning": false,
+    "similarity_block": false,
+    "top_similarity": 0.0,
+    "notes": []
+  },
+  "embedding_version": null
+}

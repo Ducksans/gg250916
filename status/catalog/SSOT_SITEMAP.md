@@ -20,11 +20,13 @@ tags:
 > Dataview 플러그인 설치 시 표가 자동 생성됩니다. 없더라도 링크는 수동으로 사용할 수 있습니다.
 
 ## 0) 에이전트 허브 링크
+- [[status/vision/PROJECT_NORTH_STAR.md|PROJECT NORTH STAR]]
 - [[AGENTS.md|AGENTS Core]] · [[AGENTS_expand.md|AGENTS 확장]] · [[AGENTS_log.md|문서 관리 게이트]]
 - [[status/reports/EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md|EXEC_PLAN]] · [[status/reports/GG_TIME_SPEC_V1.md|GG_TIME_SPEC_V1]]
 
 ## 1) 핵심 문서(고정 링크)
 - [[status/reports/EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md|EXEC_PLAN]]
+- [[status/reports/GG_IDE_SHELL_SPEC_V1.md|IDE Shell Spec]]
 - [[status/reports/GG_DB_SPEC_V1.md|DB Spec]] · [[status/reports/GG_ORCH_SPEC_V1.md|Orchestrator]] · [[status/reports/GG_MEMORY_5_LAYER_SPEC.md|Memory‑5]] · [[status/reports/GG_SSV_SPEC_V1.md|SSV]]
 - [[status/reports/GG_CONTENT_PIPELINE_V1.md|Content Pipeline]] · [[status/reports/GG_SCHEDULER_SPEC_V1.md|Scheduler]] · [[status/reports/GG_CONTEXT_SENTRY_SPEC_V1.md|Context Sentry]]
 - [[status/reports/GG_CONTEXT_REGISTRY_SPEC_V1.md|Context Registry]] · [[status/reports/GG_API_CONTEXT_SUMMARY.md|Context API]] · [[status/reports/GG_DYNAMIC_BLOCKS_SPEC.md|Dynamic Blocks]] · [[status/reports/GG_TIME_SPEC_V1.md|Time Spec]]
@@ -51,7 +53,7 @@ SORT file.mtime DESC
 ```dataview
 TABLE file.link AS Doc, BT, ST, RT
 FROM "status"
-WHERE BT OR ST OR RT
+WHERE (BT OR ST OR RT) AND document_type != "redirect_note"
 SORT file.mtime DESC
 ```
 

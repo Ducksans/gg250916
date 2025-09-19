@@ -1,0 +1,42 @@
+{
+  "query": "증거 1건:\n1. [스레드 ID: gg_20250916_mfmm7sst]\n[제목: gg_20250916_mfmm7sst]\n[메시지 수: 11]\n\nuser: 이봐\nuser: 메세지 입력\nassistant: 증거 1건: 1. [스레드 ID: gg_20250916_mfmm7sst] [제목: gg_20250916_mfmm7sst] [메시지 수: 2] user: 이봐 user: 메세지 입력 (gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1) 근거 인용: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1\nassistant: 무엇을 도와드릴까요? 추가 정보가 필요합니다. [근거: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1]\nuser: 예를 들면 어떤 추가 정보를 줘야 할 까?\nassistant: 증거 1건: 1. [스레드 ID: gg_20250916_mfmm7sst] [제목: gg_20250916_mfmm7sst] [메시지 수: 5] user: 이봐 user: 메세지 입력 assistant: 증거 1건: 1. [스레드 ID: gg_20250916_mfmm7sst] [제목: gg_20250916_mfmm7sst] [메시지 수: 2] user: 이봐 user: 메세지 입력 (gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1) 근거 인용: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1 assistant: 무엇을 도와드릴까요? 추가 정보가 필요합니다. [근거: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1] user: 예를 들면 어떤 추가 정보를 줘야 할 까? (gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1) 근거 인용: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1\nassistant: 구체적인 질문 또는 요청 사항을 말씀해 주세요. 예를 들어, 해결하고자 하는 문제나 필요한 정보에 대해 설명해주시면 보다 정확하게 도와드릴 수 있습니다. [근거: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1]\nuser: /home/duksan/바탕화면/gumgang_meeting/status/evidence/전이확정선언_20250816.md 이 파일 읽을 수 있니 ?\nassistant: 증거 1건: 1. [스레드 ID: gg_20250916_mfmm7sst] [제목: gg_20250916_mfmm7sst] [메시지 수: 8] user: 이봐 user: 메세지 입력 assistant: 증거 1건: 1. [스레드 ID: gg_20250916_mfmm7sst] [제목: gg_20250916_mfmm7sst] [메시지 수: 2] user: 이봐 user: 메세지 입력 (gumgang_meeting/conve (gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1)\n\n근거 인용: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1",
+  "params": {
+    "k": 12,
+    "half_life_days": null,
+    "fresh_weight": 0.48272328094906314,
+    "self_rag": 1,
+    "strict": 1,
+    "need_fresh": 0,
+    "file_enabled": true
+  },
+  "source_mix": {
+    "memory": 12,
+    "file": 0
+  },
+  "pre_count": 24,
+  "post_count": 12,
+  "grounded": true,
+  "evidence_path_from_memory_search": "status/evidence/memory/search_runs/20250917/run_1758098602060.json",
+  "rerank_policy": {
+    "apply_if": "recency<0.2 AND refs<0.2",
+    "blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "bonus": {
+      "refs_ge_1_add": 0.05,
+      "normalized_threshold": 0.2
+    },
+    "cap": {
+      "kw_ge": 0.9,
+      "max_uplift": 0.02
+    }
+  },
+  "rerank_applied": 0,
+  "ts": "2025-09-17T08:43:22.087Z"
+}

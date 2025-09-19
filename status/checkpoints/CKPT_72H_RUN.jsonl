@@ -106,3 +106,429 @@
 {"run_id":"72H_$(date -u +%Y%m%d_%H%MZ)","scope":"EXEC_PLAN_APPENDIX","decision":"EXEC_PLAN 부록 추가 및 DB/오케스트레이터/분산 실행 설계 문서/스키마/스크립트 골격 생성","next_step":"오케스트레이터 라우터 앱 연결 및 인덱션 결과 DB 적재 파이프라인 설계 적용","evidence":"gumgang_meeting/status/reports/EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md#부록A; gumgang_meeting/status/reports/GG_DB_SPEC_V1.md; gumgang_meeting/status/reports/GG_ORCH_SPEC_V1.md; gumgang_meeting/status/reports/GG_MEMORY_5_LAYER_SPEC.md; gumgang_meeting/status/reports/GG_CONTENT_PIPELINE_V1.md; gumgang_meeting/status/reports/GG_DISTRIBUTED_EXEC_V1.md; gumgang_meeting/db/schema/postgres/schema_v1.sql; gumgang_meeting/db/schema/sqlite/schema_v1.sql; gumgang_meeting/scripts/ingest/ingest_v1.py; gumgang_meeting/exports/gumgang_meeting_core/.github/workflows"}
 {"run_id": "MCP_TEST_001", "scope": "MCP", "decision": "서버 도입", "next_step": "문맥 유지", "evidence": "gumgang_meeting/scripts/mcp", "utc_ts": "2025-09-15T10:03:22.548Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "3f65930c09e2fd4cdbf21c592bb1b30c7caf62b441628abfb2ebea99c9cf7609", "writer": "app"}
 {"run_id":"72H_20250915_0700Z","scope":"DOCS_TIME_SPEC","decision":"시간 규약 문서 및 관련 스펙 보강(UTC/KST 병기·유틸·무결성) 패치","next_step":"유틸/스탬퍼 스켈레톤 추가 및 센트리 시간 검증 통합","evidence":"gumgang_meeting/status/reports/GG_TIME_SPEC_V1.md; gumgang_meeting/status/reports/GG_CONTEXT_REGISTRY_SPEC_V1.md; gumgang_meeting/status/reports/GG_API_CONTEXT_SUMMARY.md; gumgang_meeting/status/reports/GG_DAILY_OPS_V1.md; gumgang_meeting/status/reports/GG_DYNAMIC_BLOCKS_SPEC.md; gumgang_meeting/status/catalog/assets.json"}
+{"run_id": "ST0101_2025-09-16", "scope": "BT-06.ST0101-0102", "decision": "ST0101 audit complete; ST0102 runner scaffolding ready for execution", "next_step": "Run scripts/ci/st0102_runner.sh without --dry-run and collect 5175 preview for human approval", "evidence": "status/reports/TBD_sendPipeline_audit.md; scripts/ci/st0102_runner.sh; status/evidence/ui/README.md; status/design/roadmap_BT07_BT10.md", "utc_ts": "2025-09-16T16:56:00Z", "seq": 1, "prev_hash": "ac8a7b8d518f712e69b11ac6837d3c47e23d87960f1789257449e3a13b67a989", "writer": "agent", "this_hash": "0a5afb0a7df72e970c41e646ccce7886a138eae144bfc8d9736267f24546cbe7"}
+{"run_id": "ST0102_2025-09-16", "scope": "CI_RUNNER", "decision": "ST0102 runner executed; build+guard pass; preview 5175 ready for human review", "next_step": "Human to inspect 5175 preview and decide on 5173 deploy", "evidence": "scripts/ci/st0102_runner.sh; status/evidence/ui/build_20250916T1714Z.log; status/evidence/ui/guardrails_20250916T1714Z.log; status/evidence/ui/dist/dev_ui_dist_20250916T1714Z.zip; status/evidence/ui/preview_20250916T1714Z.txt; status/evidence/ui/preview_20250916T1715Z.html; status/evidence/ui/preview_head_20250916T1715Z.log; status/evidence/ui/README.md", "utc_ts": "2025-09-16T17:17:37Z", "seq": 1, "prev_hash": "0a5afb0a7df72e970c41e646ccce7886a138eae144bfc8d9736267f24546cbe7", "writer": "agent", "this_hash": "3868b271cdd4950eb7f748d7e2cc09b512115c1f0be9fa905c7414b632bc9bb7"}
+{"run_id": "ST0102_2025-09-16_APPROVAL", "scope": "CI_RUNNER", "decision": "Human approved ST0102 preview; proceed to ST0103 and BT-06 tracks", "next_step": "Prep ST0103 thread import work and BT-06 document drafting", "evidence": "status/evidence/ui/preview_20250916T1715Z.html; status/evidence/ui/preview_head_20250916T1715Z.log; status/tasks/BT-06_backlog.md", "utc_ts": "2025-09-16T17:25:33Z", "seq": 1, "prev_hash": "3868b271cdd4950eb7f748d7e2cc09b512115c1f0be9fa905c7414b632bc9bb7", "writer": "human", "this_hash": "550450bb44e285aab9fe4c3fe51c43b25722ca8c753d0cd5352545873f9d8569"}
+{"run_id": "ST0103_2025-09-16", "scope": "BT-06.ST0103", "decision": "EXECUTE — Thread import kickoff (approved)", "next_step": "Run st0103_import_runner; verify UI import via TopToolbar → Import Threads", "evidence": "scripts/ci/st0103_import_runner.sh; status/evidence/ui/README.md", "utc_ts": "2025-09-16T18:18:47Z", "writer": "agent"}
+{"run_id": "DOC_GATE_2025-09-16", "scope": "DOC_GATE", "decision": "Gate scan completed: meta=1 missing", "next_step": "Fix missing front matter where applicable; re-run gate", "evidence": "status/logs/document_gate/2025-09-16.md", "utc_ts": "2025-09-16T18:33:19Z", "writer": "agent"}
+{"run_id": "ST0103_2025-09-16_RUN", "scope": "BT-06.ST0103", "decision": "ST0103 import executed — recent+read sample passed", "next_step": "Open Dev UI(5175) → TopToolbar: Import Threads; verify left pane shows imported threads", "evidence": "status/evidence/ui/thread_import_20250916T1845Z.log; status/evidence/ui/thread_import_20250916T1845Z.json; scripts/ci/st0103_import_runner.sh", "utc_ts": "2025-09-16T18:45:30Z", "writer": "agent"}
+{"run_id": "ST0103_DB_2025-09-16_PLAN", "scope": "BT-06.ST0103-DB", "decision": "DB track initiated — SQLite init + ingest dry-run evidence recorded", "next_step": "Implement /api/v2/threads (SQLite) and feature flag UI switch", "evidence": "status/design/db_threads_integration_plan.md; scripts/db/init_sqlite.py; scripts/db/ingest_threads_jsonl.py; status/evidence/db/init_*.log; status/evidence/db/ingest_*.json", "utc_ts": "2025-09-16T19:05:40Z", "writer": "agent"}
+{"run_id": "ST0103_DB_2025-09-16_APPLY", "scope": "BT-06.ST0103-DB", "decision": "SQLite ingest applied from JSONL; DB populated", "next_step": "Verify /api/v2/threads endpoints and toggle Source=DB in UI", "evidence": "status/evidence/db/ingest_*.json; db/gumgang.db", "utc_ts": "2025-09-16T19:21:39Z", "writer": "agent"}
+{"run_id": "ST0103_DB_2025-09-16_UI_PASS", "scope": "BT-06.ST0103-DB", "decision": "UI import + infinite scroll PASS (Source=DB)", "next_step": "Proceed to ST-0603/0604 docs and ST0102-LINT cleanup", "evidence": "status/evidence/ui/ST0103_UI_PASS_20250916T1949Z.md; status/evidence/ui/thread_import_*.log; status/evidence/ui/thread_import_*.json; status/evidence/db/ingest_*.json; db/gumgang.db", "utc_ts": "2025-09-16T19:49:14Z", "writer": "agent"}
+{"run_id": "ST-0603_2025-09-16_DRAFT_UPDATE", "scope": "BT-06.ST-0603", "decision": "Updated roadmap BT07~BT10 with ST0103(DB v2) prerequisites and API notes", "next_step": "Proceed to ST-0604 backend_semantic_search_api.yaml draft", "evidence": "status/design/roadmap_BT07_BT10.md", "utc_ts": "2025-09-16T19:54:04Z", "writer": "agent"}
+{"run_id": "ST-0604_2025-09-16_DRAFT", "scope": "BT-06.ST-0604", "decision": "Drafted backend_semantic_search_api.yaml with /api/search/unified (GET) contract", "next_step": "Human review; then align Bridge contract and UI call sites", "evidence": "status/design/backend_semantic_search_api.yaml", "utc_ts": "2025-09-16T19:59:47Z", "writer": "agent"}
+{"run_id": "ST-0606_2025-09-16_DRAFT_UPDATE", "scope": "BT-06.ST-0606", "decision": "Updated UI integration with Backend×Source matrix, v1/v2 endpoints, import & infinite scroll behavior", "next_step": "Human review → align Bridge contract and finalize KPIs", "evidence": "status/design/ui_integration.md", "utc_ts": "2025-09-16T20:03:49Z", "writer": "agent"}
+{"run_id": "ST-0605_2025-09-16_DRAFT_UPDATE", "scope": "BT-06.ST-0605", "decision": "Bridge contract updated with threads v1/v2 HTTP pass-through; implemented proxies in bridge/server.js", "next_step": "Human review → smoke test via /bridge/api/v2/threads/recent", "evidence": "status/design/bridge_contract.md; bridge/server.js", "utc_ts": "2025-09-16T20:09:54Z", "writer": "agent"}
+{"run_id": "ST-0605_2025-09-16_PROXY_PASS", "scope": "BT-06.ST-0605", "decision": "Bridge v2 threads proxy PASS (recent/read)", "next_step": "Finalize ST-0607/0608 docs; start ST0102-LINT cleanups", "evidence": "status/evidence/bridge/V2_PROXY_PASS_20250916T2021Z.md; bridge/server.js; status/design/bridge_contract.md", "utc_ts": "2025-09-16T20:21:32Z", "writer": "agent"}
+{"run_id": "ST0102_LINT_2025-09-16_RULES", "scope": "BT-06.ST0102-LINT", "decision": "Adjusted ESLint rules and scripts (warn on no-explicit-any, added lint:fix, ignore build) for Dev UI", "next_step": "Run lint and progressively fix remaining warnings; converge rules after docs review", "evidence": "ui/dev_a1_vite/.eslintrc.cjs; ui/dev_a1_vite/.eslintignore; ui/dev_a1_vite/package.json", "utc_ts": "2025-09-16T20:25:16Z", "writer": "agent"}
+{"run_id": "ST-0605_V2_PROXY_SMOKE_2025-09-17", "scope": "BT-06.ST-0605", "decision": "V2 proxy smoke PASS (recent/read)", "next_step": "Human review of docs; expand smoke to error cases; proceed ST0102-LINT fixes", "evidence": "status/evidence/bridge/V2_PROXY_SMOKE_20250917T0441Z.md", "utc_ts": "2025-09-17T04:41:07Z", "writer": "agent"}
+{"run_id": "ST0102_LINT_2025-09-17_RUN", "scope": "BT-06.ST0102-LINT", "decision": "Ran lint (pre/fix/post); errors remain (see evidence)", "next_step": "Targeted fixes for rule-of-hooks/no-undef/no-empty; or adjust rule severity after review", "evidence": ["status/evidence/ui/lint_after_fix_20250917T0457Z.log", "status/evidence/ui/lint_before_fix_20250917T0457Z.log", "status/evidence/ui/lint_fix_20250917T0457Z.log"], "utc_ts": "2025-09-17T04:58:22Z", "writer": "agent"}
+{"run_id": "ST0102_LINT_2025-09-17_PASS", "scope": "BT-06.ST0102-LINT", "decision": "Lint errors resolved to zero", "next_step": "Optionally tackle warnings; proceed with ST-0607/0608 docs", "evidence": null, "utc_ts": "2025-09-17T05:03:11Z", "writer": "agent"}
+{"run_id": "ST-0607_TEST_PLAN_RUN_20250917", "scope": "BT-06.ST-0607", "decision": "CLI smokes PASS (v2 recent/read, health, heads). UI steps pending/human.", "next_step": "Run UI Import/scroll/send checks; tick checkboxes in ST-0607; then proceed ST-0608", "evidence": ["status/evidence/bridge/v2_recent_20250917T0556Z.json", "status/evidence/bridge/v2_read_20250917T0556Z.json", "status/evidence/bridge/health_3037_20250917T0556Z.json", "status/evidence/backend/health_8000_20250917T0556Z.json", "status/evidence/ui/head_5173_20250917T0556Z.txt", "status/evidence/ui/head_5175_20250917T0556Z.txt"], "utc_ts": "2025-09-17T05:56:44Z", "writer": "agent"}
+{
+  "run_id": "ST-0607_TEST_PLAN_RUN_20250917",
+  "scope": "BT-06.ST-0607",
+  "decision": "UI import(DB source) and v2 proxy smoke PASS",
+  "next_step": "Validate send pipeline and record perf; then update ST-0608 risks",
+  "evidence": "status/evidence/bridge/V2_PROXY_SMOKE_20250917T060839Z.json,status/evidence/bridge/V2_PROXY_READ_20250917T060839Z.json,status/evidence/ui/ui_import_20250917T060845Z.png",
+  "utc_ts": "2025-09-17T06:09:32Z",
+  "writer": "agent"
+}
+{
+  "run_id": "ST-0608_RISK_REGISTER_UPDATE_20250917",
+  "scope": "BT-06.ST-0608",
+  "decision": "Risks updated with mitigations and smoke schedule; README warning pending",
+  "next_step": "Add Origin/ports warning to README and wire weekly smoke automation",
+  "evidence": "status/tasks/ST-0608_risk_register.md",
+  "utc_ts": "2025-09-17T06:10:10Z",
+  "writer": "agent"
+}
+{
+  "run_id": "ST-0607_SEND_PIPELINE_PASS_20250917",
+  "scope": "BT-06.ST-0607",
+  "decision": "Send pipeline PASS — user→assistant placeholder→final patch verified",
+  "next_step": "Record 3-run perf timings; add README Origin/ports warning",
+  "evidence": "status/evidence/ui/ui_send_<UTC>.png",
+  "utc_ts": "2025-09-17T06:23:20Z",
+  "writer": "agent"
+}
+{
+  "run_id": "ST-0607_PERF_20250917",
+  "scope": "BT-06.ST-0607",
+  "decision": "Perf recorded (3x recent/read via Bridge) and send evidence attached",
+  "next_step": "README warning for Origin/ports; close ST-0607",
+  "evidence": "status/evidence/ui/ui_send_20250917T062913Z.png,status/evidence/bridge/V2_PROXY_PERF_20250917T062930Z.md",
+  "utc_ts": "2025-09-17T06:29:59Z",
+  "writer": "agent"
+}
+{
+  "run_id": "ST-0608_README_WARNINGS_20250917",
+  "scope": "BT-06.ST-0608",
+  "decision": "Added README Origin/Ports guardrails and marked risk item complete",
+  "next_step": "Monitor regular smoke schedule; close ST-0608 for this pass",
+  "evidence": "README.md,status/tasks/ST-0608_risk_register.md",
+  "utc_ts": "2025-09-17T06:33:07Z",
+  "writer": "agent"
+}
+{
+  "run_id": "OPS_HEALTH_CHECK_SCRIPT_FIXED_20250917",
+  "scope": "OPS",
+  "decision": "Health check uses GET; preview(5175) added; statuses align with UI",
+  "next_step": "Keep Tue/Fri smokes and monitor",
+  "evidence": "check_servers.sh,README.md",
+  "utc_ts": "2025-09-17T06:56:39Z",
+  "writer": "agent"
+}
+{
+  "run_id": "BT-06_ST0607_0608_COMPLETE_20250917",
+  "scope": "BT-06",
+  "decision": "ST-0607 and ST-0608 marked done; runbook updated",
+  "next_step": "Proceed to BT-09 contract verification, then BT-10 search UX smoke",
+  "evidence": "status/tasks/ST-0607_test_plan.md,status/tasks/ST-0608_risk_register.md,status/catalog/MASTER_RUNBOOK.md",
+  "utc_ts": "2025-09-17T06:56:39Z",
+  "writer": "agent"
+}
+{
+  "run_id": "RUNBOOK_DYNAMIC_TIME_20250917",
+  "scope": "DOCS",
+  "decision": "MASTER_RUNBOOK shows dynamic Local/UTC/KST via Dataview inline expressions",
+  "next_step": "Verify rendering in Reading View and replicate pattern in other summary docs if useful",
+  "evidence": "status/catalog/MASTER_RUNBOOK.md",
+  "utc_ts": "2025-09-17T07:04:20Z",
+  "writer": "agent"
+}
+{
+  "run_id": "DOCS_DYNAMIC_TIME_EXPANSION_20250917",
+  "scope": "DOCS",
+  "decision": "Added DataviewJS dynamic time blocks to timeline and design summaries",
+  "next_step": "Verify rendering in Reading View and replicate as needed",
+  "evidence": "status/reports/MASTER_EXECUTION_TIMELINE.md,status/design/roadmap_BT07_BT10.md,status/design/ui_integration.md,status/design/risks.md",
+  "utc_ts": "2025-09-17T07:13:57Z",
+  "writer": "agent"
+}
+{
+  "run_id": "BT-09_ST0901_TASK_CREATED_20250917",
+  "scope": "BT-09",
+  "decision": "Added ST-0901 contract verification task (phase=present) for auto-listing in Active ST",
+  "next_step": "Run contract checks and capture evidence",
+  "evidence": "status/tasks/ST-0901_contract_verification.md",
+  "utc_ts": "2025-09-17T07:17:53Z",
+  "writer": "agent"
+}
+{
+  "run_id": "ST-0901_CONTRACT_MATCH",
+  "scope": "BT-09.ST-0901",
+  "decision": "Contract verified — v1/v2 match via Bridge/Backend",
+  "next_step": "Proceed to BT-10 search UX smoke",
+  "evidence": "status/evidence/bridge/CONTRACT_MATCH_20250917T073050Z.md",
+  "utc_ts": "2025-09-17T07:33:26Z",
+  "writer": "agent"
+}
+{
+  "run_id": "BT-10_SEARCH_SMOKE_20250917",
+  "scope": "BT-10",
+  "decision": "Search smoke executed — memory/search and unified via Bridge captured; UI screenshot saved",
+  "next_step": "Wire explicit UI search capture with query overlay; ensure file retriever channel on for path#Lx-y citations",
+  "evidence": "status/evidence/ui/ui_search_20250917T073916Z.json,status/evidence/ui/ui_search_20250917T073916Z.png",
+  "utc_ts": "2025-09-17T07:40:36Z",
+  "writer": "agent"
+}
+{
+  "run_id": "UI_OVERLAY_CAPTURE_20250917",
+  "scope": "BT-10",
+  "decision": "Overlay capture created for UI dev (5173) with query label",
+  "next_step": "Use overlay script for future evidence captures (5173/5175)",
+  "evidence": "status/evidence/ui/ui_search_overlay_20250917T074945Z.png",
+  "utc_ts": "2025-09-17T07:50:23Z",
+  "writer": "agent"
+}
+{
+  "run_id": "FASTAPI_DB_CONVERGENCE_DECISION_20250917",
+  "scope": "BT-09/BT-10",
+  "decision": "Docs patched for FastAPI+DB single gateway; Bridge frozen as preview; SGM soft/hard policy documented",
+  "next_step": "Lock UI toggles; add Infinity Context ingest; validate send pipeline under soft",
+  "evidence": "README.md,AGENTS.md,status/design/ui_integration.md,status/design/roadmap_BT07_BT10.md,status/design/risks.md,status/catalog/MASTER_RUNBOOK.md,status/reports/TBD_sendPipeline_audit.md",
+  "utc_ts": "2025-09-17T11:08:57Z",
+  "writer": "agent"
+}
+{
+  "run_id": "FASTAPI_DB_CONVERGENCE_EXEC_20250917T1119Z",
+  "scope": "BT-09/BT-10",
+  "decision": "Executed convergence: docs updated for FastAPI+DB single gateway; handoff + trigger recorded; TODOs added to README/RUNBOOK",
+  "next_step": "Run health checks; validate UI defaults locked; execute SGM soft 50-shot and capture evidence; prepare Infinity Context ingest",
+  "evidence": "README.md,status/catalog/MASTER_RUNBOOK.md,status/reports/TBD_sendPipeline_audit.md,status/reports/INFINITY_CONTEXT_V0_PLAN.md",
+  "utc_ts": "2025-09-17T11:19:52Z",
+  "writer": "agent"
+}
+{
+  "run_id": "SGM_TUNING_SOFT_RUN_20250917T1119Z",
+  "scope": "BT-10.SGM",
+  "decision": "Prepared SGM soft run plan (50-shot set); evidence paths and capture schema defined; execution pending",
+  "next_step": "Execute soft run, save JSON/PNG under status/evidence/ui/sgm_runs, then append results CKPT",
+  "evidence": "status/reports/TBD_sendPipeline_audit.md,status/evidence/ui/sgm_runs/",
+  "utc_ts": "2025-09-17T11:19:52Z",
+  "writer": "agent"
+}
+{
+  "run_id": "HEALTH_CHECK_OK_20250917T112829Z",
+  "scope": "OPS",
+  "decision": "All servers healthy (8000/3037/5173/5175)",
+  "next_step": "Proceed with SGM soft run and UI defaults audit",
+  "evidence": "status/evidence/ui/sgm_runs/HEALTH_20250917T112702Z.log",
+  "utc_ts": "2025-09-17T11:28:29Z",
+  "writer": "agent"
+}
+{
+  "run_id": "SGM_TUNING_SOFT_RUN_20250917T112829Z",
+  "scope": "BT-10.SGM",
+  "decision": "Executed soft-run (search×2, tools.read×2, multiturn×3). UI defaults audit shows backend=fastapi OK; source=files (needs db); toolmode=off (needs on)",
+  "next_step": "Patch UI defaults (lock/hide toggles), capture UI PNG overlay, and plan Infinity Context ingest execution",
+  "evidence": "status/evidence/ui/sgm_runs/SGM_soft_20250917T112829Z.json",
+  "utc_ts": "2025-09-17T11:28:29Z",
+  "writer": "agent"
+}
+{
+  "run_id": "UI_TOGGLE_LOCK_PATCH_20250917T112931Z",
+  "scope": "BT-10.UI",
+  "decision": "Patched UI defaults: Source=DB, ToolMode=ON; disabled backend/source/toolmode toggles in TopToolbar",
+  "next_step": "Reload UI (5173/5175) to verify defaults and disabled state; capture PNG overlay",
+  "evidence": "ui/dev_a1_vite/src/hooks/usePrefs.js: getThreadSourcePref,getToolModePref; ui/dev_a1_vite/src/components/chat/TopToolbar.jsx",
+  "utc_ts": "2025-09-17T11:29:31Z",
+  "writer": "agent"
+}
+{
+  "run_id": "SGM_SOFT_UI_SCREENSHOTS_20250917T113237Z",
+  "scope": "BT-10.SGM",
+  "decision": "Captured UI screenshots after 7s virtual-time wait (5173/5175)",
+  "next_step": "Human verify toggles disabled and defaults shown; proceed Infinity Context v0 implementation",
+  "evidence": "status/evidence/ui/sgm_runs/SGM_soft_20250917T113226Z_5173.png,status/evidence/ui/sgm_runs/SGM_soft_20250917T113226Z_5175.png,status/evidence/ui/sgm_runs/SGM_soft_20250917T112819Z.json",
+  "utc_ts": "2025-09-17T11:32:37Z",
+  "writer": "agent"
+}
+{
+  "run_id": "INFINITY_CONTEXT_V0_DRYRUN_20250917T113601Z",
+  "scope": "BT-10.Memory",
+  "decision": "Dry-run parsed and mapped migrated store → v2 import payload (no DB writes)",
+  "next_step": "Execute import with --execute for selected batch; verify via /api/v2/threads/recent/read",
+  "evidence": "status/evidence/ui/ingest/INFINITY_V0_20250917T113552Z.json",
+  "utc_ts": "2025-09-17T11:36:01Z",
+  "writer": "agent"
+}
+{
+  "run_id": "INFINITY_CONTEXT_V0_EXEC_20250917T113620Z",
+  "scope": "BT-10.Memory",
+  "decision": "Imported migrated threads into DB via /api/v2/threads/import (2 batches)",
+  "next_step": "UI 5173 Import Threads with Source=DB and verify random thread turns",
+  "evidence": "status/evidence/ui/ingest/INFINITY_V0_20250917T113608Z.json",
+  "utc_ts": "2025-09-17T11:36:20Z",
+  "writer": "agent"
+}
+{
+  "run_id": "EVIDENCE_COLLAPSE_UI_20250917T115411Z",
+  "scope": "BT-10.UI",
+  "decision": "Added collapsible evidence block in Message.jsx (default collapsed, shows compact links)",
+  "next_step": "Verify in 5173/5175; later add OS-open integration or bridge viewer mapping",
+  "evidence": "ui/dev_a1_vite/src/components/chat/messages/Message.jsx",
+  "utc_ts": "2025-09-17T11:54:11Z",
+  "writer": "agent"
+}
+{
+  "run_id": "EVIDENCE_LINK_FIX_BRIDGE_20250917T120300Z",
+  "scope": "BT-10.UI",
+  "decision": "Evidence links now open via Bridge (3037) viewer to avoid Vite /ui-dev base routing issues",
+  "next_step": "Reload and test link open; consider OS-open handler as optional enhancement",
+  "evidence": "ui/dev_a1_vite/src/components/chat/messages/Message.jsx",
+  "utc_ts": "2025-09-17T12:03:00Z",
+  "writer": "agent"
+}
+{
+  "run_id": "EVIDENCE_LINK_ROUTING_NOTE_20250917T120901Z",
+  "scope": "BT-10.UI",
+  "decision": "Evidence links temporarily routed via Bridge(3037) viewer due to Vite /ui-dev base; plan to replace with FastAPI viewer endpoint",
+  "next_step": "Add /api/files/view?path=... (read-only, guarded) and update link builder to FastAPI",
+  "evidence": "ui/dev_a1_vite/src/components/chat/messages/Message.jsx,status/evidence/ui/sgm_runs/SGM_soft_20250917T113226Z_5173.png",
+  "utc_ts": "2025-09-17T12:09:01Z",
+  "writer": "agent"
+}
+{
+  "run_id": "FASTAPI_FILE_VIEWER_OSOPEN_20250917T122100Z",
+  "scope": "BT-10.UI",
+  "decision": "Added FastAPI endpoints: GET /api/files/view (HTML viewer, path#Lx-y, truncated), POST /api/files/open (xdg-open guarded). Updated UI evidence links to use FastAPI and added 'OS로 열기' button.",
+  "next_step": "Verify link open from 5173/5175; test OS open. Consider further guardrails (size/extension whitelist).",
+  "evidence": "app/api.py,ui/dev_a1_vite/src/components/chat/messages/Message.jsx",
+  "utc_ts": "2025-09-17T12:21:00Z",
+  "writer": "agent"
+}
+{
+  "run_id": "FASTAPI_FILEVIEWER_PATH_NORMALIZE_20250917T123525Z",
+  "scope": "BT-10.UI",
+  "decision": "Path normalization added: strips leading 'gumgang_meeting/' and supports absolute paths under project root. files/open now supports readOnly with platform-aware viewers and browser fallback.",
+  "next_step": "User verify: link1 opens viewer (no NOT_FOUND), OS로 열기 works in read-only.",
+  "evidence": "app/api.py,ui/dev_a1_vite/src/components/chat/messages/Message.jsx",
+  "utc_ts": "2025-09-17T12:35:25Z",
+  "writer": "agent"
+}
+{
+  "run_id": "THREAD_VIEWER_AND_LINK_REWRITE_20250917T130611Z",
+  "scope": "BT-10.UI",
+  "decision": "Added /api/v2/threads/view HTML viewer and rewrote legacy evidence links to DB viewer; added /api/files/exists",
+  "next_step": "Verify: legacy conversations/threads links open v2 viewer with #Lx scroll; working file links still open /api/files/view",
+  "evidence": "app/api.py,ui/dev_a1_vite/src/components/chat/messages/Message.jsx",
+  "utc_ts": "2025-09-17T13:06:11Z",
+  "writer": "agent"
+}
+{
+  "run_id": "THREAD_VIEW_HIGHLIGHT_RANGE_20250917T131244Z",
+  "scope": "BT-10.UI",
+  "decision": "Preserved #Lx-y in link rewrite and added highlight range to /api/v2/threads/view (scroll + .hl style)",
+  "next_step": "User verify: legacy link opens v2 viewer with the Lx-y band highlighted",
+  "evidence": "app/api.py,ui/dev_a1_vite/src/components/chat/messages/Message.jsx",
+  "utc_ts": "2025-09-17T13:12:44Z",
+  "writer": "agent"
+}
+{
+  "run_id": "SGM_SOFT_VALIDATION_PASS_20250917T135058Z",
+  "scope": "BT-10.SGM",
+  "decision": "SGM soft 3-shot validation PASS (file summary, no-evidence template, multi-turn continuity)",
+  "next_step": "Active ST cleanup and minor improvements (link exists filter, highlight contrast)",
+  "evidence": "status/reports/SGM_SOFT_VALIDATION_20250917.md,status/evidence/ui/sgm_runs/SGM_soft_20250917T112819Z.json",
+  "utc_ts": "2025-09-17T13:50:58Z",
+  "writer": "agent"
+}
+{
+  "run_id": "ACTIVE_ST_SETUP_20250917T142249Z",
+  "scope": "DOCS",
+  "decision": "Added tasks: ST-0612, ST-0613 (present), ST-0701 (present), ST-0702, ST-0703 (pending) to drive next actions in RUNBOOK",
+  "next_step": "Author RFC for DATA_CONTRACT_v2 and proceed to API stubs once approved",
+  "evidence": "status/tasks/ST-0612_evidence_link_filter.md,status/tasks/ST-0613_viewer_highlight_contrast.md,status/tasks/ST-0701_data_contract_v2_rfc.md,status/tasks/ST-0702_content_api_stubs.md,status/tasks/ST-0703_sqlite_v2_migration_e2e.md",
+  "utc_ts": "2025-09-17T14:22:49Z",
+  "writer": "agent"
+}
+{
+  "run_id": "DATA_CONTRACT_V2_RFC_DRAFT_20250917T144131Z",
+  "scope": "BT-07.ST-0701",
+  "decision": "Drafted DATA_CONTRACT_v2 RFC with schema modules and FastAPI contract (import/search/revalidate)",
+  "next_step": "Human review → approve RFC, then proceed to API stubs (ST-0702)",
+  "evidence": "status/reports/DATA_CONTRACT_v2_RFC.md",
+  "utc_ts": "2025-09-17T14:41:31Z",
+  "writer": "agent"
+}
+{
+  "run_id": "ST-0702_API_STUBS_OK_20250917T145005Z",
+  "scope": "BT-07.ST-0702",
+  "decision": "Added FastAPI stubs: POST /api/v2/content/import, GET /api/v2/content/search, POST /api/v2/content/revalidate (200 OK; evidence append-only)",
+  "next_step": "Proceed to ST-0703: apply SQLite v2 schema and wire real upsert/search over DB view",
+  "evidence": "status/evidence/content/import_runs,status/evidence/content/revalidate_runs",
+  "utc_ts": "2025-09-17T14:50:05Z",
+  "writer": "agent"
+}
+{
+  "run_id": "ST-0703_SQLITE_V2_E2E_20250917T150039Z",
+  "scope": "BT-07.ST-0703",
+  "decision": "SQLite v2 content schema ensured on write; import upserts items/collections/tags; search reads via content_search_view; evidence written under status/evidence/content/**",
+  "next_step": "Harden schema (migrations files), expand tags/collections joins in view, then consider PG adapter",
+  "evidence": "status/evidence/content/import_runs,status/evidence/content/latest.json",
+  "utc_ts": "2025-09-17T15:00:39Z",
+  "writer": "agent"
+}
+{
+  "run_id": "SQLITE_V2_MIGRATIONS_APPLIED_20250917T152837Z",
+  "scope": "BT-07.ST-0703",
+  "decision": "SQLite v2 migration SQL files added and applied via scripts/db/migrate_sqlite.sh",
+  "next_step": "Document PG migration script usage; consider Meili adapter scaffold",
+  "evidence": "db/schema/sqlite/*_v2.sql,db/migrations/sqlite/*.sql,scripts/db/migrate_sqlite.sh",
+  "utc_ts": "2025-09-17T15:28:37Z",
+  "writer": "agent"
+}
+{
+  "run_id": "DOCS_README_CONTENT_V2_20250917T153240Z",
+  "scope": "DOCS",
+  "decision": "README updated with Content v2 Quickstart (RFC link, API samples, migrations)",
+  "next_step": "Human review; proceed with PG adapter and UI evidence link filter",
+  "evidence": "README.md",
+  "utc_ts": "2025-09-17T15:32:40Z",
+  "writer": "agent"
+}
+{
+  "run_id": "ST-0612_LINK_FILTER_IMPL_20250917T154017Z",
+  "scope": "BT-06.ST-0612",
+  "decision": "UI filters evidence links via /api/files/exists; legacy links preserved with v2 viewer rewrite",
+  "next_step": "Capture UI evidence for filtered list and update task status",
+  "evidence": "ui/dev_a1_vite/src/components/chat/messages/Message.jsx",
+  "utc_ts": "2025-09-17T15:40:17Z",
+  "writer": "agent"
+}
+{
+  "run_id": "ST-0613_HIGHLIGHT_CONTRAST_20250917T154017Z",
+  "scope": "BT-06.ST-0613",
+  "decision": "Increased viewer highlight contrast (border-left + brighter tone)",
+  "next_step": "Verify readability in dark mode and AA contrast",
+  "evidence": "app/api.py#v2_threads_view_css",
+  "utc_ts": "2025-09-17T15:40:17Z",
+  "writer": "agent"
+}
+{
+  "run_id": "EVIDENCE_VIEW_TOGGLE_COMPACT_DEFAULT_20250917T164906Z",
+  "scope": "BT-06.UI",
+  "decision": "Added evidence view toggle (원본 병기/간략) with compact as default; summary shows visible count and original when different",
+  "next_step": "Monitor UX; if stable, consider defaulting to summary-only in production",
+  "evidence": "ui/dev_a1_vite/src/components/chat/messages/Message.jsx,status/catalog/MASTER_RUNBOOK.md",
+  "utc_ts": "2025-09-17T16:49:06Z",
+  "writer": "agent"
+}
+{
+  "run_id": "ST-0612_0613_COMPLETED_20250917T164906Z",
+  "scope": "BT-06",
+  "decision": "Marked ST-0612 (link filter) and ST-0613 (highlight contrast) as past; docs updated",
+  "next_step": "Proceed with BT-07 PG adapter planning and UI polishing as needed",
+  "evidence": "status/tasks/ST-0612_evidence_link_filter.md,status/tasks/ST-0613_viewer_highlight_contrast.md",
+  "utc_ts": "2025-09-17T16:49:06Z",
+  "writer": "agent"
+}
+{
+  "run_id": "BT-07_PG_ADAPTER_STUB_20250917T165830Z",
+  "scope": "BT-07",
+  "decision": "Added optional PG adapter path for content import/search via GG_CONTENT_DB=pg; defaults to SQLite",
+  "next_step": "If PG available, set GG_CONTENT_DB=pg and CONTENT_PG_URL to validate; otherwise continue with SQLite",
+  "evidence": "app/api.py",
+  "utc_ts": "2025-09-17T16:58:30Z",
+  "writer": "agent"
+}
+{
+  "run_id": "TMUX_4SERVERS_ENABLED_20250917T190453Z",
+  "scope": "OPS",
+  "decision": "Updated dev_all.sh to launch 4 panes (Backend/Bridge/Vite Dev/Vite Preview 5175); README docs updated",
+  "next_step": "Use start_servers.sh; verify 5175 health shows OK in check_servers.sh",
+  "evidence": "scripts/dev_all.sh,README.md",
+  "utc_ts": "2025-09-17T19:04:53Z",
+  "writer": "agent"
+}
+{"run_id": "EVIDENCE_FALLBACK_HTML_20250918T0807Z", "scope": "BT-06.UI", "decision": "Updated /api/v2/threads/view to fallback to legacy conversations and memory evidence; returns informative HTML instead of 404", "next_step": "Monitor fallback logs and consider importing missing threads into DB", "evidence": "app/api.py,status/catalog/MASTER_RUNBOOK.md", "utc_ts": "2025-09-18T08:25:31Z", "writer": "agent"}
+{"run_id": "UI_TOOLBAR_LOCK_20250918T0812Z", "scope": "BT-06.UI", "decision": "Locked TopToolbar controls (API/Source/Tool Mode) to enforce FastAPI+DB policy; buttons are disabled with guidance tooltips", "next_step": "Monitor user flow; if additional controls needed, extend toolbar guidance", "evidence": "ui/dev_a1_vite/src/components/chat/TopToolbar.jsx,status/evidence/ui/toolbar_lock_20250918T0812Z.txt", "utc_ts": "2025-09-18T08:28:42Z", "writer": "agent"}
+{"run_id": "LEGACY_THREADS_IMPORT_20250918T0910Z", "scope": "BT-06.UI", "decision": "Imported 19 legacy/memory threads into DB via /api/v2/threads/import using generated payload", "next_step": "Verify sample links in UI; expand inventory automation", "evidence": "status/plans/legacy_threads_import_payload.json,status/evidence/ui/ingest/legacy_threads_import_result_20250918T0910Z.json", "utc_ts": "2025-09-18T09:11:22Z", "writer": "agent"}
+{"run_id": "STAGE2_OUTLINE_20250918T0942Z", "scope": "BT-07", "decision": "Stage 2 Orchestrator outline draft created (agent management, MCP mapping, Control Tower integration)", "next_step": "Refine MCP tool mapping and prepare kickoff workshop", "evidence": "status/plans/stage2_orchestrator_outline.md", "utc_ts": "2025-09-18T10:20:39Z", "writer": "agent"}
+{"run_id": "EVIDENCE_FALLBACK_QA_20250918T0948Z", "scope": "BT-06.UI", "decision": "Verified evidence fallback after legacy import; sample links render and summary log captured", "next_step": "Continue monitoring rag_injection logs; integrate legacy import into nightly job", "evidence": "status/logs/rag_injection_summary_20250918T0945Z.txt", "utc_ts": "2025-09-18T10:22:35Z", "writer": "agent"}
+{"run_id": "STAGE1_PROGRESS_WRAP_20250918T0952Z", "scope": "BT-06.UI", "decision": "Stage 1 sprint tasks (PG ingest, legacy import, evidence fallback, toolbar lock, Stage2 outline) updated across Control Tower", "next_step": "Review Tomorrow Queue; prepare Stage 2 kickoff", "evidence": "README.md,status/reports/MASTER_EXECUTION_TIMELINE.md,status/catalog/MASTER_RUNBOOK.md,status/vision/PROJECT_NORTH_STAR.md", "utc_ts": "2025-09-18T10:25:02Z", "writer": "agent"}
+{"run_id": "STAGE2_OUTLINE_EXPANDED_20250918T1000Z", "scope": "BT-07", "decision": "Expanded Stage 2 Orchestrator outline with MCP mapping, agent studio workflow, and Control Tower integration roadmap", "next_step": "Draft Stage 2 kickoff doc and data model", "evidence": "status/plans/stage2_orchestrator_outline.md", "utc_ts": "2025-09-18T10:33:42Z", "writer": "agent"}
+{"run_id": "LEGACY_DB_SUMMARY_20250918T1010Z", "scope": "BT-06.UI", "decision": "DB threads summary captured (427 total, legacy inventory logged)", "next_step": "Automate nightly legacy sync and Stage 2 kickoff", "evidence": "status/evidence/memory/legacy_threads_inventory_log_20250918T090532Z.md", "utc_ts": "2025-09-18T10:36:49Z", "writer": "agent"}
+{"run_id": "STAGE2_KICKOFF_DOC_20250918T1015Z", "scope": "BT-07", "decision": "Created Stage 2 kickoff agenda and checklist document", "next_step": "Schedule kickoff and share materials", "evidence": "status/reports/STAGE2_KICKOFF.md", "utc_ts": "2025-09-18T10:39:27Z", "writer": "agent"}
+{"run_id": "PYSPARK_ENV_READY_20250918T1950Z", "scope": "BT-07", "decision": "PySpark environment installed with embedded JDK; README commands updated", "next_step": "Integrate PySpark workflows into Stage 2 Planner", "evidence": "status/plans/pyspark_env_setup.md,README.md,status/reports/README_CHANGELOG.md", "utc_ts": "2025-09-18T10:55:26Z", "writer": "agent"}
+{"run_id": "STAGE2_KICKOFF_SCHEDULED_20250918T1955Z", "scope": "BT-07", "decision": "Stage 2 kickoff scheduled for 2025-09-19 11:00 KST with attendees and materials listed", "next_step": "Prepare legacy sync automation script and PySpark integration draft before meeting", "evidence": "status/reports/STAGE2_KICKOFF.md,status/catalog/MASTER_RUNBOOK.md,status/reports/MASTER_EXECUTION_TIMELINE.md", "utc_ts": "2025-09-18T10:58:20Z", "writer": "agent"}
+{"run_id": "LEGACY_SYNC_SCRIPT_20250918T110002Z", "scope": "BT-06.UI", "decision": "Created nightly legacy import script and updated plan", "next_step": "Test cron script and integrate into scheduler", "evidence": "scripts/cron_legacy_import.py,status/plans/legacy_thread_import_plan.md", "utc_ts": "2025-09-18T11:00:02Z", "writer": "agent"}
+{"run_id": "PYSPARK_SCENARIO_20250918T1122Z", "scope": "BT-07", "decision": "Drafted PySpark integration scenario for Stage 2 Agent Studio", "next_step": "Implement MCP wrapper and UI bindings", "evidence": "status/plans/pyspark_integration_scenario.md", "utc_ts": "2025-09-18T11:07:06Z", "writer": "agent"}
+{"run_id": "EVIDENCE_MONITOR_SCRIPT_20250918T1128Z", "scope": "BT-06.UI", "decision": "Added evidence fallback monitoring script and metrics plan", "next_step": "Link monitoring procedure in README/Runbook and set up alerts", "evidence": "scripts/monitor/evidence_fallback_check.py,status/plans/evidence_fallback_monitoring.md,status/logs/evidence_monitor_*", "utc_ts": "2025-09-18T11:17:54Z", "writer": "agent"}
+{"run_id": "MCP_PYSPARK_WRAPPER_20250918T1135Z", "scope": "BT-07", "decision": "Created MCP PySpark execution wrapper script", "next_step": "Integrate with Agent Studio and UI trigger", "evidence": "scripts/mcp/pyspark_execute.py,status/plans/pyspark_integration_scenario.md", "utc_ts": "2025-09-18T11:20:35Z", "writer": "agent"}
+{"run_id": "STAGE2_PACKAGE_READY_20250918T1140Z", "scope": "BT-07", "decision": "Stage 2 kickoff materials packaged (slides, attendance, monitoring links)", "next_step": "Distribute materials to attendees and prepare MCP integration", "evidence": "status/plans/stage2_kickoff_package.md,status/plans/stage2_kickoff_slide_outline.txt", "utc_ts": "2025-09-18T11:51:53Z", "writer": "agent"}
+{"run_id": "STAGE2_PACKAGE_READY_20250918T1140Z", "scope": "BT-07", "decision": "Stage 2 kickoff materials packaged (slides, attendance, monitoring links)", "next_step": "Distribute materials to attendees and prepare MCP integration", "evidence": "status/plans/stage2_kickoff_package.md,status/plans/stage2_kickoff_slide_outline.txt", "utc_ts": "2025-09-18T11:52:17Z", "writer": "agent"}
+{"run_id": "MCP_PYSPARK_UI_TRIGGER_20250918T121822Z", "scope": "BT-07", "decision": "Added /api/mcp/pyspark/* and UI triggers; executed sample PySpark job", "next_step": "Wire Planner action and add right-panel result view", "evidence": "gumgang_meeting/status/evidence/pyspark_runs", "utc_ts": "2025-09-18T12:18:22.041Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "296044aed8a855e375388c29b20f5b1cd9dfa5dfd7ce5eff14cb8c1f9a08109c", "writer": "app"}
+{"run_id": "PYS_PANELS_INTEGRATION_20250918T122116Z", "scope": "BT-07", "decision": "Added PySpark panel tab with latest-run view and toolbar event wiring", "next_step": "Enhance panel with stdout/stderr tabs and rerun button; integrate Planner", "evidence": "gumgang_meeting/ui/dev_a1_vite/src/components/CommandCenterDrawer.jsx", "utc_ts": "2025-09-18T12:21:16.945Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "eafa0e7e06f722b741fcf11fa46d2c50cbdca742498e7df030f9a5d92b232b72", "writer": "app"}
+{"run_id": "PYS_PANELS_ENHANCED_20250918T122404Z", "scope": "BT-07", "decision": "Enhanced PySpark panel with stdout/stderr, RC status, rerun/refresh, evidence open/copy", "next_step": "Connect Planner action to pick scripts; add result summary cards", "evidence": "gumgang_meeting/ui/dev_a1_vite/src/components/A1Dev.jsx", "utc_ts": "2025-09-18T12:24:04.118Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "949234f8f5f9638b2413ba61365a878acaead9c39dd36965f9766697a188360c", "writer": "app"}
+{"run_id": "JSONLD_BREADCRUMBS_API_20250918T122654Z", "scope": "BT-07.Content", "decision": "Added /api/v2/content/jsonld/breadcrumbs with optional evidence save; documented usage in Real Estate pipeline README", "next_step": "Add XML sitemap generator endpoint and OpenAPI lint/validation", "evidence": "gumgang_meeting/status/evidence/content/jsonld_runs", "utc_ts": "2025-09-18T12:26:54.658Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "669fab3f3f80b3777ccb171a9630f53b0eca6646e7603ff432fa0f99f0568762", "writer": "app"}
+{"run_id": "SITEMAP_AREAS_API_20250918T122809Z", "scope": "BT-07.Content", "decision": "Added /api/v2/content/sitemap/areas endpoint with evidence save; documented usage in Real Estate pipeline README", "next_step": "Wire OpenAPI lint/validation and add structured data test hooks", "evidence": "gumgang_meeting/status/evidence/content/sitemaps_runs", "utc_ts": "2025-09-18T12:28:09.241Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "a8f66875db65031e46275e80c0c451ae2467767af7d947b476451bdfcf55a5e0", "writer": "app"}
+{"run_id": "OPENAPI_FIX_AND_SD_SMOKE_20250918T123005Z", "scope": "BT-07.Content", "decision": "Fixed OpenAPI response indent; added structured data smoke script (breadcrumbs JSON-LD, sitemap XML)", "next_step": "Add OpenAPI lint (Redocly or Spectral) and CI hooks; extend JSON-LD templates (Article/LocalBusiness)", "evidence": "gumgang_meeting/scripts/validators/structured_data_smoke.sh", "utc_ts": "2025-09-18T12:30:05.607Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "2f0c28b3d9e0ba40630a1dc576f62fd2f8319ec2a78648ce18983b73ce56e913", "writer": "app"}
+{"run_id": "CONTENT_JSONLD_SITEMAP_EXPANSION_20250918T123324Z", "scope": "BT-07.Content", "decision": "Added JSON-LD Article/LocalBusiness and sitemap index endpoints; wired Planner → PySpark quick action; updated validators and docs", "next_step": "Add OpenAPI lint task and integrate endpoints into SSOT sitemap; design alert channel for evidence fallback", "evidence": "gumgang_meeting/app/api.py", "utc_ts": "2025-09-18T12:33:24.210Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "666fefbaf09918c7cbe7068718e3909e7b0346eff3363f590952f16c8a685c71", "writer": "app"}
+{"run_id": "TAURI_INTEGRATION_20250918T140407Z", "scope": "BT-06.UI", "decision": "Tauri v2 dev configured; Editor 3-pane with resizers, file APIs documented in README", "next_step": "Add Save (Evidence) via Tauri FS and keybindings; session restore", "evidence": "gumgang_meeting/ui/dev_a1_vite/src-tauri/tauri.conf.json", "utc_ts": "2025-09-18T14:04:07.419Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "10519dc6d143435fd9bab3efb4cd440348842be3566642e255705b48f4e66ad7", "writer": "app"}
+{"run_id": "IDE_SHELL_PHASE1_20250918T152120Z", "scope": "BT-06.UI", "decision": "IDE Shell Phase 1 docs + /ui-dev/ide route + 3-pane layout with resizers, presets, shortcuts, composer", "next_step": "Phase 2: session restore, split editors, save via Tauri FS", "evidence": "gumgang_meeting/status/reports/GG_IDE_SHELL_SPEC_V1.md", "utc_ts": "2025-09-18T15:21:20.730Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "1a704e8fb11a7504ae617621d276e8f404c7dce99688e867b394f5bf78e15678", "writer": "app"}
+{"run_id": "IDE_HOME_AND_THEME_20250918T163820Z", "scope": "BT-06.UI", "decision": "Home→IDE (/ui-dev/ide) redirect in dev/router + VS Code dark tokens applied (gray base, blue/purple accents)", "next_step": "Polish palette across all components; add Task History popover; implement presets shortcuts", "evidence": "gumgang_meeting/ui/dev_a1_vite/vite.config.ts", "utc_ts": "2025-09-18T16:38:20.016Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "c3d15c6052fed956d19ca4b094e5300f26a36b33d34c70b295d5fb5e13725f0b", "writer": "app"}
+{"run_id": "IDE_KEYMAP_PRESETS_20250918T170813Z", "scope": "BT-06.UI", "decision": "Added Keymap Settings page (/settings/keys) with local overrides; wired global/IDE shortcuts to keymap; added preset buttons and explorer/chat toggles; Home→IDE dev redirect and Tauri URL set", "next_step": "Complete palette application across inputs/tabs/buttons; add preset slots save/recall UI and finalize Task History popover", "evidence": "gumgang_meeting/ui/dev_a1_vite/src/settings/KeymapPage.jsx", "utc_ts": "2025-09-18T17:08:13.860Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "7e33b32b13e2e3ff6b0e3dcb49d363e776e2ad2180ada299df73bd3b55a2e912", "writer": "app"}
+{"run_id": "EOD_WRAP_20250918T180312Z", "scope": "OPS", "decision": "End-of-day protocol executed: Runbook/TL updated, IDE work logged, global redirects set, UI palette pass-1 applied", "next_step": "Resume with IDE Shell Phase 1.5 (icons/presets polish, keymap page, Task History)", "evidence": "gumgang_meeting/status/catalog/MASTER_RUNBOOK.md", "utc_ts": "2025-09-18T18:03:12.136Z", "seq": 1, "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000", "this_hash": "d307b72b505727221a0ceb3b4d6a99599338af32f6c55bdd0ef92e91f81145d4", "writer": "app"}

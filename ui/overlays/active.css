@@ -1,0 +1,958 @@
+/*
+  Gumgang UI Overlay — labs/default.css
+  Purpose:
+    - Safe, minimal visual refinements loaded at runtime (no rebuild).
+    - Can be replaced by ui/overlays/active.css to iterate UI quickly.
+
+  Scope:
+    - Overrides only; avoids breaking base layout or behavior.
+    - Uses CSS variables and light specificity; respects body.lowfx.
+
+  Notes:
+    - Load order: snapshot CSS → this overlay (via auto-injection hook).
+    - Remove or swap this file to revert changes instantly.
+*/
+
+/* 1) Theme polish via variables (non-destructive) */
+:root {
+  /* Slightly brighter accent and clearer borders */
+  --accent: #30d27d;
+  --border: #223047;
+  --shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+  /* Keep container; tweak just a hair for breathing room */
+  --container: clamp(1100px, 90vw, 1800px);
+}
+
+/* 2) Header glass effect (opt-in; disabled in lowfx or when data-noblur=1) */
+@supports (
+  (backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px))
+) {
+  body:not(.lowfx)[data-noblur="0"] header,
+  body:not(.lowfx):not([data-noblur="1"]) header {
+    background: rgba(15, 23, 42, 0.55) !important;
+    -webkit-backdrop-filter: saturate(1.1) blur(10px);
+    backdrop-filter: saturate(1.1) blur(10px);
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* 3) Buttons — clarity, accessibility, and sticky state */
+.btn {
+  border: 1px solid var(--border) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(24, 31, 50, 0.9),
+    rgba(17, 24, 39, 0.9)
+  ) !important;
+  color: var(--fg) !important;
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.04) inset,
+    0 1px 10px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* === ST-1206 Simple Input Area — append-only override === */
+body.simple #chat-input {
+  overflow: visible;
+  max-height: none;
+  transition:
+    transform 80ms ease,
+    box-shadow 120ms ease,
+    border-color 120ms ease;
+}
+.btn:hover {
+  border-color: rgba(48, 210, 125, 0.6) !important;
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.06) inset,
+    0 2px 14px rgba(48, 210, 125, 0.15) !important;
+}
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+.btn:focus-visible {
+  outline: 2px solid rgba(48, 210, 125, 0.9);
+  outline-offset: 2px;
+}
+
+/* Sticky feedback (last pressed) */
+.btn.is-sticky {
+  border-color: rgba(48, 210, 125, 0.8) !important;
+  box-shadow:
+    0 0 0 2px rgba(48, 210, 125, 0.18),
+    0 1px 12px rgba(48, 210, 125, 0.2) !important;
+}
+
+/* === Entry-Pass Banner (L1/L2/L3 progress + NEXT + CHAIN) === */
+.gg-entry-banner {
+  /* anchor to the right of header to avoid overlapping existing toolbar */
+  position: fixed;
+  top: 64px; /* below sticky header */
+  right: 16px; /* align to header toolbar side */
+  left: auto;
+  transform: none;
+  z-index: 999; /* above content, not obscuring modals */
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid #2b3758;
+  border-radius: 10px;
+  background: rgba(10, 16, 32, 0.9);
+  color: #e6eefb;
+  font:
+    13px/1.4 system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* inline variant — if banner is inserted inside header toolbar */
+.gg-entry-banner.inline {
+  position: static;
+  transform: none;
+  z-index: auto;
+  margin-left: 8px;
+}
+
+/* responsive tweaks — keep out of the way on smaller screens */
+@media (max-width: 1024px) {
+  .gg-entry-banner {
+    top: 72px;
+    right: 10px;
+    gap: 8px;
+    padding: 6px 10px;
+  }
+  .gg-entry-banner .gg-btn {
+    padding: 3px 6px;
+  }
+}
+@media (max-width: 640px) {
+  .gg-entry-banner {
+    top: 76px;
+    right: 6px;
+    gap: 6px;
+  }
+  #gg-roadmap {
+    display: none;
+  } /* compact mode */
+}
+
+.gg-chip {
+  padding: 2px 8px;
+  border: 1px solid #334267;
+  border-radius: 999px;
+  background: #0a1329;
+  color: #d7e4ff;
+}
+.gg-chip.on {
+  background: #0e1730;
+  border-color: #4b74d1;
+  box-shadow: 0 0 0 1px rgba(75, 116, 209, 0.25) inset;
+}
+
+.gg-badge {
+  padding: 2px 8px;
+  border: 1px solid #334267;
+  border-radius: 6px;
+  background: #0f1830;
+  color: #cfe1ff;
+}
+.gg-badge.ok {
+  background: rgba(20, 184, 166, 0.12);
+  border-color: rgba(20, 184, 166, 0.35);
+  color: #14b8a6;
+}
+.gg-badge.err {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #ef4444;
+}
+
+.gg-btn {
+  padding: 4px 8px;
+  border: 1px solid #334267;
+  border-radius: 6px;
+  background: #0f1830;
+  color: #d7e4ff;
+  cursor: pointer;
+}
+.gg-btn:hover {
+  border-color: #4b74d1;
+}
+.gg-sep {
+  opacity: 0.5;
+}
+.btn.is-sticky::after {
+  content: "ON";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 10px;
+  line-height: 1;
+  padding: 3px 5px;
+  color: #0b0c10;
+  background: var(--accent);
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(48, 210, 125, 0.35);
+}
+
+/* 4) Tabs — selected clarity */
+nav.tabs button[aria-selected="true"],
+nav.tabs a[aria-selected="true"] {
+  background: rgba(48, 210, 125, 0.12) !important;
+  border-color: rgba(48, 210, 125, 0.6) !important;
+  color: var(--fg) !important;
+}
+
+/* 5) Panels and warn bars — subtle depth and contrast */
+section.panel {
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.28) !important;
+  border: 1px solid rgba(34, 48, 71, 0.8) !important;
+}
+.warnbar {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 184, 0, 0.12),
+    rgba(255, 149, 0, 0.08)
+  ) !important;
+  border: 1px solid rgba(255, 184, 0, 0.4) !important;
+  color: #ffd27a !important;
+  box-shadow: 0 6px 20px rgba(255, 184, 0, 0.12) !important;
+}
+
+/* 6) A4 shortcuts — alignment and label clarity */
+#a4-shortcuts .label {
+  opacity: 0.9;
+  letter-spacing: 0.2px;
+}
+#a4-shortcuts .btn {
+  min-height: 32px;
+}
+
+/* 7) Small motion cues (avoid in lowfx) */
+body:not(.lowfx) .fade-in {
+  animation: overlay-fade-in 280ms ease-out both;
+}
+@keyframes overlay-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 8) Accessibility helpers */
+:where(button, [role="button"]) {
+  -webkit-tap-highlight-color: rgba(48, 210, 125, 0.25);
+}
+:where([title]) {
+  cursor: help;
+}
+
+/* 9) Safe-mode badge (non-intrusive) */
+body[data-safe="1"] .hdr h1::after {
+  content: "SAFE";
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  color: #0b0c10;
+  background: #ffd27a;
+  padding: 3px 6px;
+  border-radius: 6px;
+  vertical-align: middle;
+}
+
+/* 10) Low-FX respect — strip glass/shadows if enabled */
+body.lowfx header,
+body.lowfx nav.tabs,
+body.lowfx section.panel,
+body.lowfx footer {
+  box-shadow: none !important;
+}
+body.lowfx * {
+  transition: none !important;
+}
+
+/* 11) Overlay active marker (developer-only hint; easy to remove) */
+html::before {
+  content: "overlay:labs/default.css";
+  position: fixed;
+  z-index: 2147483647;
+  right: 8px;
+  bottom: 6px;
+  font:
+    10px/1.6 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  color: rgba(229, 231, 235, 0.6);
+  background: rgba(11, 12, 16, 0.5);
+  padding: 2px 6px;
+  border: 1px solid rgba(34, 48, 71, 0.7);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+/* End of labs/default.css */
+
+/* UI Pitstop v1 — Simple Mode + Status Strip (Step 1)
+   - body.simple: keep only 1-line status strip on top
+   - non-destructive; hides header/tabs only in simple
+   - respects lowfx and theme
+*/
+body.simple header,
+body.simple nav.tabs {
+  display: none !important;
+}
+body.simple #global-warn {
+  margin-top: var(--gg-strip-h, 46px);
+}
+body.simple main {
+  margin-top: var(--gg-strip-h, 46px); /* reserve space for strip */
+}
+
+/* Status strip container (optional; injected by JS or markup) */
+#gg-status-strip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 10px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+html[data-theme="light"] #gg-status-strip {
+  background: #ffffff;
+}
+body.lowfx #gg-status-strip {
+  box-shadow: none !important;
+}
+
+/* Strip chips (5x: SGM, Sources, Thread, Bridge, Chain) */
+#gg-status-strip .chip {
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel-2);
+  color: var(--fg);
+  font-size: 12px;
+  white-space: nowrap;
+}
+#gg-status-strip .chip.ok {
+  border-color: rgba(34, 197, 94, 0.45);
+  color: #22c55e;
+}
+#gg-status-strip .chip.warn {
+  border-color: rgba(234, 179, 8, 0.55);
+  color: #eab308;
+}
+#gg-status-strip .chip.err {
+  border-color: rgba(239, 68, 68, 0.55);
+  color: #ef4444;
+}
+#gg-status-strip .chip.kebab {
+  cursor: pointer;
+}
+
+/* convId emphasis */
+#gg-status-strip .chip.thread {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* End of UI Pitstop v1 (Step 1) */
+
+/* UI Pitstop v1 — Step 2: A1 Two-Column Grid (Simple mode only)
+   - Apply 2-column layout only when a threads pane exists to avoid empty gutter.
+   - Left: #gg-threads (search/recent/new), Right: #a1-wrap (chat)
+*/
+body.simple #a1:has(#gg-threads) {
+  display: grid !important;
+  grid-template-columns: minmax(240px, clamp(18vw, 22vw, 420px)) 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+/* Threads pane (left) */
+body.simple #gg-threads {
+  position: sticky;
+  top: var(--gg-strip-h, 46px); /* stay below status strip */
+  align-self: start;
+  max-height: calc(100dvh - var(--gg-strip-h, 46px));
+  overflow: auto;
+  background: var(--panel);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 10px;
+}
+body.simple #gg-threads h3 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+body.simple #gg-threads .row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+body.simple #gg-threads input[type="search"],
+body.simple #gg-threads input[type="text"],
+body.simple #gg-threads select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-2);
+  color: var(--fg);
+}
+body.simple #gg-threads .btn {
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+/* Right column (chat) should not stretch oddly */
+body.simple #a1-wrap {
+  min-width: 0; /* allow grid item to shrink */
+}
+
+/* Responsive fallback: stack to single column on narrower screens */
+@media (max-width: 1024px) {
+  body.simple #a1 {
+    display: block !important;
+  }
+  body.simple #gg-threads {
+    position: static;
+    max-height: none;
+    margin-bottom: 10px;
+  }
+}
+
+/* Evidence summary/collapse styles (Step 2)
+   Expected structure inside #chat-msgs (JS will add):
+   .gg-ev[data-collapsed="1"]
+     .gg-ev-summary  (always visible, clickable)
+     .gg-ev-list     (hidden when collapsed)
+*/
+#chat-msgs .gg-ev {
+  margin: 8px 0;
+  border: 1px solid var(--border);
+  border-left: 3px solid #60a5fa;
+  border-radius: 8px;
+  background: var(--panel);
+  overflow: hidden;
+}
+#chat-msgs .gg-ev-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  font:
+    12px system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  color: var(--fg);
+  background: var(--panel-2);
+  cursor: pointer;
+  user-select: none;
+}
+#chat-msgs .gg-ev-summary .gg-chip-ev {
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #0f1830;
+  color: #d7e4ff;
+  font-size: 11px;
+  white-space: nowrap;
+}
+#chat-msgs .gg-ev-summary .gg-chip-ev.ok {
+  border-color: rgba(34, 197, 94, 0.45);
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+}
+#chat-msgs .gg-ev-summary .gg-chip-ev.warn {
+  border-color: rgba(234, 179, 8, 0.55);
+  color: #eab308;
+  background: rgba(234, 179, 8, 0.1);
+}
+#chat-msgs .gg-ev-summary .gg-chip-ev.err {
+  border-color: rgba(239, 68, 68, 0.55);
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+#chat-msgs .gg-ev-list {
+  padding: 8px 10px;
+  font:
+    12px/1.5 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Consolas,
+    monospace;
+  color: var(--fg);
+  background: var(--panel);
+  overflow: auto;
+  max-height: 240px;
+}
+#chat-msgs .gg-ev[data-collapsed="1"] .gg-ev-list {
+  display: none;
+}
+/* Hover cue */
+#chat-msgs .gg-ev-summary:hover {
+  filter: brightness(1.05);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Threads collapsed mode (toggle-able via body.threads-collapsed) */
+body.simple.threads-collapsed #a1 {
+  display: block !important; /* revert to single column */
+}
+body.simple.threads-collapsed #gg-threads {
+  display: none !important; /* hide left pane entirely */
+}
+
+/* Step C Prep — Chat bubbles and readability (non-destructive)
+   - These styles are inert until JS renders .msg.{user|assistant} with a .bubble.
+   - Keeps existing A1 markup working; Step C JS will wrap messages.
+*/
+#chat-msgs {
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: var(--gg-chat-width);
+  margin: 0 auto;
+}
+#chat-msgs .msg {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0;
+}
+#chat-msgs .msg.user {
+  justify-content: flex-end;
+}
+#chat-msgs .msg.assistant {
+  justify-content: flex-start;
+}
+
+#chat-msgs .msg .bubble {
+  max-width: min(80ch, 92%);
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--fg);
+  box-shadow: var(--shadow);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+#chat-msgs .msg.user .bubble {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.35);
+}
+#chat-msgs .msg.assistant .bubble {
+  background: var(--panel-2);
+}
+
+#chat-msgs .msg .meta {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+
+/* Input composer readability */
+#chat-input {
+  line-height: 1.5;
+  font-size: 14px;
+  max-height: 35vh !important;
+  overflow: visible !important;
+}
+
+/* Viewport utilization overrides (Simple mode) */
+body.simple #a1 {
+  height: 100dvh;
+}
+body.simple #a1-wrap {
+  height: calc(100dvh - var(--gg-strip-h, 46px)) !important;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto !important;
+  grid-auto-rows: 0 !important;
+  overflow: hidden !important;
+  overscroll-behavior: contain;
+}
+
+/* Make chat viewport fill remaining height even if inline styles exist */
+body.simple #chat-msgs {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  min-height: 0 !important;
+  overflow-y: auto !important; /* scroll inside timeline */
+  overscroll-behavior: contain;
+}
+
+/* Composer tweaks: smaller initial height, allow growth */
+#chat-input {
+  min-height: 56px !important;
+  max-height: 35vh !important;
+  resize: vertical;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+/* Evidence summary density: reduce vertical footprint */
+#chat-msgs .gg-ev {
+  margin: 4px 0 !important;
+}
+#chat-msgs .gg-ev-summary {
+  padding: 4px 8px !important;
+  gap: 6px !important;
+  font-size: 11px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+#chat-msgs .gg-ev-list {
+  max-height: 140px !important;
+  font-size: 11px !important;
+}
+
+/* Center chat timeline (Simple) */
+body.simple #chat-msgs {
+  max-width: var(--gg-chat-width) !important;
+  margin: 0 auto !important;
+  width: 100%;
+}
+body.simple #a1-wrap > #chat-msgs {
+  align-self: stretch !important;
+}
+
+/* Dense toolbar mode (toggle via body.simple.dense-toolbar) */
+body.simple.dense-toolbar .label {
+  padding: 1px 4px !important;
+  font-size: 11px !important;
+}
+body.simple.dense-toolbar .btn {
+  padding: 6px 8px !important;
+  font-size: 12px !important;
+}
+body.simple.dense-toolbar #a1 .row {
+  gap: 6px !important;
+  margin-top: 2px !important;
+}
+body.simple.dense-toolbar input,
+body.simple.dense-toolbar select {
+  padding: 4px 6px !important;
+}
+
+/* Evidence: hide immediate duplicate blocks if any */
+#chat-msgs .gg-ev + .gg-ev {
+  display: none !important;
+}
+
+/* Sticky composer (Simple single‑scroll) */
+body.simple #chat-input {
+  position: static;
+  z-index: auto;
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+}
+body.simple #chat-input + .row {
+  position: static;
+  z-index: auto;
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* Simple Single-Scroll Layout (ChatGPT-like) */
+html {
+  height: 100%;
+}
+body.simple {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Left: threads scroll only (below status strip ~46px) */
+body.simple #gg-threads {
+  height: calc(100dvh - var(--gg-strip-h, 46px));
+  overflow: auto;
+  position: sticky;
+  top: var(--gg-strip-h, 46px);
+}
+
+/* Right: timeline scroll only; composer fixed within right pane (via grid rows) */
+body.simple #a1 {
+  height: 100dvh;
+}
+body.simple #a1-wrap {
+  height: calc(100dvh - var(--gg-strip-h, 46px)) !important;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto !important;
+  grid-auto-rows: 0 !important;
+  overflow: hidden !important;
+}
+body.simple #chat-msgs {
+  overflow: auto !important; /* inner scroll */
+}
+
+/* Guardrails P0 — dvh/min-height and safe-area padding (Safari/iOS) */
+body.simple #a1 {
+  height: 100dvh;
+  min-height: 100vh;
+}
+body.simple #a1-wrap {
+  height: calc(100dvh - var(--gg-strip-h, 46px)) !important;
+  min-height: calc(100vh - var(--gg-strip-h, 46px)) !important;
+}
+/* Composer safe-area support (iOS Safari keyboard up) */
+body.simple #chat-input,
+body.simple #composer {
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+/* Precise overflow/min-height resets — ensure only two scroll containers */
+body.simple #a1,
+body.simple #a1-right,
+body.simple #a1-wrap {
+  overflow: visible !important;
+  min-height: 0 !important;
+}
+body.simple #chat-msgs,
+body.simple #gg-threads {
+  overflow: auto !important;
+}
+
+/* Evidence details/summary — accessible default (1-line summary truncation) */
+#chat-msgs details {
+  margin: 8px 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  overflow: hidden;
+}
+#chat-msgs details > summary {
+  padding: 6px 8px;
+  font:
+    12px system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-2);
+}
+#chat-msgs details[open] > summary {
+  border-bottom-color: transparent;
+}
+#chat-msgs details .ev-body {
+  padding: 8px 10px;
+  font:
+    12px/1.5 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Consolas,
+    monospace;
+  max-height: 240px;
+  overflow: auto;
+}
+
+/* Regression guards — avoid double scrollbars in ancestors */
+body.simple #chat-msgs {
+  max-height: none !important;
+}
+body.simple .panel,
+body.simple .content {
+  overflow: visible !important;
+}
+body.simple #a1-right * {
+  min-height: 0 !important;
+}
+
+/* Simple mode — hide experimental token budget UI (Budget row) */
+body.simple label[for="budget-input"],
+body.simple #budget-input,
+body.simple #btn-budget-apply {
+  display: none !important;
+}
+
+:root {
+  /* Unified chat width (timeline + composer) */
+  --gg-chat-width: clamp(720px, 82vw, 902px);
+}
+
+/* Simple — center both timeline and composer to the same width */
+body.simple #a1-wrap {
+  grid-template-columns: 1fr auto; /* left: input/timeline, right: buttons */
+  justify-items: center; /* center left column content (timeline/input) */
+}
+
+/* Timeline width + centering (left column) */
+body.simple #chat-msgs {
+  width: 100%;
+  justify-self: center;
+}
+
+/* Composer two‑column layout (same row): input left, buttons right */
+body.simple #chat-input {
+  grid-row: 3;
+  grid-column: 1;
+  width: 100%;
+  max-width: var(--gg-chat-width);
+  justify-self: center;
+}
+body.simple #chat-input + .row {
+  grid-row: 3;
+  grid-column: 2;
+  align-self: start;
+  justify-self: end; /* stick buttons to the right */
+}
+
+/* Anchor result block spans full width below */
+body.simple #anchor-result {
+  max-width: var(--gg-chat-width);
+  margin: 0 auto;
+  grid-column: 1 / -1;
+}
+
+/* Mobile fallback: stack composer vertically */
+@media (max-width: 768px) {
+  body.simple #a1-wrap {
+    grid-template-columns: 1fr;
+  }
+  body.simple #chat-input {
+    grid-column: 1 !important;
+  }
+  body.simple #chat-input + .row {
+    grid-column: 1 !important;
+    justify-self: end;
+  }
+}
+
+/* End of UI Pitstop v1 (Step 2) */
+/* ===== ST-1206 T3 — Simple 모드 레이아웃/정렬 패치 ===== */
+/* 우측 영역(#a1-wrap) 3행 그리드 + 중앙 정렬 */
+body.simple #a1-wrap {
+  display: grid !important;
+  /* 중앙 트랙을 강제로 0까지 수축 가능하게 */
+  grid-template-rows: auto minmax(0, 1fr) auto !important;
+  grid-auto-rows: 0 !important;
+  grid-template-columns: minmax(0, var(--gg-chat-width, 880px)) auto;
+  justify-content: center;
+  gap: var(--gg-gap, 8px);
+  height: calc(100dvh - var(--gg-strip-h, 46px));
+  overflow: hidden !important;
+  overscroll-behavior: contain;
+}
+
+/* 스크롤/높이 충돌 방지 (이중 스크롤 근절) */
+body.simple #a1-right,
+body.simple #a1-wrap,
+body.simple #chat-msgs {
+  min-height: 0 !important;
+}
+body.simple #chat-msgs {
+  overflow: auto !important;
+}
+
+/* 입력창 중앙, 버튼은 우측 컬럼에 배치 */
+body.simple #chat-input {
+  grid-row: 3 !important;
+  grid-column: 1 !important;
+  width: 100%;
+  max-width: var(--gg-chat-width, 880px);
+  margin: 0 auto;
+  overflow: visible !important;
+}
+/* chat-input 바로 다음에 오는 버튼/행(보내기/앵커)을 우측 끝으로 */
+body.simple [data-gg="composer-actions"] {
+  grid-row: 3;
+  grid-column: 2;
+  justify-self: end;
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+/* 타임라인(본문) 폭도 입력창과 동일하게 중앙 정렬 */
+body.simple #chat-msgs {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  max-width: var(--gg-chat-width, 880px);
+  margin: 0 auto;
+  /* 트랙 수축과 내부 스크롤을 보장 */
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+
+/* 1024px 이하: 한 열로 접기(버튼을 입력창 아래로 내림) */
+@media (max-width: 1024px) {
+  body.simple #a1-wrap {
+    grid-template-columns: 1fr;
+  }
+  body.simple #chat-input + .row {
+    grid-column: 1;
+    justify-self: end;
+  }
+}
+/* --- A1 subtree overflow reset: only two scroll containers (#gg-threads, #chat-msgs) --- */
+body.simple #a1 *:not(#a1-wrap):not(#chat-msgs):not(#gg-threads) {
+  overflow: visible !important;
+  overflow-y: visible !important;
+}
+
+body.simple #gg-threads,
+body.simple #chat-msgs {
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+
+/* Thinking badge alignment: ensure it aligns with timeline width and grid area */
+#gg-thinking {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  justify-self: center;
+  max-width: var(--gg-chat-width, 880px) !important;
+  width: 100% !important;
+  margin: 0 auto 6px !important;
+  pointer-events: none;
+}
+
+/* ===== /ST-1206 T3 ===== */
+/* === ST-1206 Simple Input — hard override to avoid extra scroller === */
+body.simple #chat-input {
+  overflow: visible !important;
+  overflow-y: visible !important;
+  max-height: none;
+}
+/* === ST-1206 Simple Input — prevent input from being counted as scroller === */
+body.simple #chat-input,
+body.simple #chat-input textarea,
+body.simple #chat-input [contenteditable="true"],
+body.simple textarea#chat-input {
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+  overscroll-behavior: contain;
+}

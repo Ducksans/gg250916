@@ -116,7 +116,13 @@ export default function ThreadList({
   useEffect(() => {
     const node = sentinelRef.current;
     if (!node) return;
-    const root = listRef.current;
+    // The actual scroll container is #gg-threads (layout owns overflow).
+    // Using listRef as root prevents intersection when the parent scroller moves.
+    const root =
+      document.getElementById("gg-threads") ||
+      (listRef.current && listRef.current.closest
+        ? listRef.current.closest("#gg-threads")
+        : null);
     const obs = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -128,7 +134,7 @@ export default function ThreadList({
           }
         }
       },
-      { root, rootMargin: "0px 0px 400px 0px", threshold: 0 },
+      { root: root || null, rootMargin: "0px 0px 600px 0px", threshold: 0 },
     );
     obs.observe(node);
     return () => obs.disconnect();

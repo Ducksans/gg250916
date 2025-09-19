@@ -1,0 +1,226 @@
+{
+  "query": "SSOT_SITEMAP — 금강 문서 색인",
+  "tiers": [
+    "long",
+    "medium",
+    "short",
+    "ultra_long",
+    "ultra_short"
+  ],
+  "weights": {
+    "kw": 1.0,
+    "recency": 0.6,
+    "refs": 0.4,
+    "tier": 0.2,
+    "tier_map": {
+      "ultra_short": 1.0,
+      "short": 0.8,
+      "medium": 0.6,
+      "long": 0.4,
+      "ultra_long": 0.2
+    }
+  },
+  "params": {
+    "k": 8,
+    "half_life_days": 7.0,
+    "score_min": 0.25,
+    "quorum_min": 1,
+    "quorum_target": 3
+  },
+  "items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7557503985683416,
+      "ts": "2025-09-16T18:46:59.122Z",
+      "scope_id": null,
+      "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9262506642805696,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7557503985683416,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.030248851520684,
+      "ts": "2025-09-17T05:23:02.580Z",
+      "scope_id": null,
+      "text": "이 스레드는 이천시로 전입한 경우 주택 신축 지원금이 있는지에 대한 질문으로 시작됩니다. 이천시의 농촌지역(읍·면)에서는 농촌주택 개량사업을 통해 최대 2억 5천만 원의 저금리 융자 지원이 가능하다는 정보가 제공되었습니다. 신둔면 도암리 609-4는 농촌지역으로 분류되어 해당 지원 사업의 대상이 될 수 있습니다.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/6875d0d7-cdc4-8003-a838-e6b278c00246.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9837480858678067,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.030248851520684,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7930380594064508,
+      "ts": "2025-09-17T06:11:14.100Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68885fa1-cf80-8329-88e8-1e601ffcae24.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9883967656774181,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7930380594064508,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7873429162113379,
+      "ts": "2025-09-17T04:32:20.840Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68a2db67-6310-832f-834f-3699d93045be.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9789048603522297,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7873429162113379,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.778018589328727,
+      "ts": "2025-09-11T12:51:35.354Z",
+      "scope_id": null,
+      "text": "너는 금강 이니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_cl7pxreb_mffedvu2.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 0.25,
+        "recency": 0.5466976488812118,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.778018589328727,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7669692205395431,
+      "ts": "2025-09-11T11:52:24.884Z",
+      "scope_id": null,
+      "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.5449487008992385,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7669692205395431,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7668998367134672,
+      "ts": "2025-09-11T11:48:29.325Z",
+      "scope_id": null,
+      "text": "무엇을 도와드릴까요?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.5448330611891121,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7668998367134672,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7596263273916546,
+      "ts": "2025-09-16T20:02:21.438Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/68a47a66-b5a0-832b-8d47-1243449d0fae.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9327105456527577,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7596263273916546,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "no_hit": false,
+  "ts": "2025-09-17T08:09:34.143Z"
+}

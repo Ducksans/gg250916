@@ -1,0 +1,154 @@
+{
+  "query": "너는 누구니 ?",
+  "tiers": [
+    "long",
+    "medium",
+    "short",
+    "ultra_long",
+    "ultra_short"
+  ],
+  "weights": {
+    "kw": 1.0,
+    "recency": 0.6,
+    "refs": 0.4,
+    "tier": 0.2,
+    "tier_map": {
+      "ultra_short": 1.0,
+      "short": 0.8,
+      "medium": 0.6,
+      "long": 0.4,
+      "ultra_long": 0.2
+    }
+  },
+  "params": {
+    "k": 5,
+    "half_life_days": 7.0,
+    "score_min": 0.25,
+    "quorum_min": 1,
+    "quorum_target": 3
+  },
+  "items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999882757938,
+      "ts": "2025-09-15T04:34:30.739Z",
+      "scope_id": null,
+      "text": "너는 누구니 ?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_67va3uqm_mfk3u4xc.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999999804596563,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7999999882757938,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2995334228105164,
+      "ts": "2025-09-15T04:26:40.075Z",
+      "scope_id": null,
+      "text": "너는 금강이 뭐라고 생각해?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_dcqftnjv_mfkmexp8.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9992223713508607,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2995334228105164,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2955278098471201,
+      "ts": "2025-09-15T03:18:48.930Z",
+      "scope_id": null,
+      "text": "너는 무슨 엔진 이야?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_q3mamsyt_mfkjwqes.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9925463497452005,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2955278098471201,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.096844427225547,
+      "ts": "2025-09-11T14:34:17.003Z",
+      "scope_id": null,
+      "text": "이봐 너는 누구야?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.661407378709245,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.096844427225547,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.095930611117981,
+      "ts": "2025-09-11T13:59:06.517Z",
+      "scope_id": null,
+      "text": "안녕 너는 이 스래드를 요약 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhy.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.6598843518633015,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.095930611117981,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "no_hit": false,
+  "ts": "2025-09-15T04:34:30.793Z"
+}

@@ -3,6 +3,13 @@
 
 # --- 0. 설정 및 로깅 준비 ---
 set -e # 오류 발생 시 즉시 스크립트 중단
+
+if [ -z "${ALLOW_SETUP_RERUN:-}" ]; then
+  echo "[DEPRECATED] setup_dev_env_v3.sh 는 보존용 스크립트입니다." >&2
+  echo "            표준 서버 기동은 ./start_servers.sh 로 통일되었습니다." >&2
+  echo "            강제로 실행하려면 'ALLOW_SETUP_RERUN=1 ./setup_dev_env_v3.sh' 를 사용하세요." >&2
+  exit 1
+fi
 LOG_FILE="$HOME/gumgang_setup_log_$(date +%Y%m%d_%H%M%S).txt"
 exec &> >(tee -a "$LOG_FILE") # 모든 출력을 파일과 터미널에 동시에 기록
 

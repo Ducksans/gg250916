@@ -1,0 +1,154 @@
+{
+  "query": "이 스래드 요약 해봐",
+  "tiers": [
+    "long",
+    "medium",
+    "short",
+    "ultra_long",
+    "ultra_short"
+  ],
+  "weights": {
+    "kw": 1.0,
+    "recency": 0.6,
+    "refs": 0.4,
+    "tier": 0.2,
+    "tier_map": {
+      "ultra_short": 1.0,
+      "short": 0.8,
+      "medium": 0.6,
+      "long": 0.4,
+      "ultra_long": 0.2
+    }
+  },
+  "params": {
+    "k": 5,
+    "half_life_days": 7.0,
+    "score_min": 0.25,
+    "quorum_min": 1,
+    "quorum_target": 3
+  },
+  "items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999127639015,
+      "ts": "2025-09-17T05:24:49.445Z",
+      "scope_id": null,
+      "text": "이 스래드 요약 해봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68885fa1-cf80-8329-88e8-1e601ffcae24.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999998546065025,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7999999127639015,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.5354196249962355,
+      "ts": "2025-09-11T16:53:40.814Z",
+      "scope_id": null,
+      "text": "ui-dev/thread/gg_mig_20250911_06ckhx <<< 이 스래드 요약 해봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+      "line_from": 8,
+      "line_to": 8,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.5590327083270592,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.5354196249962355,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.535314083394356,
+      "ts": "2025-09-11T16:48:00.291Z",
+      "scope_id": null,
+      "text": "이 스래드 요약 해봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/68483692-2588-8003-acd8-8b219f28d744.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.5588568056572599,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.535314083394356,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.5352595160524887,
+      "ts": "2025-09-11T16:45:04.149Z",
+      "scope_id": null,
+      "text": "이 스래드 요약 해봐 http://localhost:5173/ui-dev/thread/6885bcc0-dfb4-8326-ba92-cb0353ea6b06",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/6885bcc0-dfb4-8326-ba92-cb0353ea6b06.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.5587658600874811,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.5352595160524887,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2898939146589592,
+      "ts": "2025-09-17T05:23:02.580Z",
+      "scope_id": null,
+      "text": "이 스레드는 이천시로 전입한 경우 주택 신축 지원금이 있는지에 대한 질문으로 시작됩니다. 이천시의 농촌지역(읍·면)에서는 농촌주택 개량사업을 통해 최대 2억 5천만 원의 저금리 융자 지원이 가능하다는 정보가 제공되었습니다. 신둔면 도암리 609-4는 농촌지역으로 분류되어 해당 지원 사업의 대상이 될 수 있습니다.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/6875d0d7-cdc4-8003-a838-e6b278c00246.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.25,
+        "recency": 0.9998231910982652,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2898939146589592,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "no_hit": false,
+  "ts": "2025-09-17T05:24:49.569Z"
+}

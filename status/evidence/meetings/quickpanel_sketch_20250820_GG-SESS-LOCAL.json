@@ -1,0 +1,57 @@
+{
+  "kind": "meeting_quickpanel_sketch",
+  "version": "beta-sketch-2025-08-20",
+  "session_id": "GG-SESS-LOCAL",
+  "generated_at": "2025-08-20T07:20:00Z",
+  "summary": "A1 채팅 화면에 회의 퀵패널(β) 스케치만 배치. 기능은 BT-10에서 연결 예정.",
+  "ui": {
+    "entry_file": "gumgang_meeting/ui/snapshots/unified_A1-A4_v0/index.html",
+    "toolbar_button_id": "btn-meeting-panel",
+    "drawer_id": "a1-meeting-drawer",
+    "status_text_id": "ops-status",
+    "tabs": ["A1", "A2", "A3", "A4", "A5(회의β)"],
+    "default_drawer_state": "closed"
+  },
+  "behavior": {
+    "toggle": {
+      "button": true,
+      "shortcut": "Ctrl+Alt+H",
+      "updates_ops_status": true
+    },
+    "safe_mode_supported": true,
+    "lowfx_respected": true
+  },
+  "controls": [
+    { "name": "회의 노트", "enabled": false, "tooltip": "회의 노트(준비중)" },
+    { "name": "캡쳐", "enabled": false, "tooltip": "화면 캡쳐(준비중)" },
+    { "name": "주석", "enabled": false, "tooltip": "주석(준비중)" },
+    { "name": "녹화", "enabled": false, "tooltip": "녹화(준비중)" }
+    ],
+  "storage_rules": {
+    "root": "status/meetings/<sessionId>/",
+    "evidence_root": "status/evidence/meetings/",
+    "examples": [
+      "status/meetings/GG-SESS-LOCAL/notes_YYYYMMDD.json",
+      "status/meetings/GG-SESS-LOCAL/capture_YYYYMMDD_HHMM.png",
+      "status/evidence/meetings/quickpanel_sketch_YYYYMMDD_<sessionId>.json"
+    ]
+  },
+  "endpoints": {
+    "save": "POST /api/save",
+    "open": "POST /api/open",
+    "health": "GET /api/health"
+  },
+  "bt10_linkages": [
+    "화면 캡쳐(getDisplayMedia 또는 네이티브) → 파일 저장 및 미리보기",
+    "Canvas 주석(펜/하이라이트/텍스트/도형) + undo/redo",
+    "화면 녹화(MediaRecorder/webm 또는 네이티브) + 용량/길이 제한",
+    "회의 자산 리스트(오늘/최근) + /api/open 연결",
+    "공유/코멘트 타임라인(경량 WebSocket) 1단계"
+  ],
+  "acceptance_placeholders": [
+    "버튼/단축키로 드로어 열림/닫힘 동작하고 ops-status에 반영됨",
+    "BT-09에서는 버튼은 disabled(부작용 없음)",
+    "레이아웃 안정, 1800px 컨테이너에서 시각적 일관성 유지"
+  ],
+  "notes": "이 JSON은 스케치 존재를 증거화하기 위한 기록입니다. 실제 기능 연결은 BT-10에서 진행합니다."
+}

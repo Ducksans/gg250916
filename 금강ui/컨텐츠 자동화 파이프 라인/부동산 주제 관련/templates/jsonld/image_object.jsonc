@@ -1,0 +1,11 @@
+// JSON-LD template for ImageObject
+{
+  "@context": "https://schema.org",
+  "@type": "ImageObject",
+  "contentUrl": "{{image_url}}",
+  "thumbnailUrl": "{{thumb_url}}",
+  "caption": "{{caption}}",
+  "uploadDate": "{{upload_date}}",
+  "license": "{{license_url}}",
+  "creator": {"@type": "Organization", "name": "{{creator}}"}
+}

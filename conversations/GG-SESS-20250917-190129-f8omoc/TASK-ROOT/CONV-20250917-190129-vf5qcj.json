@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-20250917-190129-f8omoc",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250917-190129-vf5qcj",
+    "model": "gpt-4o-mini",
+    "created_at": "2025-09-17T10:01:30.709Z",
+    "updated_at": "2025-09-17T10:01:30.709Z",
+    "type": "chat",
+    "version": 1,
+    "provider": "openai",
+    "upstream_model": "gpt-4o-mini-2024-07-18",
+    "last_request_id": "req_f1e282f75bdb414985e251e67349254f"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "/home/duksan/바탕화면/gumgang_meeting/README.md 읽고 한 줄 요약",
+      "ts": "2025-09-17T10:01:29.552Z"
+    },
+    {
+      "role": "assistant",
+      "content": "없음 템플릿",
+      "ts": "2025-09-17T10:01:30.709Z",
+      "usage": {
+        "prompt_tokens": 1336,
+        "completion_tokens": 6,
+        "total_tokens": 1342,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-4o-mini-2024-07-18",
+      "request_id": "req_f1e282f75bdb414985e251e67349254f"
+    }
+  ]
+}

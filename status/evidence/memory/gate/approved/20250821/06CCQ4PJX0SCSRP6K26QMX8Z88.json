@@ -1,0 +1,49 @@
+{
+  "id": "06CCQ4PJX0SCSRP6K26QMX8Z88",
+  "proposal_id": "06CCQ4PJX0SCSRP6K26QMX8Z88",
+  "state": "approved",
+  "approved_at": "2025-08-21T07:40:53.873646Z",
+  "approver": "web",
+  "run_id": "72H_20250821_0204Z",
+  "checkpoint_evidence": "gumgang_meeting/status/checkpoints/CKPT_72H_RUN.md#L651-660",
+  "approved_sha256": "b3009ab0969727c88b506bd857b28e4719368918c4a18f738214fcbda6d97f75",
+  "gate_token": "gt.06CCQ4PJX0SCSRP6K26QMX8Z88.1755762053873.57b2b7bc8082ffce414a3ad83088a0f0aa6a57c19ddcbf11306670bea2c9e63d",
+  "prev_hash": null,
+  "review_at": "2026-08-21T07:40:53.873648Z",
+  "proposal_excerpt": "L5 게이트 핵심 지식",
+  "refs": [
+    "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl#L1-1",
+    "status/evidence/meetings/GG-SESS-LOCAL/events.jsonl#L1-10",
+    "status/resources/vector_index/search_results_20250819_1455.json#L1-10"
+  ],
+  "l5_record": {
+    "record": {
+      "id": "ultra_long_20250821_1755762053873",
+      "tier": "ultra_long",
+      "scope_id": "BT-12",
+      "ts": "2025-08-21T07:40:53.873358Z",
+      "text": "L5 게이트 핵심 지식",
+      "refs": [
+        "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl#L1-1",
+        "status/evidence/meetings/GG-SESS-LOCAL/events.jsonl#L1-10",
+        "status/resources/vector_index/search_results_20250819_1455.json#L1-10"
+      ],
+      "mode": null,
+      "weight": {
+        "gate_token": "gt.06CCQ4PJX0SCSRP6K26QMX8Z88.1755762053873.57b2b7bc8082ffce414a3ad83088a0f0aa6a57c19ddcbf11306670bea2c9e63d",
+        "approved_id": "06CCQ4PJX0SCSRP6K26QMX8Z88"
+      },
+      "emb": null,
+      "session_id": "GG-SESS-LOCAL"
+    },
+    "path": "status/evidence/memory/tiers/ultra_long/20250821/GG-SESS-LOCAL.jsonl",
+    "bytes_written": 619
+  },
+  "indexes": {
+    "inverted_updated": true,
+    "vector_upserted": true,
+    "backlink_count": 3,
+    "embedding_version": null,
+    "upsert_log_line": null
+  }
+}

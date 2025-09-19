@@ -20,7 +20,7 @@
  *  - '1파일 1책임' 원칙을 준수하고 있으므로 리팩토링은 현재 시급하지 않습니다.
  * ---------------------------------------------------------------------------
  */
-import React, { useEffect, useRef, useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 /**
  * ConfirmDialog — Generic confirmation modal for destructive/critical actions.
@@ -75,7 +75,7 @@ export default function ConfirmDialog({
     const sel =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     return Array.from(root.querySelectorAll(sel)).filter(
-      (el) => !el.hasAttribute("disabled") && !el.getAttribute("aria-hidden"),
+      (el) => !el.hasAttribute("disabled") && !el.getAttribute("aria-hidden")
     );
   }, []);
 
@@ -108,7 +108,7 @@ export default function ConfirmDialog({
         }
       }
     },
-    [open, closeOnEsc, onCancel, focusables],
+    [open, closeOnEsc, onCancel, focusables]
   );
 
   // Auto-focus when opened

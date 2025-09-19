@@ -1,0 +1,154 @@
+{
+  "query": "안녕",
+  "tiers": [
+    "long",
+    "medium",
+    "short",
+    "ultra_long",
+    "ultra_short"
+  ],
+  "weights": {
+    "kw": 1.0,
+    "recency": 0.6,
+    "refs": 0.4,
+    "tier": 0.2,
+    "tier_map": {
+      "ultra_short": 1.0,
+      "short": 0.8,
+      "medium": 0.6,
+      "long": 0.4,
+      "ultra_long": 0.2
+    }
+  },
+  "params": {
+    "k": 5,
+    "half_life_days": 7.0,
+    "score_min": 0.25,
+    "quorum_min": 1,
+    "quorum_target": 3
+  },
+  "items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.799999892513908,
+      "ts": "2025-09-17T06:11:13.264Z",
+      "scope_id": null,
+      "text": "안녕",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68885fa1-cf80-8329-88e8-1e601ffcae24.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999998208565136,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.799999892513908,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.6320321815906562,
+      "ts": "2025-09-14T12:52:15.943Z",
+      "scope_id": null,
+      "text": "안녕?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.7200536359844271,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.6320321815906562,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.5313588724708516,
+      "ts": "2025-09-11T13:59:06.517Z",
+      "scope_id": null,
+      "text": "안녕 너는 이 스래드를 요약 할 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhy.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.5522647874514195,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.5313588724708516,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.529009951045202,
+      "ts": "2025-09-11T11:48:48.009Z",
+      "scope_id": null,
+      "text": "안녕 금강아?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.54834991840867,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.529009951045202,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.5290010425203906,
+      "ts": "2025-09-11T11:48:18.144Z",
+      "scope_id": null,
+      "text": "안녕?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.5483350708673178,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.5290010425203906,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "no_hit": false,
+  "ts": "2025-09-17T06:11:13.422Z"
+}

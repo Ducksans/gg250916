@@ -1,0 +1,37 @@
+{
+  "id": "06CCQ293F1AKQR7ZACJ8Z2565G",
+  "created_at": "2025-08-21T07:30:19.128867Z",
+  "state": "pending",
+  "proposer": "zed",
+  "scope_id": null,
+  "session_id": "GG-SESS-LOCAL",
+  "text": "L5 게이트 핵심 지식",
+  "redacted_text": null,
+  "refs": [
+    "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl#L1-1",
+    "status/evidence/meetings/GG-SESS-LOCAL/events.jsonl#L1-10",
+    "status/resources/vector_index/search_results_20250819_1455.json#L1-10"
+  ],
+  "rationale": null,
+  "sha256": "b3009ab0969727c88b506bd857b28e4719368918c4a18f738214fcbda6d97f75",
+  "source_roots": [
+    "memory_tiers",
+    "meetings",
+    "vector_index"
+  ],
+  "source_diversity_ok": true,
+  "dup_candidates": [],
+  "pii_flags": [],
+  "auto_checks": {
+    "ref_count_ok": true,
+    "source_diversity_ok": true,
+    "pii_detected": false,
+    "redaction_suggested": false,
+    "duplicate_sha256": false,
+    "similarity_warning": false,
+    "similarity_block": false,
+    "top_similarity": 0.0,
+    "notes": []
+  },
+  "embedding_version": null
+}

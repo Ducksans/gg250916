@@ -6,7 +6,7 @@ set -euo pipefail
 # Optionally runs Vite dev on that worktree so you can open a local port
 # (default 5175) to view the latest CI-passing source.
 
-CORE_DIR="exports/gumgang_meeting_core"
+CORE_DIR="$PWD"
 GREEN_TAG="last-green"
 PORT="5175"
 INTERVAL="5"

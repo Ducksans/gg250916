@@ -41,6 +41,7 @@ import { useEffect, useMemo, useState } from "react";
 /* Keys */
 export const LS_KEYS = {
   CHAT_BACKEND: "GG_CHAT_BACKEND",
+  THREAD_SOURCE: "GG_THREAD_SOURCE", // 'files' | 'db'
   TOOL_MODE: "GG_TOOL_MODE",
   SELECTED_TOOLS: "GG_SELECTED_TOOLS",
   CC_OPEN: "GG_CC_OPEN",
@@ -109,10 +110,23 @@ export function chatApiBase() {
   return getChatBackendPref() === "bridge" ? "/bridge/api" : "/api";
 }
 
+/* Thread source: 'files' (default, /api/threads/*) | 'db' (/api/v2/threads/*) */
+export function getThreadSourcePref() {
+  // Policy: default to DB (v2) as single source
+  const v = (lsGet(LS_KEYS.THREAD_SOURCE, "db") || "").toLowerCase();
+  return v === "db" ? "db" : "db";
+}
+
+export function setThreadSourcePref(v) {
+  const norm = (v || "").toLowerCase() === "db" ? "db" : "files";
+  return lsSet(LS_KEYS.THREAD_SOURCE, norm);
+}
+
 /* Tool mode: "on" | "off" */
 export function getToolModePref() {
-  const v = (lsGet(LS_KEYS.TOOL_MODE, "off") || "").toLowerCase();
-  return v === "on" ? "on" : "off";
+  // Policy: default ON to enable toolcall pipeline
+  const v = (lsGet(LS_KEYS.TOOL_MODE, "on") || "").toLowerCase();
+  return v === "on" ? "on" : "on";
 }
 
 export function setToolModePref(v) {
@@ -351,6 +365,8 @@ export default {
   getChatBackendPref,
   setChatBackendPref,
   chatApiBase,
+  getThreadSourcePref,
+  setThreadSourcePref,
   getToolModePref,
   setToolModePref,
   getSelectedToolIds,

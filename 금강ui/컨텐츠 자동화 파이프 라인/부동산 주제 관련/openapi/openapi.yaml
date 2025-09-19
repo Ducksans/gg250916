@@ -1,0 +1,484 @@
+# 6하원칙 요약(OpenAPI)
+# - Who: 백엔드/API 오너, 프론트/앱 통합 담당, QA
+# - Where: 허브 백엔드 도메인(https://hub.example.com)
+# - What: 지오 정규화, 필지(PNU), 규제 오버레이, 검색 API 스펙 정의
+# - How: OpenAPI 3.0.3, 스키마/예시 포함, 변경 시 버저닝
+# - Why: 클라이언트/서버 계약 명시로 결합도↓, 품질/테스트 자동화↑
+# - When: 각 마일스톤 직전 확정, 배포와 동기화, 변경 로그 기록
+openapi: 3.0.3
+info:
+  title: Real Estate Hub API
+  version: 0.1.0
+  description: |
+    Geo normalization, parcel info, overlays, search and publishing utilities.
+servers:
+  - url: https://hub.example.com
+paths:
+  /api/geo/normalize:
+    get:
+      summary: Normalize free-form address to standard form and coordinates
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: lang
+          in: query
+          schema:
+            type: string
+            enum: [ko, en]
+            default: ko
+      responses:
+        '200':
+          description: Normalized result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeoNormalizeResult'
+              example:
+                input: "서울특별시 중구 세종대로 110"
+                address: "서울특별시 중구 세종대로 110"
+                coordinates: { lat: 37.5663, lon: 126.9779 }
+                pnu: "1111010100100000000"
+        '400':
+          description: Bad Request (missing or invalid query)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: { type: string }
+                  message: { type: string }
+              example:
+                error: "BAD_REQUEST"
+                message: "query parameter is required"
+  /api/parcel/{pnu}:
+    get:
+      summary: Get parcel boundary and regulation TL;DR by PNU
+      parameters:
+        - name: pnu
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Parcel info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParcelInfo'
+              example:
+                pnu: "1111010100100000000"
+                centroid: { lat: 37.5667, lon: 126.9784 }
+                boundary:
+                  type: Feature
+                  geometry:
+                    type: Polygon
+                    coordinates:
+                      - [[126.9780,37.5663],[126.9788,37.5663],[126.9788,37.5671],[126.9780,37.5671],[126.9780,37.5663]]
+                  properties: { code: "PNU-EXAMPLE" }
+                tldr:
+                  - code: "R2"
+                    name: "제2종 일반주거지역"
+                    summary: "중층 주거지역, 소규모 근생 허용"
+                    source_url: "https://www.law.go.kr/"
+                    caution: "지자체 조례 확인"
+  /api/infra/isochrone:
+    get:
+      summary: Get isochrone (travel-time polygon) for given origin
+      parameters:
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "126.9784,37.5667"
+          description: "Origin as 'lon,lat' (WGS84)"
+        - name: minutes
+          in: query
+          schema:
+            type: integer
+            default: 30
+          description: Travel time in minutes
+        - name: modes
+          in: query
+          schema:
+            type: string
+            default: transit
+            enum: [walk, drive, transit]
+          description: Travel mode
+      responses:
+        '200':
+          description: Isochrone polygon(s)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IsochroneResponse'
+  /api/overlay/zones:
+    get:
+      summary: Get zoning overlays for a given area
+      parameters:
+        - name: bbox
+          in: query
+          required: true
+          schema:
+            type: string
+            example: 126.9,37.4,127.2,37.7
+      responses:
+        '200':
+          description: Overlay features
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: FeatureCollection
+                  features:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Feature'
+              example:
+                type: FeatureCollection
+                features:
+                  - type: Feature
+                    geometry:
+                      type: Polygon
+                      coordinates:
+                        - [[126.97,37.56],[126.98,37.56],[126.98,37.57],[126.97,37.57],[126.97,37.56]]
+                    properties:
+                      layer: use_zones
+                      code: R2
+                      name: 제2종 일반주거지역
+                      updated_at: '2025-09-10T00:00:00Z'
+                  - type: Feature
+                    geometry:
+                      type: Polygon
+                      coordinates:
+                        - [[126.98,37.56],[126.99,37.56],[126.99,37.57],[126.98,37.57],[126.98,37.56]]
+                    properties:
+                      layer: districts
+                      code: D_HEIGHT
+                      name: 고도지구
+                      updated_at: '2025-09-10T00:00:00Z'
+
+  /api/overlay/schools:
+    get:
+      summary: Get school district and facility info for a given coordinate
+      parameters:
+        - name: lat
+          in: query
+          required: true
+          schema: { type: number, format: float }
+        - name: lon
+          in: query
+          required: true
+          schema: { type: number, format: float }
+      responses:
+        '200':
+          description: School information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchoolInfoResponse'
+              example:
+                district: "강남서초교육지원청"
+                schools:
+                  - name: "역삼초등학교"
+                    type: "초등학교"
+                    distance_m: 350
+                    rating: 4.8
+                    address: "서울특별시 강남구 테헤란로37길 26"
+                    homepage: "https://www.yuksam.es.kr"
+
+  /api/overlay/transit:
+    get:
+      summary: Get public transit info for a given coordinate
+      parameters:
+        - name: lat
+          in: query
+          required: true
+          schema: { type: number, format: float }
+        - name: lon
+          in: query
+          required: true
+          schema: { type: number, format: float }
+        - name: radius
+          in: query
+          schema: { type: integer, default: 500, description: "Search radius in meters" }
+      responses:
+        '200':
+          description: Transit information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransitInfoResponse'
+              example:
+                subway_stations:
+                  - name: "강남역"
+                    lines: ["2호선", "신분당선"]
+                    distance_m: 500
+                    walking_minutes: 6
+                bus_stops:
+                  - name: "강남역사거리"
+                    routes: ["140", "402", "420"]
+                    distance_m: 200
+                    walking_minutes: 3
+
+  /api/overlay/commercial:
+    get:
+      summary: Get commercial facility info for a given coordinate
+      parameters:
+        - name: lat
+          in: query
+          required: true
+          schema: { type: number, format: float }
+        - name: lon
+          in: query
+          required: true
+          schema: { type: number, format: float }
+        - name: radius
+          in: query
+          schema: { type: integer, default: 500, description: "Search radius in meters" }
+      responses:
+        '200':
+          description: Commercial facility information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommercialInfoResponse'
+              example:
+                major_franchises:
+                  - name: "스타벅스"
+                    category: "카페"
+                    count: 5
+                facility_counts:
+                  convenience: 12
+                  cafe: 23
+                  restaurant: 45
+                  bank: 3
+                  mart: 2
+                foot_traffic:
+                  weekday_avg: 12500
+                  weekend_avg: 18700
+                  peak_hours: ["18:00-19:00", "12:00-13:00"]
+  /api/search:
+    get:
+      summary: Search hub content
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [listing, area, tool]
+        - name: area_min
+          in: query
+          schema: { type: integer }
+        - name: area_max
+          in: query
+          schema: { type: integer }
+        - name: price_min
+          in: query
+          schema: { type: integer }
+        - name: price_max
+          in: query
+          schema: { type: integer }
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [recent, price_asc, price_desc, area_desc]
+            default: recent
+        - name: page
+          in: query
+          schema: { type: integer, minimum: 1, default: 1 }
+        - name: size
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hits:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ContentHit'
+              example:
+                hits:
+                  - id: "AA-2025-0001"
+                    title: "서울 중구 세종대로 110 · 아파트 84㎡ · 12억"
+                    url: "https://hub.example.com/property/seoul-junggu/%EC%84%B8%EC%A2%85%EB%8C%80%EB%A1%9C110/AA-2025-0001"
+                    snippet: "정식 매물 페이지 · Canonical/JSON-LD/OG/oEmbed"
+                    score: 0.98
+                  - id: "tools-acq-tax"
+                    title: "취득세 계산기"
+                    url: "https://hub.example.com/tools/acq-tax"
+                    snippet: "금액·주택수·세대원 구성으로 취득세를 계산합니다."
+                    score: 0.85
+components:
+  schemas:
+    GeoNormalizeResult:
+      type: object
+      properties:
+        input:
+          type: string
+        address:
+          type: string
+        coordinates:
+          type: object
+          properties:
+            lat: { type: number }
+            lon: { type: number }
+        pnu:
+          type: string
+    ParcelInfo:
+      type: object
+      properties:
+        pnu: { type: string }
+        centroid:
+          type: object
+          properties:
+            lat: { type: number }
+            lon: { type: number }
+        boundary:
+          $ref: '#/components/schemas/Feature'
+        tldr:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegulationRule'
+    ContentHit:
+      type: object
+      properties:
+        id: { type: string }
+        title: { type: string }
+        url: { type: string }
+        snippet: { type: string }
+        score: { type: number }
+    Feature:
+      type: object
+      properties:
+        type: { type: string, example: Feature }
+        geometry:
+          type: object
+          properties:
+            type: { type: string, example: Polygon }
+            coordinates:
+              type: array
+              items:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: number
+        properties:
+          type: object
+          description: Arbitrary properties for the overlay layer (e.g., layer, code, name, updated_at)
+          additionalProperties: true
+          
+    SchoolInfoResponse:
+      type: object
+      properties:
+        district: { type: string, description: "교육청/지역명" }
+        schools:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string, description: "학교명" }
+              type: { type: string, enum: ["유치원", "초등학교", "중학교", "고등학교", "특수학교"], description: "학교급" }
+              distance_m: { type: integer, description: "요청 좌표로부터의 거리(미터)" }
+              rating: { type: number, format: float, minimum: 0, maximum: 5, description: "학교 평점(0-5)" }
+              address: { type: string, description: "주소" }
+              homepage: { type: string, format: uri, description: "학교 홈페이지 URL" }
+              
+    TransitInfoResponse:
+      type: object
+      properties:
+        subway_stations:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string, description: "역명" }
+              lines: 
+                type: array
+                items: { type: string }
+                description: "지하철 노선 목록"
+              distance_m: { type: integer, description: "요청 좌표로부터의 거리(미터)" }
+              walking_minutes: { type: integer, description: "도보 예상 시간(분)" }
+        bus_stops:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string, description: "정류장명" }
+              routes: 
+                type: array
+                items: { type: string }
+                description: "버스 노선 번호 목록"
+              distance_m: { type: integer, description: "요청 좌표로부터의 거리(미터)" }
+              walking_minutes: { type: integer, description: "도보 예상 시간(분)" }
+              
+    CommercialInfoResponse:
+      type: object
+      properties:
+        major_franchises:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string, description: "브랜드/체인점명" }
+              category: { type: string, description: "업종 카테고리" }
+              count: { type: integer, description: "반경 내 점포 수" }
+        facility_counts:
+          type: object
+          additionalProperties: 
+            type: integer
+            description: "업종별 시설물 수"
+        foot_traffic:
+          type: object
+          properties:
+            weekday_avg: { type: integer, description: "평일 평균 유동인구" }
+            weekend_avg: { type: integer, description: "주말 평균 유동인구" }
+            peak_hours: 
+              type: array
+              items: { type: string }
+              description: "시간대별 최대 혼잡 시간대 목록 (HH:MM-HH:MM 포맷)"
+    RegulationRule:
+      type: object
+      properties:
+        code: { type: string }
+        name: { type: string }
+        summary: { type: string }
+        source_url: { type: string }
+        caution: { type: string }
+    IsochroneResponse:
+      type: object
+      properties:
+        origin:
+          type: array
+          items: { type: number }
+          minItems: 2
+          maxItems: 2
+          description: "[lon, lat]"
+        minutes:
+          type: integer
+        mode:
+          type: string
+          enum: [walk, drive, transit]
+        polygons:
+          type: array
+          items:
+            $ref: '#/components/schemas/Feature'

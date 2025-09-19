@@ -1,0 +1,12 @@
+// JSON-LD template for WebSite SearchAction
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "부동산 컨텐츠 허브",
+  "url": "https://hub.example.com/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://hub.example.com/search?q={query}",
+    "query-input": "required name=query"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "ts": "20250917T113552Z",
+  "base": "http://127.0.0.1:8000",
+  "limit": 50,
+  "batch_size": 25,
+  "mode": "dry-run",
+  "counts": {
+    "source_items": 50,
+    "mapped_threads": 50
+  },
+  "batches": [
+    {
+      "ok": true,
+      "imported": 25,
+      "dry_run": true
+    },
+    {
+      "ok": true,
+      "imported": 25,
+      "dry_run": true
+    }
+  ],
+  "errors": []
+}

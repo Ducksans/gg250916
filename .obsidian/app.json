@@ -15,5 +15,6 @@
     "librechat**",
     ".LibreChat/**",
     "gumgang_0_5/**"
-  ]
+  ],
+  "alwaysUpdateLinks": true
 }

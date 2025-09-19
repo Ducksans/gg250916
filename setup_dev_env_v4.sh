@@ -2,6 +2,12 @@
 # 금강 프로젝트 개발 환경 자동 설정 스크립트 (v4, 환경 로딩 및 안정성 강화)
 
 set -e
+
+if [ -z "${ALLOW_SETUP_RERUN:-}" ]; then
+  echo "[DEPRECATED] setup_dev_env_v4.sh 는 이미 환경이 구성된 상태에서는 재실행하지 않습니다." >&2
+  echo "            정말 다시 실행하려면 'ALLOW_SETUP_RERUN=1 ./setup_dev_env_v4.sh' 형태로 호출하세요." >&2
+  exit 1
+fi
 LOG_FILE="$HOME/gumgang_setup_log_$(date +%Y%m%d_%H%M%S).txt"
 exec &> >(tee -a "$LOG_FILE")
 

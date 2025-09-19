@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: blob: filesystem: *; frame-src *; img-src * data: blob:; connect-src *;" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Overlay Capture</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #111; }
+    .wrap { position: relative; width: 100%; height: 100vh; }
+    iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
+    .overlay {
+      position: fixed; left: 16px; top: 16px; z-index: 9999;
+      background: rgba(0,0,0,0.6); color: #fff; padding: 10px 14px; border-radius: 8px;
+      font: 14px/1.35 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      max-width: 85vw; box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+    .overlay small { opacity: 0.8; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <iframe src="http://127.0.0.1:5173/ui-dev/"></iframe>
+    <div class="overlay">
+      <div>Search: 금강 (Source=DB, API=Bridge)</div>
+      <small>UTC 20250917T074945Z</small>
+    </div>
+  </div>
+</body>
+</html>

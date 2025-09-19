@@ -1,0 +1,23 @@
+# Legacy thread import log 2025-09-18 10:36Z
+Inventory file: legacy_threads_inventory_20250918T090532Z.txt
+Threads imported: 19
+
+thread_1bhi4cg4_mffchqm1
+thread_3njvqqb0_mffevzef
+thread_67va3uqm_mfk3u4xc
+thread_67va3uqm_mfk3u4xc
+thread_76j4jda7_mfg6h109
+thread_88odotgh_mffdcln4
+thread_a4dv1c8h_mfmce8q5
+thread_auto_patch_report__hasSSOT_overlap_min__v1
+thread_cl7pxreb_mffedvu2
+thread_d70obb80_mfffdsmz
+thread_dcqftnjv_mfkmexp8
+thread_dcqftnjv_mfkmexp8
+thread_dz4jv7iz_mffe0g73
+thread_k9lx4dm1_mffe9xtw
+thread_m0sk3dcn_mfmyshgm
+thread_ova3z1dd_mffmki10
+thread_pan3h7k9_mfm9ohq0
+thread_q3mamsyt_mfkjwqes
+thread_s4kmes09_mffbwy6g

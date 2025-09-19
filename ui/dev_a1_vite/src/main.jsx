@@ -27,15 +27,20 @@
  */
 import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import A1Dev from "@/components/A1Dev";
+import IdeShell from "@/ide/IdeShell";
+import KeymapPage from "@/settings/KeymapPage";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter basename="/ui-dev">
       <Routes>
-        <Route path="/" element={<A1Dev />} />
+        <Route path="/" element={<Navigate to="/ide" replace />} />
+        <Route path="/chat" element={<A1Dev />} />
         <Route path="/thread/:threadId" element={<A1Dev />} />
+        <Route path="/ide" element={<IdeShell />} />
+        <Route path="/settings/keys" element={<KeymapPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

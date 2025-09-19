@@ -1,0 +1,101 @@
+{
+  "generated_at": "2025-08-20T06:48:48.285Z",
+  "platform": "linux",
+  "arch": "x64",
+  "node": "v22.18.0",
+  "cwd": "/home/duksan/바탕화면/gumgang_meeting",
+  "project_dir": "/home/duksan/바탕화면/gumgang_meeting/gumgang_0_5/gumgang-v2",
+  "bridge_url": "http://localhost:3037",
+  "ok": true,
+  "package": {
+    "dev_cli": "^2.7.1",
+    "dep_cli": null,
+    "has_cli": true,
+    "scripts": {
+      "dev": "node start-dev.js",
+      "dev:original": "next dev --turbopack",
+      "dev:fixed": "PORT=3000 next dev -p 3000 --turbopack",
+      "build": "next build",
+      "start": "next start",
+      "lint": "next lint",
+      "tauri": "tauri",
+      "tauri:dev": "tauri dev",
+      "tauri:build": "tauri build",
+      "ci:sanity": "bash scripts/ci/sanity.sh",
+      "guard:scan": "rg -n \"as any|@ts-ignore|@ts-expect-error(?!:)\" -g \"!node_modules\" || true",
+      "preflight:linux": "bash scripts/ci/linux_preflight.sh",
+      "bridge:open": "node -e \"(async()=>{try{const http=require('http');const https=require('https');const u=new URL(process.env.BRIDGE_URL||'http://localhost:3037');const args=process.argv.slice(3);const root=args[0]||'status';const p=args[1]||'';if(!p){console.error('Usage: npm run bridge:open -- <root> <relativePath>');process.exit(2);}const data=JSON.stringify({root:root,path:p});const mod=u.protocol==='https:'?https:http;const req=mod.request({hostname:u.hostname,port:u.port||((u.protocol==='https:')?443:80),path:'/api/open',method:'POST',headers:{'Content-Type':'application/json','Content-Length':Buffer.byteLength(data)}},res=>{let b='';res.on('data',d=>b+=d);res.on('end',()=>{console.log(b||res.statusCode);});});req.on('error',e=>{console.error(e.message);process.exit(1);});req.write(data);req.end();}catch(e){console.error(e&&e.message||e);process.exit(1);}})();\"",
+      "overlay:on": "node -e \"(function(){try{const fs=require('fs'),path=require('path');const root=path.resolve(__dirname,'../../ui/overlays');const labs=path.join(root,'labs');function cp(a,b){const s=path.join(labs,a),d=path.join(root,b);if(fs.existsSync(s)){fs.mkdirSync(root,{recursive:true});fs.copyFileSync(s,d);console.log('copied',a,'->',b);}else{console.log('skip',a);}}cp('default.css','active.css');cp('default.js','active.js');}catch(e){console.error(e&&e.message||e);process.exit(1);}})();\"",
+      "overlay:off": "node -e \"(function(){try{const fs=require('fs'),path=require('path');const root=path.resolve(__dirname,'../../ui/overlays');['active.css','active.js'].forEach(function(f){try{fs.unlinkSync(path.join(root,f));console.log('removed',f);}catch(_){}});}catch(e){console.error(e&&e.message||e);process.exit(1);}})();\"",
+      "preflight:linux:save": "node scripts/ci/save_preflight_linux.js",
+      "build:plan": "node scripts/ci/build_plan_probe.js",
+      "tauri:probe": "node scripts/ci/tauri_probe.js"
+    }
+  },
+  "cli": {
+    "local_bin": "/home/duksan/바탕화면/gumgang_meeting/gumgang_0_5/gumgang-v2/node_modules/.bin/tauri",
+    "detected_version": null,
+    "detected_source": null,
+    "info": null,
+    "attempts": [
+      {
+        "kind": "local:-v",
+        "bin": "/home/duksan/바탕화면/gumgang_meeting/gumgang_0_5/gumgang-v2/node_modules/.bin/tauri",
+        "ok": false,
+        "code": 2,
+        "killed": false,
+        "stdout_preview": "",
+        "stderr_preview": "error: 'node node_modules/.bin/tauri' requires a subcommand but one was not provided\n  [subcommands: init, dev, build, bundle, android, migrate, info, add, remove, plugin, icon, signer, completions, permission, capability, inspect, help]\n\nU"
+      },
+      {
+        "kind": "npx_no_install:-v",
+        "bin": "npx tauri",
+        "ok": false,
+        "code": 2,
+        "killed": false,
+        "stdout_preview": "",
+        "stderr_preview": "error: 'npm run npx' requires a subcommand but one was not provided\n  [subcommands: init, dev, build, bundle, android, migrate, info, add, remove, plugin, icon, signer, completions, permission, capability, inspect, help]\n\nUsage: npm run npx"
+      },
+      {
+        "kind": "path:-v",
+        "bin": "tauri",
+        "ok": false,
+        "code": 127,
+        "killed": false,
+        "stdout_preview": "",
+        "stderr_preview": "spawn tauri ENOENT"
+      },
+      {
+        "kind": "local:info",
+        "bin": "/home/duksan/바탕화면/gumgang_meeting/gumgang_0_5/gumgang-v2/node_modules/.bin/tauri info",
+        "ok": false,
+        "code": 1,
+        "killed": true,
+        "stdout_preview": "\n[✔] Environment\n    - OS: Ubuntu 22.4.0 x86_64 (X64) (ubuntu on wayland)\n    ✔ webkit2gtk-4.1: 2.48.5\n    ✔ rsvg2: 2.58.0\n    ✔ rustc: 1.89.0 (29483883e 2025-08-04)\n    ✔ cargo: 1.89.0 (c24e10642 2025-06-23)\n    ✔ rustup: 1.28.2 (e4f3ad6f8",
+        "stderr_preview": ""
+      },
+      {
+        "kind": "npx_no_install:info",
+        "bin": "npx --no-install tauri info",
+        "ok": false,
+        "code": 1,
+        "killed": true,
+        "stdout_preview": "\n[✔] Environment\n    - OS: Ubuntu 22.4.0 x86_64 (X64) (ubuntu on wayland)\n    ✔ webkit2gtk-4.1: 2.48.5\n    ✔ rsvg2: 2.58.0\n    ✔ rustc: 1.89.0 (29483883e 2025-08-04)\n    ✔ cargo: 1.89.0 (c24e10642 2025-06-23)\n    ✔ rustup: 1.28.2 (e4f3ad6f8",
+        "stderr_preview": ""
+      },
+      {
+        "kind": "path:info",
+        "bin": "tauri info",
+        "ok": false,
+        "code": 127,
+        "killed": false,
+        "stdout_preview": "",
+        "stderr_preview": "spawn tauri ENOENT"
+      }
+    ]
+  },
+  "guidance": [
+    "CLI detected or declared. You can run: npm run tauri:dev / npm run tauri:build",
+    "If dev/build fails, ensure native deps installed; see preflight script."
+  ]
+}

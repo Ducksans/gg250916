@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "data": {
+    "ts": "2025-08-23T08:56:41.860Z",
+    "node": "v22.18.0",
+    "pid": 112427,
+    "uptime_sec": 45,
+    "read_only_mode": false,
+    "routes": {
+      "save": true,
+      "open": true,
+      "fs_roots": true,
+      "fs_list": true,
+      "ui": true
+    }
+  },
+  "meta": {
+    "request_id": "req_1755939401860_nn4hfb",
+    "upstream_model": null,
+    "cache_ratio": 0,
+    "server_ts": "2025-08-23T08:56:41.860Z"
+  }
+}

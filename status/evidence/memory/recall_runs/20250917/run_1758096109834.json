@@ -1,0 +1,242 @@
+{
+  "query": "AGENTS.md",
+  "params": {
+    "k": 5,
+    "need_fresh": 0,
+    "half_life_days": 7.0,
+    "fresh_weight": 0.6,
+    "self_rag": 1,
+    "tiers": [
+      "long",
+      "medium",
+      "short",
+      "ultra_long",
+      "ultra_short"
+    ],
+    "rerank_blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "rerank_policy": {
+      "apply_if": "recency<0.2 AND refs<0.2",
+      "bonus": {
+        "refs_ge_1_add": 0.05,
+        "normalized_threshold": 0.2
+      },
+      "cap": {
+        "kw_ge": 0.9,
+        "max_uplift": 0.02
+      }
+    }
+  },
+  "pre_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.756145866606979,
+      "ts": "2025-09-16T18:46:59.122Z",
+      "scope_id": null,
+      "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9269097776782984,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.29348839646997,
+      "ts": "2025-09-17T06:11:14.100Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68885fa1-cf80-8329-88e8-1e601ffcae24.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9891473274499502,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2877846421100376,
+      "ts": "2025-09-17T04:32:20.840Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68a2db67-6310-832f-834f-3699d93045be.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9796410701833962,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2600273328227773,
+      "ts": "2025-09-16T20:02:21.438Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/68a47a66-b5a0-832b-8d47-1243449d0fae.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9333788880379623,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2516953204960466,
+      "ts": "2025-09-16T17:19:15.456Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9194922008267447,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    }
+  ],
+  "post_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.756145866606979,
+      "ts": "2025-09-16T18:46:59.122Z",
+      "scope_id": null,
+      "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9269097776782984,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.756145866606979,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.29348839646997,
+      "ts": "2025-09-17T06:11:14.100Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68885fa1-cf80-8329-88e8-1e601ffcae24.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9891473274499502,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.29348839646997,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2877846421100376,
+      "ts": "2025-09-17T04:32:20.840Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68a2db67-6310-832f-834f-3699d93045be.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9796410701833962,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2877846421100376,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2600273328227773,
+      "ts": "2025-09-16T20:02:21.438Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/68a47a66-b5a0-832b-8d47-1243449d0fae.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9333788880379623,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2600273328227773,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2516953204960466,
+      "ts": "2025-09-16T17:19:15.456Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.5,
+        "recency": 0.9194922008267447,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2516953204960466,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "ts": "2025-09-17T08:01:49.834Z"
+}

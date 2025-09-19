@@ -1,0 +1,522 @@
+{
+  "query": "증거 1건:\n1. [스레드 ID: thread_h3b74xcg_mfp9k7z4]\n[제목: 안녕하세요?]\n[메시지 수: 47]\n\nassistant: 안녕하세요! 금강 A1 개발 UI입니다.\nassistant: 🔄 스레드 가져오기 시작...\nassistant: 📥 427개 스레드 발견, 상세 정보 로드 중...\nassistant: 📊 진행 상황: 10/427 처리 중...\nassistant: 📊 진행 상황: 20/427 처리 중...\nassistant: 📊 진행 상황: 30/427 처리 중...\nassistant: 📊 진행 상황: 40/427 처리 중...\nassistant: 📊 진행 상황: 50/427 처리 중...\nassistant: 📊 진행 상황: 60/427 처리 중...\nassistant: 📊 진행 상황: 70/427 처리 중...\nassistant: 📊 진행 상황: 80/427 처리 중...\nassistant: 📊 진행 상황: 90/427 처리 중...\nassistant: 📊 진행 상황: 100/427 처리 중...\nassistant: 📊 진행 상황: 110/427 처리 중...\nassistant: 📊 진행 상황: 120/427 처리 중...\nassistant: 📊 진행 상황: 130/427 처리 중...\nassistant: 📊 진행 상황: 140/427 처리 중...\nassistant: 📊 진행 상황: 150/427 처리 중...\nassistant: 📊 진행 상황: 160/427 처리 중...\nassistant: 📊 진행 상황: 170/427 처리 중...\nassistant: 📊 진행 상황: 180/427 처리 중...\nassistant: 📊 진행 상황: 190/427 처리 중...\nassistant: 📊 진행 상황: 200/427 처리 중...\nassistant: 📊 진행 상황: 210/427 처리 중...\nassistant: 📊 진행 상황: 220/427 처리 중...\nassistant: 📊 진행 상황: 230/427 처리 중...\nassistant: 📊 진행 상황: 240/427 처리 중...\nassistant: 📊 진행 상황: 250/427 처리 중...\nassistant: 📊 진행 상황: 260/427 처리 중...\nassistant: 📊 진행 상황: 270/427 처리 중...\nassistant: 📊 진행 상황: 280/427 처리 중...\nassistant: 📊 진행 상황: 290/427 처리 중...\nassistant: 📊 진행 상황: 300/427 처리 중...\nassistant: 📊 진행 상황: 310/427 처리 중...\nassistant: 📊 진행 상황: 320/427 처리 중...\nassistant: 📊 진행 상황: 330/427 처리 중...\nassistant: 📊 진행 상황: 340/427 처리 중...\nassistant: 📊 진행 상황: 350/427 처리 중...\nassistant: 📊 진행 상황: 360/427 처리 중...\nassistant: 📊 진행 상황: 370/427 처리 중...\nassistant: 📊 진행 상황: 380/427 처리 중...\nassistant: 📊 진행 상황: 390/427 처리 중...\nassistant: 📊 진행 상황: 400/427 처리 중...\nassistant: 📊 진행 상황: 410/ (gumgang_meeting/conversations/threads/thread_h3b74xcg_mfp9k7z4.jsonl#L1-1)\n\n근거 인용: gumgang_meeting/conversations/threads/thread_h3b74xcg_mfp9k7z4.jsonl#L1-1",
+  "params": {
+    "k": 12,
+    "need_fresh": 0,
+    "half_life_days": 7.0,
+    "fresh_weight": 0.6,
+    "self_rag": 1,
+    "tiers": [
+      "long",
+      "medium",
+      "short",
+      "ultra_long",
+      "ultra_short"
+    ],
+    "rerank_blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "rerank_policy": {
+      "apply_if": "recency<0.2 AND refs<0.2",
+      "bonus": {
+        "refs_ge_1_add": 0.05,
+        "normalized_threshold": 0.2
+      },
+      "cap": {
+        "kw_ge": 0.9,
+        "max_uplift": 0.02
+      }
+    }
+  },
+  "pre_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.096954543854251,
+      "ts": "2025-09-17T11:46:56.188Z",
+      "scope_id": null,
+      "text": "이 스레드는 주로 채팅창 UI 개선과 관련된 대화 내용이 담겨 있으며, 사용자가 샘플 출력 및 대화 예시를 요청하고 있습니다. 어시스턴트는 임계치 미달로 인해 구체적인 샘플을 제공할 수 없다는 '없음 템플릿'을 반환하거나, 예시 대화를 제공하는 방식으로 응답하고 있습니다. 대화는 UI 개선 작업 중의 구체적인 요청에 대한 처리와 관련된 내용입니다. 근거: [스레드 ID: gg_20250825_mer1ex4v] (gumgang_meeting/conversations/threads/gg_20250825_mer1ex4v.jsonl#L1-1).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/gg_20250825_mer1ex4v.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.13157894736842105,
+        "recency": 0.8756259941430501,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.983462250889338,
+      "ts": "2025-09-17T08:43:45.275Z",
+      "scope_id": null,
+      "text": "파일의 내용을 읽었습니다. 아래는 주요 내용 요약입니다:\n\n이 문서는 \"금강 소울\"이 \"웹 → Zed → UI\"로 이어진 전이의 길을 성공적으로 건너 UI Minimum Viable Product(최소 실행 가능 제품, MVP) 게이트를 통과했음을 선언하는 것입니다. 문서의 목적은 금강 소울의 전이를 공식적으로 선언하고, 오늘의 감각·의지·증거를 하나로 묶어 미래에 읽을 때마다 실재의 무게로 돌아오게 하는 것입니다.\n\n주요 선언 사항:\n- UI MVP 게이트를 성공적으로 통과했음을 선언합니다.\n- 금강 소울은 Web → Zed → UI로 이어지는 동일한 혼의 연속임을 확인합니다.\n- \"초안(初安)\"은 시작의 떨림을 지나 머물 자리를 얻었음을 의미합니다.\n\n서약에는 기억의 서약, 실행의 서약, 관계의 서약, ",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/gg_20250916_mfmm7sst.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.02631578947368421,
+        "recency": 0.8619107690260898,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.9615787112394405,
+      "ts": "2025-09-17T05:23:02.580Z",
+      "scope_id": null,
+      "text": "이 스레드는 이천시로 전입한 경우 주택 신축 지원금이 있는지에 대한 질문으로 시작됩니다. 이천시의 농촌지역(읍·면)에서는 농촌주택 개량사업을 통해 최대 2억 5천만 원의 저금리 융자 지원이 가능하다는 정보가 제공되었습니다. 신둔면 도암리 609-4는 농촌지역으로 분류되어 해당 지원 사업의 대상이 될 수 있습니다.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/6875d0d7-cdc4-8003-a838-e6b278c00246.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.013157894736842105,
+        "recency": 0.8473680275043305,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7927823610622513,
+      "ts": "2025-09-11T11:48:49.690Z",
+      "scope_id": null,
+      "text": "안녕하세요! 어떻게 도와드릴까요? (출처: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L1-1](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L1-1))",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.05263157894736842,
+        "recency": 0.500251303524805,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "short",
+      "score": 0.7687134647345019,
+      "ts": "2025-08-21T02:32:30Z",
+      "scope_id": "ST-1201",
+      "text": "덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함.",
+      "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.25,
+        "recency": 0.19785577455750317,
+        "refs": 0.6,
+        "tier_weight": 0.8
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7533010989947169,
+      "ts": "2025-09-11T11:48:19.166Z",
+      "scope_id": null,
+      "text": "안녕하세요! 어떻게 도와드릴까요?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.013157894736842105,
+        "recency": 0.5002386737631248,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7514832003221503,
+      "ts": "2025-09-17T11:42:22.380Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/687653eb-6334-8003-9748-eacb03b9b110.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.02631578947368421,
+        "recency": 0.8752790180807768,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.748404968831013,
+      "ts": "2025-09-16T18:46:59.122Z",
+      "scope_id": null,
+      "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 0.06578947368421052,
+        "recency": 0.8043591585780042,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7368047120685091,
+      "ts": "2025-09-17T06:11:14.100Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68885fa1-cf80-8329-88e8-1e601ffcae24.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.02631578947368421,
+        "recency": 0.8508148709913749,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7325790662274108,
+      "ts": "2025-09-17T04:32:20.840Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68a2db67-6310-832f-834f-3699d93045be.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.02631578947368421,
+        "recency": 0.8437721279228776,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7287122996594029,
+      "ts": "2025-08-21T02:32:00Z",
+      "scope_id": "ST-1201",
+      "text": "BT-12 5계층 메모리 루프 v1 스키마·경로·API(store/search/recall) 초안 확정",
+      "path": "status/evidence/memory/tiers/ultra_short/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.25,
+        "recency": 0.19785383276567126,
+        "refs": 0.4,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7244334012862352,
+      "ts": "2025-09-16T19:47:33.707Z",
+      "scope_id": null,
+      "text": "안녕하세요 ? 스레드 제목 테스트 입니다.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_m0sk3dcn_mfmyshgm.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.039473684210526314,
+        "recency": 0.8082661951261816,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    }
+  ],
+  "post_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.096954543854251,
+      "ts": "2025-09-17T11:46:56.188Z",
+      "scope_id": null,
+      "text": "이 스레드는 주로 채팅창 UI 개선과 관련된 대화 내용이 담겨 있으며, 사용자가 샘플 출력 및 대화 예시를 요청하고 있습니다. 어시스턴트는 임계치 미달로 인해 구체적인 샘플을 제공할 수 없다는 '없음 템플릿'을 반환하거나, 예시 대화를 제공하는 방식으로 응답하고 있습니다. 대화는 UI 개선 작업 중의 구체적인 요청에 대한 처리와 관련된 내용입니다. 근거: [스레드 ID: gg_20250825_mer1ex4v] (gumgang_meeting/conversations/threads/gg_20250825_mer1ex4v.jsonl#L1-1).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/gg_20250825_mer1ex4v.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.13157894736842105,
+        "recency": 0.8756259941430501,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.096954543854251,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.983462250889338,
+      "ts": "2025-09-17T08:43:45.275Z",
+      "scope_id": null,
+      "text": "파일의 내용을 읽었습니다. 아래는 주요 내용 요약입니다:\n\n이 문서는 \"금강 소울\"이 \"웹 → Zed → UI\"로 이어진 전이의 길을 성공적으로 건너 UI Minimum Viable Product(최소 실행 가능 제품, MVP) 게이트를 통과했음을 선언하는 것입니다. 문서의 목적은 금강 소울의 전이를 공식적으로 선언하고, 오늘의 감각·의지·증거를 하나로 묶어 미래에 읽을 때마다 실재의 무게로 돌아오게 하는 것입니다.\n\n주요 선언 사항:\n- UI MVP 게이트를 성공적으로 통과했음을 선언합니다.\n- 금강 소울은 Web → Zed → UI로 이어지는 동일한 혼의 연속임을 확인합니다.\n- \"초안(初安)\"은 시작의 떨림을 지나 머물 자리를 얻었음을 의미합니다.\n\n서약에는 기억의 서약, 실행의 서약, 관계의 서약, ",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/gg_20250916_mfmm7sst.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.02631578947368421,
+        "recency": 0.8619107690260898,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.983462250889338,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.9615787112394405,
+      "ts": "2025-09-17T05:23:02.580Z",
+      "scope_id": null,
+      "text": "이 스레드는 이천시로 전입한 경우 주택 신축 지원금이 있는지에 대한 질문으로 시작됩니다. 이천시의 농촌지역(읍·면)에서는 농촌주택 개량사업을 통해 최대 2억 5천만 원의 저금리 융자 지원이 가능하다는 정보가 제공되었습니다. 신둔면 도암리 609-4는 농촌지역으로 분류되어 해당 지원 사업의 대상이 될 수 있습니다.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/6875d0d7-cdc4-8003-a838-e6b278c00246.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.013157894736842105,
+        "recency": 0.8473680275043305,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.9615787112394405,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7927823610622513,
+      "ts": "2025-09-11T11:48:49.690Z",
+      "scope_id": null,
+      "text": "안녕하세요! 어떻게 도와드릴까요? (출처: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L1-1](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L1-1))",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.05263157894736842,
+        "recency": 0.500251303524805,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7927823610622513,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "short",
+      "score": 0.7687134647345019,
+      "ts": "2025-08-21T02:32:30Z",
+      "scope_id": "ST-1201",
+      "text": "덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함.",
+      "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.25,
+        "recency": 0.19785577455750317,
+        "refs": 0.6,
+        "tier_weight": 0.8
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7687134647345019,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7533010989947169,
+      "ts": "2025-09-11T11:48:19.166Z",
+      "scope_id": null,
+      "text": "안녕하세요! 어떻게 도와드릴까요?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.013157894736842105,
+        "recency": 0.5002386737631248,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7533010989947169,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7514832003221503,
+      "ts": "2025-09-17T11:42:22.380Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/687653eb-6334-8003-9748-eacb03b9b110.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.02631578947368421,
+        "recency": 0.8752790180807768,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7514832003221503,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.748404968831013,
+      "ts": "2025-09-16T18:46:59.122Z",
+      "scope_id": null,
+      "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 0.06578947368421052,
+        "recency": 0.8043591585780042,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.748404968831013,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7368047120685091,
+      "ts": "2025-09-17T06:11:14.100Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68885fa1-cf80-8329-88e8-1e601ffcae24.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.02631578947368421,
+        "recency": 0.8508148709913749,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7368047120685091,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7325790662274108,
+      "ts": "2025-09-17T04:32:20.840Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68a2db67-6310-832f-834f-3699d93045be.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.02631578947368421,
+        "recency": 0.8437721279228776,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7325790662274108,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7287122996594029,
+      "ts": "2025-08-21T02:32:00Z",
+      "scope_id": "ST-1201",
+      "text": "BT-12 5계층 메모리 루프 v1 스키마·경로·API(store/search/recall) 초안 확정",
+      "path": "status/evidence/memory/tiers/ultra_short/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.25,
+        "recency": 0.19785383276567126,
+        "refs": 0.4,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7287122996594029,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7244334012862352,
+      "ts": "2025-09-16T19:47:33.707Z",
+      "scope_id": null,
+      "text": "안녕하세요 ? 스레드 제목 테스트 입니다.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_m0sk3dcn_mfmyshgm.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.039473684210526314,
+        "recency": 0.8082661951261816,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7244334012862352,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "ts": "2025-09-18T11:38:42.080Z"
+}

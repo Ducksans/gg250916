@@ -21,10 +21,16 @@ import re
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Literal as _Lit
 
 from fastapi import Body, FastAPI, File, Form, HTTPException, UploadFile, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, HTMLResponse, PlainTextResponse, JSONResponse, Response
+import html
+import urllib.parse
+import shutil
+import subprocess
+import platform
 from pydantic import BaseModel, Field
 from app.gate_utils import (
     verify_gate_token,
@@ -115,6 +121,98 @@ def append_jsonl(path: Path, obj: Dict[str, Any]) -> int:
     with path.open("ab") as f:
         f.write(data)
     return len(data)
+
+
+def _find_legacy_thread_file(tid: str) -> Optional[Path]:
+    """Locate legacy conversation thread file by id."""
+    base = PROJECT_ROOT / "conversations" / "threads"
+    direct = base / f"{tid}.jsonl"
+    if direct.exists():
+        return direct
+    for sub in base.glob("*/"):
+        candidate = sub / f"{tid}.jsonl"
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def _find_memory_thread_files(tid: str) -> List[Path]:
+    base = PROJECT_ROOT / "status" / "evidence" / "memory"
+    return list(base.glob(f"**/{tid}.jsonl"))
+
+
+def _read_legacy_thread(fp: Path) -> List[Tuple[str, str, Any]]:
+    turns: List[Tuple[str, str, Any]] = []
+    with fp.open("r", encoding="utf-8", errors="ignore") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                obj = json.loads(line)
+            except Exception:
+                continue
+            if not isinstance(obj, dict):
+                continue
+            role = str(obj.get("role") or obj.get("speaker") or "").strip() or "user"
+            text = obj.get("content") or obj.get("text") or ""
+            ts = obj.get("ts") or obj.get("timestamp")
+            turns.append((role, text, ts))
+    return turns
+
+
+# ---------------- Content v2 — Evidence helpers (stubs for ST-0702) ----------------
+
+CONTENT_EVIDENCE_ROOT = EVIDENCE_ROOT / "content"
+CONTENT_IMPORT_DIR = CONTENT_EVIDENCE_ROOT / "import_runs"
+CONTENT_REVALIDATE_DIR = CONTENT_EVIDENCE_ROOT / "revalidate_runs"
+for _d in (CONTENT_EVIDENCE_ROOT, CONTENT_IMPORT_DIR, CONTENT_REVALIDATE_DIR):
+    try:
+        _d.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        pass
+
+
+def _content_db_kind() -> str:
+    # sqlite (default) | pg
+    val = (ENV.get("GG_CONTENT_DB") or "").strip().lower()
+    return "pg" if val in {"pg", "postgres", "postgresql"} else "sqlite"
+
+
+def _pg_conn():
+    import importlib
+    drv = importlib.import_module("psycopg2")  # may raise ImportError if not installed
+    url = ENV.get("CONTENT_PG_URL") or ENV.get("PGURL")
+    if not url:
+        raise RuntimeError("CONTENT_PG_URL/PGURL is required for GG_CONTENT_DB=pg")
+    return drv.connect(url)
+
+
+class ContentItem(BaseModel):
+    id: str
+    slug: str
+    title: str
+    summary: Optional[str] = None
+    body_mdx_path: Optional[str] = None
+    thumbnail_url: Optional[str] = None
+    price_plan: Optional[str] = None
+    features_json: Optional[List[Any]] = None
+    links_json: Optional[Dict[str, Any]] = None
+
+
+class ContentCollection(BaseModel):
+    id: str
+    slug: str
+    name: str
+    items: Optional[List[str]] = None
+
+
+class ImportPayload(BaseModel):
+    run_id: Optional[str] = None
+    upsert: Optional[bool] = True
+    items: Optional[List[ContentItem]] = None
+    collections: Optional[List[ContentCollection]] = None
+
 
 
 def write_bytes(path: Path, content: Iterable[bytes]) -> int:
@@ -420,6 +518,476 @@ def sitegraph_latest(lens: str = "Core") -> Dict[str, Any]:
     }
 
 
+# ---------- MCP PySpark Runner (Stage 2 – UI trigger) ----------
+
+PYSPARK_JOBS_ROOT = (PROJECT_ROOT / "scripts" / "pyspark_jobs").resolve()
+
+
+class PysparkRunReq(BaseModel):
+    script: str = Field(..., description="Repo-relative path under scripts/pyspark_jobs")
+    args: Optional[List[str]] = None
+    run_id: Optional[str] = None
+
+
+def _resolve_pyspark_job(path_str: str) -> Path:
+    p = (PROJECT_ROOT / path_str).resolve()
+    root = PYSPARK_JOBS_ROOT
+    if not str(p).startswith(str(root) + os.sep):
+        raise HTTPException(status_code=403, detail="JOB_PATH_NOT_ALLOWED")
+    if not p.exists() or p.suffix.lower() != ".py":
+        raise HTTPException(status_code=404, detail="JOB_NOT_FOUND")
+    return p
+
+
+def _truncate(s: str, limit: int = 8000) -> str:
+    if len(s) <= limit:
+        return s
+    head = s[: limit // 2]
+    tail = s[-limit // 2 :]
+    return head + "\n...<truncated>...\n" + tail
+
+
+@app.get("/api/mcp/pyspark/jobs")
+def pyspark_jobs_list() -> Dict[str, Any]:
+    try:
+        PYSPARK_JOBS_ROOT.mkdir(parents=True, exist_ok=True)
+        jobs = [
+            relpath(p)
+            for p in sorted(PYSPARK_JOBS_ROOT.glob("*.py"), key=lambda x: x.name)
+        ]
+        return {"ok": True, "jobs": jobs}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"LIST_FAIL: {e}")
+
+
+@app.post("/api/mcp/pyspark/run")
+def pyspark_run(req: PysparkRunReq) -> Dict[str, Any]:
+    job = _resolve_pyspark_job(req.script)
+    # Build command to call wrapper
+    wrapper = PROJECT_ROOT / "scripts" / "mcp" / "pyspark_execute.py"
+    if not wrapper.exists():
+        raise HTTPException(status_code=500, detail="WRAPPER_MISSING")
+
+    import sys as _sys
+
+    cmd = [_sys.executable, str(wrapper), str(job)]
+    try:
+        proc = subprocess.run(
+            cmd,
+            check=False,
+            capture_output=True,
+            text=True,
+            cwd=str(PROJECT_ROOT),
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"RUN_FAIL: {e}")
+
+    # Evidence write
+    ev_dir = EVIDENCE_ROOT / "pyspark_runs"
+    ev_dir.mkdir(parents=True, exist_ok=True)
+    ts = now_iso()
+    base = prune_filename(job.name, default="job.py")
+    out_path = ev_dir / f"{ts.replace(':','').replace('-','').replace('Z','Z')}_{base}.json"
+    payload = {
+        "ts": ts,
+        "run_id": req.run_id or f"PYSPARK_RUN_{ts.replace('-', '').replace(':', '')}",
+        "script": relpath(job),
+        "rc": proc.returncode,
+        "stdout": _truncate(proc.stdout or ""),
+        "stderr": _truncate(proc.stderr or ""),
+    }
+    try:
+        out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception as e:
+        # still return result even if evidence write fails
+        return {
+            "ok": proc.returncode == 0,
+            "rc": proc.returncode,
+            "error": f"EVIDENCE_WRITE_FAIL: {e}",
+            "stdout": _truncate(proc.stdout or ""),
+            "stderr": _truncate(proc.stderr or ""),
+        }
+
+    return {
+        "ok": proc.returncode == 0,
+        "rc": proc.returncode,
+        "evidence": relpath(out_path),
+    }
+
+
+@app.get("/api/mcp/pyspark/latest")
+def pyspark_latest() -> Dict[str, Any]:
+    ev_dir = EVIDENCE_ROOT / "pyspark_runs"
+    try:
+        ev_dir.mkdir(parents=True, exist_ok=True)
+        files = sorted(ev_dir.glob("*.json"), key=lambda p: p.stat().st_mtime, reverse=True)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"SCAN_FAIL: {e}")
+    if not files:
+        raise HTTPException(status_code=404, detail="NO_RUNS")
+    fp = files[0]
+    try:
+        data = json.loads(fp.read_text(encoding="utf-8"))
+    except Exception:
+        data = None
+    return {
+        "ok": True,
+        "path": relpath(fp),
+        "data": data,
+    }
+
+
+# ---------- Content v2 — JSON‑LD utilities ----------
+
+CONTENT_JSONLD_DIR = CONTENT_EVIDENCE_ROOT / "jsonld_runs"
+try:
+    CONTENT_JSONLD_DIR.mkdir(parents=True, exist_ok=True)
+except Exception:
+    pass
+
+
+class BreadcrumbParams(BaseModel):
+    region_name: Optional[str] = Field(None, description="예: 서울특별시")
+    region_slug: Optional[str] = Field(None, description="예: seoul")
+    category_name: Optional[str] = Field(None, description="예: 매물")
+    category_slug: Optional[str] = Field(None, description="예: listings")
+    title: Optional[str] = Field(None, description="문서 제목")
+    canonical: Optional[str] = Field(None, description="정본 URL")
+    site_base: Optional[str] = Field(None, description="사이트 베이스 URL (기본 ENV SITE_BASE_URL 또는 https://hub.example.com)")
+    save: Optional[bool] = Field(False, description="Evidence로 저장 여부")
+
+
+def _site_base_url() -> str:
+    val = (ENV.get("SITE_BASE_URL") or "").strip()
+    if val:
+        return val.rstrip("/")
+    return "https://hub.example.com"
+
+
+@app.get("/api/v2/content/jsonld/breadcrumbs")
+def content_jsonld_breadcrumbs(
+    region_name: Optional[str] = None,
+    region_slug: Optional[str] = None,
+    category_name: Optional[str] = None,
+    category_slug: Optional[str] = None,
+    title: Optional[str] = None,
+    canonical: Optional[str] = None,
+    site_base: Optional[str] = None,
+    save: Optional[bool] = False,
+) -> Any:
+    base = (site_base or _site_base_url()).rstrip("/")
+    # Build list elements, skipping empty fields gracefully
+    items: List[Dict[str, Any]] = []
+    items.append({"@type": "ListItem", "position": 1, "name": "홈", "item": f"{base}/"})
+    if region_name and region_slug:
+        items.append(
+            {
+                "@type": "ListItem",
+                "position": len(items) + 1,
+                "name": region_name,
+                "item": f"{base}/areas/{region_slug}/",
+            }
+        )
+    if category_name and category_slug:
+        items.append(
+            {
+                "@type": "ListItem",
+                "position": len(items) + 1,
+                "name": category_name,
+                "item": f"{base}/{category_slug}/",
+            }
+        )
+    if title and canonical:
+        items.append(
+            {
+                "@type": "ListItem",
+                "position": len(items) + 1,
+                "name": title,
+                "item": canonical,
+            }
+        )
+
+    jsonld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": items}
+
+    # Optionally save to evidence
+    saved_path: Optional[Path] = None
+    if save:
+        ts = now_iso().replace(":", "").replace("-", "")
+        fname = f"{ts}_breadcrumbs.json"
+        saved_path = CONTENT_JSONLD_DIR / fname
+        try:
+            saved_path.write_text(json.dumps(jsonld, ensure_ascii=False, indent=2), encoding="utf-8")
+        except Exception:
+            saved_path = None
+
+    # Return as application/ld+json
+    if saved_path is not None:
+        return JSONResponse(content=jsonld, media_type="application/ld+json", headers={"X-Evidence-Path": relpath(saved_path)})
+    return JSONResponse(content=jsonld, media_type="application/ld+json")
+
+
+# ---------- Content v2 — Sitemap generators ----------
+
+CONTENT_SITEMAP_DIR = CONTENT_EVIDENCE_ROOT / "sitemaps_runs"
+try:
+    CONTENT_SITEMAP_DIR.mkdir(parents=True, exist_ok=True)
+except Exception:
+    pass
+
+
+def _xml_escape(text: str) -> str:
+    return (
+        text.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+        .replace("'", "&apos;")
+    )
+
+
+@app.get("/api/v2/content/sitemap/areas")
+def content_sitemap_areas(
+    paths: Optional[str] = None,
+    areas: Optional[str] = None,
+    site_base: Optional[str] = None,
+    lastmod: Optional[str] = None,
+    changefreq: Optional[str] = "daily",
+    save: Optional[bool] = False,
+) -> Any:
+    """Generate a simple sitemap.xml for area pages.
+
+    Query params:
+      - paths: comma-separated relative paths (e.g., "areas/seoul/junggu/,areas/seoul/jongno/")
+      - areas: comma-separated area slugs without prefix (e.g., "seoul/junggu,seoul/jongno")
+      - site_base: base URL (default ENV SITE_BASE_URL or https://hub.example.com)
+      - lastmod: YYYY-MM-DD (default: today UTC)
+      - changefreq: sitemap changefreq value (default: daily)
+      - save: if true, save XML under status/evidence/content/sitemaps_runs
+    """
+    base = (site_base or _site_base_url()).rstrip("/")
+
+    rels: List[str] = []
+    if isinstance(paths, str) and paths.strip():
+        for p in paths.split(","):
+            p2 = p.strip()
+            if not p2:
+                continue
+            rels.append(p2.lstrip("/"))
+    if not rels and isinstance(areas, str) and areas.strip():
+        for a in areas.split(","):
+            a2 = a.strip()
+            if not a2:
+                continue
+            # compose as areas/<slug>/
+            rels.append(f"areas/{a2.strip('/')}/")
+
+    if not rels:
+        # Minimal fallback example (two entries) to keep the endpoint useful OOTB
+        rels = ["areas/seoul/junggu/", "areas/seoul/jongno/"]
+
+    # date
+    try:
+        lm = lastmod if lastmod else datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    except Exception:
+        lm = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    # Build XML
+    lines: List[str] = [
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+        "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">",
+    ]
+    for r in rels:
+        url = f"{base}/{r.lstrip('/')}"
+        lines.append("  <url>")
+        lines.append(f"    <loc>{_xml_escape(url)}</loc>")
+        lines.append(f"    <lastmod>{_xml_escape(lm)}</lastmod>")
+        if changefreq:
+            lines.append(f"    <changefreq>{_xml_escape(str(changefreq))}</changefreq>")
+        lines.append("  </url>")
+    lines.append("</urlset>")
+    xml_text = "\n".join(lines) + "\n"
+
+    saved_path: Optional[Path] = None
+    if save:
+        ts = now_iso().replace(":", "").replace("-", "")
+        fname = f"{ts}_areas.xml"
+        saved_path = CONTENT_SITEMAP_DIR / fname
+        try:
+            saved_path.write_text(xml_text, encoding="utf-8")
+        except Exception:
+            saved_path = None
+
+    headers = {"Content-Type": "application/xml; charset=utf-8"}
+    if saved_path is not None:
+        headers["X-Evidence-Path"] = relpath(saved_path)
+    return Response(content=xml_text, media_type="application/xml", headers=headers)
+
+
+# ---------- Content v2 — JSON‑LD: Article & LocalBusiness ----------
+
+CONTENT_JSONLD_ARTICLE_DIR = CONTENT_JSONLD_DIR  # reuse dir
+CONTENT_JSONLD_BUSINESS_DIR = CONTENT_JSONLD_DIR  # reuse dir
+
+
+@app.get("/api/v2/content/jsonld/article")
+def content_jsonld_article(
+    headline: Optional[str] = None,
+    description: Optional[str] = None,
+    author_name: Optional[str] = None,
+    date_published: Optional[str] = None,  # ISO8601
+    date_modified: Optional[str] = None,  # ISO8601
+    image: Optional[str] = None,
+    canonical: Optional[str] = None,
+    site_name: Optional[str] = None,
+    save: Optional[bool] = False,
+) -> Any:
+    base = _site_base_url()
+    url = canonical or base
+    obj: Dict[str, Any] = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": headline or "",
+        "description": description or "",
+        "url": url,
+    }
+    if image:
+        obj["image"] = image
+    if author_name:
+        obj["author"] = {"@type": "Person", "name": author_name}
+    if date_published:
+        obj["datePublished"] = date_published
+    if date_modified:
+        obj["dateModified"] = date_modified
+    if site_name:
+        obj["publisher"] = {"@type": "Organization", "name": site_name}
+
+    saved_path: Optional[Path] = None
+    if save:
+        ts = now_iso().replace(":", "").replace("-", "")
+        fname = f"{ts}_article.json"
+        saved_path = CONTENT_JSONLD_ARTICLE_DIR / fname
+        try:
+            saved_path.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding="utf-8")
+        except Exception:
+            saved_path = None
+
+    if saved_path is not None:
+        return JSONResponse(content=obj, media_type="application/ld+json", headers={"X-Evidence-Path": relpath(saved_path)})
+    return JSONResponse(content=obj, media_type="application/ld+json")
+
+
+@app.get("/api/v2/content/jsonld/localbusiness")
+def content_jsonld_local_business(
+    name: Optional[str] = None,
+    telephone: Optional[str] = None,
+    street: Optional[str] = None,
+    locality: Optional[str] = None,
+    region: Optional[str] = None,
+    postal_code: Optional[str] = None,
+    country: Optional[str] = "KR",
+    lat: Optional[float] = None,
+    lon: Optional[float] = None,
+    url: Optional[str] = None,
+    opening_hours: Optional[str] = None,  # e.g., Mo-Fr 09:00-18:00
+    same_as: Optional[str] = None,  # comma-separated URLs
+    save: Optional[bool] = False,
+) -> Any:
+    obj: Dict[str, Any] = {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": name or "",
+    }
+    if telephone:
+        obj["telephone"] = telephone
+    if url:
+        obj["url"] = url
+    addr: Dict[str, Any] = {"@type": "PostalAddress"}
+    if street:
+        addr["streetAddress"] = street
+    if locality:
+        addr["addressLocality"] = locality
+    if region:
+        addr["addressRegion"] = region
+    if postal_code:
+        addr["postalCode"] = postal_code
+    if country:
+        addr["addressCountry"] = country
+    if len(addr) > 1:
+        obj["address"] = addr
+    if lat is not None and lon is not None:
+        obj["geo"] = {"@type": "GeoCoordinates", "latitude": lat, "longitude": lon}
+    if opening_hours:
+        obj["openingHours"] = opening_hours
+    if same_as:
+        arr = [s.strip() for s in same_as.split(",") if s.strip()]
+        if arr:
+            obj["sameAs"] = arr
+
+    saved_path: Optional[Path] = None
+    if save:
+        ts = now_iso().replace(":", "").replace("-", "")
+        fname = f"{ts}_localbusiness.json"
+        saved_path = CONTENT_JSONLD_BUSINESS_DIR / fname
+        try:
+            saved_path.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding="utf-8")
+        except Exception:
+            saved_path = None
+
+    if saved_path is not None:
+        return JSONResponse(content=obj, media_type="application/ld+json", headers={"X-Evidence-Path": relpath(saved_path)})
+    return JSONResponse(content=obj, media_type="application/ld+json")
+
+
+@app.get("/api/v2/content/sitemap/index")
+def content_sitemap_index(
+    sitemaps: Optional[str] = None,  # comma-separated absolute or relative URLs
+    site_base: Optional[str] = None,
+    save: Optional[bool] = False,
+) -> Any:
+    base = (site_base or _site_base_url()).rstrip("/")
+    urls: List[str] = []
+    if isinstance(sitemaps, str) and sitemaps.strip():
+        for x in sitemaps.split(","):
+            x2 = x.strip()
+            if not x2:
+                continue
+            if x2.startswith("http://") or x2.startswith("https://"):
+                urls.append(x2)
+            else:
+                urls.append(f"{base}/{x2.lstrip('/')}")
+    if not urls:
+        # Fallback examples
+        urls = [
+            f"{base}/sitemap-areas.xml",
+            f"{base}/sitemap-categories.xml",
+        ]
+
+    lines: List[str] = [
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+        "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">",
+    ]
+    for u in urls:
+        lines.append("  <sitemap>")
+        lines.append(f"    <loc>{_xml_escape(u)}</loc>")
+        lines.append("  </sitemap>")
+    lines.append("</sitemapindex>")
+    xml_text = "\n".join(lines) + "\n"
+
+    saved_path: Optional[Path] = None
+    if save:
+        ts = now_iso().replace(":", "").replace("-", "")
+        fname = f"{ts}_sitemap_index.xml"
+        saved_path = CONTENT_SITEMAP_DIR / fname
+        try:
+            saved_path.write_text(xml_text, encoding="utf-8")
+        except Exception:
+            saved_path = None
+
+    headers = {"Content-Type": "application/xml; charset=utf-8"}
+    if saved_path is not None:
+        headers["X-Evidence-Path"] = relpath(saved_path)
+    return Response(content=xml_text, media_type="application/xml", headers=headers)
+
 @app.get("/api/delta/latest")
 def delta_latest(
     lens: Optional[str] = None,
@@ -585,6 +1153,19 @@ app.add_middleware(
 THREADS_ENABLED = True
 THREADS_ROOT = PROJECT_ROOT / "conversations" / "threads"
 THREADS_ROOT.mkdir(parents=True, exist_ok=True)
+
+# --- SQLite (v2 API) configuration ---
+import sqlite3
+
+def _sqlite_path() -> str:
+    # Prefer explicit env; fallback to repo default
+    p = ENV.get("GG_SQLITE_DB") or ENV.get("GG_DB_SQLITE") or str(PROJECT_ROOT / "db" / "gumgang.db")
+    return p
+
+def _sqlite_conn() -> sqlite3.Connection:
+    conn = sqlite3.connect(_sqlite_path())
+    conn.row_factory = sqlite3.Row
+    return conn
 
 THREAD_TEXT_MAX = 16 * 1024       # 16KB per input text
 THREAD_LINE_MAX = 64 * 1024       # 64KB per JSONL line
@@ -928,6 +1509,137 @@ def threads_recent_api(limit: int = 20) -> Dict[str, Any]:
                     continue
     items.sort(key=lambda x: str(x.get("last_ts") or ""), reverse=True)
     return {"ok": True, "data": {"items": items[:lim], "count": len(items)}, "meta": {"ts": now_iso()}}
+
+
+# ---------------- v2 (SQLite-backed) Thread APIs ----------------
+@app.get("/api/v2/threads/recent")
+def v2_threads_recent(limit: int = 50) -> Dict[str, Any]:
+    try:
+        lim = max(1, min(10000, int(limit or 50)))
+        with _sqlite_conn() as con:
+            cur = con.execute(
+                """
+                SELECT t.id, t.title, t.updated_at,
+                       COALESCE((SELECT COUNT(1) FROM messages m WHERE m.thread_id = t.id), 0) AS approx_turns
+                FROM threads t
+                ORDER BY t.updated_at DESC
+                LIMIT ?
+                """,
+                (lim,),
+            )
+            items = []
+            for r in cur.fetchall():
+                items.append({
+                    "id": r["id"],
+                    "convId": r["id"],  # compatibility field
+                    "title": r["title"],
+                    "last_ts": r["updated_at"],
+                    "approx_turns": r["approx_turns"],
+                    "top_tags": [],
+                })
+        return {"ok": True, "data": {"items": items, "count": len(items)}, "meta": {"ts": now_iso(), "db": _sqlite_path()}}
+    except Exception as e:
+        return {"ok": False, "error": str(e), "data": {"items": []}, "meta": {"ts": now_iso()}}
+
+
+@app.get("/api/v2/threads/read")
+def v2_threads_read(id: str) -> Dict[str, Any]:
+    try:
+        tid = safe_id(id, "CONV")
+        with _sqlite_conn() as con:
+            cur_t = con.execute("SELECT id, title, updated_at FROM threads WHERE id = ?", (tid,))
+            row = cur_t.fetchone()
+            if not row:
+                raise HTTPException(status_code=404, detail="thread not found")
+            cur_m = con.execute(
+                "SELECT id, role, content, meta_json, created_at FROM messages WHERE thread_id = ? ORDER BY created_at ASC",
+                (tid,),
+            )
+            turns: List[Dict[str, Any]] = []
+            for m in cur_m.fetchall():
+                try:
+                    meta = json.loads(m["meta_json"]) if m["meta_json"] else {}
+                except Exception:
+                    meta = {}
+                turns.append({
+                    "role": m["role"],
+                    "text": m["content"],
+                    "ts": m["created_at"],
+                    "meta": meta,
+                })
+        return {"ok": True, "data": {"id": tid, "title": row["title"], "turns": turns}, "meta": {"ts": now_iso(), "db": _sqlite_path()}}
+    except HTTPException:
+        raise
+    except Exception as e:
+        return {"ok": False, "error": str(e), "data": {}, "meta": {"ts": now_iso()}}
+
+
+@app.post("/api/v2/threads/append")
+def v2_threads_append(body: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
+    tid = safe_id(str(body.get("id") or ""), "CONV")
+    role = str(body.get("role") or "").strip().lower()
+    text = str(body.get("text") or "")
+    if role not in {"user", "assistant", "system"} or not text:
+        raise HTTPException(status_code=422, detail="INVALID_ROLE_OR_TEXT")
+    meta = body.get("meta") or {}
+    now_ms = int(datetime.now(timezone.utc).timestamp() * 1000)
+    try:
+        with _sqlite_conn() as con:
+            con.execute(
+                "INSERT OR IGNORE INTO threads(id, title, tags, created_at, updated_at) VALUES(?,?,?,?,?)",
+                (tid, None, None, now_ms, now_ms),
+            )
+            con.execute(
+                "INSERT OR REPLACE INTO messages(id, thread_id, role, content, meta_json, created_at) VALUES(?,?,?,?,?,?)",
+                (f"{tid}:{now_ms}", tid, role, text, json.dumps(meta, ensure_ascii=False), now_ms),
+            )
+            con.execute("UPDATE threads SET updated_at = ? WHERE id = ?", (now_ms, tid))
+            con.commit()
+        return {"ok": True, "data": {"id": tid}, "meta": {"ts": now_iso()}}
+    except Exception as e:
+        return {"ok": False, "error": str(e), "meta": {"ts": now_iso()}}
+
+
+@app.post("/api/v2/threads/import")
+def v2_threads_import(body: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
+    threads = body.get("threads") or []
+    if not isinstance(threads, list) or not threads:
+        raise HTTPException(status_code=422, detail="THREADS_REQUIRED")
+    imported = 0
+    try:
+        with _sqlite_conn() as con:
+            con.execute("PRAGMA foreign_keys=ON;")
+            for th in threads:
+                tid = safe_id(str(th.get("id") or ulid()), "CONV")
+                title = th.get("title")
+                now_ms = int(datetime.now(timezone.utc).timestamp() * 1000)
+                con.execute(
+                    "INSERT OR IGNORE INTO threads(id, title, tags, created_at, updated_at) VALUES(?,?,?,?,?)",
+                    (tid, title, None, now_ms, now_ms),
+                )
+                for msg in (th.get("messages") or []):
+                    role = str(msg.get("role") or "").strip().lower()
+                    if role not in {"user", "assistant", "system"}:
+                        continue
+                    text = msg.get("content") or msg.get("text") or ""
+                    if not text:
+                        continue
+                    ts = msg.get("ts")
+                    if isinstance(ts, (int, float)):
+                        ts_ms = int(ts)
+                    else:
+                        ts_ms = now_ms
+                    meta = msg.get("meta") or {}
+                    con.execute(
+                        "INSERT OR REPLACE INTO messages(id, thread_id, role, content, meta_json, created_at) VALUES(?,?,?,?,?,?)",
+                        (f"{tid}:{ts_ms}", tid, role, text, json.dumps(meta, ensure_ascii=False), ts_ms),
+                    )
+                con.execute("UPDATE threads SET updated_at = ? WHERE id = ?", (now_ms, tid))
+            con.commit()
+            imported = len(threads)
+        return {"ok": True, "data": {"imported": imported}, "meta": {"ts": now_iso(), "db": _sqlite_path()}}
+    except Exception as e:
+        return {"ok": False, "error": str(e), "meta": {"ts": now_iso()}}
 
 @app.get("/api/threads/migrated")
 def threads_migrated_api(limit: int = 500) -> Dict[str, Any]:
@@ -2378,6 +3090,675 @@ def search_unified(
         },
     }
     return {"ok": True, "data": data, "meta": {"ts": now_iso()}}
+
+# ---------------- Read‑only File Viewer + OS Open (FastAPI single gateway) ----------------
+
+_DENY_DIR_SEGMENTS = (
+    os.sep + ".git" + os.sep,
+    os.sep + "node_modules" + os.sep,
+    os.sep + "dist" + os.sep,
+    os.sep + "build" + os.sep,
+    os.sep + "__pycache__" + os.sep,
+)
+
+
+def _safe_abs_path(rel: str) -> Path:
+    if not isinstance(rel, str) or not rel.strip():
+        raise HTTPException(status_code=422, detail="PATH_REQUIRED")
+    # Strip leading slash to make it project‑relative
+    clean = rel.lstrip("/")
+    # Normalize repo-root-prefixed paths (e.g., "gumgang_meeting/…")
+    if clean.startswith("gumgang_meeting/"):
+        clean = clean[len("gumgang_meeting/"):]
+    # If absolute path provided and within project root, accept; else treat as project-relative
+    abs_p: Path
+    if os.path.isabs(rel):
+        abs_in = Path(rel).resolve()
+        pr = str(PROJECT_ROOT.resolve())
+        aps = str(abs_in)
+        if aps == pr or aps.startswith(pr + os.sep):
+            abs_p = abs_in
+        else:
+            abs_p = (PROJECT_ROOT / clean).resolve()
+    else:
+        abs_p = (PROJECT_ROOT / clean).resolve()
+    abs_p = (PROJECT_ROOT / clean).resolve()
+    pr = str(PROJECT_ROOT.resolve())
+    aps = str(abs_p)
+    if not (aps == pr or aps.startswith(pr + os.sep)):
+        raise HTTPException(status_code=403, detail="OUT_OF_PROJECT_ROOT")
+    if any(seg in aps for seg in _DENY_DIR_SEGMENTS):
+        raise HTTPException(status_code=403, detail="DENIED_PATH")
+    if not abs_p.exists() or not abs_p.is_file():
+        raise HTTPException(status_code=404, detail="NOT_FOUND")
+    return abs_p
+
+
+@app.get("/api/files/view")
+def files_view(path: str, max_bytes: int = 200_000) -> HTMLResponse:
+    """Render a simple read‑only viewer for small UTF‑8 text files under project root.
+    Accepts optional anchor in path like "status/foo.md#L10-20" to highlight lines.
+    """
+    raw = urllib.parse.unquote(path or "")
+    # Split anchor
+    anchor_start = None
+    anchor_end = None
+    base_path = raw
+    if "#L" in raw:
+        base_path, frag = raw.split("#L", 1)
+        try:
+            parts = (frag or "").split("-", 1)
+            anchor_start = int(parts[0]) if parts and parts[0].isdigit() else None
+            if len(parts) > 1 and parts[1].isdigit():
+                anchor_end = int(parts[1])
+        except Exception:
+            anchor_start = anchor_end = None
+
+    fp = _safe_abs_path(base_path)
+    try:
+        text = fp.read_text(encoding="utf-8", errors="replace")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"READ_ERROR: {e}")
+
+    # Enforce byte limit (rough cut); show notice if truncated
+    b = text.encode("utf-8")
+    truncated = False
+    if len(b) > int(max_bytes):
+        truncated = True
+        # Cut at safe boundary by lines
+        lines = text.splitlines()
+        approx = 0
+        kept: list[str] = []
+        for ln in lines:
+            bs = len((ln + "\n").encode("utf-8"))
+            if approx + bs > int(max_bytes):
+                break
+            kept.append(ln)
+            approx += bs
+        text = "\n".join(kept)
+
+    esc = html.escape
+    lines = text.splitlines()
+    # Build HTML with line anchors
+    out = [
+        "<!doctype html>",
+        "<html><head><meta charset='utf-8'>",
+        f"<title>{esc(relpath(fp))}</title>",
+        "<style>body{background:#0b1222;color:#e5e7eb;font:14px/1.5 system-ui,monospace;margin:0;padding:14px;} .ln{display:inline-block;width:64px;color:#94a3b8;opacity:.8;padding-right:8px;text-align:right;user-select:none} pre{margin:0;white-space:pre-wrap} .hl{background:rgba(180, 83, 9, .25);} a{color:#93c5fd;text-decoration:none} .head{font:12px system-ui;color:#94a3b8;margin-bottom:8px} </style>",
+        "</head><body>",
+        f"<div class='head'>Path: {esc(relpath(fp))}{' &middot; <em>truncated</em>' if truncated else ''}</div>",
+        "<div>",
+    ]
+    start = int(anchor_start or 0)
+    end = int(anchor_end or anchor_start or 0)
+    for i, ln in enumerate(lines, start=1):
+        cls = "hl" if (start and i >= start and (end == 0 or i <= end)) else ""
+        out.append(
+            f"<div id='L{i}' class='{cls}'><span class='ln'>L{i}</span><pre>{esc(ln)}</pre></div>"
+        )
+    out += [
+        "</div>",
+        "<script>\n",
+        "try{\n",
+        "const s=new URLSearchParams(location.search);\n",
+        "const p=s.get('path')||'';\n",
+        "const m=p.match(/#L(\\d+)(?:-(\\d+))?$/);\n",
+        "if(m){const el=document.getElementById('L'+Number(m[1]||'0')); if(el){el.scrollIntoView({block:'center'});}}\n",
+        "}catch(e){}\n",
+        "</script>",
+        "</body></html>",
+    ]
+    return HTMLResponse("".join(out))
+
+@app.get("/api/files/exists")
+def files_exists(path: str) -> Dict[str, Any]:
+    raw = urllib.parse.unquote(path or "")
+    fp = _safe_abs_path(raw)
+    return {"ok": True, "exists": fp.exists() and fp.is_file(), "path": relpath(fp), "meta": {"ts": now_iso()}}
+
+
+class FileOpenReq(BaseModel):
+    path: str
+    readOnly: Optional[bool] = False
+
+
+@app.post("/api/files/open")
+def files_open(req: FileOpenReq) -> Dict[str, Any]:
+    fp = _safe_abs_path(urllib.parse.unquote(req.path or ""))
+    sysname = platform.system().lower()
+    opener: Optional[List[str]] = None
+    if sysname.startswith("linux"):
+        if req.readOnly:
+            # Prefer editors with explicit read-only/preview flags
+            if shutil.which("gnome-text-editor"):
+                opener = ["gnome-text-editor", "--view", str(fp)]
+            elif shutil.which("gedit"):
+                opener = ["gedit", "--view", str(fp)]
+            elif shutil.which("kate"):
+                opener = ["kate", "--read-only", str(fp)]
+            else:
+                # Fallback to browser-based FastAPI viewer (read-only)
+                view_url = f"http://127.0.0.1:8000/api/files/view?path=/{urllib.parse.quote(relpath(fp))}"
+                exe = shutil.which("xdg-open")
+                if not exe:
+                    raise HTTPException(status_code=501, detail="xdg-open not found for viewer")
+                opener = [exe, view_url]
+        else:
+            exe = shutil.which("xdg-open")
+            if not exe:
+                raise HTTPException(status_code=501, detail="xdg-open not found")
+            opener = [exe, str(fp)]
+    elif sysname.startswith("darwin"):
+        if req.readOnly and shutil.which("qlmanage"):
+            opener = ["qlmanage", "-p", str(fp)]
+        else:
+            opener = ["open", str(fp)]
+    elif sysname.startswith("win"):
+        if req.readOnly and shutil.which("notepad++"):
+            opener = ["notepad++", "-ro", str(fp)]
+        else:
+            # 'start' is a shell builtin; use cmd.exe /c start
+            opener = ["cmd", "/c", "start", str(fp)]
+    else:
+        raise HTTPException(status_code=501, detail="UNSUPPORTED_OS")
+
+    try:
+        subprocess.Popen(opener)  # non-blocking
+        return {"ok": True, "data": {"path": relpath(fp)}, "meta": {"ts": now_iso()}}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"OPEN_FAILED: {e}")
+
+
+@app.get("/api/files/read")
+def files_read(path: str, max_bytes: int = 2_000_000) -> Dict[str, Any]:
+    """Return UTF‑8 text content of a file under the project root as JSON.
+    Intended for editor consumption (read‑only)."""
+    raw = urllib.parse.unquote(path or "")
+    fp = _safe_abs_path(raw)
+    try:
+        data = fp.read_bytes()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"READ_ERROR: {e}")
+    truncated = False
+    if len(data) > int(max_bytes):
+        data = data[: int(max_bytes)]
+        truncated = True
+    try:
+        text = data.decode("utf-8", errors="replace")
+    except Exception:
+        text = data.decode("utf-8", errors="replace")
+    return {
+        "ok": True,
+        "data": {"path": relpath(fp), "text": text, "truncated": truncated},
+        "meta": {"ts": now_iso()},
+    }
+
+
+@app.get("/api/files/list")
+def files_list(path: Optional[str] = None, depth: int = 1) -> Dict[str, Any]:
+    """List directories/files under project root (read‑only, safe).
+
+    - path: repo‑relative directory (default '.')
+    - depth: 1 (flat) or 2 (include one level of children for directories)
+    Excludes heavy/unsafe folders: .git, node_modules, dist, build, .venv, venv, .obsidian
+    """
+    base = PROJECT_ROOT.resolve()
+    raw = (path or ".").lstrip("/")
+    target = (base / raw).resolve()
+    if not str(target).startswith(str(base)):
+        raise HTTPException(status_code=403, detail="OUT_OF_ROOT")
+    if not target.exists() or not target.is_dir():
+        raise HTTPException(status_code=404, detail="NOT_DIR")
+
+    deny = {".git", "node_modules", "dist", "build", ".venv", "venv", ".obsidian"}
+
+    def allowed(p: Path) -> bool:
+        n = p.name
+        if n in deny:
+            return False
+        if n.endswith(".egg-info"):
+            return False
+        return True
+
+    def entry(p: Path) -> Dict[str, Any]:
+        try:
+            st = p.stat()
+            size = int(st.st_size)
+            mtime = int(st.st_mtime)
+        except Exception:
+            size = None
+            mtime = None
+        return {
+            "name": p.name,
+            "path": relpath(p),
+            "type": "dir" if p.is_dir() else "file",
+            "size": size,
+            "mtime": mtime,
+        }
+
+    items: List[Dict[str, Any]] = []
+    try:
+        for child in sorted(target.iterdir(), key=lambda x: (0 if x.is_dir() else 1, x.name.lower())):
+            if not allowed(child):
+                continue
+            d = entry(child)
+            if depth > 1 and child.is_dir():
+                subs: List[Dict[str, Any]] = []
+                for g in sorted(child.iterdir(), key=lambda x: (0 if x.is_dir() else 1, x.name.lower())):
+                    if not allowed(g):
+                        continue
+                    subs.append(entry(g))
+                d["children"] = subs
+            items.append(d)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"LIST_FAIL: {e}")
+
+    return {"ok": True, "cwd": relpath(target), "items": items}
+
+
+@app.get("/api/v2/threads/view")
+def v2_threads_view(id: str) -> HTMLResponse:
+    """Render thread content with #L anchors. Falls back to legacy files if needed."""
+    tid = safe_id(id, "CONV")
+    turns: List[Tuple[str, str, Any]] = []
+    title: Optional[str] = None
+
+    # Try DB first
+    try:
+        with _sqlite_conn() as con:
+            cur_t = con.execute("SELECT id, title, updated_at FROM threads WHERE id = ?", (tid,))
+            row = cur_t.fetchone()
+            if row:
+                title = row["title"]
+                cur_m = con.execute(
+                    "SELECT role, content, created_at FROM messages WHERE thread_id = ? ORDER BY created_at ASC",
+                    (tid,),
+                )
+                turns = [(r[0], r[1], r[2]) for r in cur_m.fetchall()]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    sources: List[str] = []
+    if not turns:
+        legacy_fp = _find_legacy_thread_file(tid)
+        if legacy_fp:
+            try:
+                turns = _read_legacy_thread(legacy_fp)
+                title = title or tid
+                sources.append(relpath(legacy_fp))
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=f"legacy thread read failed: {e}")
+    if not turns:
+        mem_files = _find_memory_thread_files(tid)
+        for fp in mem_files:
+            try:
+                turns.extend(_read_legacy_thread(fp))
+                sources.append(relpath(fp))
+            except Exception:
+                continue
+
+    if not turns:
+        html_body = f"""
+        <!doctype html><html><head><meta charset='utf-8'>
+        <title>Thread {html.escape(tid)}</title>
+        <style>body{{background:#0b1222;color:#e5e7eb;font:14px/1.6 system-ui,monospace;margin:0;padding:24px;}}
+        a{{color:#93c5fd;}}</style></head><body>
+        <h2>Thread {html.escape(tid)}</h2>
+        <p>해당 스레드 데이터를 DB/legacy 파일에서 찾을 수 없습니다.</p>
+        <p>관련 로그를 확인하려면 <code>status/logs/rag_injection_latest.json</code> 또는 메모리 증거를 참고해주세요.</p>
+        </body></html>
+        """
+        return HTMLResponse(html_body, status_code=200)
+
+    esc = html.escape
+    out = [
+        "<!doctype html>",
+        "<html><head><meta charset='utf-8'>",
+        f"<title>Thread {esc(title or tid)}</title>",
+        "<style>body{background:#0b1222;color:#e5e7eb;font:14px/1.6 system-ui,monospace;margin:0;padding:14px;} .ln{display:inline-block;width:64px;color:#94a3b8;opacity:.8;padding-right:8px;text-align:right;user-select:none} .msg{margin:0 0 6px 0;white-space:pre-wrap} .hdr{font:12px system-ui;color:#94a3b8;margin-bottom:8px} .role{font-weight:600;color:#93c5fd} .hl{background:rgba(234,179,8,.25);border-left:4px solid rgba(234,179,8,.9);}</style>",
+        "</head><body>",
+        f"<div class='hdr'>Thread: {esc(tid)} &middot; Turns: {len(turns)}" + (f" &middot; Sources: {', '.join(esc(s) for s in sources)}" if sources else "") + "</div>",
+        "<div>",
+    ]
+    for i, (role, content, _) in enumerate(turns, start=1):
+        out.append(
+            f"<div id='L{i}'><span class='ln'>L{i}</span><span class='role'>{esc(role)}:</span> <span class='msg'>{esc(content)}</span></div>"
+        )
+    out += [
+        "</div>",
+        "<script>\n",
+        "try{\n",
+        "  const m=location.hash.match(/#L(\\d+)(?:-(\\d+))?/);\n",
+        "  if(m){\n",
+        "    const a=parseInt(m[1]||'0');\n",
+        "    const b=(m[2]?parseInt(m[2]):a);\n",
+        "    const start=Math.min(a,b), end=Math.max(a,b);\n",
+        "    const first=document.getElementById('L'+start);\n",
+        "    for(let i=start;i<=end;i++){ const el=document.getElementById('L'+i); if(el){ el.classList.add('hl'); } }\n",
+        "    if(first){ first.scrollIntoView({block:'center'}); }\n",
+        "  }\n",
+        "}catch(e){}\n",
+        "</script>",
+        "</body></html>",
+    ]
+    return HTMLResponse("".join(out))
+
+
+# ---------------- Content v2 — API stubs (ST-0702) ----------------
+
+# Evidence roots (append-only JSON snapshots)
+CONTENT_EVIDENCE_ROOT = EVIDENCE_ROOT / "content"
+CONTENT_IMPORT_DIR = CONTENT_EVIDENCE_ROOT / "import_runs"
+CONTENT_REVALIDATE_DIR = CONTENT_EVIDENCE_ROOT / "revalidate_runs"
+for _d in (CONTENT_EVIDENCE_ROOT, CONTENT_IMPORT_DIR, CONTENT_REVALIDATE_DIR):
+    try:
+        _d.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        pass
+
+
+class ContentItem(BaseModel):
+    id: str
+    slug: str
+    title: str
+    summary: Optional[str] = None
+    body_mdx_path: Optional[str] = None
+    thumbnail_url: Optional[str] = None
+    price_plan: Optional[str] = None
+    features_json: Optional[List[Any]] = None
+    links_json: Optional[Dict[str, Any]] = None
+
+
+class ContentCollection(BaseModel):
+    id: str
+    slug: str
+    name: str
+    items: Optional[List[str]] = None
+
+
+class ImportPayload(BaseModel):
+    run_id: Optional[str] = None
+    upsert: Optional[bool] = True
+    items: Optional[List[ContentItem]] = None
+    collections: Optional[List[ContentCollection]] = None
+
+
+@app.post("/api/v2/content/import")
+def content_import(body: ImportPayload = Body(...)) -> Dict[str, Any]:
+    """Import payload → SQLite v2 upsert + append-only evidence snapshot.
+    Tables are created on first use (idempotent)."""
+    run_id = body.run_id or f"run_{int(time.time()*1000)}"
+    now = now_iso()
+    items = body.items or []
+    cols = body.collections or []
+    upserted = {"items": 0, "collections": 0, "tags": 0}
+
+    db_kind = _content_db_kind()
+
+    # 1) Upsert into DB (content v2 schema)
+    def _ensure_schema(con):
+        con.execute(
+            """
+            CREATE TABLE IF NOT EXISTS content_items (
+              id            TEXT PRIMARY KEY,
+              slug          TEXT UNIQUE NOT NULL,
+              title         TEXT NOT NULL,
+              summary       TEXT,
+              body_mdx_path TEXT,
+              thumbnail_url TEXT,
+              price_plan    TEXT,
+              features_json TEXT DEFAULT '[]',
+              links_json    TEXT DEFAULT '{}',
+              updated_at    INTEGER
+            );
+            """
+        )
+        con.execute(
+            """
+            CREATE TABLE IF NOT EXISTS content_tags (
+              id   TEXT PRIMARY KEY,
+              slug TEXT UNIQUE NOT NULL,
+              name TEXT NOT NULL
+            );
+            """
+        )
+        con.execute(
+            """
+            CREATE TABLE IF NOT EXISTS content_item_tags (
+              item_id TEXT NOT NULL,
+              tag_id  TEXT NOT NULL,
+              PRIMARY KEY (item_id, tag_id)
+            );
+            """
+        )
+        con.execute(
+            """
+            CREATE TABLE IF NOT EXISTS content_collections (
+              id   TEXT PRIMARY KEY,
+              slug TEXT UNIQUE NOT NULL,
+              name TEXT NOT NULL
+            );
+            """
+        )
+        con.execute(
+            """
+            CREATE TABLE IF NOT EXISTS content_collection_items (
+              collection_id TEXT NOT NULL,
+              item_id       TEXT NOT NULL,
+              ord           INTEGER DEFAULT 0,
+              PRIMARY KEY (collection_id, item_id)
+            );
+            """
+        )
+        # simple view (tags omitted for speed)
+        con.execute(
+            """
+            CREATE VIEW IF NOT EXISTS content_search_view AS
+            SELECT id, slug, title, summary, thumbnail_url, updated_at, links_json
+            FROM content_items;
+            """
+        )
+
+    if db_kind == "sqlite":
+        with _sqlite_conn() as con:
+            _ensure_schema(con)
+            # items
+            for it in items:
+                js = json.dumps((it.features_json or []), ensure_ascii=False)
+                lj = json.dumps((it.links_json or {}), ensure_ascii=False)
+                updated_ms = int(datetime.now(timezone.utc).timestamp() * 1000)
+                con.execute(
+                    """
+                INSERT INTO content_items(id, slug, title, summary, body_mdx_path, thumbnail_url, price_plan, features_json, links_json, updated_at)
+                VALUES(?,?,?,?,?,?,?,?,?,?)
+                ON CONFLICT(id) DO UPDATE SET
+                  slug=excluded.slug, title=excluded.title, summary=excluded.summary,
+                  body_mdx_path=excluded.body_mdx_path, thumbnail_url=excluded.thumbnail_url,
+                  price_plan=excluded.price_plan, features_json=excluded.features_json,
+                  links_json=excluded.links_json, updated_at=excluded.updated_at
+                """,
+                (
+                    it.id, it.slug, it.title, it.summary, it.body_mdx_path, it.thumbnail_url,
+                    it.price_plan, js, lj, updated_ms,
+                ),
+            )
+                upserted["items"] += 1
+                # tags (optional by slug=name)
+                for tg in (it.features_json or []):
+                    # treat features_json strings as tags if they look like slugs
+                    if not isinstance(tg, str) or not tg:
+                        continue
+                    tag_id = tg
+                    con.execute(
+                        "INSERT OR IGNORE INTO content_tags(id, slug, name) VALUES(?,?,?)",
+                        (tag_id, tag_id, tag_id),
+                    )
+                    try:
+                        con.execute(
+                            "INSERT OR IGNORE INTO content_item_tags(item_id, tag_id) VALUES(?,?)",
+                            (it.id, tag_id),
+                        )
+                    except Exception:
+                        pass
+            # collections
+            for c in cols:
+                con.execute(
+                    "INSERT OR REPLACE INTO content_collections(id, slug, name) VALUES(?,?,?)",
+                    (c.id, c.slug, c.name),
+                )
+                upserted["collections"] += 1
+                for iid in (c.items or []):
+                    con.execute(
+                        "INSERT OR IGNORE INTO content_collection_items(collection_id, item_id, ord) VALUES(?,?,?)",
+                        (c.id, iid, 0),
+                    )
+            con.commit()
+    else:
+        # Postgres path (best-effort; requires psycopg2 and CONTENT_PG_URL)
+        try:
+            with _pg_conn() as con:
+                con.autocommit = True
+                cur = con.cursor()
+                # ensure schema (idempotent)
+                cur.execute(open("db/schema/postgres/content_v2.sql","r",encoding="utf-8").read())
+                # items
+                for it in items:
+                    js = json.dumps((it.features_json or []), ensure_ascii=False)
+                    lj = json.dumps((it.links_json or {}), ensure_ascii=False)
+                    cur.execute(
+                        """
+                        INSERT INTO content.items(id, slug, title, summary, body_mdx_path, thumbnail_url, price_plan, features_json, links_json)
+                        VALUES(%s,%s,%s,%s,%s,%s,%s,%s::jsonb,%s::jsonb)
+                        ON CONFLICT(id) DO UPDATE SET
+                          slug=excluded.slug, title=excluded.title, summary=excluded.summary,
+                          body_mdx_path=excluded.body_mdx_path, thumbnail_url=excluded.thumbnail_url,
+                          price_plan=excluded.price_plan, features_json=excluded.features_json,
+                          links_json=excluded.links_json, updated_at=now()
+                        """,
+                        (it.id, it.slug, it.title, it.summary, it.body_mdx_path, it.thumbnail_url, it.price_plan, js, lj),
+                    )
+                    upserted["items"] += 1
+                    for tg in (it.features_json or []):
+                        if not isinstance(tg, str) or not tg:
+                            continue
+                        cur.execute("INSERT INTO content.tags(id, slug, name) VALUES(%s,%s,%s) ON CONFLICT(id) DO NOTHING", (tg, tg, tg))
+                        cur.execute("INSERT INTO content.item_tags(item_id, tag_id) VALUES(%s,%s) ON CONFLICT DO NOTHING", (it.id, tg))
+                for c in cols:
+                    cur.execute(
+                        "INSERT INTO content.collections(id, slug, name) VALUES(%s,%s,%s) ON CONFLICT(id) DO UPDATE SET slug=excluded.slug, name=excluded.name",
+                        (c.id, c.slug, c.name),
+                    )
+                    upserted["collections"] += 1
+                    for iid in (c.items or []):
+                        cur.execute(
+                            "INSERT INTO content.collection_items(collection_id, item_id, ord) VALUES(%s,%s,%s) ON CONFLICT DO NOTHING",
+                            (c.id, iid, 0),
+                        )
+        except Exception as e:
+            return {"ok": False, "error": f"PG_IMPORT_FAILED: {e}", "meta": {"ts": now_iso()}}
+
+    day = datetime.now(timezone.utc).strftime("%Y%m%d")
+    out_dir = CONTENT_IMPORT_DIR / day
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / f"{run_id}.json"
+    payload = {
+        "run_id": run_id,
+        "upsert": bool(body.upsert),
+        "items": [i.model_dump() for i in items],
+        "collections": [c.model_dump() for c in cols],
+        "ts": now,
+    }
+    out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # keep a latest snapshot for search stub
+    latest = CONTENT_EVIDENCE_ROOT / "latest.json"
+    latest.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    return {"ok": True, "upserted": upserted, "meta": {"ts": now, "evidence": relpath(out_path)}}
+
+
+@app.get("/api/v2/content/search")
+def content_search(q: Optional[str] = None, page: int = 1, size: int = 20) -> Dict[str, Any]:
+    """Search via content_search_view (title/summary LIKE filter). Uses SQLite by default; PG if GG_CONTENT_DB=pg."""
+    page = max(1, int(page or 1))
+    size = max(1, int(size or 20))
+    like = f"%{(q or '').strip()}%"
+    items: List[Dict[str, Any]] = []
+    total = 0
+    if _content_db_kind() == "sqlite":
+        with _sqlite_conn() as con:
+            # ensure view exists
+            try:
+                con.execute("select 1 from content_search_view limit 1")
+            except Exception:
+                con.execute(
+                    "CREATE VIEW IF NOT EXISTS content_search_view AS SELECT id, slug, title, summary, thumbnail_url, updated_at, links_json FROM content_items"
+                )
+            if (q or "").strip():
+                cur = con.execute(
+                    "SELECT id, slug, title, summary, thumbnail_url, updated_at, links_json FROM content_search_view WHERE title LIKE ? OR summary LIKE ? ORDER BY updated_at DESC LIMIT ? OFFSET ?",
+                    (like, like, size, (page - 1) * size),
+                )
+                items = [dict(row) for row in cur.fetchall()]
+                total = len(items)  # simple approx for stub
+            else:
+                cur = con.execute(
+                    "SELECT id, slug, title, summary, thumbnail_url, updated_at, links_json FROM content_search_view ORDER BY updated_at DESC LIMIT ? OFFSET ?",
+                    (size, (page - 1) * size),
+                )
+                items = [dict(row) for row in cur.fetchall()]
+                total = len(items)
+    else:
+        # Postgres path
+        try:
+            with _pg_conn() as con:
+                cur = con.cursor()
+                if (q or "").strip():
+                    cur.execute(
+                        "SELECT id, slug, title, summary, thumbnail_url, updated_at, links_json::text FROM content_search_view WHERE title ILIKE %s OR summary ILIKE %s ORDER BY updated_at DESC LIMIT %s OFFSET %s",
+                        (like, like, size, (page - 1) * size),
+                    )
+                else:
+                    cur.execute(
+                        "SELECT id, slug, title, summary, thumbnail_url, updated_at, links_json::text FROM content_search_view ORDER BY updated_at DESC LIMIT %s OFFSET %s",
+                        (size, (page - 1) * size),
+                    )
+                rows = cur.fetchall()
+                for r in rows:
+                    items.append({
+                        "id": r[0], "slug": r[1], "title": r[2], "summary": r[3], "thumbnail_url": r[4],
+                        "updated_at": r[5].isoformat().replace("+00:00","Z") if hasattr(r[5], 'isoformat') else str(r[5]),
+                        "links_json": r[6],
+                    })
+                total = len(items)
+        except Exception as e:
+            return {"ok": False, "error": f"PG_SEARCH_FAILED: {e}", "data": {"items": [], "total": 0}, "meta": {"ts": now_iso()}}
+    # normalize
+    for it in items:
+        it["links_json"] = json.loads(it.get("links_json") or "{}") if isinstance(it.get("links_json"), str) else (it.get("links_json") or {})
+        # convert updated_at (ms) → ISO if looks like int
+        try:
+            ms = int(it.get("updated_at") or 0)
+            it["updated_at"] = datetime.fromtimestamp(ms/1000, tz=timezone.utc).isoformat().replace("+00:00","Z")
+        except Exception:
+            pass
+    return {"ok": True, "data": {"items": items, "total": total}, "meta": {"ts": now_iso()}}
+
+
+class RevalidateReq(BaseModel):
+    paths: List[str]
+    reason: Optional[str] = None
+
+
+@app.post("/api/v2/content/revalidate")
+def content_revalidate(req: RevalidateReq) -> Dict[str, Any]:
+    day = datetime.now(timezone.utc).strftime("%Y%m%d")
+    out_dir = CONTENT_REVALIDATE_DIR / day
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / f"revalidate_{int(time.time()*1000)}.json"
+    payload = {"paths": req.paths, "reason": req.reason, "ts": now_iso()}
+    out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    return {"ok": True, "revalidated": req.paths, "meta": {"ts": now_iso(), "evidence": relpath(out_path)}}
 
 
 @app.get("/api/memory/recall")

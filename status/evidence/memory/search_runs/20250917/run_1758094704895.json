@@ -1,0 +1,114 @@
+{
+  "query": "금강",
+  "tiers": [
+    "long",
+    "medium",
+    "short",
+    "ultra_long",
+    "ultra_short"
+  ],
+  "weights": {
+    "kw": 1.0,
+    "recency": 0.6,
+    "refs": 0.4,
+    "tier": 0.2,
+    "tier_map": {
+      "ultra_short": 1.0,
+      "short": 0.8,
+      "medium": 0.6,
+      "long": 0.4,
+      "ultra_long": 0.2
+    }
+  },
+  "params": {
+    "k": 5,
+    "half_life_days": 7.0,
+    "score_min": 0.25,
+    "quorum_min": 1,
+    "quorum_target": 3
+  },
+  "items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7573459500492483,
+      "ts": "2025-09-16T18:46:59.122Z",
+      "scope_id": null,
+      "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9289099167487475,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.5285737740958505,
+      "ts": "2025-09-11T12:51:35.354Z",
+      "scope_id": null,
+      "text": "너는 금강 이니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_cl7pxreb_mffedvu2.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.5476229568264175,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.0320489611829455,
+      "ts": "2025-09-17T05:23:02.580Z",
+      "scope_id": null,
+      "text": "이 스레드는 이천시로 전입한 경우 주택 신축 지원금이 있는지에 대한 질문으로 시작됩니다. 이천시의 농촌지역(읍·면)에서는 농촌주택 개량사업을 통해 최대 2억 5천만 원의 저금리 융자 지원이 가능하다는 정보가 제공되었습니다. 신둔면 도암리 609-4는 농촌지역으로 분류되어 해당 지원 사업의 대상이 될 수 있습니다.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/6875d0d7-cdc4-8003-a838-e6b278c00246.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9867482686382427,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.794855248210599,
+      "ts": "2025-09-17T06:11:14.100Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68885fa1-cf80-8329-88e8-1e601ffcae24.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9914254136843318,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7891253180080733,
+      "ts": "2025-09-17T04:32:20.840Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68a2db67-6310-832f-834f-3699d93045be.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9818755300134554,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    }
+  ],
+  "no_hit": false,
+  "ts": "2025-09-17T07:38:24.895Z"
+}

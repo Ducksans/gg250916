@@ -1,0 +1,78 @@
+<!--
+  [금강 AI 주석 v1.1]
+  ---------------------------------------------------------------------------
+  @파일경로: ui/dev_a1_vite/index.html
+  @분석일자: 2025-09-10T15:41Z (UTC) / 2025-09-11 00:41 (KST)
+  @작성자: Gemini (금강 AI)
+  ---------------------------------------------------------------------------
+  @파일목적
+   - 이 파일은 Vite + React 기반 금강 UI 애플리케이션의 HTML 뼈대이자, 브라우저가 가장 먼저 로드하는 최초 진입점(Entry Point)입니다.
+
+  @핵심역할
+   - 1. React 애플리케이션이 렌더링될 '뿌리' 역할을 하는 `<div id="root">` DOM 요소를 제공합니다.
+   - 2. 모든 JavaScript 로직의 시작점인 `/src/main.jsx` 파일을 로드하여 앱을 실행시킵니다.
+   - 3. `<base href="/ui-dev/">` 태그를 통해 앱의 모든 상대 경로가 `/ui-dev/`를 기준으로 동작하도록 보장합니다.
+
+  @주요관계
+   - (로드) → `/src/main.jsx`
+   - (설정 참조) ← `vite.config.ts` (base 경로 설정)
+
+  @참고사항
+   - 이 파일 자체에는 비즈니스 로직이 포함되지 않으며, 오직 앱을 '시동'하는 역할에만 집중합니다.
+  ---------------------------------------------------------------------------
+-->
+<!doctype html>
+<html lang="ko" data-theme="dark">
+  <head>
+    <script type="module">import { injectIntoGlobalHook } from "/ui-dev/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/ui-dev/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gumgang UI — A1 Dev (Vite + React)</title>
+    <meta
+      name="description"
+      content="A1 전용 Vite React 개발 엔트리. /ui-dev/ 경로에서 동작합니다."
+    />
+    <!-- Keep base aligned with Vite config base -->
+    <base href="/ui-dev/" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0c10;
+        --fg: #e5e7eb;
+      }
+      html,
+      body,
+      #root {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          "Noto Sans KR",
+          Arial,
+          sans-serif;
+      }
+      /* Minimal safe defaults; A1 layout rules are enforced in app code and guard:ui */
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>이 애플리케이션을 사용하려면 JavaScript가 필요합니다.</noscript>
+    <!-- Vite dev: http://localhost:5173/ui-dev/ -->
+    <script type="module" src="/ui-dev/src/main.jsx"></script>
+  </body>
+</html>

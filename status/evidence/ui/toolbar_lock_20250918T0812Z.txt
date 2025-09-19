@@ -1,0 +1,4 @@
+UI Toolbar lock applied:
+- API button reads "API: FastAPI" and is disabled with title "Locked: FastAPI 단일 관문 정책".
+- Source button reads "Source: DB" and is disabled with title "Locked: Source=DB 정책".
+- Tool Mode button reads "Tool Mode: ON" and is disabled with title "Locked: Tool Mode ON 정책".

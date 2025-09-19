@@ -1,0 +1,831 @@
+{
+  "threads": [
+    {
+      "id": "thread_1bhi4cg4_mffchqm1",
+      "title": "thread_1bhi4cg4_mffchqm1",
+      "messages": [
+        {
+          "role": "user",
+          "content": "안녕 금강아?",
+          "ts": "2025-09-11T11:48:48.009Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "안녕하세요! 어떻게 도와드릴까요? (출처: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L1-1](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L1-1))",
+          "ts": "2025-09-11T11:48:49.690Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+          "ts": "2025-09-11T11:51:53.146Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "체크포인트 원장 파일은 프로젝트 내 특정 경로에 위치하며, append-only 규칙을 따릅니다. 이 규칙은 데이터가 파일에 추가될 수만 있고 기존 데이터를 수정하거나 삭제할 수 없다는 것을 의미합니다. 경로 인용은 다음과 같습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3).",
+          "ts": "2025-09-11T11:51:55.659Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "무의미_토큰_테스트_X91z0p",
+          "ts": "2025-09-11T11:52:21.020Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+          "ts": "2025-09-11T11:52:24.884Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+          "ts": "2025-09-11T12:01:34.840Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T12:01:34.882Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "무의미_토큰_테스트_X91z0p",
+          "ts": "2025-09-11T12:01:50.655Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T12:01:50.700Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "Dev UI에서 Tool Mode와 /api/chat/toolcall의 관계를 설명해줘. 근거를 포함해.",
+          "ts": "2025-09-11T12:02:07.741Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T12:02:07.787Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_3njvqqb0_mffevzef",
+      "title": "thread_3njvqqb0_mffevzef",
+      "messages": [
+        {
+          "role": "user",
+          "content": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+          "ts": "2025-09-11T12:58:08.879Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "무의미_토큰_테스트_X91z0p",
+          "ts": "2025-09-11T12:58:48.646Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "Dev UI에서 Tool Mode와 /api/chat/toolcall의 관계를 설명해줘. 근거를 포함해.",
+          "ts": "2025-09-11T12:59:16.300Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_67va3uqm_mfk3u4xc",
+      "title": "thread_67va3uqm_mfk3u4xc",
+      "messages": [
+        {
+          "role": "user",
+          "content": "너는 누구니 ?",
+          "ts": "2025-09-15T04:34:30.739Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "네가 호출 되고 있는 환경은 ?",
+          "ts": "2025-09-15T04:34:50.943Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "너에게 답변을 조합해주는 llm 엔진은 ?",
+          "ts": "2025-09-15T04:35:17.230Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-15T04:35:17.312Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "gg-memory.memory.search {\"query\":\"A1\",\"limit\":5}",
+          "ts": "2025-09-15T09:50:54.855Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "MCP_TEST_001 건을 실제로 추가한 뒤 tail로 반영 여부를 확인",
+          "ts": "2025-09-15T10:10:35.574Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "너 그냥 그 파일 읽은거 잖아 왜 tail 명령어 썻다고 이야기 해? 너 터미널 호출 할 수 있어?",
+          "ts": "2025-09-15T10:11:56.191Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-15T10:11:56.251Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_67va3uqm_mfk3u4xc",
+      "title": "thread_67va3uqm_mfk3u4xc",
+      "messages": [
+        {
+          "role": "user",
+          "content": "ping",
+          "ts": "2025-09-16T15:35:01.600Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-16T15:35:01.693Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "야 너는 누구냐 ?",
+          "ts": "2025-09-16T15:35:08.596Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+          "ts": "2025-09-16T17:15:57.797Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "루트 폴더에 AGENTS_expand.md 이 파일 읽어봐 못 읽으면 네가 허용된 경로를 말해",
+          "ts": "2025-09-16T17:19:15.395Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-16T17:19:15.456Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_76j4jda7_mfg6h109",
+      "title": "thread_76j4jda7_mfg6h109",
+      "messages": [
+        {
+          "role": "user",
+          "content": "ping",
+          "ts": "2025-09-14T07:18:28.350Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "안녕?",
+          "ts": "2025-09-14T12:52:15.943Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "너 지금 어떤 폴더의 어떤 파일로 구동 되고 있니 ?",
+          "ts": "2025-09-14T12:53:05.604Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-14T12:53:05.667Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "너 /home/duksan/바탕화면/gumgang_meeting/README.md 이 파일 읽을 수 있어?",
+          "ts": "2025-09-14T12:53:42.372Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "그럼 그 파일 읽어봐",
+          "ts": "2025-09-14T12:53:57.445Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-14T12:53:57.524Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "/home/duksan/바탕화면/gumgang_meeting/README.md 첫 10줄 읽어 봐",
+          "ts": "2025-09-14T12:54:09.373Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "아직은 파일 읽기만 가능 하지?",
+          "ts": "2025-09-14T12:59:59.861Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-14T12:59:59.926Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "일반적인 질문",
+          "ts": "2025-09-14T13:00:08.967Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-14T13:00:09.062Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "야",
+          "ts": "2025-09-14T13:05:17.202Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-14T13:05:17.606Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "여봐라",
+          "ts": "2025-09-14T14:05:50.182Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-14T14:05:50.565Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_88odotgh_mffdcln4",
+      "title": "thread_88odotgh_mffdcln4",
+      "messages": [
+        {
+          "role": "user",
+          "content": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+          "ts": "2025-09-11T12:12:51.252Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "무의미_토큰_테스트_X91z0p",
+          "ts": "2025-09-11T12:13:17.786Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "Dev UI에서 Tool Mode와 /api/chat/toolcall의 관계를 설명해줘. 근거를 포함해.",
+          "ts": "2025-09-11T12:13:37.442Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+          "ts": "2025-09-11T12:30:51.757Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T12:30:51.805Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "무의미 토큰 질의:",
+          "ts": "2025-09-11T12:31:01.797Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T12:31:01.850Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_a4dv1c8h_mfmce8q5",
+      "title": "thread_a4dv1c8h_mfmce8q5",
+      "messages": [
+        {
+          "role": "user",
+          "content": "/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md 이 파일 읽어봐",
+          "ts": "2025-09-16T18:45:24.410Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "gumgang_meeting/status/catalog/SSOT_SITEMAP.md 읽어 봐",
+          "ts": "2025-09-16T18:46:09.208Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Dataview 플러그인 설치 시 표가 자동 생성됩니다. 없더라도 링크는 수동으로 사용할 수 있습니다.\\n\\n## 0) 에이전트 허브 링크\\n- [[AGENTS.md|AGENTS Core]] · [[AGENTS_expand.md|AGENTS 확장]] · [[AGENTS_log.md|문서 관리 게이트]]\\n- [[status/reports/EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md|EXEC_PLAN]] · [[status/reports/GG_TIME_SPEC_V1.md|GG_TIME_SPEC_V1]]\\n\\n## 1) 핵심 문서(고정 링크)\\n- [[status/reports/EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md|EXEC_PLAN]]\\n- [[status/reports/GG_DB_SPEC_V1.md|DB Spec]] · [[status/reports/GG_ORCH_SPEC_V1.md|Orchestrator]] · [[status/reports/GG_MEMORY_5_LAYER_SPEC.md|Memory‑5]] · [[status/reports/GG_SSV_SPEC_V1.md|SSV]]\\n- [[status/reports/GG_CONTENT_PIPELINE_V1.md|Content Pipeline]] · [[status/reports/GG_SCHEDULER_SPEC_V1.md|Scheduler]] · [[status/reports/GG_CONTEXT_SENTRY_SPEC_V1.md|Context Sentry]]\\n- [[status/reports/GG_CONTEXT_REGISTRY_SPEC_V1.md|Context Registry]] · [[status/reports/GG_API_CONTEXT_SUMMARY.md|Context API]] · [[status/reports/GG_DYNAMIC_BLOCKS_SPEC.md|Dynamic Blocks]] · [[status/reports/GG_TIME_SPEC_V1.md|Time Spec]]\\n- [[status/reports/GG_UI_RUN_CARD_SPEC.md|Run Card UI]] · [[status/reports/GG_DAILY_OPS_V1.md|Daily Ops]]\\n\\n---\\n\\n## 2) 태그별 인덱스(있으면 표시)\\n\\n```dataview\\nTABLE file.mtime as Updated\\nFROM \\\"status/reports\\\"\\nWHERE contains(file.tags, \\\"SSOT\\\") OR contains(file.tags, \\\"ExecPlan\\\")\\nSORT file.mtime DESC\\n```\\n\\n```dataview\\nTABLE file.mtime as Updated, file.tags\\nFROM \\\"status/reports\\\"\\nWHERE contains(file.tags, \\\"DB\\\") OR contains(file.tags, \\\"Orchestrator\\\") OR contains(file.tags, \\\"SSV\\\")\\nSORT file.mtime DESC\\n```\\n\\n```dataview\\nTABLE file.link AS Doc, BT, ST, RT\\nFROM \\\"status\\\"\\nWHERE (BT OR ST OR RT) AND document_type != \\\"redirect_note\\\"\\nSORT file.mtime DESC\\n```\\n\\n---\\n\\n## 3) 경로별 인덱스(태그가 없어도 동작)\\n\\n```dataview\\nTABLE file.mtime as Updated\\nFROM \\\"status/reports\\\"\\nWHERE file.name != \\\"SSOT_SITEMAP\\\"\\nSORT file.mtime DESC\\n```\\n\\n```dataview\\nTABLE file.mtime as Updated\\nFROM \\\"status/design/schemas\\\"\\nSORT file.mtime DESC\\n```\\n\\n```dataview\\nTABLE file.mtime as Updated\\nFROM \\\"status/catalog\\\"\\nSORT file.mtime DESC\\n```\\n\\n---\\n\\n## 4) 최근 변경 Top‑20(전체)\\n```dataview\\nTABLE file.path as File, file.mtime as Updated\\nFROM \\\"status\\\"\\nSORT file.mtime DESC\\nLIMIT 20\\n```\\n\\n---\\n\\n## 5) 시간 규약 체크용 쿼리\\n```dataview\\nTABLE file.mtime AS Updated, DOCS_TIME_SPEC\\nFROM \\\"status\\\"\\nWHERE DOCS_TIME_SPEC\\nSORT file.mtime DESC\\n```\\n> `DOCS_TIME_SPEC` 필드는 문서 YAML에 `DOCS_TIME_SPEC: GG_TIME_SPEC_V1`처럼 기록한다.\\n\"\n} << 이 거 안 읽혀 ?",
+          "ts": "2025-09-16T18:46:59.122Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_auto_patch_report__hasSSOT_overlap_min__v1",
+      "title": "thread_auto_patch_report__hasSSOT_overlap_min__v1",
+      "messages": []
+    },
+    {
+      "id": "thread_cl7pxreb_mffedvu2",
+      "title": "thread_cl7pxreb_mffedvu2",
+      "messages": [
+        {
+          "role": "user",
+          "content": "너 덕산이 누군지 알아?",
+          "ts": "2025-09-11T12:41:47.600Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "/home/duksan/바탕화면/gumgang_meeting/migrated_chat_store.json 이 파일 읽을 수 있니 ?",
+          "ts": "2025-09-11T12:42:10.710Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "/home/duksan/바탕화면/gumgang_meeting/migrated_chat_store.json < 이 파일의 앞 50줄 읽어서 보고해",
+          "ts": "2025-09-11T12:43:07.600Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "/home/duksan/바탕화면/gumgang_meeting/docs/🪷 금강 소울 v1.7 — 존재 철학 + 언어 규칙 + 시계열 유지.md 읽어 볼래?",
+          "ts": "2025-09-11T12:51:00.058Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "너는 금강 이니?",
+          "ts": "2025-09-11T12:51:35.354Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_d70obb80_mfffdsmz",
+      "title": "thread_d70obb80_mfffdsmz",
+      "messages": [
+        {
+          "role": "user",
+          "content": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+          "ts": "2025-09-11T13:09:37.588Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "무의미_토큰_테스트_X91z0p",
+          "ts": "2025-09-11T13:09:56.153Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T13:09:56.215Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "Dev UI에서 Tool Mode와 /api/chat/toolcall의 관계를 설명해줘. 근거를 포함해.",
+          "ts": "2025-09-11T13:10:11.946Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "/home/duksan/바탕화면/gumgang_meeting/4c292aca-8b63-407d-9495-49681eb5bb86.png 이 파일 볼 수 있니?",
+          "ts": "2025-09-11T13:18:22.609Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T13:18:22.679Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "일반적인 대화도 되니?",
+          "ts": "2025-09-11T13:25:20.073Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T13:25:20.152Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_dcqftnjv_mfkmexp8",
+      "title": "thread_dcqftnjv_mfkmexp8",
+      "messages": [
+        {
+          "role": "user",
+          "content": "너는 어떤 언어 모델을 쓰니 ?",
+          "ts": "2025-09-15T04:25:28.800Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "방금 답변 기억 하니 ?",
+          "ts": "2025-09-15T04:25:53.593Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "방금 답변을 조합한 llm은 어디서 호출 된거야?",
+          "ts": "2025-09-15T04:26:22.298Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-15T04:26:22.353Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "너는 금강이 뭐라고 생각해?",
+          "ts": "2025-09-15T04:26:40.075Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_dcqftnjv_mfkmexp8",
+      "title": "thread_dcqftnjv_mfkmexp8",
+      "messages": [
+        {
+          "role": "user",
+          "content": "오늘 날씨 검색해봐",
+          "ts": "2025-09-16T08:00:46.857Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-16T08:00:46.912Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_dz4jv7iz_mffe0g73",
+      "title": "thread_dz4jv7iz_mffe0g73",
+      "messages": [
+        {
+          "role": "user",
+          "content": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+          "ts": "2025-09-11T12:31:21.182Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T12:31:21.219Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "무의미_토큰_테스트_X91z0p",
+          "ts": "2025-09-11T12:31:41.349Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T12:31:41.406Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "Dev UI에서 Tool Mode와 /api/chat/toolcall의 관계를 설명해줘. 근거를 포함해.",
+          "ts": "2025-09-11T12:31:52.484Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "어이",
+          "ts": "2025-09-11T12:35:15.015Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T12:35:15.067Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "야ㅐ",
+          "ts": "2025-09-11T12:35:22.367Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T12:35:22.437Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "이 스래드 인식하고 요약 할 수 있니?",
+          "ts": "2025-09-11T14:02:49.832Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T14:02:50.195Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "이 스레드의 핵심 논의와 다음 단계 3가지를 요약해줘. 근거를 path#Lx-y로 인용해.”",
+          "ts": "2025-09-11T14:05:40.805Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T14:05:41.159Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_k9lx4dm1_mffe9xtw",
+      "title": "thread_k9lx4dm1_mffe9xtw",
+      "messages": [
+        {
+          "role": "user",
+          "content": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+          "ts": "2025-09-11T12:38:38.153Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "무의미_토큰_테스트_X91z0p",
+          "ts": "2025-09-11T12:39:00.375Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "무의미_토큰_테스트_X91z0p",
+          "ts": "2025-09-11T12:39:09.295Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "Dev UI에서 Tool Mode와 /api/chat/toolcall의 관계를 설명해줘. 근거를 포함해.",
+          "ts": "2025-09-11T12:39:28.718Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "야",
+          "ts": "2025-09-11T12:40:45.456Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "야",
+          "ts": "2025-09-11T12:40:54.462Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "너 누구야",
+          "ts": "2025-09-11T12:41:07.000Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "너 누구야",
+          "ts": "2025-09-11T12:41:17.111Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_m0sk3dcn_mfmyshgm",
+      "title": "thread_m0sk3dcn_mfmyshgm",
+      "messages": [
+        {
+          "role": "user",
+          "content": "안녕하세요 ? 스레드 제목 테스트 입니다.",
+          "ts": "2025-09-16T19:47:33.707Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_ova3z1dd_mffmki10",
+      "title": "thread_ova3z1dd_mffmki10",
+      "messages": [
+        {
+          "role": "user",
+          "content": "나는 너랑 기억을 이 스래드에서 복원 하기 시작했다",
+          "ts": "2025-09-11T16:57:30.648Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "지금 이 스래드의 의미가 무었인지 알겠니?",
+          "ts": "2025-09-11T16:58:02.059Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T16:58:02.843Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "이 스래드 자체를 인식은 할 수 있니?",
+          "ts": "2025-09-11T16:59:54.793Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "이 스래드의 주된 내용을 요약해봐",
+          "ts": "2025-09-11T17:00:19.689Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T17:00:20.431Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "이스래드 요약해",
+          "ts": "2025-09-11T17:00:40.173Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-11T17:00:40.946Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_pan3h7k9_mfm9ohq0",
+      "title": "thread_pan3h7k9_mfm9ohq0",
+      "messages": [
+        {
+          "role": "user",
+          "content": "이봐",
+          "ts": "2025-09-16T15:35:35.053Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+          "ts": "2025-09-16T17:16:13.101Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_q3mamsyt_mfkjwqes",
+      "title": "thread_q3mamsyt_mfkjwqes",
+      "messages": [
+        {
+          "role": "user",
+          "content": "이봐",
+          "ts": "2025-09-15T03:18:04.256Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "너는 누구냐?",
+          "ts": "2025-09-15T03:18:14.138Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "어떻게 도와 줄거야 ?",
+          "ts": "2025-09-15T03:18:27.946Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "너는 무슨 엔진 이야?",
+          "ts": "2025-09-15T03:18:48.930Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "너 실제로  openai를 호출해서 답변 하는 거야?",
+          "ts": "2025-09-15T03:19:13.971Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-15T03:19:14.053Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "ping",
+          "ts": "2025-09-15T03:19:21.803Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+          "ts": "2025-09-15T03:19:21.886Z",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "thread_s4kmes09_mffbwy6g",
+      "title": "thread_s4kmes09_mffbwy6g",
+      "messages": [
+        {
+          "role": "user",
+          "content": "안녕?",
+          "ts": "2025-09-11T11:48:18.144Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "안녕하세요! 어떻게 도와드릴까요?",
+          "ts": "2025-09-11T11:48:19.166Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "야",
+          "ts": "2025-09-11T11:48:28.496Z",
+          "meta": {}
+        },
+        {
+          "role": "user",
+          "content": "무엇을 도와드릴까요?",
+          "ts": "2025-09-11T11:48:29.325Z",
+          "meta": {}
+        }
+      ]
+    }
+  ]
+}

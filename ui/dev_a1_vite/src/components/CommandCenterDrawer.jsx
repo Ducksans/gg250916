@@ -52,6 +52,7 @@ const TAB_KEYS = [
   "prompts",
   "files",
   "bookmarks",
+  "pyspark",
 ];
 
 function PanelSkeleton({ id, title, description, children }) {
@@ -101,7 +102,10 @@ function RealSnippet({ label, data }) {
   );
 }
 
-function renderPanel(tab, { plannerData, insightsData, executorData }) {
+function renderPanel(
+  tab,
+  { plannerData, insightsData, executorData, pysparkData, onPlannerRunPyspark },
+) {
   switch (tab) {
     case "planner":
       return (
@@ -111,6 +115,15 @@ function renderPanel(tab, { plannerData, insightsData, executorData }) {
           description="카테고리/채널/상태/우선순위/제목/슬러그를 관리합니다. (스켈레톤)"
         >
           <PlannerCard sample={plannerData} />
+          <div style={{ marginTop: 10, display: "inline-flex", gap: 8 }}>
+            <button
+              className="btn"
+              title="샘플 PySpark 잡 실행"
+              onClick={() => onPlannerRunPyspark?.()}
+            >
+              Run PySpark (sample)
+            </button>
+          </div>
         </PanelSkeleton>
       );
     case "insights":
@@ -177,6 +190,16 @@ function renderPanel(tab, { plannerData, insightsData, executorData }) {
           description="중요 링크/문서/스레드를 빠르게 접근. (스켈레톤)"
         />
       );
+    case "pyspark":
+      return (
+        <PanelSkeleton
+          id="cc-pyspark"
+          title="PySpark 실행 결과"
+          description="최근 실행 결과 요약과 Evidence 파일 경로를 표시합니다."
+        >
+          <RealSnippet label="Latest PySpark" data={pysparkData} />
+        </PanelSkeleton>
+      );
     default:
       return (
         <PanelSkeleton
@@ -197,6 +220,10 @@ export default function CommandCenterDrawer({
   plannerData,
   insightsData,
   executorData,
+  pysparkData,
+  onPysparkRefresh,
+  onPysparkRerun,
+  onPlannerRunPyspark,
 }) {
   const firstTabRef = useRef(null);
 
@@ -265,7 +292,125 @@ export default function CommandCenterDrawer({
         </div>
       </div>
       <div className="cc-body" data-testid="cc-body">
-        {renderPanel(activeTab, { plannerData, insightsData, executorData })}
+        {activeTab === "pyspark" ? (
+          <section id="cc-pyspark" className="cc-skel" aria-labelledby="cc-pyspark-title">
+            <h4 id="cc-pyspark-title">PySpark 실행 결과</h4>
+            <p>최근 실행 결과 요약과 Evidence 파일 경로를 표시합니다.</p>
+            {pysparkData ? (
+              <div>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "6px 0" }}>
+                  <span style={{ fontSize: 12, opacity: 0.9 }}>RC:</span>
+                  <span
+                    style={{
+                      fontWeight: 600,
+                      color:
+                        (pysparkData?.data?.rc ?? 1) === 0
+                          ? "#35c46a"
+                          : "#ff6b6b",
+                    }}
+                  >
+                    {pysparkData?.data?.rc ?? "?"}
+                  </span>
+                  <span style={{ fontSize: 12, opacity: 0.9 }}>Script:</span>
+                  <code style={{ fontSize: 12 }}>{pysparkData?.data?.script || "(unknown)"}</code>
+                  <span style={{ fontSize: 12, opacity: 0.9 }}>Evidence:</span>
+                  <code style={{ fontSize: 12 }}>{pysparkData?.path || "(none)"}</code>
+                </div>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 8 }}>
+                  <button
+                    className="btn"
+                    onClick={() => onPysparkRefresh?.()}
+                    title="최근 결과 새로고침"
+                  >
+                    Refresh
+                  </button>
+                  <button
+                    className="btn"
+                    onClick={() => onPysparkRerun?.(pysparkData?.data?.script)}
+                    title="같은 스크립트로 재실행"
+                  >
+                    Rerun
+                  </button>
+                  {pysparkData?.path && (
+                    <>
+                      <button
+                        className="btn"
+                        title="Evidence 파일 보기(FastAPI Viewer)"
+                        onClick={() =>
+                          window.open(
+                            `/api/files/view?path=/${encodeURIComponent(
+                              pysparkData.path,
+                            )}`,
+                            "_blank",
+                          )
+                        }
+                      >
+                        Open Evidence
+                      </button>
+                      <button
+                        className="btn"
+                        title="Evidence 경로 복사"
+                        onClick={async () => {
+                          try {
+                            await navigator.clipboard.writeText(pysparkData.path);
+                          } catch {}
+                        }}
+                      >
+                        Copy Path
+                      </button>
+                    </>
+                  )}
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                  <div>
+                    <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 4 }}>stdout</div>
+                    <pre
+                      style={{
+                        margin: 0,
+                        background: "#0e1527",
+                        padding: 8,
+                        borderRadius: 8,
+                        border: "1px solid var(--gg-border)",
+                        whiteSpace: "pre-wrap",
+                        maxHeight: 320,
+                        overflow: "auto",
+                      }}
+                    >
+                      {pysparkData?.data?.stdout || "(empty)"}
+                    </pre>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 4 }}>stderr</div>
+                    <pre
+                      style={{
+                        margin: 0,
+                        background: "#0e1527",
+                        padding: 8,
+                        borderRadius: 8,
+                        border: "1px solid var(--gg-border)",
+                        whiteSpace: "pre-wrap",
+                        maxHeight: 320,
+                        overflow: "auto",
+                      }}
+                    >
+                      {pysparkData?.data?.stderr || "(empty)"}
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <p>최근 실행 결과가 없습니다. Run PySpark 버튼으로 실행하세요.</p>
+            )}
+          </section>
+        ) : (
+          renderPanel(activeTab, {
+            plannerData,
+            insightsData,
+            executorData,
+            pysparkData,
+            onPlannerRunPyspark,
+          })
+        )}
       </div>
     </aside>
   );
@@ -282,4 +427,8 @@ CommandCenterDrawer.defaultProps = {
   plannerData: null,
   insightsData: null,
   executorData: null,
+  pysparkData: null,
+  onPysparkRefresh: () => {},
+  onPysparkRerun: () => {},
+  onPlannerRunPyspark: () => {},
 };

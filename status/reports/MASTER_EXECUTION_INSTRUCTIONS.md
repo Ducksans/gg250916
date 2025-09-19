@@ -1,6 +1,6 @@
 # MASTER_EXECUTION_INSTRUCTIONS — 통합 실행 지시서
 
-> 상위 참조: [[docs/MASTER_PROJECT_BLUEPRINT.md]], [[status/plans/MASTER_EXECUTION_PLAN.md]], [[reports/MASTER_ALIGNMENT_REPORT.md]]
+> 상위 참조: [[docs/MASTER_PROJECT_BLUEPRINT.md]], [[status/reports/MASTER_EXECUTION_PLAN.md]], [[status/reports/MASTER_ALIGNMENT_REPORT.md]]
 
 ## 1. 공통 준비 절차
 

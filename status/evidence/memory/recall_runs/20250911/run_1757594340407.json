@@ -1,0 +1,242 @@
+{
+  "query": "무의미_토큰_테스트_X91z0p",
+  "params": {
+    "k": 5,
+    "need_fresh": 1,
+    "half_life_days": 7.0,
+    "fresh_weight": 0.6,
+    "self_rag": 1,
+    "tiers": [
+      "long",
+      "medium",
+      "short",
+      "ultra_long",
+      "ultra_short"
+    ],
+    "rerank_blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "rerank_policy": {
+      "apply_if": "recency<0.2 AND refs<0.2",
+      "bonus": {
+        "refs_ge_1_add": 0.05,
+        "normalized_threshold": 0.2
+      },
+      "cap": {
+        "kw_ge": 0.9,
+        "max_uplift": 0.02
+      }
+    }
+  },
+  "pre_items": [
+    {
+      "tier": "ultra_short",
+      "score": 2.037239435280501,
+      "ts": "2025-09-11T11:52:24.884Z",
+      "scope_id": null,
+      "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9953990588008348,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999799404767,
+      "ts": "2025-09-11T12:39:00.375Z",
+      "scope_id": null,
+      "text": "무의미_토큰_테스트_X91z0p",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_k9lx4dm1_mffe9xtw.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999999665674615,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.799564754234471,
+      "ts": "2025-09-11T12:31:41.349Z",
+      "scope_id": null,
+      "text": "무의미_토큰_테스트_X91z0p",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_dz4jv7iz_mffe0g73.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9992745903907853,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.7984735271479755,
+      "ts": "2025-09-11T12:13:17.786Z",
+      "scope_id": null,
+      "text": "무의미_토큰_테스트_X91z0p",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_88odotgh_mffdcln4.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9974558785799593,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.0370079809652675,
+      "ts": "2025-09-11T11:48:29.325Z",
+      "scope_id": null,
+      "text": "무엇을 도와드릴까요?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9950133016087793,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    }
+  ],
+  "post_items": [
+    {
+      "tier": "ultra_short",
+      "score": 2.037239435280501,
+      "ts": "2025-09-11T11:52:24.884Z",
+      "scope_id": null,
+      "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9953990588008348,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 2.037239435280501,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999799404767,
+      "ts": "2025-09-11T12:39:00.375Z",
+      "scope_id": null,
+      "text": "무의미_토큰_테스트_X91z0p",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_k9lx4dm1_mffe9xtw.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999999665674615,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7999999799404767,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.799564754234471,
+      "ts": "2025-09-11T12:31:41.349Z",
+      "scope_id": null,
+      "text": "무의미_토큰_테스트_X91z0p",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_dz4jv7iz_mffe0g73.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9992745903907853,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.799564754234471,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.7984735271479755,
+      "ts": "2025-09-11T12:13:17.786Z",
+      "scope_id": null,
+      "text": "무의미_토큰_테스트_X91z0p",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_88odotgh_mffdcln4.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9974558785799593,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7984735271479755,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.0370079809652675,
+      "ts": "2025-09-11T11:48:29.325Z",
+      "scope_id": null,
+      "text": "무엇을 도와드릴까요?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9950133016087793,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.0370079809652675,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "ts": "2025-09-11T12:39:00.407Z"
+}

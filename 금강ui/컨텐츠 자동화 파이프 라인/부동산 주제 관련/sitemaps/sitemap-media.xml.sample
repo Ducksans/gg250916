@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://hub.example.com/property/seoul-junggu/%EC%84%B8%EC%A2%85%EB%8C%80%EB%A1%9C110/AA-2025-0001</loc>
+    <image:image>
+      <image:loc>https://hub.example.com/media/listings/AA-2025-0001/cover.jpg</image:loc>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://hub.example.com/media/listings/AA-2025-0001/cover.jpg</video:thumbnail_loc>
+      <video:title>AA-2025-0001 하이라이트</video:title>
+      <video:description>매물 하이라이트 쇼츠</video:description>
+      <video:content_loc>https://hub.example.com/media/listings/AA-2025-0001/highlight.mp4</video:content_loc>
+    </video:video>
+    <lastmod>2025-09-18</lastmod>
+  </url>
+</urlset>

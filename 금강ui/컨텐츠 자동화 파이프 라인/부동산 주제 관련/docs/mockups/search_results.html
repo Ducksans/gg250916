@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>검색 결과 | 금강 Real Estate</title>
+    <link rel="stylesheet" href="real_estate_hub.css" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">본문 바로가기</a>
+    <header>
+      <div class="header-top" role="banner">
+        <div class="brand">
+          <a href="./real_estate_hub.html" class="brand-link" aria-label="홈으로 이동">
+            <span class="logo" aria-hidden="true">GG</span>
+            <span class="site-title">금강 Real Estate</span>
+          </a>
+        </div>
+        <form class="search" role="search" aria-label="사이트 검색" action="./search_results.html" method="get">
+          <label for="q" class="sr-only">검색어</label>
+          <input id="q" name="q" type="search" placeholder="주소·단지·주제 검색" autocomplete="off" />
+          <button type="submit" class="btn primary">검색</button>
+        </form>
+      </div>
+      <div class="hero-content">
+        <div class="hero-pill">Search Results</div>
+        <h1>검색 결과</h1>
+        <p class="hero-lede">JSON-LD SearchAction 결과와 정합되는 결과 예시</p>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="card" style="margin-bottom:1rem;">
+        <form class="split-layout" aria-label="검색 필터">
+          <div>
+            <label for="region" class="sr-only">지역</label>
+            <input id="region" name="region" type="text" placeholder="지역(예: 서울 종로구)" />
+          </div>
+          <div>
+            <label for="type" class="sr-only">유형</label>
+            <select id="type" name="type">
+              <option value="">유형(전체)</option>
+              <option>아파트</option>
+              <option>오피스텔</option>
+              <option>상가</option>
+            </select>
+          </div>
+          <div>
+            <label for="area" class="sr-only">면적</label>
+            <select id="area" name="area">
+              <option value="">면적(전체)</option>
+              <option>~59㎡</option>
+              <option>60~84㎡</option>
+              <option>85㎡~</option>
+            </select>
+          </div>
+          <div>
+            <label for="price" class="sr-only">가격</label>
+            <select id="price" name="price">
+              <option value="">가격(전체)</option>
+              <option>~5억</option>
+              <option>5~10억</option>
+              <option>10억~</option>
+            </select>
+          </div>
+          <div>
+            <label for="sort" class="sr-only">정렬</label>
+            <select id="sort" name="sort">
+              <option>최신순</option>
+              <option>가격 낮은순</option>
+              <option>가격 높은순</option>
+              <option>면적 큰순</option>
+            </select>
+          </div>
+          <div>
+            <button class="btn primary" type="submit">필터 적용</button>
+          </div>
+          <div>
+            <button class="btn" type="button" id="reset-btn">필터 초기화</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" id="results-meta" style="margin-bottom:.75rem;">
+        <p class="muted">검색어: <strong id="meta-q">-</strong> · 총 <strong id="meta-total">3</strong>건</p>
+      </section>
+
+      <section class="card-grid" id="results-list">
+        <article class="card">
+          <h3><a href="./property_detail.html">서울 중구 세종대로 110 · 아파트 84㎡ · 12억</a></h3>
+          <p class="muted">정식 매물 페이지 · Canonical/JSON-LD/OG/oEmbed</p>
+          <div class="chips">
+            <span class="chip">84㎡</span>
+            <span class="chip">12억</span>
+            <span class="chip">업데이트 · 3일 전</span>
+          </div>
+        </article>
+        <article class="card">
+          <h3><a href="#">종로구 · 지역 대시보드</a></h3>
+          <p class="muted">Programmatic SEO · 실거래/공시/인프라 요약</p>
+          <div class="chips">
+            <span class="chip">지역</span>
+            <span class="chip">지표 12개</span>
+            <span class="chip">업데이트 · 1일 전</span>
+          </div>
+        </article>
+        <article class="card">
+          <h3><a href="#">취득세 계산기</a></h3>
+          <p class="muted">앱 딥링크: gumgang://tools/acq-tax</p>
+          <div class="chips">
+            <span class="chip">도구</span>
+            <span class="chip">계산기</span>
+          </div>
+        </article>
+      </section>
+
+      <div id="empty-state" class="card" style="display:none; margin-top:1rem;">
+        <p class="muted">검색 결과가 없습니다. 필터를 조정하거나 다른 키워드를 시도해 보세요.</p>
+      </div>
+
+      <nav aria-label="페이지 네비게이션" style="margin-top:1rem;" id="pager">
+        <ul style="display:flex;gap:.5rem;list-style:none;padding:0;">
+          <li><a class="btn" href="#">« 이전</a></li>
+          <li><a class="btn primary" href="#">1</a></li>
+          <li><a class="btn" href="#">2</a></li>
+          <li><a class="btn" href="#">3</a></li>
+          <li><a class="btn" href="#">다음 »</a></li>
+        </ul>
+      </nav>
+    </main>
+
+    <footer>
+      <p>© 2025 금강 Real Estate</p>
+      <p class="muted">본 페이지는 목업입니다. Canonical/UTM/라이선스 고지 샘플만 포함됩니다.</p>
+    </footer>
+    <script>
+      (function () {
+        const params = new URLSearchParams(location.search);
+        const bind = (id, key) => { const el = document.getElementById(id); if (!el) return; const v = params.get(key); if (v !== null) { if (el.tagName === 'SELECT' || el.tagName === 'INPUT') el.value = v; else el.textContent = v; } };
+        bind('q','q'); bind('region','region'); bind('type','type'); bind('area','area'); bind('price','price'); bind('sort','sort');
+        // meta
+        document.getElementById('meta-q').textContent = params.get('q') || '-';
+        // simple empty-state: if q is present AND equals '없음' then hide list
+        const q = (params.get('q')||'').trim();
+        if (q && q.toLowerCase() === '없음') {
+          document.getElementById('results-list').style.display = 'none';
+          document.getElementById('pager').style.display = 'none';
+          document.getElementById('empty-state').style.display = 'block';
+          document.getElementById('meta-total').textContent = '0';
+        } else {
+          const total = document.querySelectorAll('#results-list .card').length;
+          document.getElementById('meta-total').textContent = String(total);
+        }
+        const reset = document.getElementById('reset-btn');
+        if (reset) reset.addEventListener('click', () => {
+          for (const id of ['q','region','type','area','price','sort']) {
+            const el = document.getElementById(id);
+            if (!el) continue;
+            if (el.tagName === 'SELECT') el.selectedIndex = 0; else el.value = '';
+          }
+          document.getElementById('meta-q').textContent = '-';
+        });
+      })();
+    </script>
+  </body>
+</html>

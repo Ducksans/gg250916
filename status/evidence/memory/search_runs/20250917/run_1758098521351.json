@@ -1,0 +1,322 @@
+{
+  "query": "증거 1건:\n1. [스레드 ID: gg_20250916_mfmm7sst]\n[제목: gg_20250916_mfmm7sst]\n[메시지 수: 5]\n\nuser: 이봐\nuser: 메세지 입력\nassistant: 증거 1건: 1. [스레드 ID: gg_20250916_mfmm7sst] [제목: gg_20250916_mfmm7sst] [메시지 수: 2] user: 이봐 user: 메세지 입력 (gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1) 근거 인용: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1\nassistant: 무엇을 도와드릴까요? 추가 정보가 필요합니다. [근거: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1]\nuser: 예를 들면 어떤 추가 정보를 줘야 할 까? (gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1)\n\n근거 인용: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1",
+  "tiers": [
+    "long",
+    "medium",
+    "short",
+    "ultra_long",
+    "ultra_short"
+  ],
+  "weights": {
+    "kw": 1.0,
+    "recency": 0.6,
+    "refs": 0.4,
+    "tier": 0.2,
+    "tier_map": {
+      "ultra_short": 1.0,
+      "short": 0.8,
+      "medium": 0.6,
+      "long": 0.4,
+      "ultra_long": 0.2
+    }
+  },
+  "params": {
+    "k": 12,
+    "half_life_days": 7.0,
+    "score_min": 0.25,
+    "quorum_min": 1,
+    "quorum_target": 3
+  },
+  "items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.085528212586725,
+      "ts": "2025-09-17T05:23:02.580Z",
+      "scope_id": null,
+      "text": "이 스레드는 이천시로 전입한 경우 주택 신축 지원금이 있는지에 대한 질문으로 시작됩니다. 이천시의 농촌지역(읍·면)에서는 농촌주택 개량사업을 통해 최대 2억 5천만 원의 저금리 융자 지원이 가능하다는 정보가 제공되었습니다. 신둔면 도암리 609-4는 농촌지역으로 분류되어 해당 지원 사업의 대상이 될 수 있습니다.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/6875d0d7-cdc4-8003-a838-e6b278c00246.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.05714285714285714,
+        "recency": 0.9806422590731129,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.085528212586725,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8969552072213385,
+      "ts": "2025-09-16T18:46:59.122Z",
+      "scope_id": null,
+      "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 0.14285714285714285,
+        "recency": 0.923496773940326,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.8969552072213385,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8806191271646702,
+      "ts": "2025-09-11T11:48:49.690Z",
+      "scope_id": null,
+      "text": "안녕하세요! 어떻게 도와드릴까요? (출처: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L1-1](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L1-1))",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.11428571428571428,
+        "recency": 0.5438890214649265,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.8806191271646702,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8482997951058258,
+      "ts": "2025-09-17T06:11:14.100Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68885fa1-cf80-8329-88e8-1e601ffcae24.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.05714285714285714,
+        "recency": 0.9852615632716144,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.8482997951058258,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8426405522962952,
+      "ts": "2025-09-17T04:32:20.840Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68a2db67-6310-832f-834f-3699d93045be.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.05714285714285714,
+        "recency": 0.9758294919223969,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.8426405522962952,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8234702936650673,
+      "ts": "2025-09-11T11:48:29.325Z",
+      "scope_id": null,
+      "text": "무엇을 도와드릴까요?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.05714285714285714,
+        "recency": 0.5438790608703504,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.8234702936650673,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.815093757197906,
+      "ts": "2025-09-16T20:02:21.438Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/68a47a66-b5a0-832b-8d47-1243449d0fae.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.05714285714285714,
+        "recency": 0.9299181667584148,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.815093757197906,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8143332244217805,
+      "ts": "2025-09-16T19:47:33.707Z",
+      "scope_id": null,
+      "text": "안녕하세요 ? 스레드 제목 테스트 입니다.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_m0sk3dcn_mfmyshgm.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.05714285714285714,
+        "recency": 0.9286506121315389,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.8143332244217805,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.806822959867249,
+      "ts": "2025-09-16T17:19:15.456Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.05714285714285714,
+        "recency": 0.9161335045406531,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.806822959867249,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7834967178627699,
+      "ts": "2025-09-16T19:03:15.382Z",
+      "scope_id": null,
+      "text": "이 스레드 요약 해보 ㅏ",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/gg_mig_20250911_06ckhx.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.02857142857142857,
+        "recency": 0.9248754821522354,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7834967178627699,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7802701829089034,
+      "ts": "2025-09-16T08:00:46.912Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_dcqftnjv_mfkmexp8.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.05714285714285714,
+        "recency": 0.8718788762767435,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7802701829089034,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7780997372525,
+      "ts": "2025-09-16T17:16:13.101Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.02857142857142857,
+        "recency": 0.9158805144684525,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7780997372525,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "no_hit": false,
+  "ts": "2025-09-17T08:42:01.351Z"
+}

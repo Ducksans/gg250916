@@ -1,0 +1,24 @@
+{
+  "ts": "20250917T113608Z",
+  "base": "http://127.0.0.1:8000",
+  "limit": 100,
+  "batch_size": 50,
+  "mode": "execute",
+  "counts": {
+    "source_items": 100,
+    "mapped_threads": 100
+  },
+  "batches": [
+    {
+      "ok": true,
+      "imported": 50,
+      "error": null
+    },
+    {
+      "ok": true,
+      "imported": 50,
+      "error": null
+    }
+  ],
+  "errors": []
+}

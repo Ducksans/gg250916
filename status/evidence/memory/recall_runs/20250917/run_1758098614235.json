@@ -1,0 +1,242 @@
+{
+  "query": "/home/duksan/바탕화면/gumgang_meeting/status/evidence/전이확정선언_20250816.md 읽어뫄",
+  "params": {
+    "k": 5,
+    "need_fresh": 1,
+    "half_life_days": 7.0,
+    "fresh_weight": 0.6,
+    "self_rag": 1,
+    "tiers": [
+      "long",
+      "medium",
+      "short",
+      "ultra_long",
+      "ultra_short"
+    ],
+    "rerank_blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "rerank_policy": {
+      "apply_if": "recency<0.2 AND refs<0.2",
+      "bonus": {
+        "refs_ge_1_add": 0.05,
+        "normalized_threshold": 0.2
+      },
+      "cap": {
+        "kw_ge": 0.9,
+        "max_uplift": 0.02
+      }
+    }
+  },
+  "pre_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.799999984056548,
+      "ts": "2025-09-17T08:43:34.169Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/status/evidence/전이확정선언_20250816.md 읽어뫄",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/gg_20250916_mfmm7sst.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.99999997342758,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.420686109650872,
+      "ts": "2025-09-16T18:46:59.122Z",
+      "scope_id": null,
+      "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 0.6666666666666666,
+        "recency": 0.9233657383070092,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.3050065342305723,
+      "ts": "2025-09-16T17:16:13.101Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.5555555555555556,
+        "recency": 0.915751631125028,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.3049938024318806,
+      "ts": "2025-09-16T17:15:57.797Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.5555555555555556,
+        "recency": 0.9157304114605417,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.1829937659977239,
+      "ts": "2025-09-14T12:54:09.373Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/README.md 첫 10줄 읽어 봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+      "line_from": 8,
+      "line_to": 8,
+      "reasons": {
+        "kw": 0.5555555555555556,
+        "recency": 0.7123970174036139,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    }
+  ],
+  "post_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.799999984056548,
+      "ts": "2025-09-17T08:43:34.169Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/status/evidence/전이확정선언_20250816.md 읽어뫄",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/gg_20250916_mfmm7sst.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.99999997342758,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.799999984056548,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.420686109650872,
+      "ts": "2025-09-16T18:46:59.122Z",
+      "scope_id": null,
+      "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 0.6666666666666666,
+        "recency": 0.9233657383070092,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.420686109650872,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.3050065342305723,
+      "ts": "2025-09-16T17:16:13.101Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.5555555555555556,
+        "recency": 0.915751631125028,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.3050065342305723,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.3049938024318806,
+      "ts": "2025-09-16T17:15:57.797Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.5555555555555556,
+        "recency": 0.9157304114605417,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.3049938024318806,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.1829937659977239,
+      "ts": "2025-09-14T12:54:09.373Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/README.md 첫 10줄 읽어 봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+      "line_from": 8,
+      "line_to": 8,
+      "reasons": {
+        "kw": 0.5555555555555556,
+        "recency": 0.7123970174036139,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.1829937659977239,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "ts": "2025-09-17T08:43:34.235Z"
+}

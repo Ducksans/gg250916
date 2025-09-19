@@ -51,6 +51,7 @@ import React from "react";
 
 export const CENTER_MODES = [
   "chat",
+  "editor",
   "planner",
   "insights",
   "executor",
@@ -207,6 +208,8 @@ function modeTitle(m) {
 
 function modeDescription(m) {
   switch (m) {
+    case "editor":
+      return "Monaco 기반 멀티탭 에디터 자리입니다. gumgang_0_5의 컴포넌트를 포팅하여 연결합니다.";
     case "planner":
       return "카테고리/채널/상태/우선순위/제목/슬러그를 관리하는 포털 화면의 골격입니다.";
     case "insights":

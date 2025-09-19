@@ -98,6 +98,8 @@ const OPENAI_API_KEY =
   ENV.OPENAI_API_KEY || ENV.OPENAI_APIKEY || ENV.OPENAI_KEY;
 const OPENAI_ORG_ID = ENV.OPENAI_ORG_ID || ENV.OPENAI_ORGANIZATION;
 const OPENAI_MODEL = ENV.OPENAI_MODEL || DEFAULT_MODEL;
+const BACKEND_BASE =
+  (ENV.GG_BACKEND && String(ENV.GG_BACKEND)) || "http://127.0.0.1:8000";
 
 // ---------- Read-only Mode & RO FS Config ----------
 
@@ -479,6 +481,87 @@ const server = http.createServer(async (req, res) => {
         ok: false,
         error: { message: "READ_ONLY_MODE: writes disabled" },
       });
+    }
+
+    // ---- MCP-lite Tools: definitions + invoke (read-only) ----
+    if (req.method === "GET" && req.url.startsWith("/api/tools/definitions")) {
+      return sendJSON(res, 200, {
+        ok: true,
+        tools: [
+          {
+            id: "fs.read",
+            name: "fs.read",
+            description: "Read a text file within project (READ_ONLY, size limit)",
+            params: {
+              type: "object",
+              properties: {
+                path: { type: "string", description: "Relative or absolute path under project" },
+                maxBytes: { type: "number", description: "Max bytes to read (default 100000)" },
+              },
+              required: ["path"],
+            },
+          },
+          { id: "now", name: "now", description: "Return current UTC time" },
+        ],
+      });
+    }
+
+    if (req.method === "POST" && req.url.startsWith("/api/tools/invoke")) {
+      let body;
+      try {
+        body = (await jsonBody(req)) || {};
+      } catch (e) {
+        return sendJSON(res, 400, { ok: false, error: { message: e.message || "Invalid JSON" } });
+      }
+      const tool = String(body.tool || "").toLowerCase();
+      const args = body.args || {};
+      if (tool === "now") {
+        return sendJSON(res, 200, { ok: true, data: { utc: nowISO() } });
+      }
+      if (tool === "fs.read") {
+        try {
+          const rawPath = String(args.path || "").trim();
+          if (!rawPath) return sendJSON(res, 400, { ok: false, error: { message: "path required" } });
+          // Resolve path under PROJECT_ROOT (read-only)
+          const pr = fs.realpathSync(PROJECT_ROOT);
+          let p = rawPath;
+          if (!path.isAbsolute(p)) p = path.join(pr, p);
+          const abs = fs.realpathSync(p);
+          if (!abs.startsWith(pr)) {
+            return sendJSON(res, 403, { ok: false, error: { message: "Path outside project root" } });
+          }
+          if (!fs.existsSync(abs)) return sendJSON(res, 404, { ok: false, error: { message: "Not found" } });
+          const st = fs.statSync(abs);
+          if (!st.isFile()) return sendJSON(res, 400, { ok: false, error: { message: "Not a file" } });
+          const maxBytes = Math.min(1_000_000, Math.max(1, Number(args.maxBytes || 100_000)));
+          const fd = fs.openSync(abs, "r");
+          try {
+            const toRead = Math.min(maxBytes, st.size);
+            const buf = Buffer.allocUnsafe(toRead);
+            fs.readSync(fd, buf, 0, toRead, 0);
+            const head = buf.slice(0, Math.min(4096, toRead));
+            // crude binary guard
+            if (head.includes(0)) {
+              return sendJSON(res, 415, { ok: false, error: { message: "Binary file not supported" } });
+            }
+            const text = buf.toString("utf8");
+            return sendJSON(res, 200, {
+              ok: true,
+              data: {
+                path: path.relative(PROJECT_ROOT, abs),
+                bytes: toRead,
+                size: st.size,
+                text,
+              },
+            });
+          } finally {
+            try { fs.closeSync(fd); } catch (_) {}
+          }
+        } catch (e) {
+          return sendJSON(res, 500, { ok: false, error: { message: e.message || "fs.read failed" } });
+        }
+      }
+      return sendJSON(res, 400, { ok: false, error: { message: `Unknown tool: ${tool}` } });
     }
 
     // ODP orchestrator stub (no writes, rounds=1)
@@ -983,6 +1066,8 @@ const server = http.createServer(async (req, res) => {
               open: true,
               fs_roots: true,
               fs_list: true,
+              tools_definitions: true,
+              tools_invoke: true,
               ui: true,
             },
           },
@@ -995,6 +1080,42 @@ const server = http.createServer(async (req, res) => {
           meta,
         });
       }
+    }
+
+    // ---- Pass-through proxies to Backend (threads v1/v2) ----
+    async function proxyGetJSON(toPath) {
+      try {
+        const u = new URL(toPath, BACKEND_BASE);
+        const resp = await fetch(u.toString(), { method: "GET" });
+        const txt = await resp.text();
+        const status = resp.status || 200;
+        // Try JSON parse, else wrap as text
+        try {
+          const obj = JSON.parse(txt);
+          return sendJSON(res, status, obj);
+        } catch (_) {
+          res.writeHead(status, { "Content-Type": "application/json; charset=utf-8" });
+          res.end(txt);
+          return;
+        }
+      } catch (e) {
+        return sendJSON(res, 502, { ok: false, error: { message: e.message || "Upstream error" } });
+      }
+    }
+
+    // v1
+    if (req.method === "GET" && req.url.startsWith("/api/threads/recent")) {
+      return proxyGetJSON(req.url);
+    }
+    if (req.method === "GET" && req.url.startsWith("/api/threads/read")) {
+      return proxyGetJSON(req.url);
+    }
+    // v2
+    if (req.method === "GET" && req.url.startsWith("/api/v2/threads/recent")) {
+      return proxyGetJSON(req.url);
+    }
+    if (req.method === "GET" && req.url.startsWith("/api/v2/threads/read")) {
+      return proxyGetJSON(req.url);
     }
 
     // Static UI (GET/HEAD) under /ui/*
@@ -1230,6 +1351,61 @@ const server = http.createServer(async (req, res) => {
         return Array.isArray(messages) ? messages : [];
       }
     }
+    if (req.method === "POST" && req.url.startsWith("/api/chat/toolcall")) {
+      // Minimal toolcall: accepts {model, messages, temperature, tools?}
+      if (!OPENAI_API_KEY) {
+        return sendJSON(res, 500, { ok: false, error: { message: "OPENAI_API_KEY missing" } });
+      }
+      let body;
+      try {
+        body = (await jsonBody(req)) || {};
+      } catch (e) {
+        return sendJSON(res, 400, { ok: false, error: { message: e.message || "Invalid JSON" } });
+      }
+      const messages = Array.isArray(body.messages) ? body.messages : [];
+      if (!messages.length) {
+        return sendJSON(res, 400, { ok: false, error: { message: "messages required" } });
+      }
+      const model = body.model || OPENAI_MODEL;
+      const temperature = typeof body.temperature === "number" ? body.temperature : undefined;
+      // Heuristic tool: fs.read — detect explicit path in last user message
+      let sysAugment = null;
+      try {
+        const last = messages[messages.length - 1] || {};
+        const q = String(last.content || "");
+        const m = q.match(/\/?home\/[\s\S]*|gumgang_meeting\/[\w\W]+/);
+        if (m && m[0]) {
+          let p = m[0].trim();
+          // Normalize to absolute under project
+          const pr = fs.realpathSync(PROJECT_ROOT);
+          if (!path.isAbsolute(p)) p = path.join(pr, p);
+          const abs = fs.realpathSync(p);
+          if (abs.startsWith(pr) && fs.existsSync(abs) && fs.statSync(abs).isFile()) {
+            const st = fs.statSync(abs);
+            const lim = Math.min(100_000, st.size);
+            const buf = fs.readFileSync(abs, { encoding: "utf8" }).slice(0, lim);
+            sysAugment = `다음은 사용자가 요청한 파일 일부 내용입니다(최대 ${lim}바이트, 경로: ${path.relative(PROJECT_ROOT, abs)}). 이 내용을 근거로 간결하게 답하십시오.\n\n` + buf;
+          }
+        }
+      } catch (_) {}
+      let merged = await __gg_buildMergedMessages(messages, typeof body.top_k === "number" ? body.top_k : 12);
+      if (sysAugment) {
+        // Prepend/merge an extra system message with file snippet
+        merged = [{ role: "system", content: sysAugment }, ...merged];
+      }
+      let apiResult;
+      try {
+        apiResult = await openaiChat({ apiKey: OPENAI_API_KEY, orgId: OPENAI_ORG_ID, model, messages: merged, temperature });
+      } catch (err) {
+        const status = err.status || 500;
+        return sendJSON(res, status, { ok: false, error: { message: err.message || "OpenAI proxy failed", details: err.details || null } });
+      }
+      const oa = apiResult?.data || {};
+      const choice = oa?.choices?.[0];
+      const assistantMsg = (choice && choice.message) || { role: "assistant", content: "" };
+      return sendJSON(res, 200, { ok: true, data: { message: assistantMsg, provider: "openai", model } });
+    }
+
     if (req.method === "POST" && req.url.startsWith("/api/chat")) {
       if (!OPENAI_API_KEY) {
         return sendJSON(res, 500, {

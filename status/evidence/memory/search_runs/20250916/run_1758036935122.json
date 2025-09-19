@@ -1,0 +1,154 @@
+{
+  "query": "이봐",
+  "tiers": [
+    "long",
+    "medium",
+    "short",
+    "ultra_long",
+    "ultra_short"
+  ],
+  "weights": {
+    "kw": 1.0,
+    "recency": 0.6,
+    "refs": 0.4,
+    "tier": 0.2,
+    "tier_map": {
+      "ultra_short": 1.0,
+      "short": 0.8,
+      "medium": 0.6,
+      "long": 0.4,
+      "ultra_long": 0.2
+    }
+  },
+  "params": {
+    "k": 5,
+    "half_life_days": 7.0,
+    "score_min": 0.25,
+    "quorum_min": 1,
+    "quorum_target": 3
+  },
+  "items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.799999989107143,
+      "ts": "2025-09-16T15:35:35.053Z",
+      "scope_id": null,
+      "text": "이봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999999818452384,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.799999989107143,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.6934116545424587,
+      "ts": "2025-09-15T03:18:04.256Z",
+      "scope_id": null,
+      "text": "이봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_q3mamsyt_mfkjwqes.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.8223527575707646,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.6934116545424587,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.5487627597435476,
+      "ts": "2025-09-11T14:34:17.003Z",
+      "scope_id": null,
+      "text": "이봐 너는 누구야?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.581271266239246,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.5487627597435476,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7999737432324132,
+      "ts": "2025-09-16T15:35:08.596Z",
+      "scope_id": null,
+      "text": "야 너는 누구냐 ?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9999562387206888,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7999737432324132,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7855374149536523,
+      "ts": "2025-09-11T11:52:24.884Z",
+      "scope_id": null,
+      "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.5758956915894204,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7855374149536523,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "no_hit": false,
+  "ts": "2025-09-16T15:35:35.122Z"
+}

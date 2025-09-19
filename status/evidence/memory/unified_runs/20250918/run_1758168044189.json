@@ -1,0 +1,42 @@
+{
+  "query": "증거 1건:\n1. [스레드 ID: thread_oubr7sak_mfovp7j7]\n[제목: 안녕 하세요?]\n[메시지 수: 45]\n\nassistant: 안녕하세요! 금강 A1 개발 UI입니다.\nassistant: 🔄 스레드 가져오기 시작...\nassistant: 📥 410개 스레드 발견, 상세 정보 로드 중...\nassistant: 📊 진행 상황: 10/410 처리 중...\nassistant: 📊 진행 상황: 20/410 처리 중...\nassistant: 📊 진행 상황: 30/410 처리 중...\nassistant: 📊 진행 상황: 40/410 처리 중...\nassistant: 📊 진행 상황: 50/410 처리 중...\nassistant: 📊 진행 상황: 60/410 처리 중...\nassistant: 📊 진행 상황: 70/410 처리 중...\nassistant: 📊 진행 상황: 80/410 처리 중...\nassistant: 📊 진행 상황: 90/410 처리 중...\nassistant: 📊 진행 상황: 100/410 처리 중...\nassistant: 📊 진행 상황: 110/410 처리 중...\nassistant: 📊 진행 상황: 120/410 처리 중...\nassistant: 📊 진행 상황: 130/410 처리 중...\nassistant: 📊 진행 상황: 140/410 처리 중...\nassistant: 📊 진행 상황: 150/410 처리 중...\nassistant: 📊 진행 상황: 160/410 처리 중...\nassistant: 📊 진행 상황: 170/410 처리 중...\nassistant: 📊 진행 상황: 180/410 처리 중...\nassistant: 📊 진행 상황: 190/410 처리 중...\nassistant: 📊 진행 상황: 200/410 처리 중...\nassistant: 📊 진행 상황: 210/410 처리 중...\nassistant: 📊 진행 상황: 220/410 처리 중...\nassistant: 📊 진행 상황: 230/410 처리 중...\nassistant: 📊 진행 상황: 240/410 처리 중...\nassistant: 📊 진행 상황: 250/410 처리 중...\nassistant: 📊 진행 상황: 260/410 처리 중...\nassistant: 📊 진행 상황: 270/410 처리 중...\nassistant: 📊 진행 상황: 280/410 처리 중...\nassistant: 📊 진행 상황: 290/410 처리 중...\nassistant: 📊 진행 상황: 300/410 처리 중...\nassistant: 📊 진행 상황: 310/410 처리 중...\nassistant: 📊 진행 상황: 320/410 처리 중...\nassistant: 📊 진행 상황: 330/410 처리 중...\nassistant: 📊 진행 상황: 340/410 처리 중...\nassistant: 📊 진행 상황: 350/410 처리 중...\nassistant: 📊 진행 상황: 360/410 처리 중...\nassistant: 📊 진행 상황: 370/410 처리 중...\nassistant: 📊 진행 상황: 380/410 처리 중...\nassistant: 📊 진행 상황: 390/410 처리 중...\nassistant: 📊 진행 상황: 400/410 처리 중...\nassistant: ✅ Import 완료: 4 (gumgang_meeting/conversations/threads/thread_oubr7sak_mfovp7j7.jsonl#L1-1)\n\n근거 인용: gumgang_meeting/conversations/threads/thread_oubr7sak_mfovp7j7.jsonl#L1-1",
+  "params": {
+    "k": 12,
+    "half_life_days": null,
+    "fresh_weight": 0.47656011564700795,
+    "self_rag": 1,
+    "strict": 1,
+    "need_fresh": 0,
+    "file_enabled": true
+  },
+  "source_mix": {
+    "memory": 12,
+    "file": 0
+  },
+  "pre_count": 24,
+  "post_count": 12,
+  "grounded": true,
+  "evidence_path_from_memory_search": "status/evidence/memory/search_runs/20250918/run_1758168044174.json",
+  "rerank_policy": {
+    "apply_if": "recency<0.2 AND refs<0.2",
+    "blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "bonus": {
+      "refs_ge_1_add": 0.05,
+      "normalized_threshold": 0.2
+    },
+    "cap": {
+      "kw_ge": 0.9,
+      "max_uplift": 0.02
+    }
+  },
+  "rerank_applied": 0,
+  "ts": "2025-09-18T04:00:44.189Z"
+}

@@ -1,0 +1,49 @@
+{
+  "id": "06CCQ26YB4PC3SXTNYN45FNKXC",
+  "proposal_id": "06CCQ26YB4PC3SXTNYN45FNKXC",
+  "state": "approved",
+  "approved_at": "2025-08-21T07:39:29.256414Z",
+  "approver": "web",
+  "run_id": "72H_20250821_0204Z",
+  "checkpoint_evidence": "gumgang_meeting/status/checkpoints/CKPT_72H_RUN.md#L651-660",
+  "approved_sha256": "e1f27a5f02225672f4ec7dc663e0d412cfd1362d5f9b6df9a7238fe30fa90e8c",
+  "gate_token": "gt.06CCQ26YB4PC3SXTNYN45FNKXC.1755761969256.1e4496587f3fefc0effecaa3d00fae622b704deef65634a747fa575de5c70fab",
+  "prev_hash": null,
+  "review_at": "2026-08-21T07:39:29.256418Z",
+  "proposal_excerpt": "문의는 [REDACTED_EMAIL] 로",
+  "refs": [
+    "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl#L1-1",
+    "status/evidence/meetings/GG-SESS-LOCAL/events.jsonl#L1-10",
+    "status/resources/vector_index/search_results_20250819_1455.json#L1-10"
+  ],
+  "l5_record": {
+    "record": {
+      "id": "ultra_long_20250821_1755761969256",
+      "tier": "ultra_long",
+      "scope_id": "BT-12",
+      "ts": "2025-08-21T07:39:29.256024Z",
+      "text": "문의는 [REDACTED_EMAIL] 로",
+      "refs": [
+        "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl#L1-1",
+        "status/evidence/meetings/GG-SESS-LOCAL/events.jsonl#L1-10",
+        "status/resources/vector_index/search_results_20250819_1455.json#L1-10"
+      ],
+      "mode": null,
+      "weight": {
+        "gate_token": "gt.06CCQ26YB4PC3SXTNYN45FNKXC.1755761969256.1e4496587f3fefc0effecaa3d00fae622b704deef65634a747fa575de5c70fab",
+        "approved_id": "06CCQ26YB4PC3SXTNYN45FNKXC"
+      },
+      "emb": null,
+      "session_id": "GG-SESS-LOCAL"
+    },
+    "path": "status/evidence/memory/tiers/ultra_long/20250821/GG-SESS-LOCAL.jsonl",
+    "bytes_written": 623
+  },
+  "indexes": {
+    "inverted_updated": true,
+    "vector_upserted": true,
+    "backlink_count": 3,
+    "embedding_version": null,
+    "upsert_log_line": null
+  }
+}

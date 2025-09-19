@@ -1,0 +1,24 @@
+{
+  "generated_at": "2025-08-20T06:40:22.756Z",
+  "platform": "linux",
+  "arch": "x64",
+  "node": "v22.18.0",
+  "cwd": "/home/duksan/바탕화면/gumgang_meeting",
+  "project_dir": "/home/duksan/바탕화면/gumgang_meeting/gumgang_0_5/gumgang-v2",
+  "tauri_conf_present": true,
+  "bridge_url": "http://localhost:3037",
+  "preflight": {
+    "exit_code": 0,
+    "ok": true,
+    "failed_hint": false,
+    "warnings": null
+  },
+  "tauri_conf": {
+    "productName": "gumgang-v2",
+    "version": "0.1.0",
+    "app_url": "http://localhost:3037/ui",
+    "devUrl": "http://localhost:3000"
+  },
+  "stdout": "\u001b[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m\n\u001b[0;36m🔧 Linux Preflight — Tauri v2 Native Deps & Toolchains\u001b[0m\n\u001b[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m\n\n\u001b[0;36mDetected OS: Ubuntu 22.04\u001b[0m\n\u001b[0;36m1) Base tools\u001b[0m\n\u001b[0;32m  ✅ xdg-open found\u001b[0m\n\u001b[0;32m  ✅ pkg-config found\u001b[0m\n\u001b[0;32m  ✅ C/C++ compiler found (gcc/clang)\u001b[0m\n\n\u001b[0;36m2) Node.js / npm\u001b[0m\n\u001b[0;32m  ✅ Node.js 22.18.0 (>= 18)\u001b[0m\n\u001b[0;32m  ✅ npm 10.9.3\u001b[0m\n\n\u001b[0;36m3) Rust toolchain\u001b[0m\n\u001b[0;32m  ✅ rustc 1.89.0 (>= 1.70)\u001b[0m\n\u001b[0;32m  ✅ cargo detected (cargo 1.89.0 (c24e10642 2025-06-23))\u001b[0m\n\u001b[0;32m  ✅ rustup detected (recommended for managing toolchains)\u001b[0m\n\n\u001b[0;36m4) Tauri CLI\u001b[0m\n\u001b[0;32m  ✅ @tauri-apps/cli listed in devDependencies\u001b[0m\n\u001b[0;32m  ✅ Local tauri present; version check inconclusive, devDependency detected (treating as OK)\u001b[0m\n\n\u001b[0;36m5) Native libraries (GTK/WebKit + Soup3)\u001b[0m\n\u001b[0;32m  ✅ webkit2gtk-4.1 detected (version: 2.48.5)\u001b[0m\n\u001b[0;32m  ✅ libsoup-3.0 detected (version: 3.4.4)\u001b[0m\n\n\u001b[0;36m6) Project config sanity\u001b[0m\n\u001b[0;32m  ✅ Found /home/duksan/바탕화면/gumgang_meeting/gumgang_0_5/gumgang-v2/src-tauri/tauri.conf.json\u001b[0m\n\u001b[0;32m  ✅ tauri.conf.json devUrl points to localhost:3000\u001b[0m\n\u001b[0;32m  ✅ tauri window url points to bridge at :3037/ui\u001b[0m\n\u001b[0;32m  ✅ Bridge server present: /home/duksan/바탕화면/gumgang_meeting/bridge/server.js\u001b[0m\n\n\u001b[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m\n\u001b[0;36m📊 Summary\u001b[0m\n\u001b[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m\n\u001b[0;32m✅ Required checks passed\u001b[0m\n\nNext steps:\n  - Install missing native libs (see hints above)\n  - Ensure Node deps: npm ci\n  - Ensure Rust toolchain: rustup toolchain install stable\n  - Verify Tauri CLI: npm i -D @tauri-apps/cli && npx tauri -v\n\n",
+  "stderr": ""
+}

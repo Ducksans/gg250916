@@ -1,0 +1,10 @@
+Stage 2 Kickoff Slide Outline
+-----------------------------
+1. Stage 1 Wrap Summary
+   - Evidence fallback, PG ingest, toolbar lock, legacy import
+2. Stage 2 Goals & Success Metrics
+   - Orchestrator Hub 기능, Agent Studio, MCP 통합
+3. PySpark & Monitoring 준비
+   - 환경/시나리오 문서, 모니터링 스크립트
+4. Roadmap & Action Items
+   - Prototype Sprint → QA Sprint → Stage 3 준비

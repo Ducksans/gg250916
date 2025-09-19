@@ -1,0 +1,154 @@
+{
+  "query": "gumgang_meeting/status/catalog/SSOT_SITEMAP.md 읽어 봐",
+  "tiers": [
+    "long",
+    "medium",
+    "short",
+    "ultra_long",
+    "ultra_short"
+  ],
+  "weights": {
+    "kw": 1.0,
+    "recency": 0.6,
+    "refs": 0.4,
+    "tier": 0.2,
+    "tier_map": {
+      "ultra_short": 1.0,
+      "short": 0.8,
+      "medium": 0.6,
+      "long": 0.4,
+      "ultra_long": 0.2
+    }
+  },
+  "params": {
+    "k": 5,
+    "half_life_days": 7.0,
+    "score_min": 0.25,
+    "quorum_min": 1,
+    "quorum_target": 3
+  },
+  "items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999825793656,
+      "ts": "2025-09-16T18:46:09.208Z",
+      "scope_id": null,
+      "text": "gumgang_meeting/status/catalog/SSOT_SITEMAP.md 읽어 봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999999709656093,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7999999825793656,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.366107699048875,
+      "ts": "2025-09-16T17:15:57.797Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.5714285714285714,
+        "recency": 0.9911318793671726,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.366107699048875,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2257555783721485,
+      "ts": "2025-09-14T12:54:09.373Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/README.md 첫 10줄 읽어 봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+      "line_from": 8,
+      "line_to": 8,
+      "reasons": {
+        "kw": 0.5714285714285714,
+        "recency": 0.7572116782392951,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2257555783721485,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.0804083281611554,
+      "ts": "2025-09-16T17:16:13.101Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.2857142857142857,
+        "recency": 0.9911567374114494,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.0804083281611554,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.0496108163451014,
+      "ts": "2025-09-16T08:00:46.912Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_dcqftnjv_mfkmexp8.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.2857142857142857,
+        "recency": 0.9398275510513597,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.0496108163451014,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "no_hit": false,
+  "ts": "2025-09-16T18:46:09.278Z"
+}

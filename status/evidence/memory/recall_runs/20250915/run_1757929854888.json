@@ -1,0 +1,242 @@
+{
+  "query": "gg-memory.memory.search {\"query\":\"A1\",\"limit\":5}",
+  "params": {
+    "k": 5,
+    "need_fresh": 1,
+    "half_life_days": 7.0,
+    "fresh_weight": 0.6,
+    "self_rag": 1,
+    "tiers": [
+      "long",
+      "medium",
+      "short",
+      "ultra_long",
+      "ultra_short"
+    ],
+    "rerank_blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "rerank_policy": {
+      "apply_if": "recency<0.2 AND refs<0.2",
+      "bonus": {
+        "refs_ge_1_add": 0.05,
+        "normalized_threshold": 0.2
+      },
+      "cap": {
+        "kw_ge": 0.9,
+        "max_uplift": 0.02
+      }
+    }
+  },
+  "pre_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999859136906,
+      "ts": "2025-09-15T09:50:54.855Z",
+      "scope_id": null,
+      "text": "gg-memory.memory.search {\"query\":\"A1\",\"limit\":5}",
+      "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_67va3uqm_mfk3u4xc.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999999765228179,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.1104838308309466,
+      "ts": "2025-09-11T11:52:24.884Z",
+      "scope_id": null,
+      "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.2857142857142857,
+        "recency": 0.6412825751944348,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8246734658699462,
+      "ts": "2025-09-11T11:48:29.325Z",
+      "scope_id": null,
+      "text": "무엇을 도와드릴까요?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.6411224431165772,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7813011023257292,
+      "ts": "2025-09-15T04:26:40.075Z",
+      "scope_id": null,
+      "text": "너는 금강이 뭐라고 생각해?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_dcqftnjv_mfkmexp8.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9688351705428823,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7775649413628174,
+      "ts": "2025-09-15T03:19:21.886Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_q3mamsyt_mfkjwqes.jsonl",
+      "line_from": 8,
+      "line_to": 8,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9626082356046956,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    }
+  ],
+  "post_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999859136906,
+      "ts": "2025-09-15T09:50:54.855Z",
+      "scope_id": null,
+      "text": "gg-memory.memory.search {\"query\":\"A1\",\"limit\":5}",
+      "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_67va3uqm_mfk3u4xc.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999999765228179,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7999999859136906,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.1104838308309466,
+      "ts": "2025-09-11T11:52:24.884Z",
+      "scope_id": null,
+      "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.2857142857142857,
+        "recency": 0.6412825751944348,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.1104838308309466,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8246734658699462,
+      "ts": "2025-09-11T11:48:29.325Z",
+      "scope_id": null,
+      "text": "무엇을 도와드릴까요?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.6411224431165772,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.8246734658699462,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7813011023257292,
+      "ts": "2025-09-15T04:26:40.075Z",
+      "scope_id": null,
+      "text": "너는 금강이 뭐라고 생각해?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_dcqftnjv_mfkmexp8.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9688351705428823,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7813011023257292,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7775649413628174,
+      "ts": "2025-09-15T03:19:21.886Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_q3mamsyt_mfkjwqes.jsonl",
+      "line_from": 8,
+      "line_to": 8,
+      "reasons": {
+        "kw": 0.0,
+        "recency": 0.9626082356046956,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7775649413628174,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "ts": "2025-09-15T09:50:54.888Z"
+}

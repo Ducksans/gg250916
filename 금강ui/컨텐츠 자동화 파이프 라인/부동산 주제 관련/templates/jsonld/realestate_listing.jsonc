@@ -1,0 +1,35 @@
+// JSON-LD template for RealEstateListing (Schema.org)
+// Required: name, url, datePosted, address, geo, itemOffered, offers, image
+// Optional: seller, floorSize, numberOfRoomsTotal, additionalProperty ...
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateListing",
+  "name": "{{title}}",
+  "url": "{{canonical}}",
+  "datePosted": "{{date}}",
+  "description": "{{summary}}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "KR",
+    "addressLocality": "{{locality}}",
+    "streetAddress": "{{street}}"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": {{lat}},
+    "longitude": {{lon}}
+  },
+  "itemOffered": {
+    "@type": "Apartment",
+    "floorSize": {"@type": "QuantitativeValue", "value": {{area_m2}}, "unitCode": "MTK"},
+    "numberOfRoomsTotal": {{rooms}}
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": {{price_value}},
+    "priceCurrency": "KRW",
+    "availability": "https://schema.org/InStock"
+  },
+  "image": ["{{image_url}}"],
+  "seller": {"@type": "RealEstateAgent", "name": "{{agent_name}}"}
+}

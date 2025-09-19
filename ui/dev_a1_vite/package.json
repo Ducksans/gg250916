@@ -12,16 +12,25 @@
     "tauri:build": "tauri build",
     "tauri:init": "tauri init --ci --app-name gumgang-ui --window-title \"금강 UI\"",
     "preview": "vite preview --port 5173",
-    "guard:ui": "node ../../scripts/check_ui_guardrails.cjs"
+    "guard:ui": "node ../../scripts/check_ui_guardrails.cjs",
+    "lint": "eslint . --ext ts,tsx,jsx --report-unused-disable-directives",
+    "lint:fix": "eslint . --ext ts,tsx,jsx --fix"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
+    "monaco-editor": "^0.53.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-router-dom": "^6.30.1"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2.4.1",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
     "@vitejs/plugin-react": "^4.7.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
     "vite": "^5.4.20"
   },
   "engines": {

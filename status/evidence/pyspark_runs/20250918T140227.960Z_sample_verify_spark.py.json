@@ -1,0 +1,8 @@
+{
+  "ts": "2025-09-18T14:02:27.960Z",
+  "run_id": "PYSPARK_RUN_20250918T140227.960Z",
+  "script": "scripts/pyspark_jobs/sample_verify_spark.py",
+  "rc": 0,
+  "stdout": "Spark version: 4.0.1\nRow count: 4\nSum: 10\n",
+  "stderr": "WARNING: Using incubator modules: jdk.incubator.vector\nUsing Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties\n25/09/18 23:02:20 WARN Utils: Your hostname, duksan-main, resolves to a loopback address: 127.0.1.1; using 192.168.0.44 instead (on interface enp3s0)\n25/09/18 23:02:20 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address\nUsing Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties\nSetting default log level to \"WARN\".\nTo adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).\n25/09/18 23:02:21 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n\n[Stage 0:>                                                        (0 + 24) / 24]\n\n                                                                                \n"
+}

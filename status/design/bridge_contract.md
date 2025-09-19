@@ -1,10 +1,34 @@
 ---
-phase: past
+timestamp:
+  utc: 2025-09-16T20:06Z
+  kst: 2025-09-17 05:06
+author: Codex (AI Agent)
+summary: Bridge↔UI↔Backend 메시지 계약 정의 초안
+document_type: design_contract
+tags:
+  - #design
+  - #bt-06
+  - #st-0605
+phase: present
+DOCS_TIME_SPEC: GG_TIME_SPEC_V1
 ---
 
 # Bridge Contract (Draft)
 
 목표: UI ↔ Bridge(3037) ↔ Backend(8000) 간 메시지 규격 정의. 서버 실행 없이 문서만.
+
+## HTTP 패스스루 (Threads v1/v2)
+- 목적: UI가 Backend를 직접 때리지 않고 Bridge를 통해 동일 경로로 접근할 수 있도록 프록시 제공.
+- 환경: `GG_BACKEND` (기본값 `http://127.0.0.1:8000`)
+
+| UI 호출 | Bridge | Backend | 비고 |
+| --- | --- | --- | --- |
+| GET `/bridge/api/threads/recent?limit=50` | `/api/threads/recent` | `/api/threads/recent` | v1 파일 기반 |
+| GET `/bridge/api/threads/read?convId=<id>` | `/api/threads/read` | `/api/threads/read` | v1 파일 기반 |
+| GET `/bridge/api/v2/threads/recent?limit=50` | `/api/v2/threads/recent` | `/api/v2/threads/recent` | v2 DB 기반 |
+| GET `/bridge/api/v2/threads/read?id=<id>` | `/api/v2/threads/read` | `/api/v2/threads/read` | v2 DB 기반 |
+
+반환 형식은 Backend 응답(JSON)을 그대로 전달한다.
 
 ## 공통 프레이밍
 - transport: WebSocket (Bridge), HTTP(Backend)

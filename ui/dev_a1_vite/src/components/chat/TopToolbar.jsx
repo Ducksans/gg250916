@@ -78,6 +78,8 @@ export default function TopToolbar({
   onCreateThread,
   backendPrefLabel = "FastAPI",
   onToggleBackend,
+  threadSourceLabel = "Files",
+  onToggleThreadSource,
   toolModeOn = false,
   toolBlocked = false,
   onToggleToolMode,
@@ -85,6 +87,7 @@ export default function TopToolbar({
   onOpenPanels,
   onOpenSnapshot,
   onReload,
+  onOpenEditor,
   leftCollapsed = false,
   onToggleLeftCollapsed,
   onImportThreads,
@@ -115,11 +118,23 @@ export default function TopToolbar({
         </button>
         <button
           className="btn"
-          onClick={onToggleBackend}
+          onClick={(e) => e.preventDefault()}
+          disabled
+          aria-disabled
           style={{ marginLeft: 6 }}
-          title="채팅 백엔드 전환(FastAPI ↔ Bridge)"
+          title="Locked: FastAPI 단일 관문 정책"
         >
           API: {backendPrefLabel}
+        </button>
+        <button
+          className="btn"
+          onClick={(e) => e.preventDefault()}
+          disabled
+          aria-disabled
+          style={{ marginLeft: 6 }}
+          title="Locked: Source=DB 정책"
+        >
+          Source: {threadSourceLabel}
         </button>
         <button
           className="btn"
@@ -131,9 +146,11 @@ export default function TopToolbar({
         </button>
         <button
           className="btn"
-          onClick={onToggleToolMode}
+          onClick={(e) => e.preventDefault()}
+          disabled
+          aria-disabled
           style={{ marginLeft: 6 }}
-          title="툴 사용 모드(툴콜 루프) 토글"
+          title="Locked: Tool Mode ON 정책"
         >
           Tool Mode: {toolModeOn ? "ON" : "OFF"}
         </button>
@@ -165,11 +182,95 @@ export default function TopToolbar({
         </button>
         <button
           className="btn"
+          onClick={() => onOpenEditor && onOpenEditor()}
+          style={{ marginLeft: 6 }}
+          title="Monaco 기반 에디터 모드 열기"
+        >
+          Editor
+        </button>
+        <button
+          className="btn"
           onClick={onOpenSnapshot}
           style={{ marginLeft: 6 }}
           title="스냅샷 열기(3037)"
         >
           Snapshot
+        </button>
+        <button
+          className="btn"
+          onClick={async () => {
+            try {
+              const res = await fetch(
+                "http://127.0.0.1:8000/api/mcp/pyspark/run",
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    script: "scripts/pyspark_jobs/sample_verify_spark.py",
+                  }),
+                },
+              );
+              const data = await res.json().catch(() => ({}));
+              if (res.ok && data && data.ok) {
+                window.alert(
+                  `PySpark run OK\nEvidence: ${data.evidence || "(no path)"}`,
+                );
+                try {
+                  window.dispatchEvent(
+                    new CustomEvent("gg:open-panels", { detail: { tab: "pyspark" } }),
+                  );
+                } catch {}
+              } else {
+                window.alert(
+                  `PySpark run failed: ${
+                    (data && (data.error || data.detail)) || res.status
+                  }`,
+                );
+              }
+            } catch (err) {
+              window.alert(`PySpark run error: ${err?.message || err}`);
+            }
+          }}
+          style={{ marginLeft: 6 }}
+          title="PySpark 샘플 잡 실행"
+        >
+          Run PySpark
+        </button>
+        <button
+          className="btn"
+          onClick={async () => {
+            try {
+              const res = await fetch(
+                "http://127.0.0.1:8000/api/mcp/pyspark/latest",
+              );
+              const data = await res.json().catch(() => ({}));
+              if (res.ok && data && data.ok) {
+                const rc = data?.data?.rc ?? "?";
+                window.alert(
+                  `Latest PySpark\nRC: ${rc}\nEvidence: ${
+                    data.path || "(none)"
+                  }`,
+                );
+                try {
+                  window.dispatchEvent(
+                    new CustomEvent("gg:open-panels", { detail: { tab: "pyspark" } }),
+                  );
+                } catch {}
+              } else {
+                window.alert(
+                  `No PySpark runs or error: ${
+                    (data && (data.error || data.detail)) || res.status
+                  }`,
+                );
+              }
+            } catch (err) {
+              window.alert(`Fetch latest error: ${err?.message || err}`);
+            }
+          }}
+          style={{ marginLeft: 6 }}
+          title="최근 PySpark 실행 결과 보기"
+        >
+          Last PySpark
         </button>
         <button className="btn" onClick={onReload}>
           Reload

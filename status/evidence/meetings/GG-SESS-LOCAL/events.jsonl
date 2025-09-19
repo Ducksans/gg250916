@@ -1,0 +1,93 @@
+{"type": "capture", "ts": "2025-08-20T08:10:46.960776Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}}
+{"type": "annotate", "ts": "2025-08-20T08:10:49.142160Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "record_start", "ts": "2025-08-20T08:10:51.038222Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "annotate", "ts": "2025-08-20T08:10:53.162513Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "record_stop", "ts": "2025-08-20T08:10:55.730456Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null}
+{"type": "capture", "ts": "2025-08-20T08:11:44.081680Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}}
+{"type": "annotate", "ts": "2025-08-20T08:11:49.745826Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "record_start", "ts": "2025-08-20T08:11:55.620199Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_stop", "ts": "2025-08-20T08:12:03.871909Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null}
+{"type": "capture", "ts": "2025-08-20T08:24:26.017937Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}}
+{"type": "annotate", "ts": "2025-08-20T08:24:32.082175Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "record_start", "ts": "2025-08-20T08:24:37.833556Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "capture", "ts": "2025-08-20T08:33:19.413021Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}}
+{"type": "annotate", "ts": "2025-08-20T08:33:21.374918Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "annotate", "ts": "2025-08-20T08:33:22.935323Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "record_start", "ts": "2025-08-20T08:33:23.982669Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_stop", "ts": "2025-08-20T08:33:40.630889Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null}
+{"type": "annotate", "ts": "2025-08-20T08:33:41.301566Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "record_start", "ts": "2025-08-20T08:33:42.285462Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_stop", "ts": "2025-08-20T08:33:43.934005Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null}
+{"type": "annotate", "ts": "2025-08-20T08:33:44.347032Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "capture", "ts": "2025-08-20T08:33:45.089611Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}}
+{"type": "capture", "ts": "2025-08-20T08:33:46.515181Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}}
+{"type": "capture", "ts": "2025-08-20T08:38:35.412799Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}}
+{"type": "annotate", "ts": "2025-08-20T08:38:36.648586Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "record_start", "ts": "2025-08-20T08:38:37.390732Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "capture", "ts": "2025-08-20T08:43:38.946931Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}}
+{"type": "annotate", "ts": "2025-08-20T08:43:39.968685Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "record_start", "ts": "2025-08-20T08:43:41.138953Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "annotate", "ts": "2025-08-20T08:43:42.897192Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "capture", "ts": "2025-08-20T08:48:05.234886Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}}
+{"type": "capture_upload", "ts": "2025-08-20T08:49:03.369599Z", "meeting_id": "GG-SESS-LOCAL", "note": null, "attachment": "status/evidence/meetings/GG-SESS-LOCAL/attachments/20250820T084903_369599Z_README.md", "bytes": 5908, "content_type": "text/markdown", "original_name": "README.md"}
+{"type": "capture_upload", "ts": "2025-08-20T08:49:14.897776Z", "meeting_id": "GG-SESS-LOCAL", "note": null, "attachment": "status/evidence/meetings/GG-SESS-LOCAL/attachments/20250820T084914_897776Z_README.md", "bytes": 5908, "content_type": "text/markdown", "original_name": "README.md"}
+{"type": "capture_upload", "ts": "2025-08-20T08:49:18.392083Z", "meeting_id": "GG-SESS-LOCAL", "note": null, "attachment": "status/evidence/meetings/GG-SESS-LOCAL/attachments/20250820T084918_392083Z_README.md", "bytes": 5908, "content_type": "text/markdown", "original_name": "README.md"}
+{"type": "record_start", "ts": "2025-08-20T09:27:34.579225Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_stop", "ts": "2025-08-20T09:27:37.990886Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null}
+{"type": "annotate", "ts": "2025-08-20T09:27:42.811441Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "capture", "ts": "2025-08-20T09:27:44.177202Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}}
+{"type": "record_start", "ts": "2025-08-20T09:28:29.962470Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_stop", "ts": "2025-08-20T09:28:35.576340Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null}
+{"type": "record_start", "ts": "2025-08-20T09:28:59.514853Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_start", "ts": "2025-08-20T09:29:34.855801Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_start", "ts": "2025-08-20T09:30:07.226517Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_start", "ts": "2025-08-20T09:34:24.461735Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_stop", "ts": "2025-08-20T09:34:25.804532Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null}
+{"type": "record_start", "ts": "2025-08-20T09:34:28.192255Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_stop", "ts": "2025-08-20T09:34:29.126179Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null}
+{"type": "capture", "ts": "2025-08-20T09:34:48.585002Z", "meeting_id": "GG-SESS-LOCAL", "note": "A1 capture", "payload": {"meta": {}}}
+{"type": "record_start", "ts": "2025-08-20T09:37:26.418097Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_stop", "ts": "2025-08-20T09:37:51.820772Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null}
+{"type": "record_start", "ts": "2025-08-20T09:37:54.580255Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_stop", "ts": "2025-08-20T09:37:55.631560Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null}
+{"type": "record_start", "ts": "2025-08-20T09:38:15.351473Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "record_stop", "ts": "2025-08-20T09:38:22.577531Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null}
+{"type": "record_start", "ts": "2025-08-20T10:28:26.802823Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "annotate", "ts": "2025-08-20T10:28:44.369067Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "capture", "ts": "2025-08-20T10:28:50.859965Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}}
+{"type": "record_start", "ts": "2025-08-20T10:29:18.046210Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}}
+{"type": "capture", "ts": "2025-08-20T10:29:23.948516Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}}
+{"type": "annotate", "ts": "2025-08-20T10:29:24.775842Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": []}
+{"type": "record_stop", "ts": "2025-08-20T10:30:28.171996Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null}
+{"type": "record_start", "ts": "2025-08-21T04:20:16.506237Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "mode": "NORMAL"}
+{"type": "record_stop", "ts": "2025-08-21T04:20:42.974587Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null, "mode": "NORMAL"}
+{"type": "annotate", "ts": "2025-08-21T04:54:36.019429Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": [], "mode": "NORMAL"}
+{"type": "annotate", "ts": "2025-08-21T04:55:55.442948Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": [], "mode": "NORMAL"}
+{"type": "record_start", "ts": "2025-08-21T04:55:56.311489Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "mode": "NORMAL"}
+{"type": "annotate", "ts": "2025-08-21T04:56:09.498922Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": [], "mode": "NORMAL"}
+{"type": "capture", "ts": "2025-08-21T04:56:10.871683Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}, "mode": "NORMAL"}
+{"type": "annotate", "ts": "2025-08-21T04:56:11.445167Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": [], "mode": "NORMAL"}
+{"type": "annotate", "ts": "2025-08-21T04:56:27.020838Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": [], "mode": "NORMAL"}
+{"type": "record_stop", "ts": "2025-08-21T04:56:30.599383Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null, "mode": "NORMAL"}
+{"type": "record_start", "ts": "2025-08-21T04:56:35.399030Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "mode": "NORMAL"}
+{"type": "record_stop", "ts": "2025-08-21T04:56:37.042883Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null, "mode": "NORMAL"}
+{"type": "record_start", "ts": "2025-08-21T04:56:38.380821Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "mode": "NORMAL"}
+{"type": "record_stop", "ts": "2025-08-21T04:56:39.100812Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null, "mode": "NORMAL"}
+{"type": "record_start", "ts": "2025-08-21T04:56:40.004846Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "mode": "NORMAL"}
+{"type": "record_stop", "ts": "2025-08-21T04:56:45.930748Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null, "mode": "NORMAL"}
+{"type": "record_start", "ts": "2025-08-21T05:15:51.583592Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "mode": "NORMAL"}
+{"type": "annotate", "ts": "2025-08-21T05:15:53.090997Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": [], "mode": "NORMAL"}
+{"type": "capture", "ts": "2025-08-21T05:15:54.582242Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}, "mode": "NORMAL"}
+{"type": "record_stop", "ts": "2025-08-21T05:16:19.767583Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null, "mode": "NORMAL"}
+{"type": "annotate", "ts": "2025-08-21T05:32:32.377648Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": [], "mode": "NORMAL"}
+{"type": "annotate", "ts": "2025-08-21T05:32:37.766653Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": [], "mode": "NORMAL"}
+{"type": "capture", "ts": "2025-08-21T05:33:29.782168Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}, "mode": "NORMAL"}
+{"type": "annotate", "ts": "2025-08-21T05:33:31.194663Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": [], "mode": "NORMAL"}
+{"type": "record_start", "ts": "2025-08-21T05:33:32.829746Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "mode": "NORMAL"}
+{"type": "capture", "ts": "2025-08-21T05:40:51.537753Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}, "mode": "NORMAL"}
+{"type": "annotate", "ts": "2025-08-21T05:40:53.231527Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": [], "mode": "NORMAL"}
+{"type": "record_stop", "ts": "2025-08-21T05:40:54.537652Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null, "mode": "NORMAL"}
+{"type": "record_start", "ts": "2025-08-21T05:40:57.603371Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "mode": "NORMAL"}
+{"type": "annotate", "ts": "2025-08-21T05:53:13.934707Z", "meeting_id": "GG-SESS-LOCAL", "target": null, "text": "A5 annotate", "shapes": [], "mode": "NORMAL"}
+{"type": "capture", "ts": "2025-08-21T05:53:15.330747Z", "meeting_id": "GG-SESS-LOCAL", "note": "A5 capture", "payload": {"meta": {}}, "mode": "NORMAL"}
+{"type": "record_stop", "ts": "2025-08-21T05:53:16.996155Z", "meeting_id": "GG-SESS-LOCAL", "meta": {}, "stats": null, "mode": "NORMAL"}

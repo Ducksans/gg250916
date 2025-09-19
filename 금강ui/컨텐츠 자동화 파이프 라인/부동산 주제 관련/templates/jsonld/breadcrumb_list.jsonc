@@ -1,0 +1,11 @@
+// JSON-LD template for BreadcrumbList
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "홈", "item": "https://hub.example.com/"},
+    {"@type": "ListItem", "position": 2, "name": "{{region_name}}", "item": "https://hub.example.com/areas/{{region_slug}}/"},
+    {"@type": "ListItem", "position": 3, "name": "{{category_name}}", "item": "https://hub.example.com/{{category_slug}}/"},
+    {"@type": "ListItem", "position": 4, "name": "{{title}}", "item": "{{canonical}}"}
+  ]
+}

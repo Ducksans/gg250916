@@ -42,6 +42,7 @@ import useSimpleMode from "@/hooks/useSimpleMode";
 import useHealth from "@/hooks/useHealth";
 import useGuardrails from "@/hooks/useGuardrails";
 import useComposerSpace from "@/hooks/useComposerSpace";
+import useThreadTransfer from "@/hooks/useThreadTransfer";
 
 import {
   chatStore,
@@ -64,6 +65,8 @@ import {
   setCCTabPref,
   getLeftCollapsedPref,
   setLeftCollapsedPref,
+  getThreadSourcePref,
+  setThreadSourcePref,
 } from "@/hooks/usePrefs";
 
 import A1Grid from "@/components/layout/A1Grid";
@@ -71,8 +74,10 @@ import LeftThreadsPane from "@/components/layout/LeftThreadsPane";
 import CenterStage from "@/components/layout/CenterStage";
 import TopToolbar from "@/components/chat/TopToolbar";
 import EdgeToggles from "@/components/EdgeToggles";
+import AppHeader from "@/components/common/AppHeader";
 import Composer from "@/components/chat/Composer";
-import CommandCenterDrawer from "@/components/CommandCenterDrawer";
+import CommandCenterPanel from "@/components/panels/CommandCenterPanel";
+import EditorHeader from "@/components/editor/EditorHeader";
 import ToolsManager from "@/components/tools/ToolsManager";
 
 /**
@@ -112,9 +117,11 @@ export default function A1Dev() {
 
   // Tools panel (floating overlay)
   const [showToolsPanel, setShowToolsPanel] = useState(false);
+  // moved to usePysparkPanel inside CommandCenterPanel
 
   // Tool Mode (LLM tool-calling)
   const [toolMode, setToolMode] = useState(getToolModePref() === "on");
+  const [threadSource, setThreadSource] = useState(getThreadSourcePref()); // 'files' | 'db'
 
   // Tool definitions (for /api/chat/toolcall) + selected ids
   const [tools, setTools] = useState([]); // [{id,name,description,params}]
@@ -149,24 +156,18 @@ export default function A1Dev() {
     if (threadId && threads.find((t) => t.id === threadId)) {
       chatStore.actions.switchThread(threadId);
     }
-  }, [threadId, threads.length]);
+  }, [threadId]);
 
-  // Update URL when active thread changes
+  // Update URL only when there is no explicit threadId in the route.
+  // This prevents ping‑pong between route→store and store→route during imports.
   useEffect(() => {
-    if (activeThread?.id) {
+    if (!threadId && activeThread?.id) {
       const currentPath = window.location.pathname;
-      const expectedPath = `/ui-dev/thread/${activeThread.id}`;
       if (!currentPath.endsWith(activeThread.id)) {
         navigate(`/thread/${activeThread.id}`, { replace: true });
       }
-    } else if (!threadId) {
-      // If no active thread and not on home, go to home
-      const currentPath = window.location.pathname;
-      if (currentPath !== "/ui-dev/" && currentPath !== "/ui-dev") {
-        navigate("/", { replace: true });
-      }
     }
-  }, [activeThread?.id, navigate]);
+  }, [threadId, activeThread?.id, navigate]);
 
   // Provider-aware Tool Mode block
   const modelName = (activeAgent?.model || "").toLowerCase();
@@ -192,6 +193,7 @@ export default function A1Dev() {
     }
   }, [mainMode]);
   useGuardrails({ enabled: mainMode === "chat" && !leftCollapsed });
+  useThreadTransfer();
 
   // Reserve bottom space equal to composer height for both scrollers
   useComposerSpace({
@@ -224,6 +226,10 @@ export default function A1Dev() {
       alive = false;
     };
   }, []);
+
+  // PySpark panel logic moved into CommandCenterPanel
+
+  // (deduped duplicate block removed)
 
   // Build tool defs for current selection (memoized)
   const activeToolDefs = useMemo(() => {
@@ -490,7 +496,12 @@ export default function A1Dev() {
       // 2-4) Hardened Strict gate (보수형)
       // - SSOT가 1개 이상 있어야 통과
       // - 아니면 overlap 상위 항목이 있고, 전부 tiers 경로만이 아니며, 최상위 overlap≥0.4 여야 통과
-      const STRICT_GATE = true;
+      // - GG_STRICT_GATE=soft 일 때는 엄격 게이트를 비활성화(증거가 약해도 답변 시도)
+      let STRICT_GATE = true;
+      try {
+        const pref = localStorage.getItem("GG_STRICT_GATE") || "hard";
+        if (String(pref).toLowerCase() === "soft") STRICT_GATE = false;
+      } catch {}
       const hasSSOT = top.some((s) => isSSOT(s.path) && s.overlap >= 0.05);
       const onlyTiers = top.length > 0 && top.every((s) => isTierMemo(s.path));
       const topOverlap = top.length > 0 ? top[0].overlap : 0;
@@ -607,9 +618,10 @@ export default function A1Dev() {
           const dec = new TextDecoder();
           let buf = "";
           let assembled = "";
-          while (true) {
+          let keepReading = true;
+          while (keepReading) {
             const { value, done } = await reader.read();
-            if (done) break;
+            if (done) { keepReading = false; break; }
             buf += dec.decode(value, { stream: true });
 
             let sep;
@@ -653,7 +665,7 @@ export default function A1Dev() {
           body: JSON.stringify({
             tier: "ultra_short",
             text: reply,
-            refs: evidenceRefs,
+            refs: normRefs,
             mode: "NORMAL",
             sessionId: t.id,
           }),
@@ -669,114 +681,7 @@ export default function A1Dev() {
     }
   };
 
-  // Import Threads handler (server → local)
-  useEffect(() => {
-    // Import threads event handler - fetch all available threads
-    const onImport = async () => {
-      const base = chatApiBase();
-      try {
-        // First, try to get count of available threads
-        chatStore.actions.addAssistantMessage(`🔄 스레드 가져오기 시작...`);
-
-        // Fetch with higher limit (up to 500 threads)
-        const res = await fetch(`${base}/threads/recent?limit=500`);
-        const json = await res.json();
-        const items = Array.isArray(json?.data?.items) ? json.data.items : [];
-
-        if (items.length === 0) {
-          chatStore.actions.addAssistantMessage(`ℹ️ 가져올 스레드가 없습니다.`);
-          return;
-        }
-
-        chatStore.actions.addAssistantMessage(
-          `📥 ${items.length}개 스레드 발견, 상세 정보 로드 중...`,
-        );
-
-        let successCount = 0;
-        let failCount = 0;
-
-        // Process threads in batches to avoid overwhelming the server
-        const batchSize = 10;
-        for (let i = 0; i < items.length; i += batchSize) {
-          const batch = items.slice(i, i + batchSize);
-          const batchPromises = batch.map(async (it) => {
-            const id = String(it?.convId || "");
-            if (!id) return false;
-
-            try {
-              // migrated endpoint already includes turns, no need for separate read
-              const turns = Array.isArray(it?.turns) ? it.turns : [];
-
-              if (turns.length === 0) {
-                // Fallback to read endpoint if turns not included
-                const rr = await fetch(
-                  `${base}/threads/read?convId=${encodeURIComponent(id)}`,
-                );
-                const jj = await rr.json();
-                const turns0 = Array.isArray(jj?.data?.turns)
-                  ? jj.data.turns
-                  : [];
-                const evPath =
-                  typeof jj?.data?.path === "string" ? jj.data.path : undefined;
-                const processedTurns = turns0.map((u) => ({
-                  ...u,
-                  meta: { ...((u && u.meta) || {}), evidence_path: evPath },
-                }));
-                chatStore.actions.upsertImportedThread(
-                  id,
-                  it?.title || id,
-                  processedTurns,
-                );
-              } else {
-                // Use turns from migrated data directly
-                chatStore.actions.upsertImportedThread(
-                  id,
-                  it?.title || id,
-                  turns,
-                );
-              }
-              return true;
-            } catch {
-              return false;
-            }
-          });
-
-          const results = await Promise.all(batchPromises);
-          successCount += results.filter((r) => r).length;
-          failCount += results.filter((r) => !r).length;
-
-          // Update progress
-          const progress = Math.min(i + batchSize, items.length);
-          if (progress < items.length) {
-            chatStore.actions.addAssistantMessage(
-              `📊 진행 상황: ${progress}/${items.length} 처리 중...`,
-            );
-          }
-        }
-
-        chatStore.actions.addAssistantMessage(
-          `✅ Import 완료: ${successCount}개 성공${failCount > 0 ? `, ${failCount}개 실패` : ""}`,
-        );
-      } catch (e) {
-        chatStore.actions.addAssistantMessage(
-          `⚠️ Import 실패: ${e?.message || String(e)}`,
-        );
-      }
-    };
-
-    // Export threads event handler
-    const onExport = () => {
-      chatStore.actions.exportThreads();
-    };
-
-    window.addEventListener("gg:import-threads", onImport);
-    window.addEventListener("gg:export-threads", onExport);
-
-    return () => {
-      window.removeEventListener("gg:import-threads", onImport);
-      window.removeEventListener("gg:export-threads", onExport);
-    };
-  }, []);
+  // Import/Export event handlers moved to useThreadTransfer hook
 
   // Show loading while store initializes
   if (!storeReady) {
@@ -790,42 +695,15 @@ export default function A1Dev() {
   return (
     <>
       {/* Command Center (fixed overlay outside #a1 flow) */}
-      <CommandCenterDrawer
+      <CommandCenterPanel
         show={showCC}
-        activeTab={ccTab}
-        onTabChange={(k) => {
-          setCCTab(k);
-          setMainMode(k);
-        }}
-        onClose={() => setShowCC(false)}
-        onOpenInMain={(k) => {
-          setMainMode(k || ccTab);
-          setShowCC(false);
-        }}
-        plannerData={{
-          threadId: activeThread?.id,
-          title: activeThread?.title,
-          lastMessage: (() => {
-            try {
-              const msgs = activeThread?.messages || [];
-              return msgs[msgs.length - 1]?.content;
-            } catch {
-              return undefined;
-            }
-          })(),
-        }}
-        insightsData={{ backend, bridge }}
-        executorData={(() => {
-          try {
-            const state = chatStore.getState();
-            const invs = (state?.mcp?.invocations || []).filter(
-              (x) => x.threadId === activeThread.id,
-            );
-            return invs[invs.length - 1] || null;
-          } catch {
-            return null;
-          }
-        })()}
+        ccTab={ccTab}
+        setShowCC={setShowCC}
+        setCCTab={setCCTab}
+        setMainMode={setMainMode}
+        backend={backend}
+        bridge={bridge}
+        activeThread={activeThread}
       />
 
       {/* Edge toggles (left/right chevrons with auto-fade) */}
@@ -843,6 +721,9 @@ export default function A1Dev() {
         mainMode={mainMode}
         leftCollapsed={leftCollapsed}
         header={
+          mainMode !== 'editor' ? (
+          <>
+          <AppHeader current="chat" />
           <TopToolbar
             backendStatus={backend}
             bridgeStatus={bridge}
@@ -866,6 +747,12 @@ export default function A1Dev() {
               setChatBackendPref(next);
               window.location.reload();
             }}
+            threadSourceLabel={threadSource === "db" ? "DB" : "Files"}
+            onToggleThreadSource={() => {
+              const next = threadSource === "db" ? "files" : "db";
+              setThreadSource(next);
+              setThreadSourcePref(next);
+            }}
             toolModeOn={toolMode}
             toolBlocked={toolBlocked}
             onToggleToolMode={() => {
@@ -884,10 +771,31 @@ export default function A1Dev() {
                 "_blank",
               )
             }
+            onOpenEditor={() => {
+              setMainMode('editor');
+              setShowCC(false);
+              setLeftCollapsed(true);
+            }}
             onReload={() => window.location.reload()}
             leftCollapsed={leftCollapsed}
             onToggleLeftCollapsed={() => setLeftCollapsed((v) => !v)}
           />
+          </>
+          ) : (
+            <>
+            <AppHeader current="ide" />
+            <EditorHeader
+              onBack={() => {
+                setMainMode('chat');
+                setLeftCollapsed(false);
+              }}
+              onPanels={() => {
+                setCCTab('planner');
+                setShowCC(true);
+              }}
+            />
+            </>
+          )
         }
         left={
           <LeftThreadsPane
@@ -903,6 +811,7 @@ export default function A1Dev() {
             mode={mainMode}
             thread={activeThread}
             onBackToChat={() => setMainMode("chat")}
+            composerForEditor={<Composer onSend={send} />}
           />
         }
         composer={<Composer onSend={send} />}

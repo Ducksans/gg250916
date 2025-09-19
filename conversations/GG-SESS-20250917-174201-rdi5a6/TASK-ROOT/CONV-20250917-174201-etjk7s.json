@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-20250917-174201-rdi5a6",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250917-174201-etjk7s",
+    "model": "gpt-4o",
+    "created_at": "2025-09-17T08:42:04.884Z",
+    "updated_at": "2025-09-17T08:42:04.884Z",
+    "type": "chat",
+    "version": 1,
+    "provider": "openai",
+    "upstream_model": "gpt-4o-2024-08-06",
+    "last_request_id": "req_dc8aa57f6b8b4d5fbb054187d7a75ac5"
+  },
+  "turns": [
+    {
+      "role": "assistant",
+      "content": "증거 1건:\n1. [스레드 ID: gg_20250916_mfmm7sst]\n[제목: gg_20250916_mfmm7sst]\n[메시지 수: 5]\n\nuser: 이봐\nuser: 메세지 입력\nassistant: 증거 1건: 1. [스레드 ID: gg_20250916_mfmm7sst] [제목: gg_20250916_mfmm7sst] [메시지 수: 2] user: 이봐 user: 메세지 입력 (gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1) 근거 인용: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1\nassistant: 무엇을 도와드릴까요? 추가 정보가 필요합니다. [근거: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1]\nuser: 예를 들면 어떤 추가 정보를 줘야 할 까? (gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1)\n\n근거 인용: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1",
+      "ts": "2025-09-17T08:42:01.244Z"
+    },
+    {
+      "role": "assistant",
+      "content": "구체적인 질문 또는 요청 사항을 말씀해 주세요. 예를 들어, 해결하고자 하는 문제나 필요한 정보에 대해 설명해주시면 보다 정확하게 도와드릴 수 있습니다. [근거: gumgang_meeting/conversations/threads/gg_20250916_mfmm7sst.jsonl#L1-1]",
+      "ts": "2025-09-17T08:42:04.884Z",
+      "usage": {
+        "prompt_tokens": 2253,
+        "completion_tokens": 71,
+        "total_tokens": 2324,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-4o-2024-08-06",
+      "request_id": "req_dc8aa57f6b8b4d5fbb054187d7a75ac5"
+    }
+  ]
+}

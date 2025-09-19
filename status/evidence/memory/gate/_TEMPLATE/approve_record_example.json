@@ -1,0 +1,38 @@
+{
+  "id": "01J8Z5QK2W9E3R7T6Y4U1I0O9P8L7K6J",
+  "proposal_id": "01J8Z5QK2W9E3R7T6Y4U1I0O9P8L7K6J",
+  "state": "approved",
+  "approved_at": "2025-08-21T04:50:00Z",
+  "approver": "web_gumgang",
+  "run_id": "72H_20250821_0204Z",
+  "checkpoint_evidence": "gumgang_meeting/status/checkpoints/CKPT_72H_RUN.md#L645-650",
+
+  "approved_sha256": "9f4e3d7e4a8a2c0f1b6d2e9c4a1f0b7c6e5d4a3b2c1f0e9d8c7b6a5f4e3d2c1",
+  "gate_token": "gt_01J8Z5QK2W9E3R7T6Y4U1I0O9P8L7K6J_9f4e3d7e_HMAC256",
+  "prev_hash": "3f2e1d0c9b8a7f6e5d4c3b2a1908f7e6d5c4b3a29181726354434241302f1e0d",
+  "review_at": "2026-08-21T00:00:00Z",
+
+  "proposal_excerpt": "BT-12 게이트 핵심은 승인 기반 안정지식 편입과 무결성 체인, 승인 즉시 인덱스 갱신으로 검색·앵커 품질 향상.",
+  "refs": [
+    "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl#L1-1",
+    "status/evidence/meetings/GG-SESS-LOCAL/events.jsonl#L120-160",
+    "status/resources/vector_index/search_results_20250819_1455.json#L1-10"
+  ],
+
+  "l5_record": {
+    "tier": "ultra_long",
+    "path": "status/evidence/memory/tiers/ultra_long/20250821/GG-SESS-LOCAL.jsonl",
+    "line": 42,
+    "bytes_written": 324
+  },
+
+  "indexes": {
+    "inverted_updated": true,
+    "vector_upserted": true,
+    "backlink_count": 3,
+    "embedding_version": "e5-large-v2@384",
+    "upsert_log_line": "status/resources/vector_index/gate_upserts_20250821.jsonl#L12-12"
+  },
+
+  "this_hash": "b1a09f7e8d6c5b4a39281706f5e4d3c2b1a09f7e8d6c5b4a39281706f5e4d3c2"
+}

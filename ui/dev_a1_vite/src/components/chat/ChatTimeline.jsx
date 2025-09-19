@@ -37,8 +37,8 @@ import useAutoStick from "@/hooks/useAutoStick";
  * - thread: { id: string, messages: Array }
  */
 export default function ChatTimeline({ thread }) {
-  if (!thread) return null;
-  const messages = Array.isArray(thread.messages) ? thread.messages : [];
+  // Call hooks unconditionally; derive safe messages from optional thread
+  const messages = Array.isArray(thread?.messages) ? thread.messages : [];
   // containerRef removed; use containerSelector in useAutoStick
   // bottomRef removed; internal bottomSentinelRef is used
 
@@ -154,6 +154,9 @@ export default function ChatTimeline({ thread }) {
       // ignore
     }
   };
+
+  // Preserve prior behavior: if no thread, render nothing (after hooks have run)
+  if (!thread) return null;
 
   return (
     <>

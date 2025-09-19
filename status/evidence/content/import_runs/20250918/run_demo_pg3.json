@@ -1,0 +1,31 @@
+{
+  "run_id": "run_demo_pg3",
+  "upsert": true,
+  "items": [
+    {
+      "id": "itm_alpha",
+      "slug": "alpha",
+      "title": "Alpha",
+      "summary": "tagged",
+      "body_mdx_path": null,
+      "thumbnail_url": null,
+      "price_plan": null,
+      "features_json": [
+        "alpha-tag",
+        "beta-tag"
+      ],
+      "links_json": null
+    }
+  ],
+  "collections": [
+    {
+      "id": "col_alpha",
+      "slug": "alpha-col",
+      "name": "Alpha Collection",
+      "items": [
+        "itm_alpha"
+      ]
+    }
+  ],
+  "ts": "2025-09-18T04:16:12.253Z"
+}

@@ -1,0 +1,242 @@
+{
+  "query": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Dataview 플러그인 설치 시 표가 자동 생성됩니다. 없더라도 링크는 수동으로 사용할 수 있습니다.\\n\\n## 0) 에이전트 허브 링크\\n- [[AGENTS.md|AGENTS Core]] · [[AGENTS_expand.md|AGENTS 확장]] · [[AGENTS_log.md|문서 관리 게이트]]\\n- [[status/reports/EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md|EXEC_PLAN]] · [[status/reports/GG_TIME_SPEC_V1.md|GG_TIME_SPEC_V1]]\\n\\n## 1) 핵심 문서(고정 링크)\\n- [[status/reports/EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md|EXEC_PLAN]]\\n- [[status/reports/GG_DB_SPEC_V1.md|DB Spec]] · [[status/reports/GG_ORCH_SPEC_V1.md|Orchestrator]] · [[status/reports/GG_MEMORY_5_LAYER_SPEC.md|Memory‑5]] · [[status/reports/GG_SSV_SPEC_V1.md|SSV]]\\n- [[status/reports/GG_CONTENT_PIPELINE_V1.md|Content Pipeline]] · [[status/reports/GG_SCHEDULER_SPEC_V1.md|Scheduler]] · [[status/reports/GG_CONTEXT_SENTRY_SPEC_V1.md|Context Sentry]]\\n- [[status/reports/GG_CONTEXT_REGISTRY_SPEC_V1.md|Context Registry]] · [[status/reports/GG_API_CONTEXT_SUMMARY.md|Context API]] · [[status/reports/GG_DYNAMIC_BLOCKS_SPEC.md|Dynamic Blocks]] · [[status/reports/GG_TIME_SPEC_V1.md|Time Spec]]\\n- [[status/reports/GG_UI_RUN_CARD_SPEC.md|Run Card UI]] · [[status/reports/GG_DAILY_OPS_V1.md|Daily Ops]]\\n\\n---\\n\\n## 2) 태그별 인덱스(있으면 표시)\\n\\n```dataview\\nTABLE file.mtime as Updated\\nFROM \\\"status/reports\\\"\\nWHERE contains(file.tags, \\\"SSOT\\\") OR contains(file.tags, \\\"ExecPlan\\\")\\nSORT file.mtime DESC\\n```\\n\\n```dataview\\nTABLE file.mtime as Updated, file.tags\\nFROM \\\"status/reports\\\"\\nWHERE contains(file.tags, \\\"DB\\\") OR contains(file.tags, \\\"Orchestrator\\\") OR contains(file.tags, \\\"SSV\\\")\\nSORT file.mtime DESC\\n```\\n\\n```dataview\\nTABLE file.link AS Doc, BT, ST, RT\\nFROM \\\"status\\\"\\nWHERE (BT OR ST OR RT) AND document_type != \\\"redirect_note\\\"\\nSORT file.mtime DESC\\n```\\n\\n---\\n\\n## 3) 경로별 인덱스(태그가 없어도 동작)\\n\\n```dataview\\nTABLE file.mtime as Updated\\nFROM \\\"status/reports\\\"\\nWHERE file.name != \\\"SSOT_SITEMAP\\\"\\nSORT file.mtime DESC\\n```\\n\\n```dataview\\nTABLE file.mtime as Updated\\nFROM \\\"status/design/schemas\\\"\\nSORT file.mtime DESC\\n```\\n\\n```dataview\\nTABLE file.mtime as Updated\\nFROM \\\"status/catalog\\\"\\nSORT file.mtime DESC\\n```\\n\\n---\\n\\n## 4) 최근 변경 Top‑20(전체)\\n```dataview\\nTABLE file.path as File, file.mtime as Updated\\nFROM \\\"status\\\"\\nSORT file.mtime DESC\\nLIMIT 20\\n```\\n\\n---\\n\\n## 5) 시간 규약 체크용 쿼리\\n```dataview\\nTABLE file.mtime AS Updated, DOCS_TIME_SPEC\\nFROM \\\"status\\\"\\nWHERE DOCS_TIME_SPEC\\nSORT file.mtime DESC\\n```\\n> `DOCS_TIME_SPEC` 필드는 문서 YAML에 `DOCS_TIME_SPEC: GG_TIME_SPEC_V1`처럼 기록한다.\\n\"\n} << 이 거 안 읽혀 ?",
+  "params": {
+    "k": 5,
+    "need_fresh": 1,
+    "half_life_days": 7.0,
+    "fresh_weight": 0.6,
+    "self_rag": 1,
+    "tiers": [
+      "long",
+      "medium",
+      "short",
+      "ultra_long",
+      "ultra_short"
+    ],
+    "rerank_blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "rerank_policy": {
+      "apply_if": "recency<0.2 AND refs<0.2",
+      "bonus": {
+        "refs_ge_1_add": 0.05,
+        "normalized_threshold": 0.2
+      },
+      "cap": {
+        "kw_ge": 0.9,
+        "max_uplift": 0.02
+      }
+    }
+  },
+  "pre_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999720535726,
+      "ts": "2025-09-16T18:46:59.122Z",
+      "scope_id": null,
+      "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999999534226212,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8392164650310747,
+      "ts": "2025-09-16T17:15:57.797Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.044585987261146494,
+        "recency": 0.9910507962832137,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8328619506657962,
+      "ts": "2025-09-16T17:16:13.101Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.03821656050955414,
+        "recency": 0.9910756502604036,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8200163116790846,
+      "ts": "2025-09-11T11:52:24.884Z",
+      "scope_id": null,
+      "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.03821656050955414,
+        "recency": 0.5696662519492177,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "short",
+      "score": 0.7874540638145696,
+      "ts": "2025-08-21T02:32:30Z",
+      "scope_id": "ST-1201",
+      "text": "덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함.",
+      "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.2627388535031847,
+        "recency": 0.2078586838523081,
+        "refs": 0.6,
+        "tier_weight": 0.8
+      }
+    }
+  ],
+  "post_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999720535726,
+      "ts": "2025-09-16T18:46:59.122Z",
+      "scope_id": null,
+      "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999999534226212,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7999999720535726,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8392164650310747,
+      "ts": "2025-09-16T17:15:57.797Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.044585987261146494,
+        "recency": 0.9910507962832137,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.8392164650310747,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8328619506657962,
+      "ts": "2025-09-16T17:16:13.101Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.03821656050955414,
+        "recency": 0.9910756502604036,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.8328619506657962,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8200163116790846,
+      "ts": "2025-09-11T11:52:24.884Z",
+      "scope_id": null,
+      "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.03821656050955414,
+        "recency": 0.5696662519492177,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.8200163116790846,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "short",
+      "score": 0.7874540638145696,
+      "ts": "2025-08-21T02:32:30Z",
+      "scope_id": "ST-1201",
+      "text": "덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함.",
+      "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.2627388535031847,
+        "recency": 0.2078586838523081,
+        "refs": 0.6,
+        "tier_weight": 0.8
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7874540638145696,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "ts": "2025-09-16T18:46:59.203Z"
+}

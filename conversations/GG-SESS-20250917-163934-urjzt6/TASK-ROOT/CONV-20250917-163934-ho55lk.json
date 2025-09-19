@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "sessionId": "GG-SESS-20250917-163934-urjzt6",
+    "taskId": "TASK-ROOT",
+    "convId": "CONV-20250917-163934-ho55lk",
+    "model": "gpt-4o",
+    "created_at": "2025-09-17T07:39:36.190Z",
+    "updated_at": "2025-09-17T07:39:36.190Z",
+    "type": "chat",
+    "version": 1,
+    "provider": "openai",
+    "upstream_model": "gpt-4o-2024-08-06",
+    "last_request_id": "req_f8f5b232c174445692693ca7113cf907"
+  },
+  "turns": [
+    {
+      "role": "assistant",
+      "content": "증거 1건:\n1. [스레드 ID: thread_6izmwfx5_mfnl583p]\n[제목: 안녕?]\n[메시지 수: 14]\n\nassistant: 안녕하세요! 금강 A1 개발 UI입니다.\nassistant: 🔄 스레드 가져오기 시작...\nassistant: 📥 408개 스레드 발견, 상세 정보 로드 중...\nassistant: 📊 진행 상황: 10/408 처리 중...\nassistant: 📊 진행 상황: 20/408 처리 중...\nuser: 안녕?\nassistant: 증거 1건: 1. [스레드 ID: thread_6izmwfx5_mfnl583p] [제목: 안녕?] [메시지 수: 6] assistant: 안녕하세요! 금강 A1 개발 UI입니다. assistant: 🔄 스레드 가져오기 시작... assistant: 📥 408개 스레드 발견, 상세 정보 로드 중... assistant: 📊 진행 상황: 10/408 처리 중... assistant: 📊 진행 상황: 20/408 처리 중... user: 안녕? (gumgang_meeting/conversations/threads/thread_6izmwfx5_mfnl583p.jsonl#L1-1) 근거 인용: gumgang_meeting/conversations/threads/thread_6izmwfx5_mfnl583p.jsonl#L1-1\nassistant: 안녕하세요! 어떻게 도와드릴까요? (출처: [gumgang_meeting/conversations/threads/thread_6izmwfx5_mfnl583p.jsonl#L1-1](gumgang_meeting/conversations/threads/thread_6izmwfx5_mfnl583p.jsonl#L1-1))\nuser: 잘 도와 줘\nassistant: 증거 1건: 1. [스레드 ID: thread_6izmwfx5_mfnl583p] [제목: 안녕?] [메시지 수: 9] assistant: 안녕하세요! 금강 A1 개발 UI입니다. assistant: 🔄 스레드 가져오기 시작... assistant: 📥 408개 스레드 발견, 상세 정보 로드 중... assistant: 📊 진행 상황: 10/408 처리 중... assistant: 📊 진행 상황: 20/408 처리 중... user: 안녕? assistant: 증거 1건: 1. [스레드 ID: thread_6izmwfx5_mfnl583p] [제목: 안녕?] [메시지 수: 6] assistant: 안녕하세요! 금강 A1 개발 UI입니다. assistant: 🔄 스레드 가져오기 시작... assistant: 📥 408개 스레드 발견, 상세 정보 로드 중... assistant: 📊 진행 상황: 10/408 처리 중... assistant: 📊 진행 상황: 20/408 처리 중... user: 안녕? (gumgang_meeting/conversations/threads/thread_6izmwfx5_mfnl583p.jsonl#L1-1) 근거 인용: gumgang_meeting/conversations/threads/thread_6izmwfx5_mfnl583p.jsonl#L1-1 assistant: 안녕하세요! 어떻게 도와드릴까요? (출처: [gumgang_meeting/conversations/threads/thread_6izmwfx5_mfnl583p.jsonl#L1-1]( (gumgang_meeting/conversations/threads/thread_6izmwfx5_mfnl583p.jsonl#L1-1)\n\n근거 인용: gumgang_meeting/conversations/threads/thread_6izmwfx5_mfnl583p.jsonl#L1-1",
+      "ts": "2025-09-17T07:39:34.370Z"
+    },
+    {
+      "role": "assistant",
+      "content": "죄송합니다, 요청하신 파일의 내용을 검색할 수 없습니다. (출처: 없음 템플릿)",
+      "ts": "2025-09-17T07:39:36.190Z",
+      "usage": {
+        "prompt_tokens": 4039,
+        "completion_tokens": 25,
+        "total_tokens": 4064,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "provider": "openai",
+      "upstream_model": "gpt-4o-2024-08-06",
+      "request_id": "req_f8f5b232c174445692693ca7113cf907"
+    }
+  ]
+}

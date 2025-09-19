@@ -1,11 +1,34 @@
 ---
-phase: past
+timestamp:
+  utc: 2025-09-16T19:52Z
+  kst: 2025-09-17 04:52
+author: Codex (AI Agent)
+summary: BT-06 산출물로 BT-07~BT-10 단계별 목표와 게이트를 재정렬한 로드맵
+document_type: design_roadmap
+tags:
+  - #design
+  - #bt-06
+  - #st-0603
+phase: present
+DOCS_TIME_SPEC: GG_TIME_SPEC_V1
 ---
 
 # Roadmap — BT-07 .. BT-10 (Draft)
 
+```dataviewjs
+const D = dv.luxon.DateTime;
+dv.paragraph(`(as of ${D.utc().toFormat("yyyy-LL-dd HH:mm'Z'")} / ${D.local().toFormat("yyyy-LL-dd HH:mm")} ${D.local().zoneName})`);
+```
+
 목적: BT-05(벡터) 완료 이후 운영화를 위한 선형 큰 과제 정의.
 포트/엔트리포인트 고정: BACKEND 8000, BRIDGE 3037 (변경 금지, 체크포인트 승격 전까지)
+
+## 선행 조건(From BT-06)
+- ST0103(DB import) 완료 — UI Source: DB 토글 및 v2 API 가용
+  - API: `/api/v2/threads/recent`, `/api/v2/threads/read`
+  - UI: Import Threads 정상, 좌측 무한스크롤 PASS
+  - Evidence: `status/evidence/ui/thread_import_*.{log,json}`, `status/evidence/db/ingest_*.json`, `db/gumgang.db`
+  - CKPT: `ST0103_DB_2025-09-16_UI_PASS`
 
 ## BT-07 — UI Shell 안정화
 - Scope: Tauri+Monaco 셸 완결(열기/편집/저장), 명령 팔레트/단축키, 에러 핸들링.
@@ -32,17 +55,16 @@ phase: past
 - UX Flows:
   - 드라이런 실행 → 리포트 열람 → 표본 이동 → 스텁/QUARANTINE 확인 → 복원
 
-## BT-09 — Bridge/API 통합
-- Scope: UI↔Bridge(3037)↔Backend(8000) 왕복; 검색 API 계약(backend_semantic_search_api.yaml) 준수.
+## BT-09 — FastAPI 계약 수렴(Bridge 프리즈)
+- Scope: 모든 대화/툴/검색을 FastAPI(`/api/*`)로 일원화. Bridge는 프리뷰/스냅샷 서빙만 유지.
 - Gates:
-  - GATE_CONTRACT_MATCH: 요청/응답 스키마가 설계와 일치(샘플 캡처 증거).
-  - GATE_ROUND_TRIP: 샘플 쿼리 왕복 성공 로그/증거.
-  - FAIL_CONTRACT_DRIFT: 실제 요청/응답이 backend_semantic_search_api.yaml과 불일치 시 실패.
-  - FAIL_TIMEOUT: 샘플 왕복의 응답 시간이 2초 초과가 지속적으로 재현되면 실패.
+  - GATE_CONTRACT_MATCH: `/api/chat(,/stream,/toolcall)`, `/api/v2/threads/*`, `/api/search/unified` 설계와 일치.
+  - GATE_PREVIEW_FROZEN: Bridge 기능 확장 중단(문서/README 표기).
+  - FAIL_TOGGLE_DRIFT: UI에서 API/Source 토글 노출/오작동 시 실패.
 - KPIs:
-  - 왕복 p95 ≤ 1500ms, 계약 적합성 100%, 하트비트 누락 시 60s 내 재연결 로그
+  - 왕복 p95 ≤ 1500ms(FastAPI), 계약 적합성 100%, 무응답률(없음 템플릿) ≤ 목표치(soft 기준).
 - UX Flows:
-  - 검색 요청 전송 → 응답 수신 → 오류 시 친절 메시지 + 원클릭 재시도
+  - 자연어 전송 → 자동 툴콜/검색 근거 주입 → 인용 포함 답변 → 기록 저장
 
 ## BT-10 — E2E 시맨틱 검색 UX
 - Scope: UI 검색 입력→Top-K 결과(라인 범위 인용) 표시→클릭 시 파일/라인 열기.
@@ -57,3 +79,9 @@ phase: past
   - 검색 → Top-K → 결과 더블클릭 → 파일/라인 오픈 → 주석 도구로 표시 → 즉시 공유
 
 참고: 모든 게이트는 체크포인트 6줄 포맷과 Evidence 경로 인용을 동반한다. 본 로드맵은 UX 대헌장(status/design/ux_charter.md)과 정합해야 한다.
+
+## Session Updates — 2025-09-17 (UTC)
+- 우선 과제 정렬: ST‑0607(Test Plan) → ST‑0608(Risk Register) 순으로 진행 결정.
+- 작업 노트 생성 및 런북 연동: `status/tasks/ST-0607_test_plan.md`, `status/tasks/ST-0608_risk_register.md`(Dataview에 표시).
+- CI/런타임 상태: 8000/3037/5173/5175 정상, Threads v2 recent/read PASS.
+- 체크포인트: `ST-0607_TEST_PLAN_RUN_20250917`(CLI 스모크, UI 단계 대기).

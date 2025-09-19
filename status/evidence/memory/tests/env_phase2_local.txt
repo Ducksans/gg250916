@@ -1,0 +1,40 @@
+# Local Dev Env Shadow (Evidence)
+# Purpose: Enable Phase 2 (FileRetriever v0) for Unified Search in local development.
+# This file is a non-secret runtime snapshot for evidence. The actual .env is managed outside the tool.
+# Copy these lines into gumgang_meeting/.env (or ensure equivalent values exist) to activate file channel.
+#
+# Safety:
+# - No API keys or secrets here.
+# - File retriever is whitelist-only and defaults are conservative.
+# - To disable, set FILE_RETRIEVER_ENABLED=false.
+
+# Unified Search (server feature toggle)
+UNIFIED_ENABLED=true
+
+# Phase 2: File Retriever v0 (whitelist + kw+mtime)
+FILE_RETRIEVER_ENABLED=true
+
+# Comma-separated relative directories (project root) that are safe to scan
+# Adjust as needed; keep tight for performance and privacy.
+FILE_WHITELIST=docs,projects,status/evidence/logs
+
+# Optional: maximum file size to read (bytes). Large/binary files are skipped.
+FILE_MAX_BYTES=1000000
+
+# Optional: allowed file extensions (comma-separated). Keep text/code only.
+FILE_EXTS=.md,.txt,.json,.py,.ts,.js,.html,.css,.yaml,.yml
+
+# Optional: freshness half-life for file recency weighting (days).
+FILE_HALF_LIFE_DAYS=30
+
+# Optional: strict grounded mode (server-side gate still enforced by Unified API).
+# When strict=1 and no evidence found within window, responses are blocked with a hint.
+SGM_STRICT_DEFAULT=1
+
+# Notes:
+# - Evidence of Unified API: status/evidence/memory/unified_runs/YYYYMMDD/run_*.json
+# - Search runs (memory channel): status/evidence/memory/search_runs/YYYYMMDD/run_*.json
+# - A1 badge (Phase 2): “SGM ON · sources: memory(+files)” once file channel is active.
+# - To revert to memory-only: set FILE_RETRIEVER_ENABLED=false and reload backend.
+
+# EOF

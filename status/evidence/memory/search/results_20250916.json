@@ -1,0 +1,4508 @@
+{
+  "1758009646": {
+    "query": "오늘 날씨 검색해봐",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999999885714286,
+        "ts": "2025-09-16T08:00:46.857Z",
+        "scope_id": null,
+        "text": "오늘 날씨 검색해봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999999809523813,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999999885714286,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7947553973807986,
+        "ts": "2025-09-11T11:52:24.884Z",
+        "scope_id": null,
+        "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 6,
+        "line_to": 6,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5912589956346642,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7947553973807986,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7946737213371611,
+        "ts": "2025-09-11T11:48:29.325Z",
+        "scope_id": null,
+        "text": "무엇을 도와드릴까요?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5911228688952684,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7946737213371611,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7310460130075749,
+        "ts": "2025-09-15T10:11:56.251Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.885076688345958,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7310460130075749,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7154202864638024,
+        "ts": "2025-09-15T04:26:40.075Z",
+        "scope_id": null,
+        "text": "너는 금강이 뭐라고 생각해?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.8590338107730041,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7154202864638024,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758030916": {
+    "query": "ST-1206 ui guardrails rules/ai ST-1206.ui.rules.md",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.0653301120118404,
+        "ts": "2025-09-16T08:00:46.912Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.9660263771625912,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0653301120118404,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0007295156141718,
+        "ts": "2025-09-15T10:11:56.251Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.8583587164998103,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0007295156141718,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9860076536071267,
+        "ts": "2025-09-15T04:26:22.353Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.8338222798214019,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9860076536071267,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9832498562565524,
+        "ts": "2025-09-15T03:19:21.886Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_q3mamsyt_mfkjwqes.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.8292259509037778,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9832498562565524,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.952761624588605,
+        "ts": "2025-09-14T14:05:50.565Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 16,
+        "line_to": 16,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.7784122314571991,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.952761624588605,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "short",
+        "score": 0.9183270857889109,
+        "ts": "2025-08-21T02:32:30Z",
+        "scope_id": "ST-1201",
+        "text": "덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함.",
+        "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.39285714285714285,
+          "recency": 0.20911657155294672,
+          "refs": 0.6,
+          "tier_weight": 0.8
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9183270857889109,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8406886212837152,
+        "ts": "2025-09-11T17:57:25.686Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/688b8836-e404-832d-a65e-6edcbf94a572.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5916238926157161,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8406886212837152,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8395102808304533,
+        "ts": "2025-09-11T17:00:40.946Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_ova3z1dd_mffmki10.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5896599918602793,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8395102808304533,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.839366871103228,
+        "ts": "2025-09-11T16:53:45.024Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+        "line_from": 9,
+        "line_to": 9,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5894209756482374,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.839366871103228,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8393241543016563,
+        "ts": "2025-09-11T16:51:41.070Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/6846ebc3-fc3c-8003-972b-7f150ddfc903.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5893497809789512,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8393241543016563,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8392909126811483,
+        "ts": "2025-09-11T16:50:04.590Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68483071-55c8-8003-b33d-bcbd93e0c434.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5892943782781045,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8392909126811483,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8392518810507121,
+        "ts": "2025-09-11T16:48:11.282Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68483692-2588-8003-acd8-8b219f28d744.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5892293255607106,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8392518810507121,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8391724613430067,
+        "ts": "2025-09-11T16:44:20.651Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68785bd6-915c-8003-86a8-a5805edd3024.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5890969593812018,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8391724613430067,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8386587043265499,
+        "ts": "2025-09-11T16:19:26.218Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/6845871c-def4-8003-a227-7fcf6c137cad.jsonl",
+        "line_from": 10,
+        "line_to": 10,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5882406976871072,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8386587043265499,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8359251910650058,
+        "ts": "2025-09-11T14:05:41.159Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_dz4jv7iz_mffe0g73.jsonl",
+        "line_from": 13,
+        "line_to": 13,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5836848422512004,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8359251910650058,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8357928601415825,
+        "ts": "2025-09-11T13:59:09.481Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhy.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5834642907121612,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8357928601415825,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8351088365382242,
+        "ts": "2025-09-11T13:25:20.152Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_d70obb80_mfffdsmz.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5823242513732309,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8351088365382242,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8340161383724467,
+        "ts": "2025-09-11T12:31:01.850Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_88odotgh_mffdcln4.jsonl",
+        "line_from": 7,
+        "line_to": 7,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5805030877636016,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8340161383724467,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8334373881523578,
+        "ts": "2025-09-11T12:02:07.787Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 12,
+        "line_to": 12,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5795385040634536,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8334373881523578,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7874506051992596,
+        "ts": "2025-09-11T11:48:29.325Z",
+        "scope_id": null,
+        "text": "무엇을 도와드릴까요?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.579084341998766,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7874506051992596,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7354686414648959,
+        "ts": "2025-08-21T02:32:00Z",
+        "scope_id": "ST-1201",
+        "text": "BT-12 5계층 메모리 루프 v1 스키마·경로·API(store/search/recall) 초안 확정",
+        "path": "status/evidence/memory/tiers/ultra_short/20250821/GG-SESS-LOCAL.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.25,
+          "recency": 0.20911440244149326,
+          "refs": 0.4,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7354686414648959,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.6963302946544392,
+        "ts": "2025-09-11T16:45:04.149Z",
+        "scope_id": null,
+        "text": "이 스래드 요약 해봐 http://localhost:5173/ui-dev/thread/6885bcc0-dfb4-8326-ba92-cb0353ea6b06",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/6885bcc0-dfb4-8326-ba92-cb0353ea6b06.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.14285714285714285,
+          "recency": 0.5891219196621604,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.6963302946544392,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.6915600288821369,
+        "ts": "2025-09-11T12:51:00.058Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/docs/🪷 금강 소울 v1.7 — 존재 철학 + 언어 규칙 + 시계열 유지.md 읽어 볼래?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_cl7pxreb_mffedvu2.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.14285714285714285,
+          "recency": 0.5811714767083234,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.6915600288821369,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.5556827306585637,
+        "ts": "2025-09-11T18:31:21.691Z",
+        "scope_id": null,
+        "text": "“너 이 스레드 인식하니?”",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68458f96-6c48-8003-91c9-b962dcfa0c45.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.592804551097606,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.5556827306585637,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.5524569457062036,
+        "ts": "2025-09-11T15:55:44.213Z",
+        "scope_id": null,
+        "text": "너 나를 기억 할 수 있겠니?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/687ed6b9-85c0-8329-99a6-ec6c84b6de42.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5874282428436728,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.5524569457062036,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758032074": {
+    "query": "이 봐라",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.2871343159531572,
+        "ts": "2025-09-11T11:51:55.659Z",
+        "scope_id": null,
+        "text": "체크포인트 원장 파일은 프로젝트 내 특정 경로에 위치하며, append-only 규칙을 따릅니다. 이 규칙은 데이터가 파일에 추가될 수만 있고 기존 데이터를 수정하거나 삭제할 수 없다는 것을 의미합니다. 경로 인용은 다음과 같습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3).",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.5,
+          "recency": 0.578557193255262,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.2871343159531572,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.1637726557473935,
+        "ts": "2025-09-14T12:53:42.372Z",
+        "scope_id": null,
+        "text": "너 /home/duksan/바탕화면/gumgang_meeting/README.md 이 파일 읽을 수 있어?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.5,
+          "recency": 0.7729544262456558,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.1637726557473935,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0552794980215894,
+        "ts": "2025-09-11T18:31:21.691Z",
+        "scope_id": null,
+        "text": "“너 이 스레드 인식하니?”",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68458f96-6c48-8003-91c9-b962dcfa0c45.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.5,
+          "recency": 0.5921324967026491,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0552794980215894,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0537024801181594,
+        "ts": "2025-09-11T17:15:27.708Z",
+        "scope_id": null,
+        "text": "이 스레드 의미가 뭐야?”",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/688b8836-e404-832d-a65e-6edcbf94a572.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 0.5,
+          "recency": 0.5895041335302657,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0537024801181594,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0533897109687562,
+        "ts": "2025-09-11T17:00:19.689Z",
+        "scope_id": null,
+        "text": "이 스래드의 주된 내용을 요약해봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_ova3z1dd_mffmki10.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.5,
+          "recency": 0.5889828516145938,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0533897109687562,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758032075": {
+    "query": "ST-1206 ui guardrails rules/ai ST-1206.ui.rules.md",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.0642597674783352,
+        "ts": "2025-09-16T08:00:46.912Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.9642424696067491,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0642597674783352,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9998842899740583,
+        "ts": "2025-09-15T10:11:56.251Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.8569500070996212,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9998842899740583,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9852100219452062,
+        "ts": "2025-09-15T04:26:22.353Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.8324928937182009,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9852100219452062,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9824609870910954,
+        "ts": "2025-09-15T03:19:21.886Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_q3mamsyt_mfkjwqes.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.8279111689613496,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9824609870910954,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9520664070618083,
+        "ts": "2025-09-14T14:05:50.565Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 16,
+        "line_to": 16,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.7772535355792046,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9520664070618083,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "short",
+        "score": 0.9182768571556027,
+        "ts": "2025-08-21T02:32:30Z",
+        "scope_id": "ST-1201",
+        "text": "덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함.",
+        "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.39285714285714285,
+          "recency": 0.20903285716409972,
+          "refs": 0.6,
+          "tier_weight": 0.8
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9182768571556027,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8402868786040407,
+        "ts": "2025-09-11T17:57:25.686Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/688b8836-e404-832d-a65e-6edcbf94a572.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.590954321482925,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8402868786040407,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8391111994013996,
+        "ts": "2025-09-11T17:00:40.946Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_ova3z1dd_mffmki10.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.58899485614519,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8391111994013996,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8389681129582562,
+        "ts": "2025-09-11T16:53:45.024Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+        "line_from": 9,
+        "line_to": 9,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5887563787399511,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8389681129582562,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8389254924265481,
+        "ts": "2025-09-11T16:51:41.070Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/6846ebc3-fc3c-8003-972b-7f150ddfc903.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5886853445204374,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8389254924265481,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8388923257138758,
+        "ts": "2025-09-11T16:50:04.590Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68483071-55c8-8003-b33d-bcbd93e0c434.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5886300666659837,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8388923257138758,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8388533820297135,
+        "ts": "2025-09-11T16:48:11.282Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68483692-2588-8003-acd8-8b219f28d744.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5885651605257131,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8388533820297135,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8387741412409835,
+        "ts": "2025-09-11T16:44:20.651Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68785bd6-915c-8003-86a8-a5805edd3024.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5884330925444964,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8387741412409835,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8382615406615024,
+        "ts": "2025-09-11T16:19:26.218Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/6845871c-def4-8003-a227-7fcf6c137cad.jsonl",
+        "line_from": 10,
+        "line_to": 10,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5875787582453612,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8382615406615024,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8355341521411288,
+        "ts": "2025-09-11T14:05:41.159Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_dz4jv7iz_mffe0g73.jsonl",
+        "line_from": 13,
+        "line_to": 13,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5830331107114054,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8355341521411288,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8354021165134646,
+        "ts": "2025-09-11T13:59:09.481Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhy.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5828130513319648,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8354021165134646,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8347196175287752,
+        "ts": "2025-09-11T13:25:20.152Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_d70obb80_mfffdsmz.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5816755530241491,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8347196175287752,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8336293486993844,
+        "ts": "2025-09-11T12:31:01.850Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_88odotgh_mffdcln4.jsonl",
+        "line_from": 7,
+        "line_to": 7,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.579858438308498,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8336293486993844,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8330518821057913,
+        "ts": "2025-09-11T12:02:07.787Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 12,
+        "line_to": 12,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5788959939858428,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8330518821057913,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7870657027940975,
+        "ts": "2025-09-11T11:48:29.325Z",
+        "scope_id": null,
+        "text": "무엇을 도와드릴까요?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5784428379901625,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7870657027940975,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7354184138733908,
+        "ts": "2025-08-21T02:32:00Z",
+        "scope_id": "ST-1201",
+        "text": "BT-12 5계층 메모리 루프 v1 스키마·경로·API(store/search/recall) 초안 확정",
+        "path": "status/evidence/memory/tiers/ultra_short/20250821/GG-SESS-LOCAL.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.25,
+          "recency": 0.20903068978898456,
+          "refs": 0.4,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7354184138733908,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.6959319408167477,
+        "ts": "2025-09-11T16:45:04.149Z",
+        "scope_id": null,
+        "text": "이 스래드 요약 해봐 http://localhost:5173/ui-dev/thread/6885bcc0-dfb4-8326-ba92-cb0353ea6b06",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/6885bcc0-dfb4-8326-ba92-cb0353ea6b06.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.14285714285714285,
+          "recency": 0.5884579965993413,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.6959319408167477,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.6911723484958212,
+        "ts": "2025-09-11T12:51:00.058Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/docs/🪷 금강 소울 v1.7 — 존재 철학 + 언어 규칙 + 시계열 유지.md 읽어 볼래?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_cl7pxreb_mffedvu2.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.14285714285714285,
+          "recency": 0.5805253427311305,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.6911723484958212,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.5552793838357406,
+        "ts": "2025-09-11T18:31:21.691Z",
+        "scope_id": null,
+        "text": "“너 이 스레드 인식하니?”",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68458f96-6c48-8003-91c9-b962dcfa0c45.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.592132306392901,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.5552793838357406,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.5520608777615248,
+        "ts": "2025-09-11T15:55:44.213Z",
+        "scope_id": null,
+        "text": "너 나를 기억 할 수 있겠니?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/687ed6b9-85c0-8329-99a6-ec6c84b6de42.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5867681296025412,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.5520608777615248,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758036901": {
+    "query": "ping",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999999802926594,
+        "ts": "2025-09-16T15:35:01.600Z",
+        "scope_id": null,
+        "text": "ping",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999999671544324,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999999802926594,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.6934861293749588,
+        "ts": "2025-09-15T03:19:21.803Z",
+        "scope_id": null,
+        "text": "ping",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_q3mamsyt_mfkjwqes.jsonl",
+        "line_from": 7,
+        "line_to": 7,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.8224768822915982,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.6934861293749588,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.6494464018268016,
+        "ts": "2025-09-14T07:18:28.350Z",
+        "scope_id": null,
+        "text": "ping",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.7490773363780026,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.6494464018268016,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.343486596622592,
+        "ts": "2025-08-25T09:04:44.913486Z",
+        "scope_id": null,
+        "text": "ping",
+        "path": "status/evidence/memory/tiers/ultra_short/20250825/A1-meqvzudq.jsonl",
+        "line_from": 7,
+        "line_to": 7,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.23914432770432015,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.343486596622592,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.3422506828291407,
+        "ts": "2025-08-25T02:58:32.107668Z",
+        "scope_id": null,
+        "text": "ping",
+        "path": "status/evidence/memory/tiers/ultra_short/20250825/A1-meqil0q4.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.2370844713819013,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.3422506828291407,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758036908": {
+    "query": "야 너는 누구냐 ?",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999999764126993,
+        "ts": "2025-09-16T15:35:08.596Z",
+        "scope_id": null,
+        "text": "야 너는 누구냐 ?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999999606878323,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999999764126993,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.3601026935499794,
+        "ts": "2025-09-15T03:18:14.138Z",
+        "scope_id": null,
+        "text": "너는 누구냐?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_q3mamsyt_mfkjwqes.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.6666666666666666,
+          "recency": 0.8223933781388548,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.3601026935499794,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0298593202111561,
+        "ts": "2025-09-15T04:34:30.739Z",
+        "scope_id": null,
+        "text": "너는 누구니 ?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.3333333333333333,
+          "recency": 0.827543311463038,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0298593202111561,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0295397602815515,
+        "ts": "2025-09-15T04:26:40.075Z",
+        "scope_id": null,
+        "text": "너는 금강이 뭐라고 생각해?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.3333333333333333,
+          "recency": 0.8270107115803637,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0295397602815515,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9946655978347727,
+        "ts": "2025-09-14T13:05:17.202Z",
+        "scope_id": null,
+        "text": "야",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 13,
+        "line_to": 13,
+        "reasons": {
+          "kw": 0.3333333333333333,
+          "recency": 0.7688871075023992,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9946655978347727,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758036935": {
+    "query": "이봐",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.799999989107143,
+        "ts": "2025-09-16T15:35:35.053Z",
+        "scope_id": null,
+        "text": "이봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999999818452384,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.799999989107143,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.6934116545424587,
+        "ts": "2025-09-15T03:18:04.256Z",
+        "scope_id": null,
+        "text": "이봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_q3mamsyt_mfkjwqes.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.8223527575707646,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.6934116545424587,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.5487627597435476,
+        "ts": "2025-09-11T14:34:17.003Z",
+        "scope_id": null,
+        "text": "이봐 너는 누구야?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.581271266239246,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.5487627597435476,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7999737432324132,
+        "ts": "2025-09-16T15:35:08.596Z",
+        "scope_id": null,
+        "text": "야 너는 누구냐 ?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.9999562387206888,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7999737432324132,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7855374149536523,
+        "ts": "2025-09-11T11:52:24.884Z",
+        "scope_id": null,
+        "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 6,
+        "line_to": 6,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5758956915894204,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7855374149536523,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758036955": {
+    "query": "이보시게",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 0.7999793776721187,
+        "ts": "2025-09-16T15:35:35.053Z",
+        "scope_id": null,
+        "text": "이봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.9999656294535312,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7999793776721187,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7999531336005357,
+        "ts": "2025-09-16T15:35:08.596Z",
+        "scope_id": null,
+        "text": "야 너는 누구냐 ?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.9999218893342262,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7999531336005357,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7855305789508573,
+        "ts": "2025-09-11T11:52:24.884Z",
+        "scope_id": null,
+        "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 6,
+        "line_to": 6,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5758842982514288,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7855305789508573,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7854530949129688,
+        "ts": "2025-09-11T11:48:29.325Z",
+        "scope_id": null,
+        "text": "무엇을 도와드릴까요?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5757551581882815,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7854530949129688,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7740782693293426,
+        "ts": "2025-09-16T08:00:46.912Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.9567971155489046,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7740782693293426,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7106385924674934,
+        "ts": "2025-09-15T10:11:56.251Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.8510643207791556,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7106385924674934,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.6961743885254066,
+        "ts": "2025-09-15T04:26:40.075Z",
+        "scope_id": null,
+        "text": "너는 금강이 뭐라고 생각해?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.826957314209011,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.6961743885254066,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.6934497999642077,
+        "ts": "2025-09-15T03:19:21.886Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_q3mamsyt_mfkjwqes.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.8224163332736795,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.6934497999642077,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.6634451530697829,
+        "ts": "2025-09-14T14:05:50.565Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 16,
+        "line_to": 16,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.7724085884496382,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.6634451530697829,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.5535897303781593,
+        "ts": "2025-09-11T18:31:21.691Z",
+        "scope_id": null,
+        "text": "“너 이 스레드 인식하니?”",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68458f96-6c48-8003-91c9-b962dcfa0c45.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5893162172969322,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.5535897303781593,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.5528896395976848,
+        "ts": "2025-09-11T17:57:25.686Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/688b8836-e404-832d-a65e-6edcbf94a572.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5881493993294745,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.5528896395976848,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.5517250761341521,
+        "ts": "2025-09-11T17:00:40.946Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_ova3z1dd_mffmki10.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5862084602235869,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.5517250761341521,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758036956": {
+    "query": "ST-1206 ui guardrails rules/ai ST-1206.ui.rules.md",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.0856602888737577,
+        "ts": "2025-09-16T15:35:01.693Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.9999100052657864,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0856602888737577,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.059792295578746,
+        "ts": "2025-09-16T08:00:46.912Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.9567966831074339,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.059792295578746,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9963526728937333,
+        "ts": "2025-09-15T10:11:56.251Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.8510639786324126,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9963526728937333,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9818764575641918,
+        "ts": "2025-09-15T04:26:22.353Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.8269369530831768,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9818764575641918,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9791638939783875,
+        "ts": "2025-09-15T03:19:21.886Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_q3mamsyt_mfkjwqes.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.8224160137735033,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9791638939783875,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.949159269688161,
+        "ts": "2025-09-14T14:05:50.565Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 16,
+        "line_to": 16,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.7724083066231255,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.949159269688161,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "short",
+        "score": 0.9180656284286765,
+        "ts": "2025-08-21T02:32:30Z",
+        "scope_id": "ST-1201",
+        "text": "덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함.",
+        "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.39285714285714285,
+          "recency": 0.20868080928588925,
+          "refs": 0.6,
+          "tier_weight": 0.8
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9180656284286765,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8386038272694962,
+        "ts": "2025-09-11T17:57:25.686Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/688b8836-e404-832d-a65e-6edcbf94a572.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.588149235925351,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8386038272694962,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8374392644519915,
+        "ts": "2025-09-11T17:00:40.946Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_ova3z1dd_mffmki10.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5862082978961765,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8374392644519915,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8372975284300639,
+        "ts": "2025-09-11T16:53:45.024Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+        "line_from": 9,
+        "line_to": 9,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5859720711929636,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8372975284300639,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8372553100374445,
+        "ts": "2025-09-11T16:51:41.070Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/6846ebc3-fc3c-8003-972b-7f150ddfc903.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5859017072052648,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8372553100374445,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8372224562305575,
+        "ts": "2025-09-11T16:50:04.590Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68483071-55c8-8003-b33d-bcbd93e0c434.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5858469508604531,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8372224562305575,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8371838799168081,
+        "ts": "2025-09-11T16:48:11.282Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68483692-2588-8003-acd8-8b219f28d744.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5857826570042042,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8371838799168081,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.837105386512037,
+        "ts": "2025-09-11T16:44:20.651Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68785bd6-915c-8003-86a8-a5805edd3024.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.585651834662919,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.837105386512037,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8365976166599878,
+        "ts": "2025-09-11T16:19:26.218Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/6845871c-def4-8003-a227-7fcf6c137cad.jsonl",
+        "line_from": 10,
+        "line_to": 10,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5848055515761703,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8365976166599878,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.833895813749661,
+        "ts": "2025-09-11T14:05:41.159Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_dz4jv7iz_mffe0g73.jsonl",
+        "line_from": 13,
+        "line_to": 13,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5803025467256256,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.833895813749661,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8337650117400073,
+        "ts": "2025-09-11T13:59:09.481Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhy.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5800845433762027,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8337650117400073,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8330888820174134,
+        "ts": "2025-09-11T13:25:20.152Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_d70obb80_mfffdsmz.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5789576605052128,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8330888820174134,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8320087622314432,
+        "ts": "2025-09-11T12:31:01.850Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_88odotgh_mffdcln4.jsonl",
+        "line_from": 7,
+        "line_to": 7,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5771574608619291,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8320087622314432,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8314366583579935,
+        "ts": "2025-09-11T12:02:07.787Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 12,
+        "line_to": 12,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.5762039544061799,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8314366583579935,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.79997909426614,
+        "ts": "2025-09-16T15:35:35.053Z",
+        "scope_id": null,
+        "text": "이봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.9999651571102333,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.79997909426614,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7854530009591094,
+        "ts": "2025-09-11T11:48:29.325Z",
+        "scope_id": null,
+        "text": "무엇을 도와드릴까요?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5757550015985159,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7854530009591094,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7352071895230397,
+        "ts": "2025-08-21T02:32:00Z",
+        "scope_id": "ST-1201",
+        "text": "BT-12 5계층 메모리 루프 v1 스키마·경로·API(store/search/recall) 초안 확정",
+        "path": "status/evidence/memory/tiers/ultra_short/20250821/GG-SESS-LOCAL.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.25,
+          "recency": 0.20867864920506599,
+          "refs": 0.4,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7352071895230397,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.6942630451663738,
+        "ts": "2025-09-11T16:45:04.149Z",
+        "scope_id": null,
+        "text": "이 스래드 요약 해봐 http://localhost:5173/ui-dev/thread/6885bcc0-dfb4-8326-ba92-cb0353ea6b06",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/6885bcc0-dfb4-8326-ba92-cb0353ea6b06.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.14285714285714285,
+          "recency": 0.5856765038487182,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.6942630451663738,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.689548040861417,
+        "ts": "2025-09-11T12:51:00.058Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/docs/🪷 금강 소울 v1.7 — 존재 철학 + 언어 규칙 + 시계열 유지.md 읽어 볼래?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_cl7pxreb_mffedvu2.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.14285714285714285,
+          "recency": 0.5778181633404568,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.689548040861417,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758042957": {
+    "query": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999999726736122,
+        "ts": "2025-09-16T17:15:57.797Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999999544560206,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999999726736122,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.357426111234888,
+        "ts": "2025-09-14T12:54:09.373Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/README.md 첫 10줄 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.7,
+          "recency": 0.7623768520581469,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.357426111234888,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.1452530320320393,
+        "ts": "2025-09-11T13:18:22.609Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/4c292aca-8b63-407d-9495-49681eb5bb86.png 이 파일 볼 수 있니?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_d70obb80_mfffdsmz.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.6,
+          "recency": 0.5754217200533991,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.1452530320320393,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.1447143249776124,
+        "ts": "2025-09-11T12:51:00.058Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/docs/🪷 금강 소울 v1.7 — 존재 철학 + 언어 규칙 + 시계열 유지.md 읽어 볼래?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_cl7pxreb_mffedvu2.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.6,
+          "recency": 0.5745238749626875,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.1447143249776124,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8835575778332625,
+        "ts": "2025-09-11T11:51:55.659Z",
+        "scope_id": null,
+        "text": "체크포인트 원장 파일은 프로젝트 내 특정 경로에 위치하며, append-only 규칙을 따릅니다. 이 규칙은 데이터가 파일에 추가될 수만 있고 기존 데이터를 수정하거나 삭제할 수 없다는 것을 의미합니다. 경로 인용은 다음과 같습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3).",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.1,
+          "recency": 0.5725959630554374,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8835575778332625,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758042973": {
+    "query": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999999866388892,
+        "ts": "2025-09-16T17:16:13.101Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999999777314819,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999999866388892,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.7999848044840554,
+        "ts": "2025-09-16T17:15:57.797Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999746741400927,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999848044840554,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.4907506284826142,
+        "ts": "2025-09-14T12:54:09.373Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/README.md 첫 10줄 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.8333333333333334,
+          "recency": 0.7623621585821349,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.4907506284826142,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.3780426515757738,
+        "ts": "2025-09-11T12:51:00.058Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/docs/🪷 금강 소울 v1.7 — 존재 철학 + 언어 규칙 + 시계열 유지.md 읽어 볼래?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_cl7pxreb_mffedvu2.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.8333333333333334,
+          "recency": 0.5745155304040674,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.3780426515757738,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.2119146763027318,
+        "ts": "2025-09-11T13:18:22.609Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/4c292aca-8b63-407d-9495-49681eb5bb86.png 이 파일 볼 수 있니?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_d70obb80_mfffdsmz.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.6666666666666666,
+          "recency": 0.575413349393442,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.2119146763027318,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758042982": {
+    "query": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.799991016358718,
+        "ts": "2025-09-16T17:16:13.101Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.99998502726453,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.799991016358718,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.7999758346578358,
+        "ts": "2025-09-16T17:15:57.797Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999597244297266,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999758346578358,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.4907454149723594,
+        "ts": "2025-09-14T12:54:09.373Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/README.md 첫 10줄 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.8333333333333334,
+          "recency": 0.7623534693983769,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.4907454149723594,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.3780396907535228,
+        "ts": "2025-09-11T12:51:00.058Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/docs/🪷 금강 소울 v1.7 — 존재 철학 + 언어 규칙 + 시계열 유지.md 읽어 볼래?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_cl7pxreb_mffedvu2.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.8333333333333334,
+          "recency": 0.5745105957003157,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.3780396907535228,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.211911706219293,
+        "ts": "2025-09-11T13:18:22.609Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/4c292aca-8b63-407d-9495-49681eb5bb86.png 이 파일 볼 수 있니?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_d70obb80_mfffdsmz.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.6666666666666666,
+          "recency": 0.5754083992543774,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.211911706219293,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758043016": {
+    "query": "/home/duksan/바탕화면/gumgang_meeting/AGENTS.md 이 파일 읽어봐 ㅏ",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.5777196183622821,
+        "ts": "2025-09-16T17:15:57.797Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.7777777777777778,
+          "recency": 0.9999030676408407,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.5777196183622821,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.4351545346895007,
+        "ts": "2025-09-14T12:53:42.372Z",
+        "scope_id": null,
+        "text": "너 /home/duksan/바탕화면/gumgang_meeting/README.md 이 파일 읽을 수 있어?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.7777777777777778,
+          "recency": 0.7622945948528715,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.4351545346895007,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.3555125761206068,
+        "ts": "2025-09-16T17:16:13.101Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.5555555555555556,
+          "recency": 0.9999283676084189,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.3555125761206068,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.2119004497800405,
+        "ts": "2025-09-11T13:18:22.609Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/4c292aca-8b63-407d-9495-49681eb5bb86.png 이 파일 볼 수 있니?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_d70obb80_mfffdsmz.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.6666666666666666,
+          "recency": 0.5753896385222901,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.2119004497800405,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.2111885699017304,
+        "ts": "2025-09-11T12:42:10.710Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/migrated_chat_store.json 이 파일 읽을 수 있니 ?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_cl7pxreb_mffedvu2.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.6666666666666666,
+          "recency": 0.5742031720584396,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.2111885699017304,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758043021": {
+    "query": "야야야야",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 0.7999520214231894,
+        "ts": "2025-09-16T17:16:13.101Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.9999200357053157,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7999520214231894,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7999368416956125,
+        "ts": "2025-09-16T17:15:57.797Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.9998947361593543,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7999368416956125,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7835463833493048,
+        "ts": "2025-09-11T11:52:24.884Z",
+        "scope_id": null,
+        "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 6,
+        "line_to": 6,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5725773055821748,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7835463833493048,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7834697865556881,
+        "ts": "2025-09-11T11:48:29.325Z",
+        "scope_id": null,
+        "text": "무엇을 도와드릴까요?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.5724496442594801,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7834697865556881,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7686218558882627,
+        "ts": "2025-09-16T08:00:46.912Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.9477030931471047,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7686218558882627,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758043155": {
+    "query": "루트 폴더에 AGENTS_expand.md 이 파일 읽어봐 못 읽으면 네가 허용된 경로를 말해",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999999796041675,
+        "ts": "2025-09-16T17:19:15.395Z",
+        "scope_id": null,
+        "text": "루트 폴더에 AGENTS_expand.md 이 파일 읽어봐 못 읽으면 네가 허용된 경로를 말해",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999999660069456,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999999796041675,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9536653407334934,
+        "ts": "2025-09-16T17:16:13.101Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.15384615384615385,
+          "recency": 0.9996986448122325,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9536653407334934,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8880658776391346,
+        "ts": "2025-09-14T12:53:42.372Z",
+        "scope_id": null,
+        "text": "너 /home/duksan/바탕화면/gumgang_meeting/README.md 이 파일 읽을 수 있어?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.23076923076923078,
+          "recency": 0.7621610781165064,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8880658776391346,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8604163975284662,
+        "ts": "2025-09-11T11:51:55.659Z",
+        "scope_id": null,
+        "text": "체크포인트 원장 파일은 프로젝트 내 특정 경로에 위치하며, append-only 규칙을 따릅니다. 이 규칙은 데이터가 파일에 추가될 수만 있고 기존 데이터를 수정하거나 삭제할 수 없다는 것을 의미합니다. 경로 인용은 다음과 같습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3).",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.07692307692307693,
+          "recency": 0.5724888676756488,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8604163975284662,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.845425608186094,
+        "ts": "2025-09-16T08:00:46.912Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.07692307692307693,
+          "recency": 0.9475042187716951,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.845425608186094,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758043173": {
+    "query": "루트 폴더에 AGENTS_expand.md 이 파일 읽어봐 못 읽으면 네가 허용된 경로를 말해",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.799981965351621,
+        "ts": "2025-09-16T17:19:15.395Z",
+        "scope_id": null,
+        "text": "루트 폴더에 AGENTS_expand.md 이 파일 읽어봐 못 읽으면 네가 허용된 경로를 말해",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999699422527015,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.799981965351621,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9536473373353009,
+        "ts": "2025-09-16T17:16:13.101Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.15384615384615385,
+          "recency": 0.9996686391485785,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9536473373353009,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8880554132733824,
+        "ts": "2025-09-14T12:53:42.372Z",
+        "scope_id": null,
+        "text": "너 /home/duksan/바탕화면/gumgang_meeting/README.md 이 파일 읽을 수 있어?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.23076923076923078,
+          "recency": 0.7621436375069195,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8880554132733824,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8604104933980379,
+        "ts": "2025-09-11T11:51:55.659Z",
+        "scope_id": null,
+        "text": "체크포인트 원장 파일은 프로젝트 내 특정 경로에 위치하며, append-only 규칙을 따릅니다. 이 규칙은 데이터가 파일에 추가될 수만 있고 기존 데이터를 수정하거나 삭제할 수 없다는 것을 의미합니다. 경로 인용은 다음과 같습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3).",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.07692307692307693,
+          "recency": 0.5724790274582683,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8604104933980379,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8454094356076753,
+        "ts": "2025-09-16T08:00:46.912Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.07692307692307693,
+          "recency": 0.9474772644743309,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8454094356076753,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758048324": {
+    "query": "/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md 이 파일 읽어봐",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999999886269842,
+        "ts": "2025-09-16T18:45:24.410Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md 이 파일 읽어봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999999810449739,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999999886269842,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.4310864308441955,
+        "ts": "2025-09-16T17:15:57.797Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.6363636363636364,
+          "recency": 0.9912046574675987,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.4310864308441955,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.2907007702717372,
+        "ts": "2025-09-14T12:53:42.372Z",
+        "scope_id": null,
+        "text": "너 /home/duksan/바탕화면/gumgang_meeting/README.md 이 파일 읽을 수 있어?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.6363636363636364,
+          "recency": 0.7572285565135015,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.2907007702717372,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.2492831660430577,
+        "ts": "2025-09-16T17:16:13.101Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.45454545454545453,
+          "recency": 0.9912295191626719,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.2492831660430577,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0889537005445165,
+        "ts": "2025-09-11T13:18:22.609Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/4c292aca-8b63-407d-9495-49681eb5bb86.png 이 파일 볼 수 있니?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_d70obb80_mfffdsmz.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.5454545454545454,
+          "recency": 0.5724985918166186,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0889537005445165,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758048369": {
+    "query": "gumgang_meeting/status/catalog/SSOT_SITEMAP.md 읽어 봐",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999999825793656,
+        "ts": "2025-09-16T18:46:09.208Z",
+        "scope_id": null,
+        "text": "gumgang_meeting/status/catalog/SSOT_SITEMAP.md 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999999709656093,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999999825793656,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.366107699048875,
+        "ts": "2025-09-16T17:15:57.797Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.5714285714285714,
+          "recency": 0.9911318793671726,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.366107699048875,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.2257555783721485,
+        "ts": "2025-09-14T12:54:09.373Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/README.md 첫 10줄 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.5714285714285714,
+          "recency": 0.7572116782392951,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.2257555783721485,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0804083281611554,
+        "ts": "2025-09-16T17:16:13.101Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.9911567374114494,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0804083281611554,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0496108163451014,
+        "ts": "2025-09-16T08:00:46.912Z",
+        "scope_id": null,
+        "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_dcqftnjv_mfkmexp8.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.9398275510513597,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0496108163451014,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758048419": {
+    "query": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Dataview 플러그인 설치 시 표가 자동 생성됩니다. 없더라도 링크는 수동으로 사용할 수 있습니다.\\n\\n## 0) 에이전트 허브 링크\\n- [[AGENTS.md|AGENTS Core]] · [[AGENTS_expand.md|AGENTS 확장]] · [[AGENTS_log.md|문서 관리 게이트]]\\n- [[status/reports/EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md|EXEC_PLAN]] · [[status/reports/GG_TIME_SPEC_V1.md|GG_TIME_SPEC_V1]]\\n\\n## 1) 핵심 문서(고정 링크)\\n- [[status/reports/EXEC_PLAN_MIGRATION_AND_CHAT_RESTORE.md|EXEC_PLAN]]\\n- [[status/reports/GG_DB_SPEC_V1.md|DB Spec]] · [[status/reports/GG_ORCH_SPEC_V1.md|Orchestrator]] · [[status/reports/GG_MEMORY_5_LAYER_SPEC.md|Memory‑5]] · [[status/reports/GG_SSV_SPEC_V1.md|SSV]]\\n- [[status/reports/GG_CONTENT_PIPELINE_V1.md|Content Pipeline]] · [[status/reports/GG_SCHEDULER_SPEC_V1.md|Scheduler]] · [[status/reports/GG_CONTEXT_SENTRY_SPEC_V1.md|Context Sentry]]\\n- [[status/reports/GG_CONTEXT_REGISTRY_SPEC_V1.md|Context Registry]] · [[status/reports/GG_API_CONTEXT_SUMMARY.md|Context API]] · [[status/reports/GG_DYNAMIC_BLOCKS_SPEC.md|Dynamic Blocks]] · [[status/reports/GG_TIME_SPEC_V1.md|Time Spec]]\\n- [[status/reports/GG_UI_RUN_CARD_SPEC.md|Run Card UI]] · [[status/reports/GG_DAILY_OPS_V1.md|Daily Ops]]\\n\\n---\\n\\n## 2) 태그별 인덱스(있으면 표시)\\n\\n```dataview\\nTABLE file.mtime as Updated\\nFROM \\\"status/reports\\\"\\nWHERE contains(file.tags, \\\"SSOT\\\") OR contains(file.tags, \\\"ExecPlan\\\")\\nSORT file.mtime DESC\\n```\\n\\n```dataview\\nTABLE file.mtime as Updated, file.tags\\nFROM \\\"status/reports\\\"\\nWHERE contains(file.tags, \\\"DB\\\") OR contains(file.tags, \\\"Orchestrator\\\") OR contains(file.tags, \\\"SSV\\\")\\nSORT file.mtime DESC\\n```\\n\\n```dataview\\nTABLE file.link AS Doc, BT, ST, RT\\nFROM \\\"status\\\"\\nWHERE (BT OR ST OR RT) AND document_type != \\\"redirect_note\\\"\\nSORT file.mtime DESC\\n```\\n\\n---\\n\\n## 3) 경로별 인덱스(태그가 없어도 동작)\\n\\n```dataview\\nTABLE file.mtime as Updated\\nFROM \\\"status/reports\\\"\\nWHERE file.name != \\\"SSOT_SITEMAP\\\"\\nSORT file.mtime DESC\\n```\\n\\n```dataview\\nTABLE file.mtime as Updated\\nFROM \\\"status/design/schemas\\\"\\nSORT file.mtime DESC\\n```\\n\\n```dataview\\nTABLE file.mtime as Updated\\nFROM \\\"status/catalog\\\"\\nSORT file.mtime DESC\\n```\\n\\n---\\n\\n## 4) 최근 변경 Top‑20(전체)\\n```dataview\\nTABLE file.path as File, file.mtime as Updated\\nFROM \\\"status\\\"\\nSORT file.mtime DESC\\nLIMIT 20\\n```\\n\\n---\\n\\n## 5) 시간 규약 체크용 쿼리\\n```dataview\\nTABLE file.mtime AS Updated, DOCS_TIME_SPEC\\nFROM \\\"status\\\"\\nWHERE DOCS_TIME_SPEC\\nSORT file.mtime DESC\\n```\\n> `DOCS_TIME_SPEC` 필드는 문서 YAML에 `DOCS_TIME_SPEC: GG_TIME_SPEC_V1`처럼 기록한다.\\n\"\n} << 이 거 안 읽혀 ?",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999999720535726,
+        "ts": "2025-09-16T18:46:59.122Z",
+        "scope_id": null,
+        "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999999534226212,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999999720535726,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8392164650310747,
+        "ts": "2025-09-16T17:15:57.797Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md 이 파일 읽어 봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 4,
+        "line_to": 4,
+        "reasons": {
+          "kw": 0.044585987261146494,
+          "recency": 0.9910507962832137,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8392164650310747,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8328619506657962,
+        "ts": "2025-09-16T17:16:13.101Z",
+        "scope_id": null,
+        "text": "/home/duksan/바탕화면/gumgang_meeting/AGENTS_expand.md",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_pan3h7k9_mfm9ohq0.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.03821656050955414,
+          "recency": 0.9910756502604036,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8328619506657962,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.8200163116790846,
+        "ts": "2025-09-11T11:52:24.884Z",
+        "scope_id": null,
+        "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 6,
+        "line_to": 6,
+        "reasons": {
+          "kw": 0.03821656050955414,
+          "recency": 0.5696662519492177,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.8200163116790846,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "short",
+        "score": 0.7874540638145696,
+        "ts": "2025-08-21T02:32:30Z",
+        "scope_id": "ST-1201",
+        "text": "덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함.",
+        "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.2627388535031847,
+          "recency": 0.2078586838523081,
+          "refs": 0.6,
+          "tier_weight": 0.8
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7874540638145696,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758049398": {
+    "query": "이 스레드 요약 해보 ㅏ",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999972256447727,
+        "ts": "2025-09-16T19:03:15.382Z",
+        "scope_id": null,
+        "text": "이 스레드 요약 해보 ㅏ",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/gg_mig_20250911_06ckhx.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999953760746215,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999972256447727,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0493542312507007,
+        "ts": "2025-09-11T18:31:21.691Z",
+        "scope_id": null,
+        "text": "“너 이 스레드 인식하니?”",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68458f96-6c48-8003-91c9-b962dcfa0c45.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.5,
+          "recency": 0.5822570520845013,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0493542312507007,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0490302835143677,
+        "ts": "2025-09-16T18:46:59.122Z",
+        "scope_id": null,
+        "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 0.25,
+          "recency": 0.9983838058572794,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0490302835143677,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0478292640681874,
+        "ts": "2025-09-11T17:15:27.708Z",
+        "scope_id": null,
+        "text": "이 스레드 의미가 뭐야?”",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/688b8836-e404-832d-a65e-6edcbf94a572.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 0.5,
+          "recency": 0.579715440113646,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0478292640681874,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.0473940871309337,
+        "ts": "2025-09-11T16:53:40.814Z",
+        "scope_id": null,
+        "text": "ui-dev/thread/gg_mig_20250911_06ckhx <<< 이 스래드 요약 해봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.5,
+          "recency": 0.578990145218223,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.0473940871309337,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758052053": {
+    "query": "안녕하세요 ? 스레드 제목 테스트 입니다.",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999999540337337,
+        "ts": "2025-09-16T19:47:33.707Z",
+        "scope_id": null,
+        "text": "안녕하세요 ? 스레드 제목 테스트 입니다.",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_m0sk3dcn_mfmyshgm.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999999233895561,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999999540337337,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9973742681380828,
+        "ts": "2025-09-16T19:03:15.382Z",
+        "scope_id": null,
+        "text": "이 스레드 요약 해보 ㅏ",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/gg_mig_20250911_06ckhx.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.2,
+          "recency": 0.995623780230138,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9973742681380828,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9806336044370512,
+        "ts": "2025-09-11T11:52:24.884Z",
+        "scope_id": null,
+        "text": "\"무의미_토큰_테스트_X91z0p\"는 프로젝트 내 특정 상태 또는 테스트 목적으로 사용된 토큰으로 보입니다. 관련 내용은 다음 경로에서 확인할 수 있습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L5-5).",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+        "line_from": 6,
+        "line_to": 6,
+        "reasons": {
+          "kw": 0.2,
+          "recency": 0.567722674061752,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9806336044370512,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9805550539723356,
+        "ts": "2025-09-11T11:48:19.166Z",
+        "scope_id": null,
+        "text": "안녕하세요! 어떻게 도와드릴까요?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+        "line_from": 2,
+        "line_to": 2,
+        "reasons": {
+          "kw": 0.2,
+          "recency": 0.5675917566205592,
+          "refs": 0.6,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9805550539723356,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.7964157549749944,
+        "ts": "2025-09-16T18:46:59.122Z",
+        "scope_id": null,
+        "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 0.0,
+          "recency": 0.9940262582916575,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.7964157549749944,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758052889": {
+    "query": "이 스래드 요약해봐",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999998761637162,
+        "ts": "2025-09-16T20:01:29.797Z",
+        "scope_id": null,
+        "text": "이 스래드 요약해봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/68a47a66-b5a0-832b-8d47-1243449d0fae.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999997936061935,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999998761637162,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.546156433666914,
+        "ts": "2025-09-11T16:49:37.758Z",
+        "scope_id": null,
+        "text": "http://localhost:5173/ui-dev/thread/68483071-55c8-8003-b33d-bcbd93e0c434 이 스래드 요약해봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68483071-55c8-8003-b33d-bcbd93e0c434.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.5769273894448567,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.546156433666914,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.2133301811931474,
+        "ts": "2025-09-11T17:15:11.173Z",
+        "scope_id": null,
+        "text": "이 스래드 요약 해줘",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/688b8836-e404-832d-a65e-6edcbf94a572.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.6666666666666666,
+          "recency": 0.5777725242108012,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.2133301811931474,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.2130351981279606,
+        "ts": "2025-09-11T17:00:19.689Z",
+        "scope_id": null,
+        "text": "이 스래드의 주된 내용을 요약해봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_ova3z1dd_mffmki10.jsonl",
+        "line_from": 5,
+        "line_to": 5,
+        "reasons": {
+          "kw": 0.6666666666666666,
+          "recency": 0.5772808857688234,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.2130351981279606,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 1.2129033769083912,
+        "ts": "2025-09-11T16:53:40.814Z",
+        "scope_id": null,
+        "text": "ui-dev/thread/gg_mig_20250911_06ckhx <<< 이 스래드 요약 해봐",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+        "line_from": 8,
+        "line_to": 8,
+        "reasons": {
+          "kw": 0.6666666666666666,
+          "recency": 0.577061183736208,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.2129033769083912,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  },
+  "1758052940": {
+    "query": "지금의 채팅창 내용 요약 할 수 있겠니?",
+    "items": [
+      {
+        "tier": "ultra_short",
+        "score": 1.7999999028174758,
+        "ts": "2025-09-16T20:02:20.611Z",
+        "scope_id": null,
+        "text": "지금의 채팅창 내용 요약 할 수 있겠니?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250916/68a47a66-b5a0-832b-8d47-1243449d0fae.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 1.0,
+          "recency": 0.9999998380291266,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 1.7999999028174758,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9851193994018701,
+        "ts": "2025-09-15T10:11:56.191Z",
+        "scope_id": null,
+        "text": "너 그냥 그 파일 읽은거 잖아 왜 tail 명령어 썻다고 이야기 해? 너 터미널 호출 할 수 있어?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250915/thread_67va3uqm_mfk3u4xc.jsonl",
+        "line_from": 7,
+        "line_to": 7,
+        "reasons": {
+          "kw": 0.2857142857142857,
+          "recency": 0.832341856145974,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9851193994018701,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9746060962425023,
+        "ts": "2025-09-11T16:44:19.655Z",
+        "scope_id": null,
+        "text": "이 스래드 요약 할 수 있니 ?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/68785bd6-915c-8003-86a8-a5805edd3024.jsonl",
+        "line_from": 1,
+        "line_to": 1,
+        "reasons": {
+          "kw": 0.42857142857142855,
+          "recency": 0.5767244461184563,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9746060962425023,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9736467510873406,
+        "ts": "2025-09-11T15:55:44.213Z",
+        "scope_id": null,
+        "text": "너 나를 기억 할 수 있겠니?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/687ed6b9-85c0-8329-99a6-ec6c84b6de42.jsonl",
+        "line_from": 3,
+        "line_to": 3,
+        "reasons": {
+          "kw": 0.42857142857142855,
+          "recency": 0.5751255375265201,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9736467510873406,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      },
+      {
+        "tier": "ultra_short",
+        "score": 0.9728644708825527,
+        "ts": "2025-09-11T15:15:54.844Z",
+        "scope_id": null,
+        "text": "이 스래드 요약 할 수 있나?",
+        "path": "status/evidence/memory/tiers/ultra_short/20250911/gg_mig_20250911_06ckhx.jsonl",
+        "line_from": 7,
+        "line_to": 7,
+        "reasons": {
+          "kw": 0.42857142857142855,
+          "recency": 0.5738217371852068,
+          "refs": 0.0,
+          "tier_weight": 1.0
+        },
+        "rerank": {
+          "applied": false,
+          "rubric": null,
+          "new_score": 0.9728644708825527,
+          "bonus_applied": false,
+          "cap_applied": false,
+          "cap_limit": 0.0
+        }
+      }
+    ],
+    "no_hit": false
+  }
+}

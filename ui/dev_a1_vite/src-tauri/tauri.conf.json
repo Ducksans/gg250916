@@ -1,25 +1,33 @@
 {
-  "name": "@gumgang/ui-a1-vite",
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Gumgang UI",
+  "identifier": "com.gumgang.ui",
   "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vite --port 5173",
-    "build": "vite build",
-    "preview": "vite preview --port 5173",
-    "tauri": "tauri",
-    "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build",
-    "guard:ui": "node ../../scripts/check_ui_guardrails.cjs"
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "frontendDist": "../dist"
   },
-  "dependencies": {
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "react-router-dom": "^6.30.1"
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "Gumgang UI",
+        "width": 1400,
+        "height": 900,
+        "minWidth": 960,
+        "minHeight": 640,
+        "resizable": true,
+        "url": "http://localhost:5173/ui-dev/ide"
+      }
+    ]
+    ,
+    "security": {
+      "csp": null
+    }
   },
-  "devDependencies": {
-    "@tauri-apps/cli": "^2.4.1",
-    "@vitejs/plugin-react": "^4.3.1",
-    "vite": "^5.4.0"
+  "bundle": {
+    "active": false
   }
 }

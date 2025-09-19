@@ -1,0 +1,154 @@
+{
+  "query": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+  "tiers": [
+    "long",
+    "medium",
+    "short",
+    "ultra_long",
+    "ultra_short"
+  ],
+  "weights": {
+    "kw": 1.0,
+    "recency": 0.6,
+    "refs": 0.4,
+    "tier": 0.2,
+    "tier_map": {
+      "ultra_short": 1.0,
+      "short": 0.8,
+      "medium": 0.6,
+      "long": 0.4,
+      "ultra_long": 0.2
+    }
+  },
+  "params": {
+    "k": 5,
+    "half_life_days": 7.0,
+    "score_min": 0.25,
+    "quorum_min": 1,
+    "quorum_target": 3
+  },
+  "items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.799999977034723,
+      "ts": "2025-09-11T13:09:37.588Z",
+      "scope_id": null,
+      "text": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_d70obb80_mfffdsmz.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999999617245384,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.799999977034723,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.799317511181532,
+      "ts": "2025-09-11T12:58:08.879Z",
+      "scope_id": null,
+      "text": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_3njvqqb0_mffevzef.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9988625186358868,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.799317511181532,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.7981609536051673,
+      "ts": "2025-09-11T12:38:38.153Z",
+      "scope_id": null,
+      "text": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_k9lx4dm1_mffe9xtw.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.996934922675279,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7981609536051673,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.7977304141101085,
+      "ts": "2025-09-11T12:31:21.182Z",
+      "scope_id": null,
+      "text": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_dz4jv7iz_mffe0g73.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.996217356850181,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7977304141101085,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.797701444470099,
+      "ts": "2025-09-11T12:30:51.757Z",
+      "scope_id": null,
+      "text": "체크포인트 원장 파일 경로와 append-only 규칙을 요약해줘. 경로 인용은 반드시 포함해.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_88odotgh_mffdcln4.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9961690741168318,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.797701444470099,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "no_hit": false,
+  "ts": "2025-09-11T13:09:37.626Z"
+}

@@ -1,0 +1,42 @@
+{
+  "query": "증거 1건:\n1. [스레드 ID: thread_5ua1oh4s_mfovvsui]\n[제목: 안녕하세요? 오늘은 어떤 기분 입니까?]\n[메시지 수: 2]\n\nassistant: 안녕하세요! 금강 A1 개발 UI입니다.\nuser: 안녕하세요? 오늘은 어떤 기분 입니까? (gumgang_meeting/conversations/threads/thread_5ua1oh4s_mfovvsui.jsonl#L1-1)\n\n근거 인용: gumgang_meeting/conversations/threads/thread_5ua1oh4s_mfovvsui.jsonl#L1-1",
+  "params": {
+    "k": 12,
+    "half_life_days": null,
+    "fresh_weight": 0.4765543785463659,
+    "self_rag": 1,
+    "strict": 1,
+    "need_fresh": 0,
+    "file_enabled": true
+  },
+  "source_mix": {
+    "memory": 12,
+    "file": 0
+  },
+  "pre_count": 24,
+  "post_count": 12,
+  "grounded": true,
+  "evidence_path_from_memory_search": "status/evidence/memory/search_runs/20250918/run_1758168109655.json",
+  "rerank_policy": {
+    "apply_if": "recency<0.2 AND refs<0.2",
+    "blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "bonus": {
+      "refs_ge_1_add": 0.05,
+      "normalized_threshold": 0.2
+    },
+    "cap": {
+      "kw_ge": 0.9,
+      "max_uplift": 0.02
+    }
+  },
+  "rerank_applied": 0,
+  "ts": "2025-09-18T04:01:49.667Z"
+}

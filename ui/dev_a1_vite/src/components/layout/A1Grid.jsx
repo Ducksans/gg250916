@@ -22,6 +22,7 @@
  * ---------------------------------------------------------------------------
  */
 import React, { useEffect, useRef } from "react";
+import useViewportUnits from "@/hooks/useViewportUnits";
 
 /**
  * A1Grid — owns the 3‑row grid shell and ST‑1206 invariants
@@ -67,6 +68,9 @@ export default function A1Grid({
   sectionId = "a1",
 }) {
   const chatMsgsRef = useRef(null);
+
+  // Publish stable --gg-vh for Tauri/WebKitGTK resize correctness
+  useViewportUnits();
 
   useRightDrawerPad(chatMsgsRef, {
     enabled: observeRightDrawerPad,

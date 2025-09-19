@@ -1,0 +1,91 @@
+{
+  "generated_at": "2025-08-20T06:45:42.633Z",
+  "platform": "linux",
+  "arch": "x64",
+  "node": "v22.18.0",
+  "cwd": "/home/duksan/바탕화면/gumgang_meeting",
+  "project_dir": "/home/duksan/바탕화면/gumgang_meeting/gumgang_0_5/gumgang-v2",
+  "root_dir": "/home/duksan/바탕화면/gumgang_meeting",
+  "bridge_url": "http://localhost:3037",
+  "ok": true,
+  "tauri_audit": {
+    "productName": "gumgang-v2",
+    "version": "0.1.0",
+    "build_frontendDist": "../out",
+    "build_devUrl": "http://localhost:3000",
+    "app_window_url": "http://localhost:3037/ui",
+    "ok": true,
+    "issues": []
+  },
+  "package_audit": {
+    "has_next_dep": true,
+    "next_version": "15.4.6",
+    "scripts": {
+      "dev": "node start-dev.js",
+      "dev:original": "next dev --turbopack",
+      "dev:fixed": "PORT=3000 next dev -p 3000 --turbopack",
+      "build": "next build",
+      "start": "next start",
+      "lint": "next lint",
+      "tauri": "tauri",
+      "tauri:dev": "tauri dev",
+      "tauri:build": "tauri build",
+      "ci:sanity": "bash scripts/ci/sanity.sh",
+      "guard:scan": "rg -n \"as any|@ts-ignore|@ts-expect-error(?!:)\" -g \"!node_modules\" || true",
+      "preflight:linux": "bash scripts/ci/linux_preflight.sh",
+      "bridge:open": "node -e \"(async()=>{try{const http=require('http');const https=require('https');const u=new URL(process.env.BRIDGE_URL||'http://localhost:3037');const args=process.argv.slice(3);const root=args[0]||'status';const p=args[1]||'';if(!p){console.error('Usage: npm run bridge:open -- <root> <relativePath>');process.exit(2);}const data=JSON.stringify({root:root,path:p});const mod=u.protocol==='https:'?https:http;const req=mod.request({hostname:u.hostname,port:u.port||((u.protocol==='https:')?443:80),path:'/api/open',method:'POST',headers:{'Content-Type':'application/json','Content-Length':Buffer.byteLength(data)}},res=>{let b='';res.on('data',d=>b+=d);res.on('end',()=>{console.log(b||res.statusCode);});});req.on('error',e=>{console.error(e.message);process.exit(1);});req.write(data);req.end();}catch(e){console.error(e&&e.message||e);process.exit(1);}})();\"",
+      "overlay:on": "node -e \"(function(){try{const fs=require('fs'),path=require('path');const root=path.resolve(__dirname,'../../ui/overlays');const labs=path.join(root,'labs');function cp(a,b){const s=path.join(labs,a),d=path.join(root,b);if(fs.existsSync(s)){fs.mkdirSync(root,{recursive:true});fs.copyFileSync(s,d);console.log('copied',a,'->',b);}else{console.log('skip',a);}}cp('default.css','active.css');cp('default.js','active.js');}catch(e){console.error(e&&e.message||e);process.exit(1);}})();\"",
+      "overlay:off": "node -e \"(function(){try{const fs=require('fs'),path=require('path');const root=path.resolve(__dirname,'../../ui/overlays');['active.css','active.js'].forEach(function(f){try{fs.unlinkSync(path.join(root,f));console.log('removed',f);}catch(_){}});}catch(e){console.error(e&&e.message||e);process.exit(1);}})();\"",
+      "preflight:linux:save": "node scripts/ci/save_preflight_linux.js",
+      "build:plan": "node scripts/ci/build_plan_probe.js"
+    },
+    "required_scripts_present": true,
+    "missing_scripts": []
+  },
+  "paths": {
+    "tauri_conf_present": true,
+    "package_json_present": true,
+    "bridge_js_present": true,
+    "ui_snapshot_present": true,
+    "overlay_dir_present": true,
+    "frontend_out_present": true
+  },
+  "expected": {
+    "frontendDist": "../out",
+    "devUrl": "http://localhost:3000",
+    "app_window_url": "http://localhost:3037/ui",
+    "frontend_out_dir": "/home/duksan/바탕화면/gumgang_meeting/gumgang_0_5/gumgang-v2/out",
+    "ui_snapshot": "/home/duksan/바탕화면/gumgang_meeting/ui/snapshots/unified_A1-A4_v0/index.html",
+    "overlays_dir": "/home/duksan/바탕화면/gumgang_meeting/ui/overlays",
+    "bridge_js": "/home/duksan/바탕화면/gumgang_meeting/bridge/server.js"
+  },
+  "plan": {
+    "dev": [
+      "Start Bridge: node bridge/server.js  # PORT=3037 default",
+      "Start Next dev: npm run dev:fixed    # port 3000",
+      "Tauri dev: npm run tauri:dev         # devUrl http://localhost:3000; app window → http://localhost:3037/ui"
+    ],
+    "build": [
+      "Install deps: npm ci",
+      "Next build: npm run build",
+      "Export static: npx next export -o out  # produces ./out",
+      "Tauri build: npm run tauri:build"
+    ],
+    "notes": [
+      "UI snapshot entry served at /ui → ui/snapshots/unified_A1-A4_v0/index.html",
+      "Overlay auto-injection: ui/overlays/active.css/js (no rebuild)",
+      "Evidence save via Bridge: POST /api/save (status/evidence/**)",
+      "Evidence open via Bridge: POST /api/open"
+    ]
+  },
+  "ping": {
+    "ui_head": {
+      "ok": true,
+      "status": 200
+    },
+    "api_save_head": {
+      "ok": false,
+      "status": 404
+    }
+  }
+}

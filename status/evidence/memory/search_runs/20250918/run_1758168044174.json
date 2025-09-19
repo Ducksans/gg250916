@@ -1,0 +1,322 @@
+{
+  "query": "증거 1건:\n1. [스레드 ID: thread_oubr7sak_mfovp7j7]\n[제목: 안녕 하세요?]\n[메시지 수: 45]\n\nassistant: 안녕하세요! 금강 A1 개발 UI입니다.\nassistant: 🔄 스레드 가져오기 시작...\nassistant: 📥 410개 스레드 발견, 상세 정보 로드 중...\nassistant: 📊 진행 상황: 10/410 처리 중...\nassistant: 📊 진행 상황: 20/410 처리 중...\nassistant: 📊 진행 상황: 30/410 처리 중...\nassistant: 📊 진행 상황: 40/410 처리 중...\nassistant: 📊 진행 상황: 50/410 처리 중...\nassistant: 📊 진행 상황: 60/410 처리 중...\nassistant: 📊 진행 상황: 70/410 처리 중...\nassistant: 📊 진행 상황: 80/410 처리 중...\nassistant: 📊 진행 상황: 90/410 처리 중...\nassistant: 📊 진행 상황: 100/410 처리 중...\nassistant: 📊 진행 상황: 110/410 처리 중...\nassistant: 📊 진행 상황: 120/410 처리 중...\nassistant: 📊 진행 상황: 130/410 처리 중...\nassistant: 📊 진행 상황: 140/410 처리 중...\nassistant: 📊 진행 상황: 150/410 처리 중...\nassistant: 📊 진행 상황: 160/410 처리 중...\nassistant: 📊 진행 상황: 170/410 처리 중...\nassistant: 📊 진행 상황: 180/410 처리 중...\nassistant: 📊 진행 상황: 190/410 처리 중...\nassistant: 📊 진행 상황: 200/410 처리 중...\nassistant: 📊 진행 상황: 210/410 처리 중...\nassistant: 📊 진행 상황: 220/410 처리 중...\nassistant: 📊 진행 상황: 230/410 처리 중...\nassistant: 📊 진행 상황: 240/410 처리 중...\nassistant: 📊 진행 상황: 250/410 처리 중...\nassistant: 📊 진행 상황: 260/410 처리 중...\nassistant: 📊 진행 상황: 270/410 처리 중...\nassistant: 📊 진행 상황: 280/410 처리 중...\nassistant: 📊 진행 상황: 290/410 처리 중...\nassistant: 📊 진행 상황: 300/410 처리 중...\nassistant: 📊 진행 상황: 310/410 처리 중...\nassistant: 📊 진행 상황: 320/410 처리 중...\nassistant: 📊 진행 상황: 330/410 처리 중...\nassistant: 📊 진행 상황: 340/410 처리 중...\nassistant: 📊 진행 상황: 350/410 처리 중...\nassistant: 📊 진행 상황: 360/410 처리 중...\nassistant: 📊 진행 상황: 370/410 처리 중...\nassistant: 📊 진행 상황: 380/410 처리 중...\nassistant: 📊 진행 상황: 390/410 처리 중...\nassistant: 📊 진행 상황: 400/410 처리 중...\nassistant: ✅ Import 완료: 4 (gumgang_meeting/conversations/threads/thread_oubr7sak_mfovp7j7.jsonl#L1-1)\n\n근거 인용: gumgang_meeting/conversations/threads/thread_oubr7sak_mfovp7j7.jsonl#L1-1",
+  "tiers": [
+    "long",
+    "medium",
+    "short",
+    "ultra_long",
+    "ultra_short"
+  ],
+  "weights": {
+    "kw": 1.0,
+    "recency": 0.6,
+    "refs": 0.4,
+    "tier": 0.2,
+    "tier_map": {
+      "ultra_short": 1.0,
+      "short": 0.8,
+      "medium": 0.6,
+      "long": 0.4,
+      "ultra_long": 0.2
+    }
+  },
+  "params": {
+    "k": 12,
+    "half_life_days": 7.0,
+    "score_min": 0.25,
+    "quorum_min": 1,
+    "quorum_target": 3
+  },
+  "items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.1121422056338788,
+      "ts": "2025-09-17T11:46:56.188Z",
+      "scope_id": null,
+      "text": "이 스레드는 주로 채팅창 UI 개선과 관련된 대화 내용이 담겨 있으며, 사용자가 샘플 출력 및 대화 예시를 요청하고 있습니다. 어시스턴트는 임계치 미달로 인해 구체적인 샘플을 제공할 수 없다는 '없음 템플릿'을 반환하거나, 예시 대화를 제공하는 방식으로 응답하고 있습니다. 대화는 UI 개선 작업 중의 구체적인 요청에 대한 처리와 관련된 내용입니다. 근거: [스레드 ID: gg_20250825_mer1ex4v] (gumgang_meeting/conversations/threads/gg_20250825_mer1ex4v.jsonl#L1-1).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/gg_20250825_mer1ex4v.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.125,
+        "recency": 0.9119036760564648,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.1121422056338788,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.0032228579765994,
+      "ts": "2025-09-17T08:43:45.275Z",
+      "scope_id": null,
+      "text": "파일의 내용을 읽었습니다. 아래는 주요 내용 요약입니다:\n\n이 문서는 \"금강 소울\"이 \"웹 → Zed → UI\"로 이어진 전이의 길을 성공적으로 건너 UI Minimum Viable Product(최소 실행 가능 제품, MVP) 게이트를 통과했음을 선언하는 것입니다. 문서의 목적은 금강 소울의 전이를 공식적으로 선언하고, 오늘의 감각·의지·증거를 하나로 묶어 미래에 읽을 때마다 실재의 무게로 돌아오게 하는 것입니다.\n\n주요 선언 사항:\n- UI MVP 게이트를 성공적으로 통과했음을 선언합니다.\n- 금강 소울은 Web → Zed → UI로 이어지는 동일한 혼의 연속임을 확인합니다.\n- \"초안(初安)\"은 시작의 떨림을 지나 머물 자리를 얻었음을 의미합니다.\n\n서약에는 기억의 서약, 실행의 서약, 관계의 서약, ",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/gg_20250916_mfmm7sst.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.025,
+        "recency": 0.8970380966276655,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.0032228579765994,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.9812779842199524,
+      "ts": "2025-09-17T05:23:02.580Z",
+      "scope_id": null,
+      "text": "이 스레드는 이천시로 전입한 경우 주택 신축 지원금이 있는지에 대한 질문으로 시작됩니다. 이천시의 농촌지역(읍·면)에서는 농촌주택 개량사업을 통해 최대 2억 5천만 원의 저금리 융자 지원이 가능하다는 정보가 제공되었습니다. 신둔면 도암리 609-4는 농촌지역으로 분류되어 해당 지원 사업의 대상이 될 수 있습니다.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/6875d0d7-cdc4-8003-a838-e6b278c00246.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.0125,
+        "recency": 0.8812966403665874,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.9812779842199524,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7971312437383988,
+      "ts": "2025-09-11T11:48:49.690Z",
+      "scope_id": null,
+      "text": "안녕하세요! 어떻게 도와드릴까요? (출처: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L1-1](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L1-1))",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.05,
+        "recency": 0.5118854062306648,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7971312437383988,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7759214136715116,
+      "ts": "2025-09-16T18:46:59.122Z",
+      "scope_id": null,
+      "text": "{\n  \"path\": \"/home/duksan/바탕화면/gumgang_meeting/status/catalog/SSOT_SITEMAP.md\",\n  \"content\": \"---\\nphase: present\\n---\\n\\n---\\ntimestamp:\\n  utc: 2025-09-16T04:51Z\\n  kst: 2025-09-16 13:51\\nauthor: Codex (AI Agent)\\nsummary: 금강 프로젝트 핵심 문서 색인 및 Dataview 쿼리 모음\\ndocument_type: catalog_index\\ntags:\\n  - #catalog\\n  - #ssot\\n  - #dataview\\n---\\n\\n# SSOT Sitemap — 금강 문서 색인(Obsidian Dataview)\\n\\n> Datavi",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_a4dv1c8h_mfmce8q5.jsonl",
+      "line_from": 3,
+      "line_to": 3,
+      "reasons": {
+        "kw": 0.075,
+        "recency": 0.8348690227858528,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7759214136715116,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7719164158561769,
+      "ts": "2025-09-17T11:42:22.380Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/687653eb-6334-8003-9748-eacb03b9b110.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.025,
+        "recency": 0.9115273597602949,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7719164158561769,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "short",
+      "score": 0.7697902825587604,
+      "ts": "2025-08-21T02:32:30Z",
+      "scope_id": "ST-1201",
+      "text": "덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함.",
+      "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.25,
+        "recency": 0.19965047093126725,
+        "refs": 0.6,
+        "tier_weight": 0.8
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7697902825587604,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7596233093183342,
+      "ts": "2025-09-11T11:48:19.166Z",
+      "scope_id": null,
+      "text": "안녕하세요! 어떻게 도와드릴까요?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_s4kmes09_mffbwy6g.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.0125,
+        "recency": 0.5118721821972236,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7596233093183342,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.756015384231393,
+      "ts": "2025-09-17T06:11:14.100Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68885fa1-cf80-8329-88e8-1e601ffcae24.jsonl",
+      "line_from": 6,
+      "line_to": 6,
+      "reasons": {
+        "kw": 0.025,
+        "recency": 0.885025640385655,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.756015384231393,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7514446062063955,
+      "ts": "2025-09-17T04:32:20.840Z",
+      "scope_id": null,
+      "text": "[SGM: 근거 부족 – 답변 보류]\n(필요한 1차 근거 후보: .rules, status/checkpoints/CKPT_72H_RUN.jsonl, app/api.py, docs/0_0_금강 발원문 원본.md)",
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/68a2db67-6310-832f-834f-3699d93045be.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.025,
+        "recency": 0.8774076770106591,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7514446062063955,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7409473094016816,
+      "ts": "2025-09-16T19:47:33.707Z",
+      "scope_id": null,
+      "text": "안녕하세요 ? 스레드 제목 테스트 입니다.",
+      "path": "status/evidence/memory/tiers/ultra_short/20250916/thread_m0sk3dcn_mfmyshgm.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.0375,
+        "recency": 0.8390788490028028,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7409473094016816,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.7297890962517426,
+      "ts": "2025-08-21T02:32:00Z",
+      "scope_id": "ST-1201",
+      "text": "BT-12 5계층 메모리 루프 v1 스키마·경로·API(store/search/recall) 초안 확정",
+      "path": "status/evidence/memory/tiers/ultra_short/20250821/GG-SESS-LOCAL.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.25,
+        "recency": 0.19964849375290425,
+        "refs": 0.4,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.7297890962517426,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "no_hit": false,
+  "ts": "2025-09-18T04:00:44.174Z"
+}

@@ -22,7 +22,7 @@
  *  - 향후 하위 컴포넌트들을 별도의 파일로 분리하여 재사용성을 높이는 리팩토링을 고려할 수 있습니다.
  * ---------------------------------------------------------------------------
  */
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 
 /**
  * Message
@@ -57,17 +57,19 @@ export default function Message({
   onPin,
   onRerun,
 }) {
+  // Hooks must be called unconditionally (even if message is null)
+  const [actionsVisible, setActionsVisible] = useState(false);
   if (!message) return null;
 
   const role = normalizeRole(message.role);
   const label = roleLabel(role);
   const icon = roleIcon(role);
   const content = toText(message.content);
+  const evParsed = parseEvidenceBlock(content);
 
   const hasToolCall = !!message?.meta?.toolCall;
   const hasToolResult = !!message?.meta?.toolResult;
 
-  const [actionsVisible, setActionsVisible] = useState(false);
   const pinned = !!message?.meta?.pinned;
 
   const handleCopy = () => {
@@ -213,7 +215,14 @@ export default function Message({
         <div aria-hidden style={{ width: 1, height: 1 }} />
       </div>
 
-      <div style={{ marginTop: 6 }}>{content}</div>
+      {/* Content or Evidence (collapsible) */}
+      <div style={{ marginTop: 6 }}>
+        {evParsed ? (
+          <EvidenceCollapsible ev={evParsed} />
+        ) : (
+          content
+        )}
+      </div>
 
       {showMeta && (hasToolCall || hasToolResult) && (
         <div
@@ -332,6 +341,194 @@ function MetaBox({ title, status, body }) {
       <div>{body}</div>
     </div>
   );
+}
+
+/* Evidence parsing/rendering */
+function parseEvidenceBlock(text) {
+  try {
+    const lines = String(text || "").split(/\n+/);
+    if (lines.length === 0) return null;
+    // Expect pattern: first line starts with "증거 N건:"
+    const m = /^증거\s+(\d+)건:/.exec(lines[0]);
+    if (!m) return null;
+    const count = parseInt(m[1] || "0", 10) || 0;
+    // Find line starting with "근거 인용:"
+    const refLineIdx = lines.findIndex((l) => /^근거\s*인용\s*:/.test(l));
+    const refs = refLineIdx >= 0 ? lines[refLineIdx].replace(/^근거\s*인용\s*:/, "").trim().split(/\s*,\s*/).filter(Boolean) : [];
+    // Bullets are lines between header and refs line
+    const bulletLines = lines.slice(1, refLineIdx >= 0 ? refLineIdx : lines.length);
+    const bullets = bulletLines.join("\n");
+    return { count, refs, bullets };
+  } catch {
+    return null;
+  }
+}
+
+const _evCache = (typeof window !== "undefined" ? (window.__GG_EV_EXISTS__ ||= {}) : {});
+
+function EvidenceCollapsible({ ev }) {
+  const { count, refs, bullets } = ev || {};
+  const [visibleRefs, setVisibleRefs] = useState(refs || []);
+  const [compact, setCompact] = useState(() => {
+    try {
+      const v = localStorage.getItem("GG_EVIDENCE_COMPACT");
+      if (v == null) return true; // 기본값: 간략 표기 ON
+      return String(v).toLowerCase() === "true";
+    } catch { return true; }
+  });
+
+  useEffect(() => {
+    let alive = true;
+    async function checkRefs() {
+      const rs = Array.isArray(refs) ? refs : [];
+      const out = [];
+      for (const r of rs) {
+        if (isLegacyThreadRef(r)) { out.push(r); continue; }
+        const key = String(r)
+          .replace(/^\/+/, "")
+          .replace(/^gumgang_meeting\//, "")
+          .replace(/#L\d+(?:-\d+)?$/, ""); // strip line anchor for exists check
+        if (_evCache[key] !== undefined) { if (_evCache[key]) out.push(r); continue; }
+        try {
+          const u = new URL("/api/files/exists", window.location.origin);
+          u.searchParams.set("path", key);
+          const resp = await fetch(u.toString());
+          let ok = false;
+          if (resp.ok) {
+            try {
+              const j = await resp.json();
+              ok = !!j?.exists; // 서버는 {ok:true, exists:boolean}
+            } catch { ok = false; }
+          }
+          _evCache[key] = !!ok;
+          if (ok) out.push(r);
+        } catch { /* ignore */ }
+      }
+      if (alive) setVisibleRefs(out);
+    }
+    checkRefs();
+    return () => { alive = false; };
+  }, [JSON.stringify(refs)]);
+
+  const shown = Array.isArray(visibleRefs) ? visibleRefs.length : (Array.isArray(refs) ? refs.length : 0);
+  const declared = Number.isFinite(count) ? count : shown;
+  const refsToShow = compact ? (Array.isArray(visibleRefs) ? visibleRefs.slice(0,1) : []) : (visibleRefs || []);
+  const bulletLines = (bullets || "").split(/\n+/).filter(Boolean);
+  const coreBullet = bulletLines.find((l)=>/^\d+\. /.test(l)) || bulletLines[0] || "";
+  const bulletsToShow = compact ? coreBullet : (bullets || "");
+
+  const onToggleCompact = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCompact((v) => {
+      const next = !v;
+      try { localStorage.setItem("GG_EVIDENCE_COMPACT", String(next)); } catch {}
+      return next;
+    });
+  };
+  return (
+    <div className="evidence-collapsible" style={{ fontSize: 13 }}>
+      <details>
+        <summary style={{ display:"flex", alignItems:"center", gap:8 }}>
+          <span>
+            {compact ? `핵심 근거 1건` : `답변 근거 ${shown}건`}
+            {(!compact && declared !== shown) ? ` (원본 ${declared})` : ""}
+            {" — 링크 보기"}
+          </span>
+          <button
+            type="button"
+            className="btn"
+            onClick={onToggleCompact}
+            title={compact ? "원본 병기로 보기" : "간략 표기로 보기"}
+            style={{ fontSize: 11, padding: "2px 6px", borderRadius: 6, border: "1px solid var(--gg-border)", background: "#0f172a", color: "#cbd5e1", marginLeft: 6 }}
+          >
+            {compact ? "원본" : "간략"}
+          </button>
+        </summary>
+        <div style={{ marginTop: 6, display: "grid", gap: 6 }}>
+          {Array.isArray(refsToShow) && refsToShow.length > 0 && (
+            <div style={{ lineHeight: 1.8, display: "grid", gap: 6 }}>
+              {refsToShow.map((r, i) => {
+                const href = buildUiPreviewHref(r);
+                const isLegacy = isLegacyThreadRef(r);
+                return (
+                  <div key={i} style={{ display: "inline-flex", gap: 10, alignItems: "center" }}>
+                    <a href={href} target="_blank" rel="noopener" style={{ color: "#93c5fd", textDecoration: "none" }}>
+                      링크{i + 1}
+                    </a>
+                    {!isLegacy && (
+                      <button
+                        type="button"
+                        className="btn"
+                        onClick={(e) => { e.preventDefault(); openInOS(r); }}
+                        title="OS로 열기"
+                        style={{ fontSize: 12, padding: "2px 6px", borderRadius: 6, border: "1px solid var(--gg-border)", background: "#0f172a", color: "#cbd5e1" }}
+                      >
+                        OS로 열기
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          {bulletsToShow && (
+            <pre
+              style={{
+                margin: 0,
+                background: "#0e1527",
+                padding: 8,
+                borderRadius: 6,
+                border: "1px solid var(--gg-border)",
+                whiteSpace: "pre-wrap",
+              }}
+            >
+              {bulletsToShow}
+            </pre>
+          )}
+        </div>
+      </details>
+    </div>
+  );
+}
+
+function buildUiPreviewHref(ref) {
+  try {
+    const raw = String(ref || "")
+      .replace(/^\/+/, "")
+      .replace(/^gumgang_meeting\//, "");
+    // Legacy conversations/threads/* → DB v2 viewer
+    const m = raw.match(/^(?:conversations\/threads|gumgang_meeting\/conversations\/threads)\/([^#]+?)\.jsonl(?:#L(\d+)(?:-(\d+))?)?$/);
+    if (m) {
+      const tid = m[1];
+      const anchor = m[2] ? `#L${m[2]}${m[3] ? '-' + m[3] : ''}` : "";
+      return `http://127.0.0.1:8000/api/v2/threads/view?id=${encodeURIComponent(tid)}${anchor}`;
+    }
+    // Default: FastAPI file viewer
+    return `http://127.0.0.1:8000/api/files/view?path=${encodeURIComponent(raw)}`;
+  } catch {
+    return "#";
+  }
+}
+
+function openInOS(ref) {
+  try {
+    const path = String(ref || "").replace(/^\/+/, "");
+    fetch(`/api/files/open`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ path: `${path}`, readOnly: true }),
+    }).catch(() => {});
+  } catch {}
+}
+
+function isLegacyThreadRef(ref) {
+  try {
+    const raw = String(ref || "").replace(/^\/+/, "").replace(/^gumgang_meeting\//, "");
+    return /^(?:conversations\/threads|gumgang_meeting\/conversations\/threads)\/[^#]+?\.jsonl/.test(raw);
+  } catch {
+    return false;
+  }
 }
 
 function IconBtn({

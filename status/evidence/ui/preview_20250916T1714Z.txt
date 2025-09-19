@@ -1,0 +1,5 @@
+5175 프리뷰 실행 명령 예시:
+npm --prefix "/home/duksan/바탕화면/gumgang_meeting/ui/dev_a1_vite" run preview -- --host --port 5175
+
+승인 시:
+npm --prefix "/home/duksan/바탕화면/gumgang_meeting/ui/dev_a1_vite" run preview -- --host --port 5173

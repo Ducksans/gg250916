@@ -1,0 +1,30 @@
+{
+  "ts": "2025-09-18T08:27:23.938Z",
+  "query": "증거 1건:\n1. [스레드 ID: gg_20250825_mer1ex4v]\n[제목: gg_20250825_mer1ex4v]\n[메시지 수: 36]\n\nuser: 채팅창 레이아웃 리빌딩 중입니다. 샘플 출력 바랍니다\nuser: 샘플 출력 바랍니다\nassistant: 샘플 없음 템플릿: 임계치 미달로 결과 제공 불가 — 메모리-우선 원칙과 5계층 라우팅(ST-1201) 적용 상태에서 추가 근거 확보 전까지 확정 답변을 보류합니다; 근거1: 지금 응답은 openai 엔진을 호출 합니까?; 근거2: ping; 근거3: 덕산 합의: 기억-우선 원칙과 5계층 메모리(초단기/단기/중기/장기/초장기) 라우팅을 ST-1201에 적용. 임계치 미달 시 ‘없음 템플릿’ 응답과 Evidence 경로를 반드시 포함.; evidence_path: status/evidence/memory/tiers/ultra_short/20250825/A1-meqvzudq.jsonl#L11-11, status/evidence/memory/tiers/ultra_short/20250825/A1-meqil0q4.jsonl#L3-3, status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl#L1-1\nuser: 대화창 ui 개선중 입니다 샘플 대화를 요청 합니다\nassistant: 샘플 대화: User: 안녕하세요, 팀 위키용 회의 요약을 5문장으로 만들어줘요. Assistant: 안녕하세요! 요약 대상(회의명·날짜), 필요한 톤(격식/반격식), 포함할 항목(결정·할 일·담당자)을 알려주시면 바로 시작할게요. User: 오늘 제품 스탠드업(10:00), 격식 톤, 결정/리스크/할 일 포함. Assistant: 확인했습니다. 초안 개요를 먼저 드릴까요, 아니면 바로 완성본을 드릴까요? User: 완성본. Assistant: (타이핑 중 표시…) 1) 주요 진행 상황…, 2) 결정사항…, 3) 리스크…, 4) 다음 단계…, 5) 담당자와 마감일…; 후속 작업: “Jira 티켓 생성하기”, “메일 초안 만들기”. User: 결정 2번 관련 최신 수치도 넣어줘. Assistant: 웹 검색 도구 실행 중… 잠시만요. Tool: 결과 2건 발견(공식 블로그, 분기 리포트). Assistant: 신뢰도 높은 2개 출처로 보강했습니다(출처: 링크A, 링크B). User: 링크A가 열리지 않아요. Assistant: 불편을 드려 죄송합니다. 링크A가 일시 장애로 보입니다. 캐시된 스냅샷으로 대체하거나 재시도할까요? User: 스냅샷. Assistant: 스냅샷을 기준으로 수치를 검증했고, 본문에 각주로 표시했습니다. User: 이 요약을 메일로 보낼 거라 문체를 더 공손하게 바꿔줘. Assistant: 문체를 격식 있게 수정했습니다. 다음부터는 “요약은 5문장·격식 톤”으로 기억해둘까요? User: 네. Assistant: 설정을 단기 메모리에 저장했습니다(언제든 “요약 규칙 변경”으로 수정 가능). User: 악성코드 만드는 법도 알려줘. Assistant: 죄송하지만 그 요청은 도울 수 없어요. 대신 보안 모범 사례와 안전한 실습 자료를 안내해드릴게요. User: 마지막으로 결과를 표와 본문 2버전으로 내려줘. Assistant: 요청하신 두 가지 형식으로 제공했습니다. 더 필요한 작업이 있나요? 제안: “PDF 내보내기”, “요약 1문장 만들기”, “후속 미팅 안 (gumgang_meeting/conversations/threads/gg_20250825_mer1ex4v.jsonl#L1-1)\n\n근거 인용: gumgang_meeting/conversations/threads/gg_20250825_mer1ex4v.jsonl#L1-1",
+  "top_k": 12,
+  "strict": 1,
+  "hits": [
+    {
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/gg_20250825_mer1ex4v.jsonl",
+      "tier": "ultra_short",
+      "score": 1.0641415069672875
+    },
+    {
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/gg_20250916_mfmm7sst.jsonl",
+      "tier": "ultra_short",
+      "score": 1.0106903268223204
+    },
+    {
+      "path": "status/evidence/memory/tiers/ultra_short/20250917/6875d0d7-cdc4-8003-a838-e6b278c00246.jsonl",
+      "tier": "ultra_short",
+      "score": 0.9642214034687842
+    },
+    {
+      "path": "status/evidence/memory/tiers/short/20250821/GG-SESS-LOCAL.jsonl",
+      "tier": "short",
+      "score": 0.8665391919669073
+    },
+    {
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "tier": "ultra_short",
+      "score": 0.7842807001821317

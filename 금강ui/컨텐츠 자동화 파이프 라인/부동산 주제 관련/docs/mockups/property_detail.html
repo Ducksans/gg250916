@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko">
+  <!--
+    6하원칙 요약(Listing Mockup)
+    - Who: 제품/디자인/프론트엔드, SEO 담당
+    - Where: 매물 상세(캐노니컬) 페이지 레이아웃/메타 구조
+    - What: JSON-LD/OG/Twitter/oEmbed 디스커버리, 섹션 구조(갤러리/정보/시장/도구/지도/상담)
+    - How: 정적 목업(HTML/CSS) + 표준 메타 태그, 접근성 보조 요소 포함
+    - Why: 표준 매물 페이지 템플릿 기준 제시 및 임베드/SEO 검증 시연
+    - When: Phase0~MVP 상세 페이지 설계/합의 단계 참고(변경 시 PR)
+  -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[매물 상세] 서울특별시 중구 세종대로 110 | 금강 Real Estate</title>
+    <meta name="description" content="서울특별시 중구 세종대로 110, 아파트 전용 84㎡, 매매 12억. 사진/도면/실거래/계산기/상담." />
+    <meta name="theme-color" content="#204f8c" />
+    <link rel="canonical" href="https://hub.example.com/property/seoul-junggu/세종대로110/AA-2025-0001" />
+    <link rel="stylesheet" href="real_estate_hub.css" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="금강 Real Estate" />
+    <meta property="og:title" content="서울 중구 세종대로 110 · 아파트 84㎡ · 12억" />
+    <meta property="og:description" content="전용 84㎡, 층/향 정보, 사진/도면, 실거래/공시 참고, 계산기/체크리스트, 즉시 상담" />
+    <meta property="og:url" content="https://hub.example.com/property/seoul-junggu/세종대로110/AA-2025-0001" />
+    <meta property="og:image" content="https://hub.example.com/media/listings/AA-2025-0001/cover.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="서울 중구 세종대로 110 · 아파트 84㎡ · 12억" />
+    <meta name="twitter:description" content="전용 84㎡, 층/향 정보, 사진/도면, 실거래/공시 참고, 계산기/체크리스트, 즉시 상담" />
+    <meta name="twitter:image" content="https://hub.example.com/media/listings/AA-2025-0001/cover.jpg" />
+
+    <!-- oEmbed Discovery (예시) -->
+    <link rel="alternate" type="application/json+oembed" href="https://hub.example.com/oembed?url=https%3A%2F%2Fhub.example.com%2Fproperty%2Fseoul-junggu%2F%25EC%2584%25B8%25EC%25A2%2585%25EB%258C%2580%25EB%25A1%259C110%2FAA-2025-0001&format=json" title="금강 Real Estate oEmbed" />
+
+    <!-- JSON-LD: RealEstateListing 예시 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateListing",
+      "name": "서울 중구 세종대로 110 · 아파트 84㎡ · 12억",
+      "url": "https://hub.example.com/property/seoul-junggu/세종대로110/AA-2025-0001",
+      "datePosted": "2025-09-18",
+      "description": "전용 84㎡, 남동향, 리모델링, 역세권. 사진/도면/실거래/계산기/상담.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "KR",
+        "addressLocality": "서울특별시 중구",
+        "streetAddress": "세종대로 110"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 37.5663,
+        "longitude": 126.9779
+      },
+      "itemOffered": {
+        "@type": "Apartment",
+        "floorSize": {"@type": "QuantitativeValue", "value": 84, "unitCode": "MTK"},
+        "numberOfRoomsTotal": 3
+      },
+      "seller": {"@type": "RealEstateAgent", "name": "금강부동산 중개"},
+      "offers": {
+        "@type": "Offer",
+        "price": 1200000000,
+        "priceCurrency": "KRW",
+        "availability": "https://schema.org/InStock"
+      },
+      "image": [
+        "https://hub.example.com/media/listings/AA-2025-0001/cover.jpg"
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">본문 바로가기</a>
+    <header>
+      <div class="header-top" role="banner">
+        <div class="brand">
+          <a href="./real_estate_hub.html" class="brand-link" aria-label="홈으로 이동">
+            <span class="logo" aria-hidden="true">GG</span>
+            <span class="site-title">금강 Real Estate</span>
+          </a>
+        </div>
+        <form class="search" role="search" aria-label="사이트 검색" action="/search" method="get">
+          <label for="q" class="sr-only">검색어</label>
+          <input id="q" name="q" type="search" placeholder="주소·단지·주제 검색" autocomplete="off" />
+          <button type="submit" class="btn primary">검색</button>
+        </form>
+      </div>
+      <div class="hero-content">
+        <div class="hero-pill">Listing · Canonical</div>
+        <h1>서울 중구 세종대로 110 · 아파트 84㎡ · 12억</h1>
+        <p class="hero-lede">사진/도면, 실거래/공시 참고, 비용 계산, 체크리스트, 즉시 상담</p>
+      </div>
+      <nav class="site-nav" aria-label="상세 섹션 내비게이션">
+        <ul>
+          <li><a href="#gallery">갤러리</a></li>
+          <li><a href="#facts">기본정보</a></li>
+          <li><a href="#market">실거래/공시</a></li>
+          <li><a href="#tools">계산기/체크리스트</a></li>
+          <li><a href="#map">지도</a></li>
+          <li><a href="#contact">상담</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="sticky-cta container" aria-label="빠른 액션">
+        <div class="hero-actions">
+          <a class="btn primary" href="#tools">계산기 열기</a>
+          <a class="btn" href="#tools">계약 체크리스트</a>
+          <a class="btn" href="#contact">상담/문의</a>
+        </div>
+      </section>
+      <section id="gallery" class="card-grid">
+        <article class="card">
+          <h3>대표 사진</h3>
+          <div style="aspect-ratio: 16/9; background:#e3eaf5; border-radius:12px;"></div>
+        </article>
+        <article class="card">
+          <h3>도면</h3>
+          <div style="aspect-ratio: 4/3; background:#e3eaf5; border-radius:12px;"></div>
+        </article>
+        <article class="card">
+          <h3>썸네일</h3>
+          <div style="aspect-ratio: 1/1; background:#e3eaf5; border-radius:12px;"></div>
+        </article>
+      </section>
+
+      <section id="facts" class="split-layout">
+        <div class="card">
+          <h3>기본 정보</h3>
+          <ul class="mini-list">
+            <li>전용면적: 84㎡ (공급 112㎡)</li>
+            <li>가격: 12억 (협의 가능)</li>
+            <li>층/향: 중층, 남동향</li>
+            <li>입주 가능일: 협의</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>에이전트</h3>
+          <p class="muted">금강부동산 중개 · 등록번호 12345-67890</p>
+          <div class="badge-group">
+            <span class="badge">실매물 인증</span>
+            <span class="badge">응답속도 우수</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="market" class="split-layout">
+        <div class="card">
+          <h3>실거래 요약</h3>
+          <p class="muted">최근 3년 신고가/거래량/분포 (목업)</p>
+          <div style="height:180px; background:#eef3fb; border-radius:12px;"></div>
+        </div>
+        <div class="card">
+          <h3>공시가격</h3>
+          <p class="muted">연도별 공시가격 변동 (목업)</p>
+          <div style="height:180px; background:#eef3fb; border-radius:12px;"></div>
+        </div>
+      </section>
+
+      <section class="card container" aria-label="가격/면적 표">
+        <h3>가격/면적 세부</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>항목</th><th>값</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>전용면적</td><td class="num">84</td></tr>
+            <tr><td>공급면적</td><td class="num">112</td></tr>
+            <tr><td>가격(만원)</td><td class="num">120,000</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="tools" class="card-grid">
+        <article class="card">
+          <h3>취득세 계산</h3>
+          <p class="muted">금액·주택수·세대원 구성을 입력해 취득세·농특세·교육세를 계산합니다.</p>
+          <div class="hero-actions"><a class="btn primary" href="#">계산기 열기</a></div>
+        </article>
+        <article class="card">
+          <h3>전월세 전환</h3>
+          <p class="muted">보증금·월세 전환율 계산으로 총부담을 비교합니다.</p>
+          <div class="hero-actions"><a class="btn" href="#">전환 계산</a></div>
+        </article>
+        <article class="card">
+          <h3>계약 체크리스트</h3>
+          <p class="muted">확정일자/전입/보증보험 등 필수 체크 항목.</p>
+          <div class="hero-actions"><a class="btn" href="#">체크리스트</a></div>
+        </article>
+      </section>
+
+      <section id="map" class="card">
+        <h3>지도/인근</h3>
+        <div style="height:320px; background:#e9f1ff; border-radius:12px;"></div>
+      </section>
+
+      <section id="contact" class="split-layout">
+        <div class="card">
+          <h3>문의/상담</h3>
+          <p class="muted">050 안심번호(DNI) · 카카오 상담톡 · 웹 폼</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#">카카오 상담</a>
+            <a class="btn" href="#">050 안심번호</a>
+            <a class="btn" href="#">문의 폼</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>oEmbed JSON (예시)</h3>
+          <pre style="overflow:auto; background:#0f172a; color:#e2e8f0; padding:1rem; border-radius:12px; font-size:0.9rem;">
+{
+  "version": "1.0",
+  "type": "rich",
+  "provider_name": "금강 Real Estate",
+  "provider_url": "https://hub.example.com",
+  "title": "서울 중구 세종대로 110 · 아파트 84㎡ · 12억",
+  "thumbnail_url": "https://hub.example.com/media/listings/AA-2025-0001/cover.jpg",
+  "html": "<iframe src=\"https://hub.example.com/embed/listing/AA-2025-0001\" width=\"600\" height=\"338\" frameborder=\"0\" allowfullscreen></iframe>",
+  "width": 600,
+  "height": 338
+}
+          </pre>
+        </div>
+      </section>
+    </main>
+    <section class="card" style="margin: 1.5rem;">
+      <h3>OG/oEmbed 미리보기</h3>
+      <details>
+        <summary>Open Graph 메타 보기</summary>
+        <pre style="overflow:auto; background:#0f172a; color:#e2e8f0; padding:1rem; border-radius:12px; font-size:0.9rem;">
+og:type=article\nog:site_name=금강 Real Estate\nog:title=서울 중구 세종대로 110 · 아파트 84㎡ · 12억\nog:description=전용 84㎡, 층/향 정보, 사진/도면, 실거래/공시 참고, 계산기/체크리스트, 즉시 상담\nog:url=https://hub.example.com/property/seoul-junggu/세종대로110/AA-2025-0001\nog:image=https://hub.example.com/media/listings/AA-2025-0001/cover.jpg
+        </pre>
+      </details>
+      <details>
+        <summary>oEmbed JSON 보기</summary>
+        <pre style="overflow:auto; background:#0f172a; color:#e2e8f0; padding:1rem; border-radius:12px; font-size:0.9rem;">
+{
+  "version": "1.0",
+  "type": "rich",
+  "provider_name": "금강 Real Estate",
+  "provider_url": "https://hub.example.com",
+  "title": "서울 중구 세종대로 110 · 아파트 84㎡ · 12억",
+  "thumbnail_url": "https://hub.example.com/media/listings/AA-2025-0001/cover.jpg",
+  "html": "<iframe src=\"https://hub.example.com/embed/listing/AA-2025-0001\" width=\"600\" height=\"338\" frameborder=\"0\" allowfullscreen></iframe>",
+  "width": 600,
+  "height": 338
+}
+        </pre>
+      </details>
+    </section>
+
+    <footer>
+      <p>본 페이지는 목업입니다. 구조화 데이터/OG/oEmbed는 설계 시연용 예시입니다.</p>
+      <p class="muted">샘플 고지: Canonical은 허브 원본 URL을 기준으로 하며, 배포 링크에는 표준 UTM 파라미터가 적용됩니다. 외부 인용 시 출처/라이선스를 표시합니다.</p>
+      <p>© 2025 금강 Real Estate</p>
+    </footer>
+  </body>
+</html>

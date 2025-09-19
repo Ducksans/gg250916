@@ -67,7 +67,7 @@ export default function EdgeToggles({
   const wake = () => {
     try {
       if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
-    } catch {}
+    } catch { /* ignore */ }
     setFaded(false);
     fadeTimerRef.current = setTimeout(
       () => setFaded(true),
@@ -167,7 +167,7 @@ export default function EdgeToggles({
       clearInterval(id);
       try {
         ro && ro.disconnect();
-      } catch {}
+    } catch { /* ignore */ }
     };
   }, [leftCollapsed, rightOpen]);
 

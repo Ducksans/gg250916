@@ -30,6 +30,7 @@ import { chatStore, getActiveThread } from "@/state/chatStore";
 import {
   getSelectedToolIds as lsGetSelectedToolIds,
   setSelectedToolIds as lsSetSelectedToolIds,
+  chatApiBase,
 } from "@/hooks/usePrefs";
 
 /**
@@ -53,8 +54,8 @@ export default function ToolsManager({
   show,
   onClose,
   title = "MCP Tools",
-  definitionsUrl = "/api/tools/definitions",
-  invokeUrl = "/api/tools/invoke",
+  definitionsUrl,
+  invokeUrl,
 }) {
   const [tools, setTools] = useState([]); // [{ id, name, description, params }]
   const [selectedToolIds, setSelectedToolIds] = useState(
@@ -64,12 +65,17 @@ export default function ToolsManager({
   const [busyMap, setBusyMap] = useState({}); // { [toolId]: boolean }
   const [error, setError] = useState(null);
 
+  // Resolve default endpoints based on backend toggle (FastAPI or Bridge)
+  const apiBase = useMemo(() => chatApiBase(), []);
+  const defsUrl = definitionsUrl || `${apiBase}/tools/definitions`;
+  const invUrl = invokeUrl || `${apiBase}/tools/invoke`;
+
   // Load tool definitions; prune persisted selections to valid tool ids
   useEffect(() => {
     let alive = true;
     (async () => {
       try {
-        const res = await fetch(definitionsUrl, { method: "GET" });
+        const res = await fetch(defsUrl, { method: "GET" });
         if (!alive) return;
         if (!res.ok) {
           setError(`Failed to load tools: ${res.status} ${res.statusText}`);
@@ -96,7 +102,7 @@ export default function ToolsManager({
     return () => {
       alive = false;
     };
-  }, [definitionsUrl]);
+  }, [defsUrl]);
 
   // Simple param setter
   const setParam = useCallback((toolId, key, value) => {
@@ -136,7 +142,7 @@ export default function ToolsManager({
           { toolCall: { tool: name, args } },
         );
 
-        const res = await fetch(invokeUrl, {
+        const res = await fetch(invUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ tool: name, args }),
@@ -163,7 +169,7 @@ export default function ToolsManager({
         setBusyMap((m) => ({ ...m, [id]: false }));
       }
     },
-    [paramInputs, invokeUrl],
+    [paramInputs, invUrl],
   );
 
   // Derive visible selection from defs+ids

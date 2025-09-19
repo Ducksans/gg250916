@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "utc": "2025-09-16T19:21:25Z",
+  "root": "conversations/threads",
+  "db": "db/gumgang.db",
+  "files": 408,
+  "threads": 408,
+  "messages": 47341,
+  "mode": "apply"
+}

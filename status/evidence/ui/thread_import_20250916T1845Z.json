@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "host": "http://127.0.0.1:8000",
+  "api_base": "/api",
+  "sampled": 10,
+  "imported": 10,
+  "failed": 0,
+  "evidence_log": "thread_import_20250916T1845Z.log"
+}

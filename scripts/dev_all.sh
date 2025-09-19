@@ -41,26 +41,33 @@ cmd_tmux() {
     return 0
   fi
 
-  # Pane 0: Backend (full width top)
+  # Pane 0: Backend (좌상단)
   TMUX_BACK_CMD="cd '${ROOT_DIR}'; ${BACKEND_CMD} 2>&1 | tee -a '${LOG_DIR}/backend.log'"
   tmux new-session -d -s "${SESSION_NAME}" -n "gg" "bash -lc \"${TMUX_BACK_CMD}\""
 
-  # Pane 1: Bridge (bottom-left)
+  # Pane 1: Bridge (우상단)
   TMUX_BRIDGE_CMD="cd '${ROOT_DIR}'; ${BRIDGE_CMD} 2>&1 | tee -a '${LOG_DIR}/bridge.log'"
-  tmux split-window -v -t "${SESSION_NAME}:0.0" "bash -lc \"${TMUX_BRIDGE_CMD}\""
+  tmux split-window -h -t "${SESSION_NAME}:0.0" "bash -lc \"${TMUX_BRIDGE_CMD}\""
 
-  # Pane 2: Vite (bottom-right)
   if [ -d "${VITE_ROOT}" ] && have_cmd npm; then
+    # Pane 2: Vite Dev (좌하단)
     TMUX_VITE_CMD="cd '${VITE_ROOT}'; ${VITE_CMD} 2>&1 | tee -a '${LOG_DIR}/vite.log'"
-    tmux split-window -h -t "${SESSION_NAME}:0.1" "bash -lc \"${TMUX_VITE_CMD}\""
+    tmux split-window -v -t "${SESSION_NAME}:0.0" "bash -lc \"${TMUX_VITE_CMD}\""
+
+    # Pane 3: Vite Preview (우하단)
+    TMUX_VITE_PREVIEW_CMD="cd '${VITE_ROOT}'; npm run build && npm run preview -- --strictPort --port 5175 2>&1 | tee -a '${LOG_DIR}/vite_preview.log'"
+    tmux split-window -v -t "${SESSION_NAME}:0.1" "bash -lc \"${TMUX_VITE_PREVIEW_CMD}\""
   else
-    warn "Vite prerequisites not met; creating empty pane."
-    tmux split-window -h -t "${SESSION_NAME}:0.1" "echo 'Vite skipped'; bash"
+    warn "Vite prerequisites not met; creating placeholder panes."
+    tmux split-window -v -t "${SESSION_NAME}:0.0" "echo 'Vite dev skipped'; bash"
+    tmux split-window -v -t "${SESSION_NAME}:0.1" "echo 'Vite preview skipped'; bash"
   fi
 
+  tmux select-layout -t "${SESSION_NAME}:0" tiled
+  tmux set-option -t "${SESSION_NAME}" remain-on-exit on
   tmux select-pane -t "${SESSION_NAME}:0.0"
 
-  echo "== tmux session '${SESSION_NAME}' launched (3 panes) =="
+  echo "== tmux session '${SESSION_NAME}' launched (4 panes) =="
   echo "Attach: tmux attach -t ${SESSION_NAME}"
   tmux attach -t "${SESSION_NAME}"
 }

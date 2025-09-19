@@ -1,29 +1,353 @@
 <!doctype html>
 <html lang="ko">
+  <!--
+    2025-09-16T04:51Z (UTC) / 2025-09-16 13:51 (KST)
+    Author: ChatGPT (AI Agent)
+    Summary: 시각적 가치 제안, 자동화 플로우, 성장 루프, 가격 구조 섹션을 추가하여
+    무료 헤드 → 유료 전환 전략을 보여줌
+    Tags: #mockup #real_estate_hub #automation
+  -->
+  <!--
+    6하원칙 요약(Mockup)
+    - Who: 제품/디자인/프론트엔드, 문서 오너(IA)
+    - Where: 허브 웹(오리진) 상단 구조/내비/섹션 레이아웃
+    - What: 검색/IA/파이프라인/가치·가격/컴플라이언스 섹션 시연
+    - How: 정적 목업(HTML/CSS), JSON-LD(WebSite/SearchAction) 포함
+    - Why: 정보구조와 핵심 가치 커뮤니케이션, 구현 기준 확립
+    - When: Phase0~MVP 설계·합의 단계에서 참조(변경 시 PR 동반)
+  -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="부동산 컨텐츠 허브: 공식 데이터 기반 콘텐츠 자동화, 중개사 무료 헤드, 리드 전환 및 모바일 앱 확장 전략" />
+    <meta name="theme-color" content="#204f8c" />
     <title>부동산 컨텐츠 허브 & 모바일 앱 목업</title>
     <link rel="stylesheet" href="real_estate_hub.css" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "부동산 컨텐츠 허브",
+        "url": "https://hub.example.com/",
+        "inLanguage": "ko-KR",
+        "description": "공식 데이터 기반 부동산 콘텐츠 자동화 및 중개사 무료 헤드 프로그램",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://hub.example.com/search?q={query}",
+          "query-input": "required name=query"
+        }
+      }
+    </script>
   </head>
   <body>
+    <a href="#main" class="skip-link">본문 바로가기</a>
     <header>
-      <div class="hero-content">
+      <div class="container">
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+          <a href="#">홈</a> / <span aria-current="page">허브</span>
+        </nav>
+      </div>
+      <div class="header-top container" role="banner">
+        <div class="brand">
+          <a href="#" class="brand-link" aria-label="홈으로 이동">
+            <span class="logo" aria-hidden="true">GG</span>
+            <span class="site-title">금강 Real Estate</span>
+          </a>
+        </div>
+        <form class="search" role="search" aria-label="사이트 검색" action="./search_results.html" method="get">
+          <label for="q" class="sr-only">검색어</label>
+          <input id="q" name="q" type="search" placeholder="주소·단지·주제 검색" autocomplete="off" />
+          <button type="submit" class="btn primary">검색</button>
+        </form>
+      </div>
+      <div class="hero-content container">
         <div class="hero-pill">Real Estate Hub · Automation Loop</div>
         <h1>부동산 컨텐츠 허브 &amp; 모바일 앱 전체 구조</h1>
-        <p>
-          허브(웹)·앱·자동화 파이프라인을 하나의 루프로 묶어 신뢰 기반 거래
-          경험과 데이터 기반 운영을 동시에 강화합니다.
+        <p class="hero-lede">
+          강력한 생성형 콘텐츠 엔진을 기반으로 입력 1회를 멀티채널 매물 광고로
+          확장하고, 허브·중개사 채널·소비자 리드가 순환하는 성장 루프를
+          구축합니다.
         </p>
+        <ul class="hero-highlights">
+          <li>
+            <strong>콘텐츠 엔진</strong> — 사진·영상·폼 입력만으로 웹카드·롱폼·쇼츠
+            대본을 자동 제작
+          </li>
+          <li>
+            <strong>무료 헤드</strong> — 월 10건까지 Canonical 매물 페이지와 배포
+            자동화를 무상 제공
+          </li>
+          <li>
+            <strong>리드 → 유료 전환</strong> — 실제 소비자 리드 확보 시 Pro/Office
+            구독으로 자연 전환
+          </li>
+        </ul>
         <div class="hero-actions">
           <a class="btn primary" href="#ia">IA &amp; Pillars 보기</a>
           <a class="btn" href="#phases">마일스톤 타임라인</a>
           <a class="btn" href="#apps">모바일 앱 기능</a>
         </div>
       </div>
+      <nav class="site-nav container" aria-label="주요 섹션 내비게이션">
+        <ul>
+          <li><a href="#value-proposition">가치 제안</a></li>
+          <li><a href="#automation">생성·배포 플로우</a></li>
+          <li><a href="#growth-loop">성장 루프</a></li>
+          <li><a href="#monetization">가격 구조</a></li>
+          <li><a href="#ia">정보구조</a></li>
+          <li><a href="#phases">마일스톤</a></li>
+          <li><a href="#apps">모바일</a></li>
+          <li><a href="#pipeline">파이프라인</a></li>
+          <li><a href="#compliance">컴플라이언스</a></li>
+        </ul>
+      </nav>
     </header>
 
-    <main>
+    <main id="main">
+      <section id="value-proposition">
+        <h2 class="section-title">
+          콘텐츠 허브 핵심 가치 제안
+          <span>입력 1회 → 자동 생성 → 배포 → 리드 → 수익화</span>
+        </h2>
+        <div class="value-grid">
+          <article class="value-card">
+            <h3>콘텐츠 생성 엔진</h3>
+            <p>
+              매물 기본 정보와 멀티미디어를 업로드하면 표준화된 매물 캔버스,
+              웹 카드, 롱폼 포스트, 쇼츠 대본과 썸네일까지 자동으로 만들어집니다.
+            </p>
+            <div class="tag-row">
+              <span class="tag">RealEstateListing JSON-LD</span>
+              <span class="tag">OG 카드</span>
+            </div>
+          </article>
+          <article class="value-card">
+            <h3>전 채널 배포 대행</h3>
+            <p>
+              허브에 저장된 Canonical 페이지를 중심으로 중개사 블로그·SNS에
+              oEmbed/OG 카드, API 기반 자동 게시, 상담톡 연동 자료를 제공합니다.
+            </p>
+            <div class="tag-row">
+              <span class="tag">oEmbed</span>
+              <span class="tag">SNS 쇼츠</span>
+            </div>
+          </article>
+          <article class="value-card">
+            <h3>리드 속도 &amp; 추적</h3>
+            <p>
+              카카오 상담톡, 050 안심번호(DNI), 웹 폼 리드를 통합 저장하고 5분
+              응답 SLA 알림으로 전환 효율을 극대화합니다.
+            </p>
+            <div class="tag-row">
+              <span class="tag">5분 규칙</span>
+              <span class="tag">UTM/GA4</span>
+            </div>
+          </article>
+          <article class="value-card">
+            <h3>무료 헤드 → 유료 전환</h3>
+            <p>
+              월 10건 무료 제공으로 진입 장벽을 낮추고, 리드로 금전적 성공을
+              확인한 중개사는 Pro/Office 요금제로 확장합니다.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Free 10</span>
+              <span class="tag">Pro/Office</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="connector">
+        <h2 class="section-title">
+          커넥터 위저드(초안)
+          <span>API/RSS/HTML/CSV/PDF 소스 연결</span>
+        </h2>
+        <div class="split-layout">
+          <div class="card">
+            <h3>연결 단계</h3>
+            <ol class="mini-list">
+              <li>소스 유형 선택 · 인증/쿼터</li>
+              <li>엔드포인트/페이지네이션 정의</li>
+              <li>필드 매핑 · 정규화 규칙</li>
+              <li>일정/트리거 · 미리보기 · 승인</li>
+            </ol>
+          </div>
+          <div class="card">
+            <h3>데이터 계약</h3>
+            <p class="muted">
+              content.items · ops.import_jobs · analytics.events 스키마와 일관한
+              맵핑을 강제합니다.
+            </p>
+            <div class="tag-row">
+              <span class="tag">SSOT</span>
+              <span class="tag">Evidence</span>
+              <span class="tag">Meili/FTS</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="automation">
+        <h2 class="section-title">
+          콘텐츠 생성 · 배포 플로우
+          <span>허브와 중개사 채널을 잇는 5단계 자동화</span>
+        </h2>
+        <div class="flow-grid">
+          <div class="flow-step">
+            <h3>1. 매물 입력</h3>
+            <p>
+              주소·면적·가격과 사진/영상, 사전 정의된 폼 항목을 한 번에 등록해
+              품질과 규정 준수 조건을 갖춥니다.
+            </p>
+            <ul class="mini-list">
+              <li>국토부 고시 2020-595 체크리스트</li>
+              <li>EXIF/워터마크 자동 검증</li>
+            </ul>
+          </div>
+          <div class="flow-step">
+            <h3>2. 생성 엔진</h3>
+            <p>
+              매물 캔버스가 웹 카드, 롱폼 포스트, 쇼츠 스크립트로 전환되어
+              즉시 검토 가능한 원본이 만들어집니다.
+            </p>
+            <ul class="mini-list">
+              <li>AI 요약 &amp; CTA 추천</li>
+              <li>썸네일·컷시트 자동 제작</li>
+            </ul>
+          </div>
+          <div class="flow-step">
+            <h3>3. 허브 저장</h3>
+            <p>
+              Canonical 매물 페이지를 허브에 저장하고 Programmatic 지역/단지
+              페이지와 내부 링크를 형성합니다.
+            </p>
+            <ul class="mini-list">
+              <li>JSON-LD RealEstateListing</li>
+              <li>동적 Sitemap &amp; SEO 최적화</li>
+            </ul>
+          </div>
+          <div class="flow-step">
+            <h3>4. 배포 &amp; 임베드</h3>
+            <p>
+              블로그·SNS·카카오 채널에 원클릭 배포하거나 공식 로그인·API로
+              중개사 계정에 직접 게시합니다.
+            </p>
+            <ul class="mini-list">
+              <li>oEmbed 카드 &amp; OG 미리보기</li>
+              <li>카카오 채널 상담톡 자동 연결</li>
+            </ul>
+          </div>
+          <div class="flow-step">
+            <h3>5. 리드 &amp; 전환</h3>
+            <p>
+              상담톡·050 콜·웹 폼 리드를 트래킹하고, 성과가 검증된 중개사는
+              유료 플랜으로 전환해 성장을 가속합니다.
+            </p>
+            <ul class="mini-list">
+              <li>5분 응답 알림 &amp; SLA 대시보드</li>
+              <li>Free → Pro/Office 업그레이드</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="growth-loop">
+        <h2 class="section-title">
+          허브 ↔ 중개사 양방향 성장 루프
+          <span>콘텐츠-트래픽-리드 선순환</span>
+        </h2>
+        <div class="loop-container">
+          <div class="loop-node hub">
+            <h3>부동산 콘텐츠 허브</h3>
+            <p>
+              Canonical 매물 원본을 저장하고 Programmatic 지역·단지 페이지를
+              운영해 검색 신뢰도를 높입니다.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Canonical</span>
+              <span class="tag">Programmatic SEO</span>
+            </div>
+          </div>
+          <div class="loop-node agents">
+            <h3>중개사 채널</h3>
+            <p>
+              개인 블로그·SNS·카카오 채널에 임베드 카드와 쇼츠를 배포해 브랜드
+              존재감을 확장합니다.
+            </p>
+            <span class="loop-arrow">허브 URL ↔ 임베드 카드</span>
+          </div>
+          <div class="loop-node consumers">
+            <h3>소비자 리드</h3>
+            <p>
+              상담톡·050 콜트래킹·폼 리드가 5분 응답 규칙으로 연결되어 상담
+              성공률을 높이고 리뷰/뱃지를 생성합니다.
+            </p>
+            <span class="loop-arrow">응답 데이터 ↔ 신뢰 신호</span>
+          </div>
+          <div class="loop-node seo">
+            <h3>검색 &amp; 유입</h3>
+            <p>
+              지역/단지/유형별 PSEO 페이지와 구조화 데이터가 외부 유입을
+              촉진하고 허브-중개사 링크 그래프를 강화합니다.
+            </p>
+            <span class="loop-arrow">UGC ↔ 지표 페이지</span>
+          </div>
+          <div class="loop-node loyalty">
+            <h3>수익화 &amp; 신뢰</h3>
+            <p>
+              리드 실적 기반 Pro/Office 전환과 응답속도/검증률 뱃지로 재사용과
+              추천을 촉진합니다.
+            </p>
+            <span class="loop-arrow">Free 10 → 구독</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="monetization">
+        <h2 class="section-title">
+          가격 &amp; 전환 구조
+          <span>무료 헤드에서 구독까지 자연스러운 여정</span>
+        </h2>
+        <div class="plan-grid">
+          <article class="plan-card">
+            <div class="plan-badge">Free Head</div>
+            <h3>월 10건 무료</h3>
+            <ul>
+              <li>정식 매물 페이지 &amp; Canonical 저장</li>
+              <li>웹 카드·롱폼·쇼츠 대본 자동 생성</li>
+              <li>블로그/SNS 임베드 &amp; 카카오 상담톡 배포</li>
+              <li>기본 리드 박스 + 5분 응답 알림</li>
+            </ul>
+          </article>
+          <article class="plan-card featured">
+            <div class="plan-badge">Pro</div>
+            <h3>고성장 중개사</h3>
+            <ul>
+              <li>무제한 매물 &amp; 팀 좌석 권한 관리</li>
+              <li>050/DNI 콜트래킹 &amp; 자동 라우팅</li>
+              <li>쇼츠·썸네일 변주 무제한 + API 업로드</li>
+              <li>응답 속도·리드 KPI 대시보드</li>
+            </ul>
+          </article>
+          <article class="plan-card">
+            <div class="plan-badge">Office</div>
+            <h3>법인 &amp; 가맹 본부</h3>
+            <ul>
+              <li>지점별 리드 라우팅 규칙 &amp; SLA</li>
+              <li>전용 API &amp; 브랜드 프로모션 슬롯</li>
+              <li>Programmatic 지역/단지 위젯 커스터마이즈</li>
+              <li>전사 KPI 리포트 &amp; 품질 모니터링</li>
+            </ul>
+          </article>
+        </div>
+        <div class="plan-note">
+          <strong>성공하는 리드가 곧 업그레이드 트리거</strong> — 무료 구간에서
+          실거래 리드를 확보하면 자동으로 추천되는 Pro 체험과 초대 리워드가
+          재사용 루프를 만듭니다.
+        </div>
+      </section>
+
       <section id="summary">
         <h2 class="section-title">
           핵심 테마
@@ -252,7 +576,7 @@
         </div>
       </section>
 
-      <section id="automation">
+      <section id="pipeline">
         <h2 class="section-title">
           자동화 파이프라인 <span>생성 → 게시 → 관찰 → 개선</span>
         </h2>
@@ -281,21 +605,45 @@
           </div>
         </div>
       </section>
+
+      <section id="compliance">
+        <h2 class="section-title">
+          신뢰 &amp; 컴플라이언스
+          <span>robots/약관 준수 · 출처/라이선스 표기 · 개인정보 보호</span>
+        </h2>
+        <div class="card-grid">
+          <article class="card">
+            <h3>법·정책 가드</h3>
+            <p>robots.txt/약관 준수, 증거 스냅샷(append-only), 출처·라이선스 자동 표기.</p>
+          </article>
+          <article class="card">
+            <h3>표시·광고(국토부 고시)</h3>
+            <p>업로드 단계 필수 항목·단위 검증으로 위반 차단. 소재지/면적/등록번호 등.</p>
+          </article>
+          <article class="card">
+            <h3>개인정보/민감정보</h3>
+            <p>마스킹·최소 수집 원칙. 안심번호(050)·DNI로 연락처 노출 최소화.</p>
+          </article>
+        </div>
+      </section>
     </main>
 
     <footer>
-      <p>
-        기획 근거: 저장소 내 부동산 전략 대화 &amp; 설계 문서 전수 분석 요약.
-      </p>
+      <p>기획 근거: 저장소 내 부동산 전략 대화 &amp; 설계 문서 전수 분석 요약.</p>
       <p>
         문서 · SSOT 링크:
-        <a href="../status/reports/REAL_ESTATE_HUB_MILESTONES.md"
-          >REAL_ESTATE_HUB_MILESTONES</a
-        >,
-        <a href="../status/reports/REAL_ESTATE_BACKLOG.csv"
-          >REAL_ESTATE_BACKLOG</a
-        >
+        <a href="../status/reports/REAL_ESTATE_HUB_MILESTONES.md">REAL_ESTATE_HUB_MILESTONES</a>
       </p>
+      <p class="muted">
+        샘플 고지: Canonical은 허브 원본 URL을 기준으로 하며, 배포 링크에는 표준화된
+        UTM 파라미터(utm_source/utm_medium/utm_campaign/utm_content)가 적용됩니다. 외부 인용 시 출처/라이선스를 표시합니다.
+      </p>
+      <div class="policy-links">
+        <a href="#">이용약관</a>
+        <a href="#">개인정보처리방침</a>
+        <a href="../docs/COMPLIANCE_CHECKLIST.md">컴플라이언스 체크리스트</a>
+        <a href="../docs/STANDARDS_MARKET_BASELINE.md">Market-Defining Standards</a>
+      </div>
     </footer>
   </body>
 </html>

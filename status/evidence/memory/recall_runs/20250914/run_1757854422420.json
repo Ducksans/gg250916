@@ -1,0 +1,242 @@
+{
+  "query": "너 /home/duksan/바탕화면/gumgang_meeting/README.md 이 파일 읽을 수 있어?",
+  "params": {
+    "k": 5,
+    "need_fresh": 1,
+    "half_life_days": 7.0,
+    "fresh_weight": 0.6,
+    "self_rag": 1,
+    "tiers": [
+      "long",
+      "medium",
+      "short",
+      "ultra_long",
+      "ultra_short"
+    ],
+    "rerank_blend": {
+      "score_w": 0.92,
+      "rubric_w": 0.08
+    },
+    "rubric_weights": {
+      "kw": 0.6,
+      "recency": 0.2,
+      "refs": 0.2
+    },
+    "rerank_policy": {
+      "apply_if": "recency<0.2 AND refs<0.2",
+      "bonus": {
+        "refs_ge_1_add": 0.05,
+        "normalized_threshold": 0.2
+      },
+      "cap": {
+        "kw_ge": 0.9,
+        "max_uplift": 0.02
+      }
+    }
+  },
+  "pre_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999790833339,
+      "ts": "2025-09-14T12:53:42.372Z",
+      "scope_id": null,
+      "text": "너 /home/duksan/바탕화면/gumgang_meeting/README.md 이 파일 읽을 수 있어?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999999651388901,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2863307007947111,
+      "ts": "2025-09-11T12:42:10.710Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/migrated_chat_store.json 이 파일 읽을 수 있니 ?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_cl7pxreb_mffedvu2.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.6666666666666666,
+        "recency": 0.6994400568800742,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2040541175938129,
+      "ts": "2025-09-11T13:18:22.609Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/4c292aca-8b63-407d-9495-49681eb5bb86.png 이 파일 볼 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_d70obb80_mfffdsmz.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 0.5833333333333334,
+        "recency": 0.7012013071007993,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.02487247946709,
+      "ts": "2025-09-11T11:51:55.659Z",
+      "scope_id": null,
+      "text": "체크포인트 원장 파일은 프로젝트 내 특정 경로에 위치하며, append-only 규칙을 따릅니다. 이 규칙은 데이터가 파일에 추가될 수만 있고 기존 데이터를 수정하거나 삭제할 수 없다는 것을 의미합니다. 경로 인용은 다음과 같습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.16666666666666666,
+        "recency": 0.6970096880007055,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8752699800056278,
+      "ts": "2025-09-11T15:52:09.151Z",
+      "scope_id": null,
+      "text": "너 이 스래드 요약할 수 있니 ?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/6845871c-def4-8003-a227-7fcf6c137cad.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.25,
+        "recency": 0.7087833000093796,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      }
+    }
+  ],
+  "post_items": [
+    {
+      "tier": "ultra_short",
+      "score": 1.7999999790833339,
+      "ts": "2025-09-14T12:53:42.372Z",
+      "scope_id": null,
+      "text": "너 /home/duksan/바탕화면/gumgang_meeting/README.md 이 파일 읽을 수 있어?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250914/thread_76j4jda7_mfg6h109.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 1.0,
+        "recency": 0.9999999651388901,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.7999999790833339,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2863307007947111,
+      "ts": "2025-09-11T12:42:10.710Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/migrated_chat_store.json 이 파일 읽을 수 있니 ?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_cl7pxreb_mffedvu2.jsonl",
+      "line_from": 2,
+      "line_to": 2,
+      "reasons": {
+        "kw": 0.6666666666666666,
+        "recency": 0.6994400568800742,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2863307007947111,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.2040541175938129,
+      "ts": "2025-09-11T13:18:22.609Z",
+      "scope_id": null,
+      "text": "/home/duksan/바탕화면/gumgang_meeting/4c292aca-8b63-407d-9495-49681eb5bb86.png 이 파일 볼 수 있니?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_d70obb80_mfffdsmz.jsonl",
+      "line_from": 5,
+      "line_to": 5,
+      "reasons": {
+        "kw": 0.5833333333333334,
+        "recency": 0.7012013071007993,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.2040541175938129,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 1.02487247946709,
+      "ts": "2025-09-11T11:51:55.659Z",
+      "scope_id": null,
+      "text": "체크포인트 원장 파일은 프로젝트 내 특정 경로에 위치하며, append-only 규칙을 따릅니다. 이 규칙은 데이터가 파일에 추가될 수만 있고 기존 데이터를 수정하거나 삭제할 수 없다는 것을 의미합니다. 경로 인용은 다음과 같습니다: [status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3](status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl#L3-3).",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/thread_1bhi4cg4_mffchqm1.jsonl",
+      "line_from": 4,
+      "line_to": 4,
+      "reasons": {
+        "kw": 0.16666666666666666,
+        "recency": 0.6970096880007055,
+        "refs": 0.6,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 1.02487247946709,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    },
+    {
+      "tier": "ultra_short",
+      "score": 0.8752699800056278,
+      "ts": "2025-09-11T15:52:09.151Z",
+      "scope_id": null,
+      "text": "너 이 스래드 요약할 수 있니 ?",
+      "path": "status/evidence/memory/tiers/ultra_short/20250911/6845871c-def4-8003-a227-7fcf6c137cad.jsonl",
+      "line_from": 1,
+      "line_to": 1,
+      "reasons": {
+        "kw": 0.25,
+        "recency": 0.7087833000093796,
+        "refs": 0.0,
+        "tier_weight": 1.0
+      },
+      "rerank": {
+        "applied": false,
+        "rubric": null,
+        "new_score": 0.8752699800056278,
+        "bonus_applied": false,
+        "cap_applied": false,
+        "cap_limit": 0.0
+      }
+    }
+  ],
+  "ts": "2025-09-14T12:53:42.420Z"
+}

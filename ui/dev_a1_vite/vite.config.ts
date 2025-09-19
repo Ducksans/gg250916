@@ -34,7 +34,24 @@ export default defineConfig(({ command }) => {
   return {
     base: "/ui-dev/",
 
-    plugins: [react()],
+    plugins: [
+      react(),
+      // Redirect root "/" to "/ui-dev/ide" for convenience in dev
+      {
+        name: "gg-home-redirect",
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            if (req.url === "/" || req.url === "/index.html") {
+              res.statusCode = 302;
+              res.setHeader("Location", "/ui-dev/ide");
+              res.end();
+              return;
+            }
+            next();
+          });
+        },
+      },
+    ],
 
     resolve: {
       alias: {
@@ -59,7 +76,8 @@ export default defineConfig(({ command }) => {
       },
     },
 
-    preview: { host: "127.0.0.1", port: 5173, open: false },
+    // Align with scripts/check_servers.sh (5175)
+    preview: { host: "127.0.0.1", port: 5175, open: false },
 
     publicDir: "public",
 

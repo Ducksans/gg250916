@@ -1,12 +1,49 @@
 ---
-phase: past
+timestamp:
+  utc: 2025-09-16T20:02Z
+  kst: 2025-09-17 05:02
+author: Codex (AI Agent)
+summary: BT-06 ST-0606을 위한 Dev UI 통합 UX/명령 정의 초안
+document_type: design_spec
+tags:
+  - #design
+  - #bt-06
+  - #st-0606
+phase: present
+DOCS_TIME_SPEC: GG_TIME_SPEC_V1
 ---
 
 # UI Integration (Draft)
 
+```dataviewjs
+const D = dv.luxon.DateTime;
+dv.paragraph(`(as of ${D.utc().toFormat("yyyy-LL-dd HH:mm'Z'")})`);
+```
+
 ## 목적
 시맨틱 검색 UX를 UI 셸에 통합하기 위한 표면, 명령, 키맵, 패널, 저장 정책 정의.
 본 문서는 status/design/ux_charter.md의 원칙과 정합해야 한다.
+
+## 런타임(단일 관문)
+- Backend: FastAPI(`/api/*`) 고정
+- Source: DB(v2) 고정 — 목록: `/api/v2/threads/recent`, 읽기: `/api/v2/threads/read?id=`
+
+플래그(운영 기본)
+- `GG_THREAD_SOURCE = db` 고정
+- `GG_CHAT_BACKEND = fastapi` 고정
+
+## Thread Import & 목록 동작
+- Import Threads(TopToolbar) → Source에 따라 v1/v2 recent/read 호출.
+- 좌측 목록 무한스크롤: IntersectionObserver(root=`#gg-threads`, rootMargin=600px). 페이지 크기 기본 20.
+- URL↔스토어 동기화: 라우트에 threadId가 있을 때는 스토어만 전환, 없을 때만 URL을 갱신(깜빡임 방지).
+
+Evidence
+- `status/evidence/ui/thread_import_*.{log,json}` — 러너/수동 임포트 로그
+- `status/evidence/ui/ST0103_UI_PASS_*.md` — UI PASS 요약
+
+수용 기준(Threads)
+- Source=DB에서 Import/무한스크롤 정상(20→40→… 증가), 임의 스레드 진입 시 turns 렌더.
+- 새로고침 후 URL이 유지되고 깜빡임 없음.
 
 ## 명령 (Command Palette)
 - Semantic Search: Query (id: cmd.semantic.search)
@@ -39,12 +76,30 @@ phase: past
 
 ## 증거 훅 (Evidence Hooks)
 - openAtLine 실행 시: status/evidence/ui_open_navigation.log
+
+## Session Updates — 2025-09-17 (UTC)
+- Lint errors resolved to zero for A1 Dev UI; targeted fixes:
+  - ChatTimeline.jsx — hooks unconditional call; removed conditional hook errors.
+  - Message.jsx — ensure useState called unconditionally.
+  - A1Dev.jsx — stream loop guard; memory/store refs now use normRefs.
+  - EdgeToggles.jsx — empty catch blocks documented.
+- Threads v2 import/read confirmed via Bridge proxy; UI Import operates with `Source=DB` flag.
+- Evidence: `status/evidence/bridge/V2_PROXY_SMOKE_20250917T0441Z.md`, `status/evidence/ui/lint_final_20250917T0502Z.log`.
 - 파일 저장 이벤트: status/evidence/ui_save.log (경로, 바이트 수, 시간)
 - 검색 결과 캡처: status/evidence/ui_search.json (query, top_k, results[*].path,line_start,line_end,snippet)
 - 주석 내보내기: status/evidence/ui_annotation_<YYYYMMDD_HHMM>.png
 - 공유 수행 로그: status/evidence/ui_share.log (대상, 아티팩트 경로)
 - 네이밍 규칙: <YYYYMMDD_HHMM>_<scenario>.{json|log|png}
 - 모든 아티팩트는 문서에서 path#Lx-y로 인용 가능해야 한다.
+
+## SGM(엄격 게이트) 운영 방침
+- 개발: `GG_STRICT_GATE=soft|hard` 토글 제공(DevTools/설정). soft에서 품질 지표(무응답률↓, 인용률↑)가 기준을 충족하면 운영 기본으로 채택.
+- 운영: 기본 soft(또는 자동 판단). 토글은 UI에서 숨김, 설정값/환경변수로만 변경 가능.
+
+## 툴/대화 API 표준
+- 자동 툴콜: `/api/chat/toolcall`
+- 스트림: `/api/chat/stream`(필요 시)
+- 단일 응답: `/api/chat`
 
 ## UX 플로우 (30초 챌린지)
 - 검색 → 결과 더블클릭 오픈 → 편집 → 저장 → 스크린샷 주석 → 공유 ≤ 30초
@@ -72,5 +127,6 @@ phase: past
 - status/evidence/ui_crash.log, status/evidence/ui_runtime.log, 본 문서 업데이트, 관련 CKPT 엔트리.
 
 ## 변경 기록
+- BT-06 ST-0606(2025-09-16): Backend×Source 매트릭스, v1/v2 엔드포인트/플래그, Import/무한스크롤/라우팅 정합성 반영.
 - BT-06 ST-0610: Rust/Tauri UI 긴급 복구 계획 추가; 유지보수 규칙 보강.
 - BT-06 ST-0611: UX 대헌장 연결(명령/단축키 확장, UX 플로우·Evidence 훅 추가).

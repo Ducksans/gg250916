@@ -1,52 +1,57 @@
-# MASTER_EXECUTION_TIMELINE — 실행 순서표
+---
+timestamp:
+  utc: 2025-09-18T05:20Z
+  kst: 2025-09-18 14:20
+author: Codex (AI Agent)
+summary: North Star 4단계를 기준으로 단일 실행 타임라인과 주간 스프린트를 정리
+document_type: master_timeline
+tags:
+  - #timeline
+  - #execution
+DOCS_TIME_SPEC: GG_TIME_SPEC_V1
+---
 
-> 참조 문서: [[status/plans/MASTER_EXECUTION_PLAN.md]], [[status/tasks/MASTER_EXECUTION_INSTRUCTIONS.md]], [[reports/MASTER_ALIGNMENT_REPORT.md]]
+# MASTER_EXECUTION_TIMELINE — 단일 실행 타임라인
 
-## 1. 타임라인 개요 (D0 기준)
+> 북극성 문서([PROJECT_NORTH_STAR](../vision/PROJECT_NORTH_STAR.md))의 4단계 목표를 언제·어떻게 달성할지 주간 단위로 관리합니다. 과거 기록은 `status/archive/timeline/`으로 옮기고, 본 문서는 항상 “현재 진행형”만 유지합니다.
 
-| 실행 차수 | 시간 박스 | 대상(BT/ST)         | 선행 조건                       | 산출물                                                    | 승인/검증                       |
-| --------- | --------- | ------------------- | ------------------------------- | --------------------------------------------------------- | ------------------------------- |
-| 1         | D0 (금일) | ST0101              | MASTER_DOC/ CODE AUDIT 수신     | `reports/TBD_sendPipeline_audit.md`                       | Agent 자가 검토                 |
-| 2         | D0~D1     | **ST0102**          | 차수1 완료, deps 설치 완료      | `scripts/ci/st0102_runner.sh`, guard/build 로그           | Agent 실행 → 5175 프리뷰 요청   |
-| 3         | D1        | 승인 라운드         | ST0102 dist/로그 준비           | 5175 프리뷰, `status/evidence/ui/preview_*.png`           | Human 승인 → 5173 배포 지시     |
-| 4         | D1~D2     | ST0103              | ST0102 승인, thread 데이터 확보 | Dev UI thread import 기능, evidence 로그                  | Agent 실행, lint/test 통과      |
-| 5         | D2~D3     | ST-0603/0604        | ST0103 결과 반영                | `status/design/roadmap_BT07_BT10.md`, backend 스키마 초안 | Human 리뷰 후 문서 승인         |
-| 6         | D3~D4     | ST-0605/0606        | 차수5 문서 승인                 | Bridge 계약 문서 + UI 통합 초안                           | Agent/Human 공동 리뷰           |
-| 7         | D4~D5     | ST-0607/0608        | 차수6 완료                      | 테스트 계획, 리스크 레지스터                              | Human 승인, RUNBOOK 리스크 갱신 |
-| 8         | D5        | ST-0609             | 모든 선행 문서 승인             | 업데이트된 [[status/tasks/BT-06_backlog.md]]              | Agent 정리 → Human 확인         |
-| 9         | 지속      | 체크포인트 & 리포트 | 각 차수 완료                    | CKPT Append, 보고서 업데이트                              | Agent 작성, Human 서명          |
+## 1. 단계별 로드맵
 
-## 2. 승인 프로세스 세부
+| 단계 | 핵심 미션 | 이번 주 목표 | 위험·의존성 | 상태 |
+| --- | --- | --- | --- | --- |
+| 1. 코딩 에이전트 UI 완성 | ST‑06 계열 UI 안정화 + PG/증거 체계 정비 | PG 인게스트 검증, Evidence 링크 404 해결, UI 토글 잠금 | Legacy thread ID 정합, Postgres 접속 상태 | 🔄 진행 중 |
+| 2. 오케스트레이션 허브 | Planner/Executor 갖춘 허브화 | Stage 1 완료 후 착수 | Stage 1 산출물 | ⏳ 대기 |
+| 3. 콘텐츠 자동화 파이프라인 | Content v2 → 자동화 | Stage 2 완료 후 설계 | 파이프라인 스펙 재정비 | ⏳ 대기 |
+| 4. 정본 배포 & 채널 운영 | 허브→SNS/블로그 배포 | Stage 3 완료 후 롤아웃 | 채널 계약/계정 | ⏳ 대기 |
 
-1. **5175 프리뷰 → 5173 배포**
-   - ST0102 실행 후 Agent가 5175 포트 열람 링크 공유.
-   - Human이 UI/기능 확인 → 승인 시 5173 배포 명령(`npm run deploy:5173`), 반려 시 수정 이유를 [[status/catalog/MASTER_RUNBOOK.md]] “의사결정 대기”에 기록.
-   - 승인/반려 결과는 `status/checkpoints/CKPT_72H_RUN.jsonl`에 Append.
-2. **문서 승인**
-   - ST-0603~0609 산출물은 Obsidian 리뷰(Reading view) 후 Human이 “Approved” 주석 추가.
-   - 승인 시 Dataview 인덱스(SSOT_SITEMAP)에서 상태 확인.
-3. **리스크/테스트 계획**
-   - ST-0607/0608 결과는 MASTER_RUNBOOK 리스크 섹션과 CI Runner 체크리스트에 반영.
+## 2. 주간 스프린트 보드 (2025-W38)
 
-## 3. 선행 조건 체크리스트
+- **Sprint Goal:** 금강 UI Stage 1 마무리 — PG 연동 + Evidence 링크 정상화 + UI 토글 잠금
+- **기간:** 2025-09-18 ~ 2025-09-24
 
-- [ ] Node/PNPM 의존성 설치 (`npm install` in `ui/dev_a1_vite/`).
-- [ ] Python venv 초기화 (`./scripts/dev_backend.sh init`).
-- [ ] Bridge 서버 점검 (`node bridge/server.js` → health OK).
-- [ ] QUARANTINE 정책 재확인, 실행 승인 여부 결정.
-- [ ] Dataview/Obsidian 환경 준비 (`phase` 필드 확인).
+| 우선순위 | 작업 | 담당 | 완료 기준 | 상태 |
+| --- | --- | --- | --- | --- |
+| P0 | Evidence fallback 모니터링 자동화 | Agent | 지표 정의 + 로그 요약 자동화 초안 + CKPT | ☑ |
+| P0 | Stage 2 Kickoff 자료 패키징 | Agent | 슬라이드/증거 링크 정리 + 공유 계획 | ☑ |
+| P1 | MCP PySpark 래퍼 초안 | Agent | `scripts/mcp/pyspark_execute.py` 작성 + README 업데이트 | ☑ |
+| P0 | IDE Shell Phase 1 | Agent | /ui-dev/ide 라우트 + 3분할 셸 + 리사이저/단축키/컴포저 + 리사이즈 검증 | ☑ |
+| P0 | IDE Shell Phase 1.5 | Agent | Global Home=IDE, 전환 단축키(1/2), 패널 토글(B/J), 프리셋, Task History 골격 | ☐ |
+| P1 | IDE Shell Phase 2 | Agent | 세션 복원, 분할 에디터, 저장(Tauri FS), 빠른 열기 강화 | ☐ |
 
-## 4. 타임라인 변경 관리
+> 상태 기호: ☑ 완료 · ☐ 진행 중 · ⧖ 대기 · ⚠ 위험
 
-- 변경 제안은 [[AGENTS.md]] PLAN 절차에 따라 `변경 전→변경 후` 형태로 제시.
-- 승인된 변경은 본 문서와 [[status/plans/MASTER_EXECUTION_PLAN.md]]에 즉시 반영, 업데이트 시각 기록.
-- 대규모 일정 조정 시 [[reports/MASTER_ALIGNMENT_REPORT.md]] 업데이트 후 Human 승인 필수.
+## 3. 일일 동기화 루틴
+1. README 체크리스트 → Control Tower 문서(README, North Star, Timeline, Runbook, SSOT) 순으로 열람
+2. Runbook “오늘의 3대 작업”을 본 스프린트 보드에서 선택해 채운다
+3. 작업 완료 시 Runbook과 CKPT를 업데이트한 뒤, 스프린트 보드 상태(☐→☑)를 갱신한다
 
-## 5. 체크포인트 & 보고 일정
+## 4. 다음 마일스톤 미리보기
+- [ ] Stage 1 종료 보고(증거 링크 + CKPT) → Stage 2 kickoff 브리핑
+- [ ] Stage 2 착수 시 Planner/Executor 설계 워크숍 문서 작성
+- [ ] Stage 3을 대비해 Content Pipeline 스펙 재검토 (BT‑07 시리즈)
 
-| 시점             | 기록 위치                                                         | 내용                                           |
-| ---------------- | ----------------------------------------------------------------- | ---------------------------------------------- |
-| 각 차수 종료     | `status/checkpoints/CKPT_72H_RUN.jsonl`                           | `run_id`, `decision`, `evidence` 필수          |
-| D2, D5           | [[status/catalog/MASTER_RUNBOOK.md]]                              | “오늘의 상태 요약”/“다음 행동” 갱신            |
-| 주간             | [[AGENTS_log.md]]                                                 | 게이트 체크리스트 업데이트, Dataview 결과 공유 |
-| 마일스톤 완료 시 | [[reports/MASTER_CODE_AUDIT.md]], [[reports/MASTER_DOC_AUDIT.md]] | 감사 보고서 보강 또는 별도 추적                |
+## 5. 아카이브 규칙
+- 완료된 스프린트 보드는 `status/archive/timeline/` 폴더에 날짜 기준 복사 후 본문에서 제거합니다.
+- 북극성 표의 “현재 상태”를 변경할 때는 CKPT에 동일 run_id를 남기고 링크합니다.
+
+> 질문이 생기면 “이 작업이 어떤 Stage를 전진시키는가?”를 먼저 확인하고, 해당 Stage의 우선순위에 따라 행동합니다.

@@ -23,6 +23,7 @@
 import React from "react";
 import MainModeRouter from "@/components/MainModeRouter";
 import ChatTimeline from "@/components/chat/ChatTimeline";
+import EditorWorkspace from "@/components/editor/EditorWorkspace";
 
 /**
  * CenterStage — central router/timeline stage for the A1 grid
@@ -52,15 +53,17 @@ export default function CenterStage({
   onBackToChat,
   slots = {},
   chatNode,
+  composerForEditor,
 }) {
   const chat = chatNode ?? <ChatTimeline thread={thread} />;
+  const mergedSlots = { editor: <EditorWorkspace thread={thread} composer={composerForEditor} />, ...slots };
 
   return (
     <MainModeRouter
       mode={mode}
       chat={chat}
       onBackToChat={onBackToChat}
-      slots={slots}
+      slots={mergedSlots}
     />
   );
 }

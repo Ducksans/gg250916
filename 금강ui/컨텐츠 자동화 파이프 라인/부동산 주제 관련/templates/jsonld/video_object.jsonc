@@ -1,0 +1,12 @@
+// JSON-LD template for VideoObject
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "{{video_title}}",
+  "description": "{{video_description}}",
+  "thumbnailUrl": ["{{thumbnail_url}}"],
+  "uploadDate": "{{upload_date}}",
+  "contentUrl": "{{video_url}}",
+  "embedUrl": "{{embed_url}}",
+  "duration": "{{duration_iso}}"
+}
