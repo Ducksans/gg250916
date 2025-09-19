@@ -57,3 +57,5 @@ status/backups/
 *.onnx
 *.pth
 memory_backup/
+db/*.db
+tools/java/
